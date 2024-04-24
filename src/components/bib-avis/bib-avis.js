@@ -7,13 +7,18 @@ function isEmpty(node) {
   return node.textContent.trim() === ""
 }
 
+/**
+ * Un avis
+ * Affiche un avis
+ */
 export class BibAvis extends LitElement {
   static properties = {
     service: {
       type: String
     },
     contexte: {
-      type: String
+      type: String,
+      default: 'site-web'
     },
     niveau: {
       type: String
@@ -44,6 +49,7 @@ export class BibAvis extends LitElement {
 
     .message {
       flex-grow: 1;
+      min-height: 24px;
     }
 
     .btn-close {
@@ -112,7 +118,7 @@ export class BibAvis extends LitElement {
   }
 
   _onBtnFermerClick() {
-    console.log('click!')
+    alert('Fonction à venir!')
   }
 
   _renderBoutonFermer() {
@@ -120,13 +126,13 @@ export class BibAvis extends LitElement {
   }
 
   _renderAvis(message) {
-    console.log()
-    return message ? html`<div class="container"><div class="inner"><div class="message">${message}</div>${this._renderBoutonFermer()}</div></div>` : null
+    return message ? html`<div class="container"><div class="inner"><div class="message">${unsafeHTML(message)}</div>${this._renderBoutonFermer()}</div></div>` : null
   }
 
   _avisTask = new Task(this, {
     task: async ([service, contexte, niveau], { signal }) => {
-      const response = await fetch(`${service}/${contexte}/${niveau}`, {
+      const url = new URL(`${contexte}/${niveau}`, service)
+      const response = await fetch(url, {
         headers: {
           "Accept": "application/json",
           // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -142,7 +148,6 @@ export class BibAvis extends LitElement {
   })
 
   _renderRemote() {
-    console.log('[renderRemote]')
     return this._avisTask.render({
       pending: () => html``,
       complete: (avis) => this._renderAvis(avis.message),
@@ -154,8 +159,7 @@ export class BibAvis extends LitElement {
   }
 
   _renderLocal() {
-    console.log('[renderLocal]')
-    return this._renderAvis(html`<slot />`)
+    return this._renderAvis(`<slot />`)
   }
 
   render() {
