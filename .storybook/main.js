@@ -1,8 +1,8 @@
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
   stories: [
-    "../stories/**/*.mdx",
-    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    // "../stories/**/*.mdx",
+    // "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   addons: [
@@ -17,5 +17,8 @@ const config = {
   docs: {
     autodocs: "tag",
   },
+  core: {
+    disableWhatsNewNotifications: true
+  }
 }
 export default config

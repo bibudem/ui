@@ -1,16 +1,18 @@
 import '../stories/css/global.css'
 
 /** @type { import('@storybook/web-components').Preview } */
-export default {
-  parameters: {
-    controls: {
-      expanded: false,
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
+export const parameters = {
+  controls: {
+    expanded: false,
   },
-};
+  docs: {
+    controls: {
+      sort: 'requiredFirst'
+    },
+    canvas: {
+      sourceState: 'shown'
+    }
+  },
+}
 
 
