@@ -1,0 +1,10 @@
+{
+  "projectId": "Project:662939cb4a17c20b495618c9",
+  "autoAcceptChanges": "main",
+  "exitOnceUploaded": true,
+  "externals": [
+    "public/**"
+  ],
+  "onlyChanged": true,
+  "skip": "dependabot/**"
+}
