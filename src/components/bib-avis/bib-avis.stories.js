@@ -65,7 +65,7 @@ export default {
         }
       }
     },
-    boutonFermer: {
+    'bouton-fermer': {
       description: 'Afficher le bouton pour fermer l\'avis?',
       control: {
         type: 'boolean'
@@ -97,11 +97,11 @@ export default {
  * Affiche un avis
  */
 export const Avis = {
-  render: function ({ contexte = 'site-web-dev', boutonFermer = true }) {
-    return html`<bib-avis contexte="${contexte}" ?boutonFermer=${boutonFermer} />`
+  render: function ({ contexte = 'site-web-dev', ...props }) {
+    return html`<bib-avis contexte="${contexte}" ?bouton-fermer=${props['bouton-fermer']} />`
   },
   args: {
-    boutonFermer: true,
+    'bouton-fermer': true,
     niveau: 'important',
     contexte: 'site-web-dev'
   }
@@ -112,9 +112,9 @@ export const Avis = {
  */
 export const AvisLocal = {
   name: 'Avis avec un message local',
-  render: ({ message, boutonFermer }) => html`<bib-avis ?boutonFermer=${boutonFermer}>${unsafeHTML(message)}</bib-avis>`,
+  render: ({ message, ...props }) => html`<bib-avis ?bouton-fermer=${props['bouton-fermer']}>${unsafeHTML(message)}</bib-avis>`,
   args: {
     message: 'Ceci est un <strong>avis local</strong> avec un peu de <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">balises html</a>.',
-    boutonFermer: false
+    'bouton-fermer': false
   }
 }

@@ -24,7 +24,8 @@ export class BibAvis extends LitElement {
       type: String
     },
     boutonFermer: {
-      type: Boolean
+      type: Boolean,
+      attribute: 'bouton-fermer'
     }
   }
 
