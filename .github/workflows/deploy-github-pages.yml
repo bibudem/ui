@@ -20,7 +20,7 @@ jobs:
     - id: build-publish
       uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
       with:
-          install_command: npm ci --include dev
+          install_command: npm ci --include=dev
           # build_command: npm run build-storybook # default: npm run build-storybook
           path: storybook-static # default: dist/storybook
           checkout: false # default: true
