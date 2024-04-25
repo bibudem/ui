@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/bibudem/ui/compare/v0.1.0...v0.1.1) (2024-04-25)
+
+
+### Bug Fixes
+
+* **avis:** Correction de l'attribut "boutonFermer" -&gt; "bouton-fermer" ([a7bc74c](https://github.com/bibudem/ui/commit/a7bc74c8c4e77d6d3ab682bb190fc50bc4954a9e))
+
 ## 0.1.0 (2024-04-25)
 
 
