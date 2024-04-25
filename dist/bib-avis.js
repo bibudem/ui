@@ -1,7 +1,7 @@
 var g = Object.defineProperty;
-var b = (s, t, e) => t in s ? g(s, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : s[t] = e;
-var a = (s, t, e) => (b(s, typeof t != "symbol" ? t + "" : t, e), e);
-import { n as m, a as d, b as f, L as v, c as E, h } from "./lit-element-Mznt8OUE.js";
+var m = (s, t, e) => t in s ? g(s, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : s[t] = e;
+var a = (s, t, e) => (m(s, typeof t != "symbol" ? t + "" : t, e), e);
+import { n as b, a as d, b as f, L as v, c as E, h as c } from "./lit-element-Mznt8OUE.js";
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -154,7 +154,7 @@ class T {
     }
   }
 }
-const C = (s, t) => s === t || s.length === t.length && s.every((e, i) => !m(e, t[i]));
+const C = (s, t) => s === t || s.length === t.length && s.every((e, i) => !b(e, t[i]));
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -167,12 +167,12 @@ const w = {
   BOOLEAN_ATTRIBUTE: 4,
   EVENT: 5,
   ELEMENT: 6
-}, x = (s) => (...t) => ({
+}, y = (s) => (...t) => ({
   // This property needs to remain unminified.
   _$litDirective$: s,
   values: t
 });
-class y {
+class x {
   constructor(t) {
   }
   // See comment in Disconnectable interface for why this is a getter
@@ -197,7 +197,7 @@ class y {
  * SPDX-License-Identifier: BSD-3-Clause
  */
 const R = 1;
-class u extends y {
+class u extends x {
   constructor(t) {
     if (super(t), this._value = d, t.type !== w.CHILD)
       throw new Error(`${this.constructor.directiveName}() can only be used in child bindings`);
@@ -225,11 +225,11 @@ class u extends y {
 }
 u.directiveName = "unsafeHTML";
 u.resultType = R;
-const _ = x(u), I = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>';
+const _ = y(u), I = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>';
 function L(s) {
   return s.textContent.trim() === "";
 }
-class c extends v {
+class h extends v {
   constructor() {
     super();
     a(this, "_avisTask", new T(this, {
@@ -253,14 +253,14 @@ class c extends v {
     alert("Fonction à venir!");
   }
   _renderBoutonFermer() {
-    return this.boutonFermer ? h`<button class="btn-close" aria-label="Fermer" @click="${this._onBtnFermerClick}">${_(I)}</button>` : null;
+    return this.boutonFermer ? c`<button class="btn-close" aria-label="Fermer" @click="${this._onBtnFermerClick}">${_(I)}</button>` : null;
   }
   _renderAvis(e) {
-    return e ? h`<div class="container"><div class="inner"><div class="message">${_(e)}</div>${this._renderBoutonFermer()}</div></div>` : null;
+    return e ? c`<div class="container"><div class="inner"><div class="message">${_(e)}</div>${this._renderBoutonFermer()}</div></div>` : null;
   }
   _renderRemote() {
     return this._avisTask.render({
-      pending: () => h``,
+      pending: () => c``,
       complete: (e) => this._renderAvis(e.message),
       error: (e) => (console.log(e), null)
     });
@@ -272,7 +272,7 @@ class c extends v {
     return L(this) ? this._renderRemote() : this._renderLocal();
   }
 }
-a(c, "properties", {
+a(h, "properties", {
   service: {
     type: String
   },
@@ -286,9 +286,9 @@ a(c, "properties", {
   boutonFermer: {
     type: Boolean
   }
-}), a(c, "styles", E`*,:host{box-sizing:border-box}:host{display:block;background:var(--bib-avis-bg-color,#fffac6)}.inner{display:flex;align-items:center;max-width:1220px;margin:0 auto;padding:11px 19px}.message{flex-grow:1;min-height:24px}.btn-close{display:inline-flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;position:relative;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0;border:0;margin:0;cursor:pointer;user-select:none;vertical-align:middle;appearance:none;text-decoration:none;text-align:center;flex:0 0 auto;font-size:1.5rem;font-size:36px;font-weight:700;line-height:1;position:relative;padding:8px;padding:0;border-radius:50%;overflow:visible;color:var(--bib-btn-close-color,rgba(0,0,0,.4));transition:all 150ms cubic-bezier(.4,0,.2,1) 0s}.btn-close:hover{color:var(--bib-btn-close-hover-color,rgba(0,0,0,.8))}.btn-close::after{content:'';position:absolute;width:calc(100% + 16px);height:calc(100% + 16px);border-radius:50%;background-color:transparent;transition:background-color 150ms cubic-bezier(.4,0,.2,1) 0s}.btn-close:hover::after{background-color:rgba(0,0,0,.04)}.btn-close>svg{fill:currentColor}`);
-customElements.define("bib-avis", c);
+}), a(h, "styles", E`*,:host{box-sizing:border-box}:host{display:block;font-size:var(--bib-avis-size,var(--md-sys-typescale-title-medium-size,1rem));background:var(--bib-avis-container-color,var(--md-sys-color-warningContainer,#fffac6))}.inner{display:flex;align-items:center;max-width:1220px;margin:0 auto;padding:11px 19px;gap:1em}.message{flex-grow:1;min-height:24px}.btn-close{display:inline-flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;position:relative;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0;border:0;margin:0;cursor:pointer;user-select:none;vertical-align:middle;appearance:none;text-decoration:none;text-align:center;flex:0 0 auto;font-size:1.5rem;font-size:36px;font-weight:700;line-height:1;position:relative;padding:8px;padding:0;border-radius:50%;overflow:visible;color:var(--bib-btn-close-color,rgba(0,0,0,.4));transition:all 150ms cubic-bezier(.4,0,.2,1) 0s}.btn-close:hover{color:var(--bib-btn-close-hover-color,rgba(0,0,0,.8))}.btn-close::after{content:'';position:absolute;width:calc(100% + 16px);height:calc(100% + 16px);border-radius:50%;background-color:transparent;transition:background-color 150ms cubic-bezier(.4,0,.2,1) 0s}.btn-close:hover::after{background-color:rgba(0,0,0,.04)}.btn-close>svg{fill:currentColor}`);
+customElements.define("bib-avis", h);
 export {
-  c as BibAvis
+  h as BibAvis
 };
 //# sourceMappingURL=bib-avis.js.map
