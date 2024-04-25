@@ -12,4 +12,4 @@ La documentation des composants est gérée à l'aide de [Storybook](https://sto
 
 ### Via CDN
 
-`<script src="https://cdn.jsdelivr.net/gh/bibudem/ui/dist/bib-avis.js"></script>`
+`<script src="https://cdn.jsdelivr.net/gh/bibudem/ui@0/dist/bib-avis.js"></script>`
