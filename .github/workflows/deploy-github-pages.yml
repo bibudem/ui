@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - id: build-publish
-      uses: bitovi/github-actions-storybook-to-github-pages@v1.0.1
+      uses: bitovi/github-actions-storybook-to-github-pages@v1.0.0
       with:
           install_command: npm i --include=dev
           # build_command: npm run build-storybook # default: npm run build-storybook
