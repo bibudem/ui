@@ -77,6 +77,19 @@ export default {
         }
       }
     }
+  },
+  parameters: {
+    cssprops: {
+      'bib-avis-container-color': {
+        value: '#fffac6',
+        defaultValue: 'var(--md-sys-color-warningContainer, #fffac6)',
+        description: 'Couleur du fond'
+      },
+      'bib-avis-size': {
+        value: '1rem',
+        description: 'Taille de la police'
+      }
+    }
   }
 }
 
@@ -98,7 +111,7 @@ export const Avis = {
  * Affiche un avis créé localement
  */
 export const AvisLocal = {
-  name: "Avis avec un message local",
+  name: 'Avis avec un message local',
   render: ({ message, boutonFermer }) => html`<bib-avis ?boutonFermer=${boutonFermer}>${unsafeHTML(message)}</bib-avis>`,
   args: {
     message: 'Ceci est un <strong>avis local</strong> avec un peu de <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">balises html</a>.',

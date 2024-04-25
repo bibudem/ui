@@ -9,6 +9,7 @@ const config = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@chromatic-com/storybook",
+    "@ljcl/storybook-addon-cssprops"
   ],
   framework: {
     name: "@storybook/web-components-vite",
