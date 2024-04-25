@@ -10,18 +10,22 @@ permissions:
   pages: write
   id-token: write
 
-# List of jobs
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.build-publish.outputs.page_url }}
+  build-and-deploy:
+    # environment:
+    #   name: github-pages
+    #   url: ${{ steps.build-publish.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-    - id: build-publish
-      uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+    - name: Checkout 🛎️
+      uses: actions/checkout@v4
+
+    - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+      run: |
+        npm ci --include dev
+        npm run build
+          
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-          install_command: npm i --include=dev
-          # build_command: npm run build-storybook # default: npm run build-storybook
-          path: storybook-static # default: dist/storybook
-          checkout: false # default: true
+        folder: build-storybook # The folder the action should deploy.
