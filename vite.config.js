@@ -14,9 +14,6 @@ export default defineConfig({
     lib: {
       entry: [mainEntry, ...componentsEntries],
     },
-    rollupOptions: {
-      external: ['lit']
-    }
   },
   plugins: [
     minifyHTMLLiterals(),

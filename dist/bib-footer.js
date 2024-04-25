@@ -1,10 +1,10 @@
-import { LitElement as e, html as r } from "lit";
-class m extends e {
+import { L as e, h as r } from "./lit-element-Mznt8OUE.js";
+class s extends e {
   render() {
     return r``;
   }
 }
 export {
-  m as BibFooter
+  s as BibFooter
 };
 //# sourceMappingURL=bib-footer.js.map
