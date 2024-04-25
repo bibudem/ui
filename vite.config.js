@@ -1,21 +1,25 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
-import babel from 'vite-plugin-babel'
+import { glob } from 'glob'
+import rollupPluginMinifyHtmlLiteralsModule from 'rollup-plugin-minify-html-literals'
+
+const { default: minifyHTMLLiterals } = rollupPluginMinifyHtmlLiteralsModule
+const mainEntry = fileURLToPath(new URL('src/index.js', import.meta.url))
+const componentsEntries = (await glob('src/components/**/*.js', { ignore: '**/*.stories.*' })).map(entry => fileURLToPath(new URL(entry, import.meta.url)))
 
 export default defineConfig({
-  base: "./",
+  build: {
+    target: 'es2021',
+    sourcemap: true,
+    lib: {
+      entry: [mainEntry, ...componentsEntries],
+    },
+    rollupOptions: {
+      external: ['lit']
+    }
+  },
   plugins: [
-    babel({
-      babelConfig: {
-        babelrc: false,
-        configFile: false,
-        plugins: [
-          [
-            "@babel/plugin-proposal-decorators",
-            { loose: true, version: "2022-03" },
-          ],
-        ],
-      },
-    }),
+    minifyHTMLLiterals(),
   ],
   server: {
     host: true,
