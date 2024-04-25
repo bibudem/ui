@@ -10,7 +10,7 @@
 
 puis, insérez le custom element:
 
-`<avis-bib bouton-fermer />`
+`<bib-avis bouton-fermer />`
 
 ## Documentation
 
