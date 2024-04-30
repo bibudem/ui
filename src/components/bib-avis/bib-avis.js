@@ -37,7 +37,7 @@ export class BibAvis extends LitElement {
 
     :host {
       display: block;
-      font-size: var(--bib-avis-size, var(--md-sys-typescale-title-medium-size, 1rem));
+      font-size: var(--bib-avis-size, var(--md-sys-typescale-title-medium-size, inherit));
       background: var(--bib-avis-container-color, var(--md-sys-color-warningContainer, #fffac6))
     }
 
@@ -85,7 +85,7 @@ export class BibAvis extends LitElement {
       border-radius: 50%;
       overflow: visible;
       color: var(--bib-btn-close-color, rgba(0, 0, 0, 0.4));
-      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .btn-close:hover {
