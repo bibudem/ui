@@ -38,7 +38,7 @@ export class BibAvis extends LitElement {
     :host {
       display: block;
       font-size: var(--bib-avis-size, var(--md-sys-typescale-title-medium-size, inherit));
-      background: var(--bib-avis-container-color, var(--md-sys-color-warningContainer, #fffac6))
+      background: var(--bib-avis-container-color, var(--md-sys-color-warningContainer, #fffac6));
     }
 
     .inner {
