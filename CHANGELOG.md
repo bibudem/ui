@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.0](https://github.com/bibudem/ui/compare/v0.1.1...v0.2.0) (2024-04-30)
+
+
+### Features
+
+* Ajout de pages préliminaires pour documenter le system design ([b0d704f](https://github.com/bibudem/ui/commit/b0d704f91227cb9ebdabbfdec7a4d8d2d7c92e62))
+* **avis:** Ajout d'un complementary landmark (&lt;aside&gt;) ([b2c9ec9](https://github.com/bibudem/ui/commit/b2c9ec97a63bd38a38bedfebc6c41c59458047ee))
+* **storybook:** Ajout du plugin '@storybook/addon-a11y' pour les tests d'accessibilité ([b0d704f](https://github.com/bibudem/ui/commit/b0d704f91227cb9ebdabbfdec7a4d8d2d7c92e62))
+
+
+### Bug Fixes
+
+* **avis:** Correction de la taille de police par défaut: inherit au lieu de 1rem ([409270c](https://github.com/bibudem/ui/commit/409270c51be2698509c6f856faaad8323ad358cc))
+* Coquille dans le README.md ([f566a3c](https://github.com/bibudem/ui/commit/f566a3c2dd58c798f434a758e521308a4a6fd4a8))
+* **storybook:** Corrections diverses à propos du storybook de bib-avis ([4a89779](https://github.com/bibudem/ui/commit/4a8977977e671dfe49bb27c76b3f42e0dd924e84))
+
 ## [0.1.1](https://github.com/bibudem/ui/compare/v0.1.0...v0.1.1) (2024-04-25)
 
 
