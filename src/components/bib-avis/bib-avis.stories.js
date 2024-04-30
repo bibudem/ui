@@ -74,7 +74,7 @@ export default {
         description: 'Couleur du fond'
       },
       'bib-avis-size': {
-        value: '1rem',
+        value: 'inherit',
         description: 'Taille de la police'
       }
     }
@@ -86,8 +86,6 @@ export default {
  */
 export const Avis = {
   render: function ({ contexte, niveau, service, ...props }) {
-    console.log(arguments)
-    // return html`<bib-avis contexte="${contexte}" ?bouton-fermer=${props['bouton-fermer']} />`
     return html`<bib-avis contexte="${ifDefined(contexte)}" niveau="${ifDefined(niveau)}" service="${ifDefined(service)}" ?bouton-fermer=${props['bouton-fermer']} />`
   },
   args: {

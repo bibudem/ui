@@ -1,5 +1,13 @@
-import { BibAvis as r } from "./bib-avis.js";
+/**
+ * Librairie du system desing des Bibliothèques de l'Université de Montréal
+ * @module @bibudem/ui
+ * @version 0.2.1
+ * @author Christian Rémillard <christian.remillard@umontreal.ca>
+ * @license ISC
+ * @see https://github.com/bibudem/ui
+ */
+import { BibAvis } from "./bib-avis.js";
 export {
-  r as BibAvis
+  BibAvis
 };
 //# sourceMappingURL=index.js.map

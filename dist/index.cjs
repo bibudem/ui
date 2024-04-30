@@ -1,2 +1,10 @@
-"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const i=require("./bib-avis.cjs");exports.BibAvis=i.BibAvis;
+/**
+ * Librairie du system desing des Bibliothèques de l'Université de Montréal
+ * @module @bibudem/ui
+ * @version 0.2.1
+ * @author Christian Rémillard <christian.remillard@umontreal.ca>
+ * @license ISC
+ * @see https://github.com/bibudem/ui
+ */
+Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("./bib-avis.cjs");exports.BibAvis=e.BibAvis;
 //# sourceMappingURL=index.cjs.map
