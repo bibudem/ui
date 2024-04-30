@@ -4,13 +4,15 @@
 
 ## Utilisation
 
+Cette librairie n'exporte pas pour l'instant de module pour le _custom element_ `bib-avis`. La seule façon d'utiliser ce composant est d'importer le module à l'aide d'un élément `<script type="module"></script>`
+
 ### Via CDN
 
-`<script src="https://cdn.jsdelivr.net/gh/bibudem/ui@0/dist/bib-avis.js"></script>`
+`<script type="module" src="https://cdn.jsdelivr.net/gh/bibudem/ui@0/dist/bib-avis.js"></script>`
 
 puis, insérez le custom element:
 
-`<bib-avis bouton-fermer />`
+`<bib-avis bouton-fermer></bib-avis>`
 
 ## Documentation
 
