@@ -1,7 +1,7 @@
 var g = Object.defineProperty;
-var m = (s, t, e) => t in s ? g(s, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : s[t] = e;
-var a = (s, t, e) => (m(s, typeof t != "symbol" ? t + "" : t, e), e);
-import { n as b, a as d, b as f, L as v, c as E, h as c } from "./lit-element-Mznt8OUE.js";
+var b = (s, t, e) => t in s ? g(s, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : s[t] = e;
+var a = (s, t, e) => (b(s, typeof t != "symbol" ? t + "" : t, e), e);
+import { n as m, a as d, b as f, L as v, c as E, h as c } from "./lit-element-Mznt8OUE.js";
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -154,7 +154,7 @@ class T {
     }
   }
 }
-const C = (s, t) => s === t || s.length === t.length && s.every((e, i) => !b(e, t[i]));
+const C = (s, t) => s === t || s.length === t.length && s.every((e, i) => !m(e, t[i]));
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -256,7 +256,7 @@ class h extends v {
     return this.boutonFermer ? c`<button class="btn-close" aria-label="Fermer" @click="${this._onBtnFermerClick}">${_(I)}</button>` : null;
   }
   _renderAvis(e) {
-    return e ? c`<div class="container"><div class="inner"><div class="message">${_(e)}</div>${this._renderBoutonFermer()}</div></div>` : null;
+    return e ? c`<aside class="container"><div class="inner"><div class="message">${_(e)}</div>${this._renderBoutonFermer()}</div></aside>` : null;
   }
   _renderRemote() {
     return this._avisTask.render({
@@ -284,9 +284,10 @@ a(h, "properties", {
     type: String
   },
   boutonFermer: {
-    type: Boolean
+    type: Boolean,
+    attribute: "bouton-fermer"
   }
-}), a(h, "styles", E`*,:host{box-sizing:border-box}:host{display:block;font-size:var(--bib-avis-size,var(--md-sys-typescale-title-medium-size,1rem));background:var(--bib-avis-container-color,var(--md-sys-color-warningContainer,#fffac6))}.inner{display:flex;align-items:center;max-width:1220px;margin:0 auto;padding:11px 19px;gap:1em}.message{flex-grow:1;min-height:24px}.btn-close{display:inline-flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;position:relative;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0;border:0;margin:0;cursor:pointer;user-select:none;vertical-align:middle;appearance:none;text-decoration:none;text-align:center;flex:0 0 auto;font-size:1.5rem;font-size:36px;font-weight:700;line-height:1;position:relative;padding:8px;padding:0;border-radius:50%;overflow:visible;color:var(--bib-btn-close-color,rgba(0,0,0,.4));transition:all 150ms cubic-bezier(.4,0,.2,1) 0s}.btn-close:hover{color:var(--bib-btn-close-hover-color,rgba(0,0,0,.8))}.btn-close::after{content:'';position:absolute;width:calc(100% + 16px);height:calc(100% + 16px);border-radius:50%;background-color:transparent;transition:background-color 150ms cubic-bezier(.4,0,.2,1) 0s}.btn-close:hover::after{background-color:rgba(0,0,0,.04)}.btn-close>svg{fill:currentColor}`);
+}), a(h, "styles", E`*,:host{box-sizing:border-box}:host{display:block;font-size:var(--bib-avis-size,var(--md-sys-typescale-title-medium-size,inherit));background:var(--bib-avis-container-color,var(--md-sys-color-warningContainer,#fffac6))}.inner{display:flex;align-items:center;max-width:1220px;margin:0 auto;padding:11px 19px;gap:1em}.message{flex-grow:1;min-height:24px}.btn-close{display:inline-flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;position:relative;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0;border:0;margin:0;cursor:pointer;user-select:none;vertical-align:middle;appearance:none;text-decoration:none;text-align:center;flex:0 0 auto;font-size:1.5rem;font-size:36px;font-weight:700;line-height:1;position:relative;padding:8px;padding:0;border-radius:50%;overflow:visible;color:var(--bib-btn-close-color,rgba(0,0,0,.4));transition:all 150ms cubic-bezier(.4,0,.2,1)}.btn-close:hover{color:var(--bib-btn-close-hover-color,rgba(0,0,0,.8))}.btn-close::after{content:'';position:absolute;width:calc(100% + 16px);height:calc(100% + 16px);border-radius:50%;background-color:transparent;transition:background-color 150ms cubic-bezier(.4,0,.2,1) 0s}.btn-close:hover::after{background-color:rgba(0,0,0,.04)}.btn-close>svg{fill:currentColor}`);
 customElements.define("bib-avis", h);
 export {
   h as BibAvis
