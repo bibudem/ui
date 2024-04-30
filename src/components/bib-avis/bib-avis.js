@@ -129,7 +129,7 @@ export class BibAvis extends LitElement {
   }
 
   _renderAvis(message) {
-    return message ? html`<div class="container"><div class="inner"><div class="message">${unsafeHTML(message)}</div>${this._renderBoutonFermer()}</div></div>` : null
+    return message ? html`<aside class="container"><div class="inner"><div class="message">${unsafeHTML(message)}</div>${this._renderBoutonFermer()}</div></aside>` : null
   }
 
   _avisTask = new Task(this, {
