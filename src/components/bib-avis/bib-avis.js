@@ -1,7 +1,10 @@
 import { Task } from '@lit/task'
-import { LitElement, css, html } from 'lit'
+import { LitElement, html, css, unsafeCSS } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import closeIcon from '../../icons/close_FILL0_wght400_GRAD0_opsz24.svg?raw'
+import bibAvisStyles from './bib-avis.scss?inline'
+
+console.log('bibAvisStyles: ', bibAvisStyles)
 
 function isEmpty(node) {
   return node.textContent.trim() === ""
@@ -29,87 +32,11 @@ export class BibAvis extends LitElement {
     }
   }
 
-  static styles = css`
-    :host,
-    * {
-      box-sizing: border-box;
-    }
-
-    :host {
-      display: block;
-      font-size: var(--bib-avis-size, var(--md-sys-typescale-title-medium-size, inherit));
-      background: var(--bib-avis-container-color, var(--md-sys-color-warningContainer, #fffac6));
-    }
-
-    .inner {
-      display: flex;
-      align-items: center;
-      max-width: 1220px;
-      margin: 0 auto;
-      padding: 11px 19px;
-      gap: 1em
-    }
-
-    .message {
-      flex-grow: 1;
-      min-height: 24px;
-    }
-
-    .btn-close {
-      display: inline-flex;
-      -webkit-box-align: center;
-      align-items: center;
-      -webkit-box-pack: center;
-      justify-content: center;
-      position: relative;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      background-color: transparent;
-      outline: 0px;
-      border: 0px;
-      margin: 0px;
-      cursor: pointer;
-      user-select: none;
-      vertical-align: middle;
-      appearance: none;
-      text-decoration: none;
-      text-align: center;
-      flex: 0 0 auto;
-      font-size: 1.5rem;
-      font-size: 36px;
-      font-weight: 700;
-      line-height: 1;
-      position: relative;
-      padding: 8px;
-      padding: 0;
-      border-radius: 50%;
-      overflow: visible;
-      color: var(--bib-btn-close-color, rgba(0, 0, 0, 0.4));
-      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .btn-close:hover {
-      color: var(--bib-btn-close-hover-color, rgba(0, 0, 0, 0.8));
-    }
-
-    .btn-close::after {
-      content: '';
-      position: absolute;
-      width: calc(100% + 16px);
-      height: calc(100% + 16px);
-      border-radius: 50%;
-      background-color: transparent;
-      transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    }
-
-    .btn-close:hover::after {
-      background-color: rgba(0, 0, 0, 0.04);
-    }
-
-    .btn-close > svg {
-      fill: currentColor;
-    }
-  `
+  static styles = [
+    css`${unsafeCSS(bibAvisStyles)}`,
+    css`
+    `
+  ]
 
   constructor() {
     super()
@@ -129,7 +56,7 @@ export class BibAvis extends LitElement {
   }
 
   _renderAvis(message) {
-    return message ? html`<div class="container"><div class="inner"><div class="message">${unsafeHTML(message)}</div>${this._renderBoutonFermer()}</div></div>` : null
+    return message ? html`<aside class="container"><div class="inner"><div class="message">${unsafeHTML(message)}</div>${this._renderBoutonFermer()}</div></aside>` : null
   }
 
   _avisTask = new Task(this, {
