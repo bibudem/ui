@@ -1,5 +1,6 @@
 import { html } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
+import { ifDefined } from 'lit/directives/if-defined.js'
 import './bib-avis'
 
 export default {
@@ -9,16 +10,12 @@ export default {
   argTypes: {
     service: {
       type: {
-        required: true,
+        name: 'string'
       },
       control: {
         type: 'text',
       },
       description: 'URL de base du service',
-      if: {
-        arg: 'message',
-        exists: false
-      },
       table: {
         type: {
           summary: 'url'
@@ -32,12 +29,6 @@ export default {
       description: 'Niveau d\importance de l\'avis: `informatif` ou `important`',
       type: {
         name: 'string',
-        required: true,
-        value: ['important', 'informatif']
-      },
-      if: {
-        arg: 'message',
-        exists: false
       },
       control: { type: 'select' },
       options: ['important', 'informatif'],
@@ -51,15 +42,12 @@ export default {
     contexte: {
       description: 'Contexte d\'affichage du service utilité: `site-web` ou `site-web-dev`',
       type: {
-        required: true,
-      },
-      if: {
-        arg: 'message',
-        exists: false
+        name: 'string'
       },
       control: { type: 'select' },
       options: ['site-web', 'site-web-dev'],
       table: {
+        value: ['site-web', 'site-web-dev'],
         defaultValue: {
           summary: 'site-web'
         }
@@ -97,13 +85,13 @@ export default {
  * Affiche un avis
  */
 export const Avis = {
-  render: function ({ contexte = 'site-web-dev', ...props }) {
-    return html`<bib-avis contexte="${contexte}" ?bouton-fermer=${props['bouton-fermer']} />`
+  render: function ({ contexte, niveau, service, ...props }) {
+    console.log(arguments)
+    // return html`<bib-avis contexte="${contexte}" ?bouton-fermer=${props['bouton-fermer']} />`
+    return html`<bib-avis contexte="${ifDefined(contexte)}" niveau="${ifDefined(niveau)}" service="${ifDefined(service)}" ?bouton-fermer=${props['bouton-fermer']} />`
   },
   args: {
-    'bouton-fermer': true,
-    niveau: 'important',
-    contexte: 'site-web-dev'
+    'bouton-fermer': true
   }
 }
 
