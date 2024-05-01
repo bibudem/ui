@@ -4,8 +4,6 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import closeIcon from '../../icons/close_FILL0_wght400_GRAD0_opsz24.svg?raw'
 import bibAvisStyles from './bib-avis.scss?inline'
 
-console.log('bibAvisStyles: ', bibAvisStyles)
-
 function isEmpty(node) {
   return node.textContent.trim() === ""
 }
