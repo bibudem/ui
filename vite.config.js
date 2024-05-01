@@ -1,7 +1,10 @@
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import { glob } from 'glob'
+import terser from '@rollup/plugin-terser'
+import banner from 'vite-plugin-banner'
 import rollupPluginMinifyHtmlLiteralsModule from 'rollup-plugin-minify-html-literals'
+import pkg from './package.json'
 
 const { default: minifyHTMLLiterals } = rollupPluginMinifyHtmlLiteralsModule
 const mainEntry = fileURLToPath(new URL('src/index.js', import.meta.url))
@@ -14,9 +17,22 @@ export default defineConfig({
     lib: {
       entry: [mainEntry, ...componentsEntries],
     },
+    minify: 'terser',
+    rollupOptions: {
+      plugins: [
+        terser({
+          module: true,
+          warnings: true,
+          compress: {
+            passes: 3
+          }
+        })
+      ]
+    }
   },
   plugins: [
     minifyHTMLLiterals(),
+    banner(`/**\n * ${pkg.description}\n * @module ${pkg.name}\n * @version ${pkg.version}\n * @author ${pkg.author}\n * @license ${pkg.license}\n * @see ${pkg.homepage}\n */`)
   ],
   server: {
     host: true,
