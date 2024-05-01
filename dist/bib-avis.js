@@ -1,194 +1,125 @@
-var g = Object.defineProperty;
-var b = (s, t, e) => t in s ? g(s, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : s[t] = e;
-var a = (s, t, e) => (b(s, typeof t != "symbol" ? t + "" : t, e), e);
-import { n as m, a as d, b as f, L as v, c as E, h as c } from "./lit-element-Mznt8OUE.js";
+/**
+ * Librairie du system desing des Bibliothèques de l'Université de Montréal
+ * @module @bibudem/ui
+ * @version 0.2.1
+ * @author Christian Rémillard <christian.remillard@umontreal.ca>
+ * @license ISC
+ * @see https://github.com/bibudem/ui
+ */
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __publicField = (obj, key, value) => {
+  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  return value;
+};
+import { n as t, a as e, b as s, L as r, c as i, u as o, h as n } from "./lit-element-BtQrDsEd.js";
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const r = {
-  INITIAL: 0,
-  PENDING: 1,
-  COMPLETE: 2,
-  ERROR: 3
-}, k = Symbol();
-class T {
-  /**
-   * A Promise that resolve when the current task run is complete.
-   *
-   * If a new task run is started while a previous run is pending, the Promise
-   * is kept and only resolved when the new run is completed.
-   */
+const a = Symbol();
+class l {
   get taskComplete() {
-    return this._taskComplete ? this._taskComplete : (this.status === r.PENDING ? this._taskComplete = new Promise((t, e) => {
-      this._resolveTaskComplete = t, this._rejectTaskComplete = e;
-    }) : this.status === r.ERROR ? this._taskComplete = Promise.reject(this._error) : this._taskComplete = Promise.resolve(this._value), this._taskComplete);
+    return this._taskComplete || (1 === this.status ? this._taskComplete = new Promise((t2, e2) => {
+      this._resolveTaskComplete = t2, this._rejectTaskComplete = e2;
+    }) : 3 === this.status ? this._taskComplete = Promise.reject(this._error) : this._taskComplete = Promise.resolve(this._value)), this._taskComplete;
   }
-  constructor(t, e, i) {
-    this._callId = 0, this.status = r.INITIAL, (this._host = t).addController(this);
-    const n = typeof e == "object" ? e : { task: e, args: i };
-    this._task = n.task, this._argsFn = n.args, this._argsEqual = n.argsEqual ?? C, this._onComplete = n.onComplete, this._onError = n.onError, this.autoRun = n.autoRun ?? !0, "initialValue" in n && (this._value = n.initialValue, this.status = r.COMPLETE, this._previousArgs = this._getArgs?.());
+  constructor(t2, e2, s2) {
+    this._callId = 0, this.status = 0, (this._host = t2).addController(this);
+    const r2 = "object" == typeof e2 ? e2 : { task: e2, args: s2 };
+    this._task = r2.task, this._argsFn = r2.args, this._argsEqual = r2.argsEqual ?? h, this._onComplete = r2.onComplete, this._onError = r2.onError, this.autoRun = r2.autoRun ?? true, "initialValue" in r2 && (this._value = r2.initialValue, this.status = 2, this._previousArgs = this._getArgs?.());
   }
   hostUpdate() {
-    this.autoRun === !0 && this._performTask();
+    true === this.autoRun && this._performTask();
   }
   hostUpdated() {
-    this.autoRun === "afterUpdate" && this._performTask();
+    "afterUpdate" === this.autoRun && this._performTask();
   }
   _getArgs() {
-    if (this._argsFn === void 0)
+    if (void 0 === this._argsFn)
       return;
-    const t = this._argsFn();
-    if (!Array.isArray(t))
+    const t2 = this._argsFn();
+    if (!Array.isArray(t2))
       throw new Error("The args function must return an array");
-    return t;
+    return t2;
   }
-  /**
-   * Determines if the task should run when it's triggered because of a
-   * host update, and runs the task if it should.
-   *
-   * A task should run when its arguments change from the previous run, based on
-   * the args equality function.
-   *
-   * This method is side-effectful: it stores the new args as the previous args.
-   */
   async _performTask() {
-    const t = this._getArgs(), e = this._previousArgs;
-    this._previousArgs = t, t !== e && t !== void 0 && (e === void 0 || !this._argsEqual(e, t)) && await this.run(t);
+    const t2 = this._getArgs(), e2 = this._previousArgs;
+    this._previousArgs = t2, t2 === e2 || void 0 === t2 || void 0 !== e2 && this._argsEqual(e2, t2) || await this.run(t2);
   }
-  /**
-   * Runs a task manually.
-   *
-   * This can be useful for running tasks in response to events as opposed to
-   * automatically running when host element state changes.
-   *
-   * @param args an optional set of arguments to use for this task run. If args
-   *     is not given, the args function is called to get the arguments for
-   *     this run.
-   */
-  async run(t) {
-    t ??= this._getArgs(), this._previousArgs = t, this.status === r.PENDING ? this._abortController?.abort() : (this._taskComplete = void 0, this._resolveTaskComplete = void 0, this._rejectTaskComplete = void 0), this.status = r.PENDING;
-    let e, i;
-    this.autoRun === "afterUpdate" ? queueMicrotask(() => this._host.requestUpdate()) : this._host.requestUpdate();
-    const n = ++this._callId;
+  async run(t2) {
+    let e2, s2;
+    t2 ??= this._getArgs(), this._previousArgs = t2, 1 === this.status ? this._abortController?.abort() : (this._taskComplete = void 0, this._resolveTaskComplete = void 0, this._rejectTaskComplete = void 0), this.status = 1, "afterUpdate" === this.autoRun ? queueMicrotask(() => this._host.requestUpdate()) : this._host.requestUpdate();
+    const r2 = ++this._callId;
     this._abortController = new AbortController();
-    let o = !1;
+    let i2 = false;
     try {
-      e = await this._task(t, { signal: this._abortController.signal });
-    } catch (l) {
-      o = !0, i = l;
+      e2 = await this._task(t2, { signal: this._abortController.signal });
+    } catch (t3) {
+      i2 = true, s2 = t3;
     }
-    if (this._callId === n) {
-      if (e === k)
-        this.status = r.INITIAL;
+    if (this._callId === r2) {
+      if (e2 === a)
+        this.status = 0;
       else {
-        if (o === !1) {
+        if (false === i2) {
           try {
-            this._onComplete?.(e);
+            this._onComplete?.(e2);
           } catch {
           }
-          this.status = r.COMPLETE, this._resolveTaskComplete?.(e);
+          this.status = 2, this._resolveTaskComplete?.(e2);
         } else {
           try {
-            this._onError?.(i);
+            this._onError?.(s2);
           } catch {
           }
-          this.status = r.ERROR, this._rejectTaskComplete?.(i);
+          this.status = 3, this._rejectTaskComplete?.(s2);
         }
-        this._value = e, this._error = i;
+        this._value = e2, this._error = s2;
       }
       this._host.requestUpdate();
     }
   }
-  /**
-   * Aborts the currently pending task run by aborting the AbortSignal
-   * passed to the task function.
-   *
-   * Aborting a task does nothing if the task is not running: ie, in the
-   * complete, error, or initial states.
-   *
-   * Aborting a task does not automatically cancel the task function. The task
-   * function must be written to accept the AbortSignal and either forward it
-   * to other APIs like `fetch()`, or handle cancellation manually by using
-   * [`signal.throwIfAborted()`]{@link https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/throwIfAborted}
-   * or the
-   * [`abort`]{@link https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/abort_event}
-   * event.
-   *
-   * @param reason The reason for aborting. Passed to
-   *     `AbortController.abort()`.
-   */
-  abort(t) {
-    this.status === r.PENDING && this._abortController?.abort(t);
+  abort(t2) {
+    1 === this.status && this._abortController?.abort(t2);
   }
-  /**
-   * The result of the previous task run, if it resolved.
-   *
-   * Is `undefined` if the task has not run yet, or if the previous run errored.
-   */
   get value() {
     return this._value;
   }
-  /**
-   * The error from the previous task run, if it rejected.
-   *
-   * Is `undefined` if the task has not run yet, or if the previous run
-   * completed successfully.
-   */
   get error() {
     return this._error;
   }
-  render(t) {
+  render(t2) {
     switch (this.status) {
-      case r.INITIAL:
-        return t.initial?.();
-      case r.PENDING:
-        return t.pending?.();
-      case r.COMPLETE:
-        return t.complete?.(this.value);
-      case r.ERROR:
-        return t.error?.(this.error);
+      case 0:
+        return t2.initial?.();
+      case 1:
+        return t2.pending?.();
+      case 2:
+        return t2.complete?.(this.value);
+      case 3:
+        return t2.error?.(this.error);
       default:
         throw new Error(`Unexpected status: ${this.status}`);
     }
   }
 }
-const C = (s, t) => s === t || s.length === t.length && s.every((e, i) => !m(e, t[i]));
-/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */
-const w = {
-  ATTRIBUTE: 1,
-  CHILD: 2,
-  PROPERTY: 3,
-  BOOLEAN_ATTRIBUTE: 4,
-  EVENT: 5,
-  ELEMENT: 6
-}, y = (s) => (...t) => ({
-  // This property needs to remain unminified.
-  _$litDirective$: s,
-  values: t
-});
-class x {
-  constructor(t) {
+const h = (e2, s2) => e2 === s2 || e2.length === s2.length && e2.every((e3, r2) => !t(e3, s2[r2]));
+class c {
+  constructor(t2) {
   }
-  // See comment in Disconnectable interface for why this is a getter
   get _$isConnected() {
     return this._$parent._$isConnected;
   }
-  /** @internal */
-  _$initialize(t, e, i) {
-    this.__part = t, this._$parent = e, this.__attributeIndex = i;
+  _$initialize(t2, e2, s2) {
+    this.__part = t2, this._$parent = e2, this.__attributeIndex = s2;
   }
-  /** @internal */
-  _$resolve(t, e) {
-    return this.update(t, e);
+  _$resolve(t2, e2) {
+    return this.update(t2, e2);
   }
-  update(t, e) {
-    return this.render(...e);
+  update(t2, e2) {
+    return this.render(...e2);
   }
 }
 /**
@@ -196,100 +127,64 @@ class x {
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const R = 1;
-class u extends x {
-  constructor(t) {
-    if (super(t), this._value = d, t.type !== w.CHILD)
+class u extends c {
+  constructor(t2) {
+    if (super(t2), this._value = e, 2 !== t2.type)
       throw new Error(`${this.constructor.directiveName}() can only be used in child bindings`);
   }
-  render(t) {
-    if (t === d || t == null)
-      return this._templateResult = void 0, this._value = t;
-    if (t === f)
-      return t;
-    if (typeof t != "string")
+  render(t2) {
+    if (t2 === e || null == t2)
+      return this._templateResult = void 0, this._value = t2;
+    if (t2 === s)
+      return t2;
+    if ("string" != typeof t2)
       throw new Error(`${this.constructor.directiveName}() called with a non-string value`);
-    if (t === this._value)
+    if (t2 === this._value)
       return this._templateResult;
-    this._value = t;
-    const e = [t];
-    return e.raw = e, this._templateResult = {
-      // Cast to a known set of integers that satisfy ResultType so that we
-      // don't have to export ResultType and possibly encourage this pattern.
-      // This property needs to remain unminified.
-      _$litType$: this.constructor.resultType,
-      strings: e,
-      values: []
-    };
+    this._value = t2;
+    const r2 = [t2];
+    return r2.raw = r2, this._templateResult = { _$litType$: this.constructor.resultType, strings: r2, values: [] };
   }
 }
-u.directiveName = "unsafeHTML";
-u.resultType = R;
-const _ = y(u), I = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>';
-function L(s) {
-  return s.textContent.trim() === "";
-}
-class h extends v {
+u.directiveName = "unsafeHTML", u.resultType = 1;
+const d = (p = u, (...t2) => ({ _$litDirective$: p, values: t2 }));
+var p;
+const b = ':host,*{box-sizing:border-box}:host{display:block;font-size:var(--bib-avis-size, var(--md-sys-typescale-title-medium-size, inherit));background:var(--bib-avis-container-color, var(--md-sys-color-warningContainer, #fffac6))}:host([hidden]){display:none}.inner{display:flex;align-items:center;max-width:1220px;margin:0 auto;padding:11px 19px;gap:1em}.message{flex-grow:1;min-height:24px}.btn-close{display:inline-flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0px;border:0px;margin:0;cursor:pointer;user-select:none;vertical-align:middle;appearance:none;text-decoration:none;text-align:center;flex:0 0 auto;font-size:1.5rem;font-size:36px;font-weight:700;line-height:1;position:relative;padding:0;border-radius:50%;overflow:visible;color:var(--bib-btn-close-color, rgba(0, 0, 0, .4));transition:color .15s cubic-bezier(.4,0,.2,1),background-color .15s cubic-bezier(.4,0,.2,1)}.btn-close:after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-height:44px;min-width:44px;width:100%;height:100%}.btn-close:focus:not([disabled]),.btn-close:focus-visible{outline:2px solid #bde4ff;outline-offset:3px}.btn-close:focus:not(:focus-visible){outline:0}.btn-close:hover{color:var(--bib-btn-close-hover-color, rgba(0, 0, 0, .8))}.btn-close:hover:after{background-color:#0000000a}.btn-close:after{width:calc(100% + 16px);height:calc(100% + 16px);border-radius:50%;background-color:transparent;transition:background-color .15s cubic-bezier(.4,0,.2,1) 0ms}.btn-close>svg{fill:currentColor}';
+console.log("bibAvisStyles: ", b);
+class _ extends r {
   constructor() {
     super();
-    a(this, "_avisTask", new T(this, {
-      task: async ([e, i, n], { signal: o }) => {
-        const l = new URL(`${i}/${n}`, e), p = await fetch(l, {
-          headers: {
-            Accept: "application/json"
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          signal: o
-        });
-        if (!p.ok)
-          throw new Error(reaponse.status);
-        return p.json();
-      },
-      args: () => [this.service, this.contexte, this.niveau]
-    }));
-    this.service = "https://avis.bib.umontreal.ca", this.contexte = "site-web-dev", this.niveau = "important", this.boutonFermer = !1;
+    __publicField(this, "_avisTask", new l(this, { task: async ([t2, e2, s2], { signal: r2 }) => {
+      const i2 = new URL(`${e2}/${s2}`, t2), o2 = await fetch(i2, { headers: { Accept: "application/json" }, signal: r2 });
+      if (!o2.ok)
+        throw new Error(reaponse.status);
+      return o2.json();
+    }, args: () => [this.service, this.contexte, this.niveau] }));
+    this.service = "https://avis.bib.umontreal.ca", this.contexte = "site-web-dev", this.niveau = "important", this.boutonFermer = false;
   }
   _onBtnFermerClick() {
     alert("Fonction à venir!");
   }
   _renderBoutonFermer() {
-    return this.boutonFermer ? c`<button class="btn-close" aria-label="Fermer" @click="${this._onBtnFermerClick}">${_(I)}</button>` : null;
+    return this.boutonFermer ? n`<button class="btn-close" aria-label="Fermer" @click="${this._onBtnFermerClick}">${d('<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>')}</button>` : null;
   }
-  _renderAvis(e) {
-    return e ? c`<aside class="container"><div class="inner"><div class="message">${_(e)}</div>${this._renderBoutonFermer()}</div></aside>` : null;
+  _renderAvis(t2) {
+    return t2 ? n`<aside class="container"><div class="inner"><div class="message">${d(t2)}</div>${this._renderBoutonFermer()}</div></aside>` : null;
   }
   _renderRemote() {
-    return this._avisTask.render({
-      pending: () => c``,
-      complete: (e) => this._renderAvis(e.message),
-      error: (e) => (console.log(e), null)
-    });
+    return this._avisTask.render({ pending: () => n``, complete: (t2) => this._renderAvis(t2.message), error: (t2) => (console.log(t2), null) });
   }
   _renderLocal() {
     return this._renderAvis("<slot />");
   }
   render() {
-    return L(this) ? this._renderRemote() : this._renderLocal();
+    return "" === this.textContent.trim() ? this._renderRemote() : this._renderLocal();
   }
 }
-a(h, "properties", {
-  service: {
-    type: String
-  },
-  contexte: {
-    type: String,
-    default: "site-web"
-  },
-  niveau: {
-    type: String
-  },
-  boutonFermer: {
-    type: Boolean,
-    attribute: "bouton-fermer"
-  }
-}), a(h, "styles", E`*,:host{box-sizing:border-box}:host{display:block;font-size:var(--bib-avis-size,var(--md-sys-typescale-title-medium-size,inherit));background:var(--bib-avis-container-color,var(--md-sys-color-warningContainer,#fffac6))}.inner{display:flex;align-items:center;max-width:1220px;margin:0 auto;padding:11px 19px;gap:1em}.message{flex-grow:1;min-height:24px}.btn-close{display:inline-flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;position:relative;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0;border:0;margin:0;cursor:pointer;user-select:none;vertical-align:middle;appearance:none;text-decoration:none;text-align:center;flex:0 0 auto;font-size:1.5rem;font-size:36px;font-weight:700;line-height:1;position:relative;padding:8px;padding:0;border-radius:50%;overflow:visible;color:var(--bib-btn-close-color,rgba(0,0,0,.4));transition:all 150ms cubic-bezier(.4,0,.2,1)}.btn-close:hover{color:var(--bib-btn-close-hover-color,rgba(0,0,0,.8))}.btn-close::after{content:'';position:absolute;width:calc(100% + 16px);height:calc(100% + 16px);border-radius:50%;background-color:transparent;transition:background-color 150ms cubic-bezier(.4,0,.2,1) 0s}.btn-close:hover::after{background-color:rgba(0,0,0,.04)}.btn-close>svg{fill:currentColor}`);
-customElements.define("bib-avis", h);
+__publicField(_, "properties", { service: { type: String }, contexte: { type: String, default: "site-web" }, niveau: { type: String }, boutonFermer: { type: Boolean, attribute: "bouton-fermer" } });
+__publicField(_, "styles", [i`${o(b)}`, i``]);
+customElements.define("bib-avis", _);
 export {
-  h as BibAvis
+  _ as BibAvis
 };
 //# sourceMappingURL=bib-avis.js.map
