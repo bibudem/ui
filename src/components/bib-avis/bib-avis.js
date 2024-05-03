@@ -1,11 +1,22 @@
 import { Task } from '@lit/task'
 import { LitElement, html, css, unsafeCSS } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
+import { openDB } from 'idb'
 import closeIcon from '../../icons/close_FILL0_wght400_GRAD0_opsz24.svg?raw'
 import bibAvisStyles from './bib-avis.scss?inline'
 
 function isEmpty(node) {
   return node.textContent.trim() === ""
+}
+
+async function hash(obj) {
+  const utf8 = new TextEncoder().encode(JSON.stringify(obj))
+  const hashBuffer = await crypto.subtle.digest('SHA-256', utf8)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  const hashHex = hashArray
+    .map((bytes) => bytes.toString(16).padStart(2, '0'))
+    .join('')
+  return hashHex
 }
 
 /**
@@ -27,6 +38,9 @@ export class BibAvis extends LitElement {
     boutonFermer: {
       type: Boolean,
       attribute: 'bouton-fermer'
+    },
+    message: {
+      state: true
     }
   }
 
@@ -36,25 +50,126 @@ export class BibAvis extends LitElement {
     `
   ]
 
+  #avis
+  #db
+
   constructor() {
     super()
 
+    this.#avis = null
     this.service = 'https://avis.bib.umontreal.ca'
     this.contexte = 'site-web-dev'
     this.niveau = 'important'
     this.boutonFermer = false
   }
 
-  _onBtnFermerClick() {
-    alert('Fonction à venir!')
+  #getAvis() {
+    return new Task(this, {
+      task: async ([service, contexte, niveau], { signal }) => {
+        console.log('[#getAvis] is empty? %o', isEmpty(this))
+
+        const doGetAvis = new Promise(async (resolve, reject) => {
+          if (!isEmpty(this)) {
+            return resolve({ isLocal: true, message: this.innerHTML.split(/<!--\?lit\$\d+\$-->/).join('') })
+          }
+
+          const url = new URL(`${contexte}/${niveau}`, service)
+          const response = await fetch(url, {
+            headers: {
+              "Accept": "application/json",
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            signal
+          })
+
+          if (!response.ok) {
+            return reject(new Error(response.status))
+          }
+
+          const { message } = await response.json()
+
+          resolve({ isLocal: false, message })
+        })
+
+        try {
+          const data = await doGetAvis
+          console.log('data: %o', data)
+          await this.#processAvis(data)
+        } catch (error) {
+          console.error('[#getAvis] An error occured: %o', error)
+        }
+
+        return data
+      },
+      args: () => [this.service, this.contexte, this.niveau]
+    })
+  }
+
+  async #processAvis(avis) {
+    if (!avis.message) {
+      this.setMessage(null)
+      return
+    }
+
+    if (!('indexedDB' in window)) {
+      this.setMessage(avis.message)
+      return
+    }
+
+    const db = this.#db = await openDB('@bibudem/ui', 1, {
+      upgrade(db) {
+        // Checks if the object store exists:
+        if (!db.objectStoreNames.contains('avis')) {
+          db.createObjectStore('avis', { keyPath: 'id' })
+        }
+      }
+    })
+
+    try {
+      const id = await hash(avis)
+      const storedAvis = await db.get('avis', id)
+      console.log('storedAvis: ', storedAvis)
+      if (storedAvis) {
+        if (!storedAvis.hidden) {
+          // Delete old entries
+          await db.delete('avis', id)
+          this.#show(storedAvis)
+        }
+      } else {
+        this.#show(avis)
+      }
+    } catch (error) {
+      console.error('Something went wrong with indexedDB: %o', error)
+      this.setMessage(avis.message)
+    }
+  }
+
+  async #show(avis) {
+    this.setMessage(avis)
+    if (this.#db) {
+      const id = await hash(avis)
+      await this.#db.add('avis', { ...avis, hidden: false }, id)
+    }
+  }
+
+  async #hide() {
+    const id = await hash(this.#avis)
+    await this.#db.put('avis', { ...this.#avis, hidden: true }, id)
+    this.#avis = null
+    this.requestUpdate()
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.#getAvis()
+  }
+
+  #onBtnFermerClick() {
+    this.#hide()
   }
 
   _renderBoutonFermer() {
-    return this.boutonFermer ? html`<button class="btn-close" aria-label="Fermer" @click="${this._onBtnFermerClick}">${unsafeHTML(closeIcon)}</button>` : null
-  }
-
-  _renderAvis(message) {
-    return message ? html`<aside class="container"><div class="inner"><div class="message">${unsafeHTML(message)}</div>${this._renderBoutonFermer()}</div></aside>` : null
+    return this.boutonFermer ? html`<button class="btn-close" aria-label="Fermer" @click="${this.#onBtnFermerClick}">${unsafeHTML(closeIcon)}</button>` : null
   }
 
   _avisTask = new Task(this, {
@@ -68,30 +183,30 @@ export class BibAvis extends LitElement {
         signal
       })
       if (!response.ok) {
-        throw new Error(reaponse.status)
+        throw new Error(response.status)
       }
       return response.json()
     },
     args: () => [this.service, this.contexte, this.niveau]
   })
 
-  _renderRemote() {
-    return this._avisTask.render({
-      pending: () => html``,
-      complete: (avis) => this._renderAvis(avis.message),
-      error: e => {
-        console.log(e)
-        return null
-      }
-    })
-  }
-
-  _renderLocal() {
-    return this._renderAvis(`<slot />`)
-  }
+  // _renderRemote() {
+  //   return this._avisTask.render({
+  //     pending: () => html``,
+  //     complete: (avis) => this._renderAvis(avis.message),
+  //     error: e => {
+  //       console.error('An error occured while rendering _avisTask: %o', e)
+  //       return null
+  //     }
+  //   })
+  // }
 
   render() {
-    return isEmpty(this) ? this._renderRemote() : this._renderLocal()
+    return this.#avis?.message ? html`<aside class="container"><div class="inner"><div class="message">${unsafeHTML(this.#avis.message)}</div>${this._renderBoutonFermer()}</div></aside>` : null
+  }
+
+  setMessage(message) {
+    this.#avis = typeof message === 'string' ? { message, isLocal: true } : message
   }
 }
 
