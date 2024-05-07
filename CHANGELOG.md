@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.0](https://github.com/bibudem/ui/compare/v0.4.1...v0.5.0) (2024-05-07)
+
+
+### Features
+
+* **avis:** Ajout d'une option pour afficher les avis en pleine largeur via un attribut booléen "fluide" ([03b8822](https://github.com/bibudem/ui/commit/03b882293f40ac981ca23fd5984b709cb8fec165))
+* **udem-urgence:** Ajout d'un composant udem-urgence pour afficher les messages d'urgences de l'UdeM ([8edd09c](https://github.com/bibudem/ui/commit/8edd09c5102dc1df17ddd7570577026b8abc400d))
+
+
+### Miscellaneous Chores
+
+* release 0.4.1 ([b768cca](https://github.com/bibudem/ui/commit/b768cca3fd17f037707412b11553f2046617d0b6))
+* release 0.5.0 ([159ee6a](https://github.com/bibudem/ui/commit/159ee6ab334994fc755823994e754a802f1e2653))
+
 ## [0.4.1](https://github.com/bibudem/ui/compare/v0.4.0...v0.4.1) (2024-05-07)
 
 
