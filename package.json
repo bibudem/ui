@@ -24,7 +24,7 @@
     "chromatic": "npx chromatic",
     "build-release": "npm version patch -m \"Bump v%s\"",
     "version": "npm run build",
-    "postversion": "cross-var git commit --all -m \"Build v$npm_package_version\" && git push && git push --tags"
+    "postversion": "cross-var git commit --all -m \"Build v$npm_package_version\" && git push && git push --tags && echo Build v$npm_package_version créé et commité. Il reste à accepter le pull request généré par release-please"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.24.1",
