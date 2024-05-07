@@ -22,7 +22,7 @@
     "build": "vite build",
     "build-storybook": "storybook build --output-dir build-storybook",
     "chromatic": "npx chromatic",
-    "build-release": "npm version patch -m \"Bump v%s\"",
+    "build-release": "npm version minor -m \"Bump v%s\"",
     "version": "npm run build",
     "postversion": "cross-var git commit --all -m \"Build v$npm_package_version\" && git push && git push --tags && echo Build v$npm_package_version créé et commité. Il reste à accepter le pull request généré par release-please"
   },
