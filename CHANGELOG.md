@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/bibudem/ui/compare/v0.3.0...v0.4.0) (2024-05-07)
+
+
+### Features
+
+* **avis:** Ajout de la fonction pour masquer les avis avec mémorisation de l'action ([d3272c2](https://github.com/bibudem/ui/commit/d3272c2aa2ab486e7049a02be3e96278c8584da8))
+
 ## [0.3.0](https://github.com/bibudem/ui/compare/v0.2.1...v0.3.0) (2024-05-01)
 
 
