@@ -21,7 +21,10 @@
     "storybook-docs": "storybook dev --docs",
     "build": "vite build",
     "build-storybook": "storybook build --output-dir build-storybook",
-    "chromatic": "npx chromatic"
+    "chromatic": "npx chromatic",
+    "build-release": "npm version patch -m \"Bump v%s\"",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.24.1",
