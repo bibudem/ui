@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/bibudem/ui/compare/v0.4.0...v0.4.1) (2024-05-07)
+
+
+### Miscellaneous Chores
+
+* release 0.4.1 ([b768cca](https://github.com/bibudem/ui/commit/b768cca3fd17f037707412b11553f2046617d0b6))
+
 ## [0.4.0](https://github.com/bibudem/ui/compare/v0.3.0...v0.4.0) (2024-05-07)
 
 
