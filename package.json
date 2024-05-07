@@ -43,5 +43,8 @@
     "sass": "^1.75.0",
     "storybook": "^8.0.9",
     "vite-plugin-banner": "^0.7.1"
+  },
+  "dependencies": {
+    "idb": "^8.0.0"
   }
 }
