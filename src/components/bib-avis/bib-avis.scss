@@ -1,8 +1,5 @@
 @use '../../scss/states';
 
-.btn-close {
-}
-
 :host,
 * {
   box-sizing: border-box;
@@ -21,10 +18,13 @@
 .inner {
   display: flex;
   align-items: center;
-  max-width: 1220px;
   margin: 0 auto;
   padding: 11px 19px;
   gap: 1em;
+
+  :host(:not([fluide])) & {
+    max-width: 1220px;
+  }
 }
 
 .message {

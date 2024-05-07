@@ -104,3 +104,15 @@ export const AvisLocal = {
     'bouton-fermer': false
   }
 }
+
+/**
+ * Affichage fluide
+ */
+export const AvisFluide = {
+  name: 'Avis fluide',
+  render: ({ fluide, ...props }) => html`<bib-avis ?fluide=${fluide} ?bouton-fermer=${props['bouton-fermer']}></bib-avis>`,
+  args: {
+    fluide: true,
+    'bouton-fermer': false
+  }
+}
