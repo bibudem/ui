@@ -22,9 +22,7 @@
     "build": "vite build",
     "build-storybook": "storybook build --output-dir build-storybook",
     "chromatic": "npx chromatic",
-    "build-release": "npm version minor -m \"Bump v%s\"",
-    "version": "npm run build",
-    "postversion": "cross-var git add dist && git commit --all -m \"chore: release %npm_package_version%\" -m \"Release-As: %npm_package_version%\" && git push && git push --tags && echo Build v%npm_package_version% créé et commité. Il reste à accepter le pull request généré par release-please"
+    "version": "npm run build"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.24.1",
