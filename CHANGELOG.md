@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/bibudem/ui/compare/v0.6.1...v0.6.1) (2024-05-08)
+
+
+### Miscellaneous Chores
+
+* release 0.6.1 ([514a16c](https://github.com/bibudem/ui/commit/514a16c379eea3d9eb830a99c5f22224e9630d9e))
+
 ## [0.6.1](https://github.com/bibudem/ui/compare/v0.6.0...v0.6.1) (2024-05-08)
 
 
