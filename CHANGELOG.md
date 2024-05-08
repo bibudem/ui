@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.6.1](https://github.com/bibudem/ui/compare/v0.6.0...v0.6.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* **avis:** Correction d'une erreur avec IndexedDB ([5b4aef3](https://github.com/bibudem/ui/commit/5b4aef3b6ddbb32a6afadb1dcb18bf8026273207))
+
+
+### Miscellaneous Chores
+
+* release 0.6.0 ([dcec4fe](https://github.com/bibudem/ui/commit/dcec4fee52f3a19983c68f4aa87b3640e4cdd23e))
+* release 0.6.1 ([514a16c](https://github.com/bibudem/ui/commit/514a16c379eea3d9eb830a99c5f22224e9630d9e))
+
 ## [0.6.0](https://github.com/bibudem/ui/compare/v0.5.0...v0.6.0) (2024-05-08)
 
 
