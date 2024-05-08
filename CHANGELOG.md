@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.0](https://github.com/bibudem/ui/compare/v0.5.0...v0.5.0) (2024-05-08)
+
+
+### Bug Fixes
+
+* Correction du script postversion qui n'incluait pas les nouveaux fichiers du dossier 'dist' ([045d44e](https://github.com/bibudem/ui/commit/045d44e50e67dd3f59b944b8621193e79437b2fc))
+* Mise à jour de la librairie rollup-plugin-minify-html-literals par un fork afin d'obtenir les dernières versions de ses dépendances, en pariculier la version majeure de rollup ([ffaadd1](https://github.com/bibudem/ui/commit/ffaadd1671573d108b15214809ef34f468fa02d8))
+* **udem-urgence:** Le composant udem-urgence n'était pas export dans le build ([9a84966](https://github.com/bibudem/ui/commit/9a84966215adb9474da095716db5a4c8512206db))
+
+
+### Miscellaneous Chores
+
+* release 0.5.0 ([159ee6a](https://github.com/bibudem/ui/commit/159ee6ab334994fc755823994e754a802f1e2653))
+
 ## [0.5.0](https://github.com/bibudem/ui/compare/v0.4.1...v0.5.0) (2024-05-07)
 
 
