@@ -2,6 +2,7 @@ import { Task } from '@lit/task'
 import { LitElement, html, css, unsafeCSS } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import { openDB } from 'idb'
+import { name as PKG_NAME } from '../../../package.json'
 import closeIcon from '../../icons/close_FILL0_wght400_GRAD0_opsz24.svg?raw'
 import bibAvisStyles from './bib-avis.scss?inline'
 
@@ -66,7 +67,6 @@ export class BibAvis extends LitElement {
   #getAvis() {
     return new Task(this, {
       task: async ([service, contexte, niveau], { signal }) => {
-        console.log('[#getAvis] is empty? %o', isEmpty(this))
 
         const doGetAvis = new Promise(async (resolve, reject) => {
           if (!isEmpty(this)) {
@@ -77,7 +77,6 @@ export class BibAvis extends LitElement {
           const response = await fetch(url, {
             headers: {
               "Accept": "application/json",
-              // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             signal
           })
@@ -93,7 +92,6 @@ export class BibAvis extends LitElement {
 
         try {
           const data = await doGetAvis
-          console.log('data: %o', data)
           await this.#processAvis(data)
         } catch (error) {
           console.error('[#getAvis] An error occured: %o', error)
@@ -116,11 +114,11 @@ export class BibAvis extends LitElement {
       return
     }
 
-    const db = this.#db = await openDB('@bibudem/ui', 1, {
+    const db = this.#db = await openDB(PKG_NAME, 1, {
       upgrade(db) {
         // Checks if the object store exists:
         if (!db.objectStoreNames.contains('avis')) {
-          db.createObjectStore('avis', { keyPath: 'id' })
+          db.createObjectStore('avis')
         }
       }
     })
@@ -128,7 +126,6 @@ export class BibAvis extends LitElement {
     try {
       const id = await hash(avis)
       const storedAvis = await db.get('avis', id)
-      console.log('storedAvis: ', storedAvis)
       if (storedAvis) {
         if (!storedAvis.hidden) {
           // Delete old entries
