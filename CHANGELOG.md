@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.2](https://github.com/bibudem/ui/compare/v0.6.1...v0.6.2) (2024-05-08)
+
+
+### Features
+
+* Build pour v0.6.2 ([9d0506f](https://github.com/bibudem/ui/commit/9d0506f5dcbab86e221be96a9b0db5efc04f6372))
+
+
+### Miscellaneous Chores
+
+* release 0.6.2 ([fcd531a](https://github.com/bibudem/ui/commit/fcd531a733e0d6c62d4ece6c893a1f0b284f1a09))
+
 ## [0.6.1](https://github.com/bibudem/ui/compare/v0.6.1...v0.6.1) (2024-05-08)
 
 
