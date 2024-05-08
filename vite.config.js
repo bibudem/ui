@@ -3,10 +3,9 @@ import { defineConfig } from 'vite'
 import { glob } from 'glob'
 import terser from '@rollup/plugin-terser'
 import banner from 'vite-plugin-banner'
-import rollupPluginMinifyHtmlLiteralsModule from 'rollup-plugin-minify-html-literals'
+import minifyHTMLLiterals from 'rollup-plugin-minify-html-literals-v3'
 import pkg from './package.json'
 
-const { default: minifyHTMLLiterals } = rollupPluginMinifyHtmlLiteralsModule
 const mainEntry = fileURLToPath(new URL('src/index.js', import.meta.url))
 const componentsEntries = (await glob('src/components/**/*.js', { ignore: '**/*.stories.*' })).map(entry => fileURLToPath(new URL(entry, import.meta.url)))
 
