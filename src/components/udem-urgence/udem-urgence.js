@@ -4,17 +4,15 @@ import { SPACE_KEY, ENTER_KEY } from '../../constants'
 import styles from './udem-urgence.scss?inline'
 
 /**
- * Un avis
- * Affiche un avis
+ * Un message d'urgence du BCRP
  */
 export class UdeMUrgence extends LitElement {
   static properties = {
     service: {
       type: String
     },
-    grand: {
+    big: {
       type: Boolean,
-      // reflect: true
     },
     href: {
       type: String,
@@ -29,7 +27,7 @@ export class UdeMUrgence extends LitElement {
   constructor() {
     super()
 
-    this.grand = false
+    this.big = false
     this.service = 'https://urgence.umontreal.ca/urgence-udem.json'
   }
 
@@ -75,11 +73,11 @@ export class UdeMUrgence extends LitElement {
         this.href = headerLink ?? url
 
         if (bannerType) {
-          this.grand = bannerType === 'large'
+          this.big = bannerType === 'large'
         }
 
         return title && html`
-          <aside class="wrapper" tabindex="0" @click="${this.#onActivate}" @keyup="${this.#onActivate}">
+          <aside class="wrapper${this.big ? ' big' : ''}" tabindex="0" @click="${this.#onActivate}" @keyup="${this.#onActivate}">
             <div class="container">
               <div class="content">
                 <a class="title" href="${this.href}" @click="${this.#onTitleClick}" tabindex="-1">
