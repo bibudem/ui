@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.6.0
+ * @version 0.6.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -87,11 +87,11 @@ const l = (u = c, (...e2) => ({ _$litDirective$: u, values: e2 }));
 var u;
 const d = (e2, t2) => t2.some((t3) => e2 instanceof t3);
 let h, p;
-const g = /* @__PURE__ */ new WeakMap(), b = /* @__PURE__ */ new WeakMap(), v = /* @__PURE__ */ new WeakMap();
+const b = /* @__PURE__ */ new WeakMap(), g = /* @__PURE__ */ new WeakMap(), v = /* @__PURE__ */ new WeakMap();
 let f = { get(e2, t2, n2) {
   if (e2 instanceof IDBTransaction) {
     if ("done" === t2)
-      return g.get(e2);
+      return b.get(e2);
     if ("store" === t2)
       return n2.objectStoreNames[1] ? void 0 : n2.objectStore(n2.objectStoreNames[0]);
   }
@@ -115,15 +115,15 @@ function w(e2) {
       });
       return v.set(t3, e3), t3;
     }(e2);
-  if (b.has(e2))
-    return b.get(e2);
+  if (g.has(e2))
+    return g.get(e2);
   const t2 = function(e3) {
     return "function" == typeof e3 ? (t3 = e3, (p || (p = [IDBCursor.prototype.advance, IDBCursor.prototype.continue, IDBCursor.prototype.continuePrimaryKey])).includes(t3) ? function(...e4) {
       return t3.apply(y(this), e4), w(this.request);
     } : function(...e4) {
       return w(t3.apply(y(this), e4));
     }) : (e3 instanceof IDBTransaction && function(e4) {
-      if (g.has(e4))
+      if (b.has(e4))
         return;
       const t4 = new Promise((t5, n2) => {
         const s2 = () => {
@@ -135,11 +135,11 @@ function w(e2) {
         };
         e4.addEventListener("complete", r2), e4.addEventListener("error", i2), e4.addEventListener("abort", i2);
       });
-      g.set(e4, t4);
+      b.set(e4, t4);
     }(e3), d(e3, h || (h = [IDBDatabase, IDBObjectStore, IDBIndex, IDBCursor, IDBTransaction])) ? new Proxy(e3, f) : e3);
     var t3;
   }(e2);
-  return t2 !== e2 && (b.set(e2, t2), v.set(t2, e2)), t2;
+  return t2 !== e2 && (g.set(e2, t2), v.set(t2, e2)), t2;
 }
 const y = (e2) => v.get(e2), x = ["get", "getKey", "getAll", "getAllKeys", "count"], k = ["put", "add", "delete", "clear"], B = /* @__PURE__ */ new Map();
 function D(e2, t2) {
@@ -177,15 +177,12 @@ async function* j(...e2) {
 function S(e2, t2) {
   return t2 === Symbol.asyncIterator && d(e2, [IDBIndex, IDBObjectStore, IDBCursor]) || "iterate" === t2 && d(e2, [IDBIndex, IDBObjectStore]);
 }
-function A(e2) {
-  return "" === e2.textContent.trim();
-}
 async function C(e2) {
   const t2 = new TextEncoder().encode(JSON.stringify(e2)), n2 = await crypto.subtle.digest("SHA-256", t2);
   return Array.from(new Uint8Array(n2)).map((e3) => e3.toString(16).padStart(2, "0")).join("");
 }
 m((e2) => ({ ...e2, get: (t2, n2, s2) => S(t2, n2) ? j : e2.get(t2, n2, s2), has: (t2, n2) => S(t2, n2) || e2.has(t2, n2) }));
-class M extends s {
+class A extends s {
   constructor() {
     super();
     __privateAdd(this, _n);
@@ -221,9 +218,8 @@ _t = new WeakMap();
 _n = new WeakSet();
 n_fn = function() {
   return new e(this, { task: async ([e2, t2, n2], { signal: s2 }) => {
-    console.log("[#getAvis] is empty? %o", A(this));
     const r2 = new Promise(async (r3, i2) => {
-      if (!A(this))
+      if ("" !== this.textContent.trim())
         return r3({ isLocal: true, message: this.innerHTML.split(/<!--\?lit\$\d+\$-->/).join("") });
       const o2 = new URL(`${t2}/${n2}`, e2), a2 = await fetch(o2, { headers: { Accept: "application/json" }, signal: s2 });
       if (!a2.ok)
@@ -233,7 +229,7 @@ n_fn = function() {
     });
     try {
       const e3 = await r2;
-      console.log("data: %o", e3), await __privateMethod(this, _s, s_fn).call(this, e3);
+      await __privateMethod(this, _s, s_fn).call(this, e3);
     } catch (e3) {
       console.error("[#getAvis] An error occured: %o", e3);
     }
@@ -255,11 +251,11 @@ s_fn = async function(e2) {
     }).catch(() => {
     }), a2;
   }("@bibudem/ui", 1, { upgrade(e3) {
-    e3.objectStoreNames.contains("avis") || e3.createObjectStore("avis", { keyPath: "id" });
+    e3.objectStoreNames.contains("avis") || e3.createObjectStore("avis");
   } }));
   try {
     const n2 = await C(e2), s2 = await t2.get("avis", n2);
-    console.log("storedAvis: ", s2), s2 ? s2.hidden || (await t2.delete("avis", n2), __privateMethod(this, _r, r_fn).call(this, s2)) : __privateMethod(this, _r, r_fn).call(this, e2);
+    s2 ? s2.hidden || (await t2.delete("avis", n2), __privateMethod(this, _r, r_fn).call(this, s2)) : __privateMethod(this, _r, r_fn).call(this, e2);
   } catch (t3) {
     console.error("Something went wrong with indexedDB: %o", t3), this.setMessage(e2.message);
   }
@@ -280,10 +276,10 @@ _o = new WeakSet();
 o_fn = function() {
   __privateMethod(this, _i, i_fn).call(this);
 };
-__publicField(M, "properties", { service: { type: String }, contexte: { type: String, default: "site-web" }, niveau: { type: String }, boutonFermer: { type: Boolean, attribute: "bouton-fermer" }, message: { state: true } });
-__publicField(M, "styles", [r`${i(':host,*{box-sizing:border-box}:host{display:block;font-size:var(--bib-avis-size, var(--md-sys-typescale-title-medium-size, inherit));background:var(--bib-avis-container-color, var(--md-sys-color-warningContainer, #fffac6))}:host([hidden]){display:none}.inner{display:flex;align-items:center;margin:0 auto;padding:11px 19px;gap:1em}:host(:not([fluide])) .inner{max-width:1220px}.message{flex-grow:1;min-height:24px}.btn-close{display:inline-flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0px;border:0px;margin:0;cursor:pointer;user-select:none;vertical-align:middle;appearance:none;text-decoration:none;text-align:center;flex:0 0 auto;font-size:1.5rem;font-size:36px;font-weight:700;line-height:1;position:relative;padding:0;border-radius:50%;overflow:visible;color:var(--bib-btn-close-color, rgba(0, 0, 0, .4));transition:color .15s cubic-bezier(.4,0,.2,1),background-color .15s cubic-bezier(.4,0,.2,1)}.btn-close:after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-height:44px;min-width:44px;width:100%;height:100%}.btn-close:focus:not([disabled]),.btn-close:focus-visible{outline:2px solid #bde4ff;outline-offset:3px}.btn-close:focus:not(:focus-visible){outline:0}.btn-close:hover{color:var(--bib-btn-close-hover-color, rgba(0, 0, 0, .8))}.btn-close:hover:after{background-color:#0000000a}.btn-close:after{width:calc(100% + 16px);height:calc(100% + 16px);border-radius:50%;background-color:transparent;transition:background-color .15s cubic-bezier(.4,0,.2,1) 0ms}.btn-close>svg{fill:currentColor}')}`, r``]);
-customElements.define("bib-avis", M);
+__publicField(A, "properties", { service: { type: String }, contexte: { type: String, default: "site-web" }, niveau: { type: String }, boutonFermer: { type: Boolean, attribute: "bouton-fermer" }, message: { state: true } });
+__publicField(A, "styles", [r`${i(':host,*{box-sizing:border-box}:host{display:block;font-size:var(--bib-avis-size, var(--md-sys-typescale-title-medium-size, inherit));background:var(--bib-avis-container-color, var(--md-sys-color-warningContainer, #fffac6))}:host([hidden]){display:none}.inner{display:flex;align-items:center;margin:0 auto;padding:11px 19px;gap:1em}:host(:not([fluide])) .inner{max-width:1220px}.message{flex-grow:1;min-height:24px}.btn-close{display:inline-flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0px;border:0px;margin:0;cursor:pointer;user-select:none;vertical-align:middle;appearance:none;text-decoration:none;text-align:center;flex:0 0 auto;font-size:1.5rem;font-size:36px;font-weight:700;line-height:1;position:relative;padding:0;border-radius:50%;overflow:visible;color:var(--bib-btn-close-color, rgba(0, 0, 0, .4));transition:color .15s cubic-bezier(.4,0,.2,1),background-color .15s cubic-bezier(.4,0,.2,1)}.btn-close:after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-height:44px;min-width:44px;width:100%;height:100%}.btn-close:focus:not([disabled]),.btn-close:focus-visible{outline:2px solid #bde4ff;outline-offset:3px}.btn-close:focus:not(:focus-visible){outline:0}.btn-close:hover{color:var(--bib-btn-close-hover-color, rgba(0, 0, 0, .8))}.btn-close:hover:after{background-color:#0000000a}.btn-close:after{width:calc(100% + 16px);height:calc(100% + 16px);border-radius:50%;background-color:transparent;transition:background-color .15s cubic-bezier(.4,0,.2,1) 0ms}.btn-close>svg{fill:currentColor}')}`, r``]);
+customElements.define("bib-avis", A);
 export {
-  M as BibAvis
+  A as BibAvis
 };
 //# sourceMappingURL=bib-avis.js.map
