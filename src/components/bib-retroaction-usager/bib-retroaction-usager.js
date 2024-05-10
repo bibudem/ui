@@ -1,0 +1,156 @@
+import { LitElement, css, html, unsafeCSS } from 'lit'
+import { unsafeHTML } from 'lit/directives/unsafe-html.js'
+import '@material/web/button/filled-button.js'
+import '@material/web/button/text-button.js'
+import '@material/web/iconbutton/outlined-icon-button.js'
+import '@material/web/icon/icon.js'
+
+import thumbUpIcon from '../../icons/thumb_up_24dp_FILL0_wght400_GRAD0_opsz24.svg?raw'
+import thumbDownIcon from '../../icons/thumb_down_24dp_FILL0_wght400_GRAD0_opsz24.svg?raw'
+import styles from './bib-retroaction-usager.scss?inline'
+import { VoteData } from './VotePayload.js'
+
+export class BibRetroactionUsager extends LitElement {
+
+  static properties = {
+    _vote: {
+      state: true,
+    },
+    state: {
+      state: true
+    }
+  }
+
+  static styles = [
+    css`${unsafeCSS(styles)}`
+  ]
+
+  #service
+
+  constructor() {
+    super()
+    this._vote = null
+    this.state = 'loaded'
+    this.#service = 'https://umontreal.libwizard.com/api/v1/submission'
+  }
+
+  firstUpdated() {
+    console.log(this.renderRoot?.querySelector('#btn-vote-y').form)
+    // const form = this.renderRoot?.querySelector('form')
+    // this.renderRoot.querySelector('#btn-vote-y').form = form
+    // this.renderRoot.querySelector('#btn-vote-n').form = form
+  }
+
+  _onIconClick(event) {
+    this._vote = event.target.selected ? event.target.value : null
+  }
+
+  async #onSubmit(event) {
+    event.preventDefault()
+
+    return new Promise(async (resolve, reject) => {
+      const data = new FormData(event.currentTarget)
+      console.log([...data.entries()])
+      const vote = this.renderRoot.querySelector('.btn-vote[selected]').value
+      const id = await fetch(`${this.#service}/getguid`)
+        .then(async response => {
+          if (!response.ok) {
+            return reject(new Error('Could not fetch service. response: ', response))
+          }
+
+          return await response.json()
+        })
+        .catch(reject)
+      const voteData = new VoteData(id)
+      voteData.vote = vote
+      voteData.comment = data.get('comment')
+      voteData.email = data.get('email')
+
+      try {
+        await fetch(`${this.#service}/insertSubmission`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(voteData)
+        })
+        // const payload
+        this.state = 'submitted'
+        resolve()
+      } catch (error) {
+        console.error('Could not fetch POST. Error: %o', error)
+        this.state = 'error'
+        reject(error)
+      }
+    })
+  }
+
+  #renderSentForm() {
+    if (this.state === 'submitted') {
+      return html`
+        <p>Merci! Nous avons reçu vos commentaires.</p>
+      `
+    }
+    if (this.state === 'error') {
+      return html`
+        <p>Erreur!!!.</p>
+      `
+    }
+  }
+
+  #renderForm() {
+    if (this.state === 'loaded') {
+      return html`
+        <form aria-live='polite' @submit="${this.#onSubmit}">
+          <div role="radiogroup" aria-labelledby="survey-title" class="radio-group">
+            <md-outlined-icon-button id="btn-vote-y" class="btn-vote" value="oui" name="vote" type="button" toggle aria-label="oui"  @click="${this._onIconClick}" ?selected="${this._vote === 'oui'}">
+              <md-icon>${unsafeHTML(thumbUpIcon)}</md-icon>
+            </md-outlined-icon-button>
+            <md-outlined-icon-button id="btn-vote-n" class="btn-vote" value="non" name="vote" type="button" toggle aria-label="non" @click="${this._onIconClick}" ?selected="${this._vote === 'non'}">
+              <md-icon>${unsafeHTML(thumbDownIcon)}</md-icon>
+            </md-outlined-icon-button>
+          </div>
+          ${this.#renderSurveyComment()}
+          <a rel="" class="privacy-link" target="_blank" href="https://bib.umontreal.ca/politique-confidentialite">Politique de confidentialité</a>
+        </form>
+      `
+    }
+  }
+
+  #renderSurveyComment() {
+    if (this._vote) {
+      return html`
+        <p class="form-group">
+          <label class="label width-full" for="survey-comment">
+            <span>
+            ${this._vote === 'oui' ? `Faites-nous savoir ce que nous faisons bien` : `Faites-nous savoir ce que nous pouvons faire mieux`}
+            </span>
+          </label>
+          <textarea class="form-control input-sm width-full" name="comment" id="survey-comment"></textarea>
+        </p>
+        <div class="form-group">
+          <label class="label width-full" for="survey-email">
+            <span>Si nous pouvons vous contacter pour plus de questions, veuillez entrer votre adresse courriel</span>
+          </label>
+          <input type="email" class="form-control input-sm width-full" name="email" id="survey-email" placeholder="votre.nom@umontreal.ca" aria-invalid="false">
+        </div>
+        <p class="write-us f6 color-fg-muted">Si vous avez besoin d'une réponse, <a href="https://bib.umontreal.ca/nous-joindre" target="_blank">veuillez plutôt nous écrire</a>.</p>
+        <div class="form-group-submit d-flex flex-justify-end flex-items-center mt-3">
+          <md-text-button type="reset">Annuler</md-text-button>
+          <md-filled-button>Envoyer</md-filled-button>
+        </div>
+      `
+    }
+  }
+
+  render() {
+    return html`
+      <p id="survey-title" class="survey-title">Cette page vous a été utile?</p>
+      ${this.#renderForm()}
+      ${this.#renderSentForm()}
+      `
+  }
+}
+
+customElements.define('bib-retroaction-usager', BibRetroactionUsager)
