@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "avis",
     "storybook",
-    "udem-urgence"
+    "udem-urgence",
+    "bib-retroaction-usager"
   ]
 }
