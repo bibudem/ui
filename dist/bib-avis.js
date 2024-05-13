@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.6.2
+ * @version 0.7.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -35,95 +35,48 @@ var __privateMethod = (obj, member, method) => {
   return method;
 };
 var _e, _t, _n, n_fn, _s, s_fn, _r, r_fn, _i, i_fn, _o, o_fn;
-import { T as e } from "./task-CophuqVf.js";
-import { a as t, b as n, L as s, c as r, u as i, h as o } from "./lit-element-BtQrDsEd.js";
-/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */
-class a {
-  constructor(e2) {
-  }
-  get _$isConnected() {
-    return this._$parent._$isConnected;
-  }
-  _$initialize(e2, t2, n2) {
-    this.__part = e2, this._$parent = t2, this.__attributeIndex = n2;
-  }
-  _$resolve(e2, t2) {
-    return this.update(e2, t2);
-  }
-  update(e2, t2) {
-    return this.render(...t2);
-  }
-}
-/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */
-class c extends a {
-  constructor(e2) {
-    if (super(e2), this._value = t, 2 !== e2.type)
-      throw new Error(`${this.constructor.directiveName}() can only be used in child bindings`);
-  }
-  render(e2) {
-    if (e2 === t || null == e2)
-      return this._templateResult = void 0, this._value = e2;
-    if (e2 === n)
-      return e2;
-    if ("string" != typeof e2)
-      throw new Error(`${this.constructor.directiveName}() called with a non-string value`);
-    if (e2 === this._value)
-      return this._templateResult;
-    this._value = e2;
-    const s2 = [e2];
-    return s2.raw = s2, this._templateResult = { _$litType$: this.constructor.resultType, strings: s2, values: [] };
-  }
-}
-c.directiveName = "unsafeHTML", c.resultType = 1;
-const l = (u = c, (...e2) => ({ _$litDirective$: u, values: e2 }));
-var u;
-const d = (e2, t2) => t2.some((t3) => e2 instanceof t3);
-let h, p;
-const b = /* @__PURE__ */ new WeakMap(), g = /* @__PURE__ */ new WeakMap(), v = /* @__PURE__ */ new WeakMap();
-let f = { get(e2, t2, n2) {
+import { T as e } from "./task-B50inpYJ.js";
+import { L as t, c as n, u as s, h as r } from "./lit-element-DgcYs_ed.js";
+import { u as i } from "./unsafe-html-CYDD8bFW.js";
+const o = (e2, t2) => t2.some((t3) => e2 instanceof t3);
+let a, c;
+const l = /* @__PURE__ */ new WeakMap(), d = /* @__PURE__ */ new WeakMap(), u = /* @__PURE__ */ new WeakMap();
+let h = { get(e2, t2, n2) {
   if (e2 instanceof IDBTransaction) {
     if ("done" === t2)
-      return b.get(e2);
+      return l.get(e2);
     if ("store" === t2)
       return n2.objectStoreNames[1] ? void 0 : n2.objectStore(n2.objectStoreNames[0]);
   }
-  return w(e2[t2]);
+  return g(e2[t2]);
 }, set: (e2, t2, n2) => (e2[t2] = n2, true), has: (e2, t2) => e2 instanceof IDBTransaction && ("done" === t2 || "store" === t2) || t2 in e2 };
-function m(e2) {
-  f = e2(f);
+function b(e2) {
+  h = e2(h);
 }
-function w(e2) {
+function g(e2) {
   if (e2 instanceof IDBRequest)
     return function(e3) {
       const t3 = new Promise((t4, n2) => {
         const s2 = () => {
           e3.removeEventListener("success", r2), e3.removeEventListener("error", i2);
         }, r2 = () => {
-          t4(w(e3.result)), s2();
+          t4(g(e3.result)), s2();
         }, i2 = () => {
           n2(e3.error), s2();
         };
         e3.addEventListener("success", r2), e3.addEventListener("error", i2);
       });
-      return v.set(t3, e3), t3;
+      return u.set(t3, e3), t3;
     }(e2);
-  if (g.has(e2))
-    return g.get(e2);
+  if (d.has(e2))
+    return d.get(e2);
   const t2 = function(e3) {
-    return "function" == typeof e3 ? (t3 = e3, (p || (p = [IDBCursor.prototype.advance, IDBCursor.prototype.continue, IDBCursor.prototype.continuePrimaryKey])).includes(t3) ? function(...e4) {
-      return t3.apply(y(this), e4), w(this.request);
+    return "function" == typeof e3 ? (t3 = e3, (c || (c = [IDBCursor.prototype.advance, IDBCursor.prototype.continue, IDBCursor.prototype.continuePrimaryKey])).includes(t3) ? function(...e4) {
+      return t3.apply(p(this), e4), g(this.request);
     } : function(...e4) {
-      return w(t3.apply(y(this), e4));
+      return g(t3.apply(p(this), e4));
     }) : (e3 instanceof IDBTransaction && function(e4) {
-      if (b.has(e4))
+      if (l.has(e4))
         return;
       const t4 = new Promise((t5, n2) => {
         const s2 = () => {
@@ -135,54 +88,54 @@ function w(e2) {
         };
         e4.addEventListener("complete", r2), e4.addEventListener("error", i2), e4.addEventListener("abort", i2);
       });
-      b.set(e4, t4);
-    }(e3), d(e3, h || (h = [IDBDatabase, IDBObjectStore, IDBIndex, IDBCursor, IDBTransaction])) ? new Proxy(e3, f) : e3);
+      l.set(e4, t4);
+    }(e3), o(e3, a || (a = [IDBDatabase, IDBObjectStore, IDBIndex, IDBCursor, IDBTransaction])) ? new Proxy(e3, h) : e3);
     var t3;
   }(e2);
-  return t2 !== e2 && (g.set(e2, t2), v.set(t2, e2)), t2;
+  return t2 !== e2 && (d.set(e2, t2), u.set(t2, e2)), t2;
 }
-const y = (e2) => v.get(e2), x = ["get", "getKey", "getAll", "getAllKeys", "count"], k = ["put", "add", "delete", "clear"], B = /* @__PURE__ */ new Map();
-function D(e2, t2) {
+const p = (e2) => u.get(e2), f = ["get", "getKey", "getAll", "getAllKeys", "count"], v = ["put", "add", "delete", "clear"], m = /* @__PURE__ */ new Map();
+function w(e2, t2) {
   if (!(e2 instanceof IDBDatabase) || t2 in e2 || "string" != typeof t2)
     return;
-  if (B.get(t2))
-    return B.get(t2);
-  const n2 = t2.replace(/FromIndex$/, ""), s2 = t2 !== n2, r2 = k.includes(n2);
-  if (!(n2 in (s2 ? IDBIndex : IDBObjectStore).prototype) || !r2 && !x.includes(n2))
+  if (m.get(t2))
+    return m.get(t2);
+  const n2 = t2.replace(/FromIndex$/, ""), s2 = t2 !== n2, r2 = v.includes(n2);
+  if (!(n2 in (s2 ? IDBIndex : IDBObjectStore).prototype) || !r2 && !f.includes(n2))
     return;
   const i2 = async function(e3, ...t3) {
     const i3 = this.transaction(e3, r2 ? "readwrite" : "readonly");
     let o2 = i3.store;
     return s2 && (o2 = o2.index(t3.shift())), (await Promise.all([o2[n2](...t3), r2 && i3.done]))[0];
   };
-  return B.set(t2, i2), i2;
+  return m.set(t2, i2), i2;
 }
-m((e2) => ({ ...e2, get: (t2, n2, s2) => D(t2, n2) || e2.get(t2, n2, s2), has: (t2, n2) => !!D(t2, n2) || e2.has(t2, n2) }));
-const I = ["continue", "continuePrimaryKey", "advance"], L = {}, $ = /* @__PURE__ */ new WeakMap(), E = /* @__PURE__ */ new WeakMap(), _ = { get(e2, t2) {
-  if (!I.includes(t2))
+b((e2) => ({ ...e2, get: (t2, n2, s2) => w(t2, n2) || e2.get(t2, n2, s2), has: (t2, n2) => !!w(t2, n2) || e2.has(t2, n2) }));
+const y = ["continue", "continuePrimaryKey", "advance"], x = {}, k = /* @__PURE__ */ new WeakMap(), B = /* @__PURE__ */ new WeakMap(), D = { get(e2, t2) {
+  if (!y.includes(t2))
     return e2[t2];
-  let n2 = L[t2];
-  return n2 || (n2 = L[t2] = function(...e3) {
-    $.set(this, E.get(this)[t2](...e3));
+  let n2 = x[t2];
+  return n2 || (n2 = x[t2] = function(...e3) {
+    k.set(this, B.get(this)[t2](...e3));
   }), n2;
 } };
-async function* j(...e2) {
+async function* I(...e2) {
   let t2 = this;
   if (t2 instanceof IDBCursor || (t2 = await t2.openCursor(...e2)), !t2)
     return;
-  const n2 = new Proxy(t2, _);
-  for (E.set(n2, t2), v.set(n2, y(t2)); t2; )
-    yield n2, t2 = await ($.get(n2) || t2.continue()), $.delete(n2);
+  const n2 = new Proxy(t2, D);
+  for (B.set(n2, t2), u.set(n2, p(t2)); t2; )
+    yield n2, t2 = await (k.get(n2) || t2.continue()), k.delete(n2);
 }
-function S(e2, t2) {
-  return t2 === Symbol.asyncIterator && d(e2, [IDBIndex, IDBObjectStore, IDBCursor]) || "iterate" === t2 && d(e2, [IDBIndex, IDBObjectStore]);
+function L(e2, t2) {
+  return t2 === Symbol.asyncIterator && o(e2, [IDBIndex, IDBObjectStore, IDBCursor]) || "iterate" === t2 && o(e2, [IDBIndex, IDBObjectStore]);
 }
-async function C(e2) {
+async function E(e2) {
   const t2 = new TextEncoder().encode(JSON.stringify(e2)), n2 = await crypto.subtle.digest("SHA-256", t2);
   return Array.from(new Uint8Array(n2)).map((e3) => e3.toString(16).padStart(2, "0")).join("");
 }
-m((e2) => ({ ...e2, get: (t2, n2, s2) => S(t2, n2) ? j : e2.get(t2, n2, s2), has: (t2, n2) => S(t2, n2) || e2.has(t2, n2) }));
-class A extends s {
+b((e2) => ({ ...e2, get: (t2, n2, s2) => L(t2, n2) ? I : e2.get(t2, n2, s2), has: (t2, n2) => L(t2, n2) || e2.has(t2, n2) }));
+class j extends t {
   constructor() {
     super();
     __privateAdd(this, _n);
@@ -204,10 +157,10 @@ class A extends s {
     super.connectedCallback(), __privateMethod(this, _n, n_fn).call(this);
   }
   _renderBoutonFermer() {
-    return this.boutonFermer ? o`<button class="btn-close" aria-label="Fermer" @click="${__privateMethod(this, _o, o_fn)}">${l('<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>')}</button>` : null;
+    return this.boutonFermer ? r`<button class="btn-close" aria-label="Fermer" @click="${__privateMethod(this, _o, o_fn)}">${i('<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>')}</button>` : null;
   }
   render() {
-    return __privateGet(this, _e)?.message ? o`<aside class="container"><div class="inner"><div class="message">${l(__privateGet(this, _e).message)}</div>${this._renderBoutonFermer()}</div></aside>` : null;
+    return __privateGet(this, _e)?.message ? r`<aside class="container"><div class="inner"><div class="message">${i(__privateGet(this, _e).message)}</div>${this._renderBoutonFermer()}</div></aside>` : null;
   }
   setMessage(e2) {
     __privateSet(this, _e, "string" == typeof e2 ? { message: e2, isLocal: true } : e2);
@@ -243,9 +196,9 @@ s_fn = async function(e2) {
   if (!("indexedDB" in window))
     return void this.setMessage(e2.message);
   const t2 = __privateSet(this, _t, await function(e3, t3, { blocked: n2, upgrade: s2, blocking: r2, terminated: i2 } = {}) {
-    const o2 = indexedDB.open(e3, t3), a2 = w(o2);
+    const o2 = indexedDB.open(e3, t3), a2 = g(o2);
     return s2 && o2.addEventListener("upgradeneeded", (e4) => {
-      s2(w(o2.result), e4.oldVersion, e4.newVersion, w(o2.transaction), e4);
+      s2(g(o2.result), e4.oldVersion, e4.newVersion, g(o2.transaction), e4);
     }), n2 && o2.addEventListener("blocked", (e4) => n2(e4.oldVersion, e4.newVersion, e4)), a2.then((e4) => {
       i2 && e4.addEventListener("close", () => i2()), r2 && e4.addEventListener("versionchange", (e5) => r2(e5.oldVersion, e5.newVersion, e5));
     }).catch(() => {
@@ -254,7 +207,7 @@ s_fn = async function(e2) {
     e3.objectStoreNames.contains("avis") || e3.createObjectStore("avis");
   } }));
   try {
-    const n2 = await C(e2), s2 = await t2.get("avis", n2);
+    const n2 = await E(e2), s2 = await t2.get("avis", n2);
     s2 ? s2.hidden || (await t2.delete("avis", n2), __privateMethod(this, _r, r_fn).call(this, s2)) : __privateMethod(this, _r, r_fn).call(this, e2);
   } catch (t3) {
     console.error("Something went wrong with indexedDB: %o", t3), this.setMessage(e2.message);
@@ -263,23 +216,23 @@ s_fn = async function(e2) {
 _r = new WeakSet();
 r_fn = async function(e2) {
   if (this.setMessage(e2), __privateGet(this, _t)) {
-    const t2 = await C(e2);
+    const t2 = await E(e2);
     await __privateGet(this, _t).add("avis", { ...e2, hidden: false }, t2);
   }
 };
 _i = new WeakSet();
 i_fn = async function() {
-  const e2 = await C(__privateGet(this, _e));
+  const e2 = await E(__privateGet(this, _e));
   await __privateGet(this, _t).put("avis", { ...__privateGet(this, _e), hidden: true }, e2), __privateSet(this, _e, null), this.requestUpdate();
 };
 _o = new WeakSet();
 o_fn = function() {
   __privateMethod(this, _i, i_fn).call(this);
 };
-__publicField(A, "properties", { service: { type: String }, contexte: { type: String, default: "site-web" }, niveau: { type: String }, boutonFermer: { type: Boolean, attribute: "bouton-fermer" }, message: { state: true } });
-__publicField(A, "styles", [r`${i(':host,*{box-sizing:border-box}:host{display:block;font-size:var(--bib-avis-size, var(--md-sys-typescale-title-medium-size, inherit));background:var(--bib-avis-container-color, var(--md-sys-color-warningContainer, #fffac6))}:host([hidden]){display:none}.inner{display:flex;align-items:center;margin:0 auto;padding:11px 19px;gap:1em}:host(:not([fluide])) .inner{max-width:1220px}.message{flex-grow:1;min-height:24px}.btn-close{display:inline-flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0px;border:0px;margin:0;cursor:pointer;user-select:none;vertical-align:middle;appearance:none;text-decoration:none;text-align:center;flex:0 0 auto;font-size:1.5rem;font-size:36px;font-weight:700;line-height:1;position:relative;padding:0;border-radius:50%;overflow:visible;color:var(--bib-btn-close-color, rgba(0, 0, 0, .4));transition:color .15s cubic-bezier(.4,0,.2,1),background-color .15s cubic-bezier(.4,0,.2,1)}.btn-close:after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-height:44px;min-width:44px;width:100%;height:100%}.btn-close:focus:not([disabled]),.btn-close:focus-visible{outline:2px solid #bde4ff;outline-offset:3px}.btn-close:focus:not(:focus-visible){outline:0}.btn-close:hover{color:var(--bib-btn-close-hover-color, rgba(0, 0, 0, .8))}.btn-close:hover:after{background-color:#0000000a}.btn-close:after{width:calc(100% + 16px);height:calc(100% + 16px);border-radius:50%;background-color:transparent;transition:background-color .15s cubic-bezier(.4,0,.2,1) 0ms}.btn-close>svg{fill:currentColor}')}`, r``]);
-customElements.define("bib-avis", A);
+__publicField(j, "properties", { service: { type: String }, contexte: { type: String, default: "site-web" }, niveau: { type: String }, boutonFermer: { type: Boolean, attribute: "bouton-fermer" }, message: { state: true } });
+__publicField(j, "styles", [n`${s(':host,*{box-sizing:border-box}:host{display:block;font-size:var(--bib-avis-size, var(--md-sys-typescale-title-medium-size, inherit));background:var(--bib-avis-container-color, var(--md-sys-color-warningContainer, #fffac6))}:host([hidden]){display:none}.inner{display:flex;align-items:center;margin:0 auto;padding:11px 19px;gap:1em}:host(:not([fluide])) .inner{max-width:1220px}.message{flex-grow:1;min-height:24px}.btn-close{display:inline-flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0px;border:0px;margin:0;cursor:pointer;user-select:none;vertical-align:middle;appearance:none;text-decoration:none;text-align:center;flex:0 0 auto;font-size:1.5rem;font-size:36px;font-weight:700;line-height:1;position:relative;padding:0;border-radius:50%;overflow:visible;color:var(--bib-btn-close-color, rgba(0, 0, 0, .4));transition:color .15s cubic-bezier(.4,0,.2,1),background-color .15s cubic-bezier(.4,0,.2,1)}.btn-close:after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-height:44px;min-width:44px;width:100%;height:100%}.btn-close:focus:not([disabled]),.btn-close:focus-visible{outline:2px solid #bde4ff;outline-offset:3px}.btn-close:focus:not(:focus-visible){outline:0}.btn-close:hover{color:var(--bib-btn-close-hover-color, rgba(0, 0, 0, .8))}.btn-close:hover:after{background-color:#0000000a}.btn-close:after{width:calc(100% + 16px);height:calc(100% + 16px);border-radius:50%;background-color:transparent;transition:background-color .15s cubic-bezier(.4,0,.2,1) 0ms}.btn-close>svg{fill:currentColor}')}`, n``]);
+customElements.define("bib-avis", j);
 export {
-  A as BibAvis
+  j as BibAvis
 };
 //# sourceMappingURL=bib-avis.js.map

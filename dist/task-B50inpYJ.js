@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.6.2
+ * @version 0.7.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { n as t } from "./lit-element-BtQrDsEd.js";
+import { n as t } from "./lit-element-DgcYs_ed.js";
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -103,4 +103,4 @@ const r = (s2, e2) => s2 === e2 || s2.length === e2.length && s2.every((s3, r2) 
 export {
   e as T
 };
-//# sourceMappingURL=task-CophuqVf.js.map
+//# sourceMappingURL=task-B50inpYJ.js.map

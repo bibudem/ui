@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.6.2
+ * @version 0.7.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -663,8 +663,9 @@ export {
   K as a,
   G as b,
   o as c,
+  $ as d,
   X as h,
   b as n,
   r as u
 };
-//# sourceMappingURL=lit-element-BtQrDsEd.js.map
+//# sourceMappingURL=lit-element-DgcYs_ed.js.map
