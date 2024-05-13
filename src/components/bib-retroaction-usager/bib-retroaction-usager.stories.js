@@ -3,19 +3,23 @@ import './bib-retroaction-usager'
 
 export default {
   title: 'Composants/Rétroaction usager',
-  component: 'Urgence',
+  component: 'BibRetroactionUsager',
   tags: ['autodocs'],
+  parameters: {
+    cssprops: {
+      'bib-comp-retroaction-usager-size': {
+        value: 'inherit',
+        description: 'Taille de la police'
+      }
+    }
+  }
 }
 
 /**
  * Widget de base
  */
 export const RetroactionUsager = {
-  render: function ({ service, grand }) {
+  render: function () {
     return html`<bib-retroaction-usager />`
-  },
-  args: {
-    service: 'https://coquille.umontreal.ca/urgence-test-bcrp/urgence-udem.json',
-    grand: true
   }
 }

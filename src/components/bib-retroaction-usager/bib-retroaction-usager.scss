@@ -9,16 +9,12 @@
 
 :host {
   --_size-large: calc(16 / 14 * 1em);
-  --_size-small: calc(14 / 16 * 1em);
-  --_icon-btn-size: calc(40px * 0.875);
-  --_leading-space: 1em;
+  --_size-small: calc(13 / 16 * 1em);
+  --_leading-space: 0.5em;
 
-  --bib-comp-retroaction-usager-size: var(--md-sys-typescale-body-small-size, 16px);
-
-  --md-ref-typeface-plain: $md-ref-typeface-plain;
+  --bib-comp-retroaction-usager-size: var(--md-sys-typescale-body-small-size, inherit);
 
   display: inline-block;
-  // background-color: var(--md-sys-color-surface-container);
   font-size: var(--bib-comp-retroaction-usager-size);
 }
 
@@ -31,26 +27,25 @@ input {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-  padding: calc(var(--_leading-space) / 2) var(--_leading-space);
+  padding: var(--_leading-space) var(--_leading-space);
 }
 
 .survey-title {
   margin-bottom: var(--_size-large);
-  font-weight: bold;
+  font-weight: 450;
 }
 
 .radio-group {
   display: flex;
-  gap: 0.75em;
+  gap: 0.5em;
   margin-bottom: 0.5em;
 }
 
 .btn-vote {
   --md-outlined-icon-button-container-height: var(--_icon-btn-size);
   --md-outlined-icon-button-container-width: var(--_icon-btn-size);
-}
-
-.survey-comment-container {
+  --md-outlined-icon-button-selected-container-color: var(--md-sys-color-surface-tint);
+  --md-outlined-icon-button-outline-width: 0;
 }
 
 .form-group {
@@ -86,4 +81,27 @@ input {
 .write-us {
   color: #3d4248;
   font-size: var(--_size-small);
+}
+
+.btn {
+  font-family: inherit;
+
+  &-submit {
+    &:not(disabled) {
+      .progress {
+        display: none;
+      }
+    }
+
+    span {
+      display: inline-flex;
+      gap: 0.5em;
+      align-items: center;
+    }
+  }
+}
+
+.progress {
+  --md-circular-progress-size: 20px;
+  --md-circular-progress-active-indicator-width: 16;
 }
