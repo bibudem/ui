@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.7.0](https://github.com/bibudem/ui/compare/v0.6.2...v0.7.0) (2024-05-13)
+
+
+### Features
+
+* **bib-retroaction-usager:** Ajout d'un composant bib-retroaction-usager pour collecter les impressions et les envoyer à libWizard ([b28eb50](https://github.com/bibudem/ui/commit/b28eb50fb992f8e6dc1e30fcf81f41f20d51d43e))
+* **bib-retroaction-usager:** Ajout d'un composant bib-retroaction-usager pour collecter les impressions et les envoyer à libWizard ([380d807](https://github.com/bibudem/ui/commit/380d8079c0fcf78a1b1914e9e1a6e96dad7432af))
+
+
+### Bug Fixes
+
+* Suppression d'un fichier en double ([bed4566](https://github.com/bibudem/ui/commit/bed45662c806ceb2f3b616c0a56ab90ba533a3b5))
+* **udem-urgence:** La variante "grand" ne fonctionnait pas ([75425d2](https://github.com/bibudem/ui/commit/75425d27350ad157e1db97ce4afb2548f4fe6cbe))
+
+
+### Miscellaneous Chores
+
+* release 0.7.0 ([44fe65c](https://github.com/bibudem/ui/commit/44fe65c3b8f2d02c91db3de1483f4e08387f4821))
+
 ## [0.6.2](https://github.com/bibudem/ui/compare/v0.6.1...v0.6.2) (2024-05-08)
 
 
