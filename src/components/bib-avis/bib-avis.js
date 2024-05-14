@@ -145,6 +145,13 @@ export class BibAvis extends LitElement {
   }
 
   async #show(avis) {
+
+    const canceled = !this.dispatchEvent(new CustomEvent('bib:show', { bubbles: true, cancelable: true }))
+
+    if (canceled) {
+      return
+    }
+
     this.setMessage(avis)
 
     if (this.#db) {
@@ -154,6 +161,13 @@ export class BibAvis extends LitElement {
   }
 
   async #hide() {
+
+    const canceled = !this.dispatchEvent(new CustomEvent('bib:hide', { bubbles: true, cancelable: true }))
+
+    if (canceled) {
+      return
+    }
+
     const id = await hash(this.#avis)
     await this.#db.put(STORE_NAME, { ...this.#avis, hidden: true }, id)
     this.#avis = null
