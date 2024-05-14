@@ -6,6 +6,9 @@ import { name as PKG_NAME } from '../../../package.json'
 import closeIcon from '../../icons/close_FILL0_wght400_GRAD0_opsz24.svg?raw'
 import bibAvisStyles from './bib-avis.scss?inline'
 
+const DB_VERSION = 1
+const STORE_NAME = 'avis'
+
 function isEmpty(node) {
   return node.textContent.trim() === ""
 }
@@ -114,22 +117,22 @@ export class BibAvis extends LitElement {
       return
     }
 
-    const db = this.#db = await openDB(PKG_NAME, 1, {
+    const db = this.#db = await openDB(PKG_NAME, DB_VERSION, {
       upgrade(db) {
         // Checks if the object store exists:
-        if (!db.objectStoreNames.contains('avis')) {
-          db.createObjectStore('avis')
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          db.createObjectStore(STORE_NAME)
         }
       }
     })
 
     try {
       const id = await hash(avis)
-      const storedAvis = await db.get('avis', id)
+      const storedAvis = await db.get(STORE_NAME, id)
       if (storedAvis) {
         if (!storedAvis.hidden) {
           // Delete old entries
-          await db.delete('avis', id)
+          await db.delete(STORE_NAME, id)
           this.#show(storedAvis)
         }
       } else {
@@ -143,15 +146,16 @@ export class BibAvis extends LitElement {
 
   async #show(avis) {
     this.setMessage(avis)
+
     if (this.#db) {
       const id = await hash(avis)
-      await this.#db.add('avis', { ...avis, hidden: false }, id)
+      await this.#db.add(STORE_NAME, { ...avis, hidden: false }, id)
     }
   }
 
   async #hide() {
     const id = await hash(this.#avis)
-    await this.#db.put('avis', { ...this.#avis, hidden: true }, id)
+    await this.#db.put(STORE_NAME, { ...this.#avis, hidden: true }, id)
     this.#avis = null
     this.requestUpdate()
   }
@@ -186,17 +190,6 @@ export class BibAvis extends LitElement {
     },
     args: () => [this.service, this.contexte, this.niveau]
   })
-
-  // _renderRemote() {
-  //   return this._avisTask.render({
-  //     pending: () => html``,
-  //     complete: (avis) => this._renderAvis(avis.message),
-  //     error: e => {
-  //       console.error('An error occured while rendering _avisTask: %o', e)
-  //       return null
-  //     }
-  //   })
-  // }
 
   render() {
     return this.#avis?.message ? html`<aside class="container"><div class="inner"><div class="message">${unsafeHTML(this.#avis.message)}</div>${this._renderBoutonFermer()}</div></aside>` : null
