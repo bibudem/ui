@@ -64,6 +64,18 @@ export default {
           summary: false
         }
       }
+    },
+    fluide: {
+      description: 'Affichage en mode fluide de la bannière',
+      control: {
+        type: 'boolean'
+      },
+      options: [true, false],
+      table: {
+        defaultValue: {
+          summary: false
+        }
+      }
     }
   },
   parameters: {
@@ -85,8 +97,8 @@ export default {
  * Affiche un avis
  */
 export const Avis = {
-  render: function ({ contexte, niveau, service, ...props }) {
-    return html`<bib-avis contexte="${ifDefined(contexte)}" niveau="${ifDefined(niveau)}" service="${ifDefined(service)}" ?bouton-fermer=${props['bouton-fermer']} />`
+  render: function ({ contexte, niveau, service, fluide, ...props }) {
+    return html`<bib-avis contexte="${ifDefined(contexte)}" niveau="${ifDefined(niveau)}" service="${ifDefined(service)}" ?bouton-fermer=${props['bouton-fermer']} ?fluide=${fluide} />`
   },
   args: {
     'bouton-fermer': true
