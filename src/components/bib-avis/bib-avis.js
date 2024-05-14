@@ -149,7 +149,7 @@ export class BibAvis extends LitElement {
 
     if (this.#db) {
       const id = await hash(avis)
-      await this.#db.add(STORE_NAME, { ...avis, hidden: false }, id)
+      await this.#db.put(STORE_NAME, { ...avis, hidden: false }, id)
     }
   }
 
