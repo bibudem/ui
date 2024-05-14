@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.8.0](https://github.com/bibudem/ui/compare/v0.7.0...v0.8.0) (2024-05-14)
+
+
+### Features
+
+* **avis:** Ajout des événements bib:show et bib:hide ([0969407](https://github.com/bibudem/ui/commit/0969407a549d6a1ecc50a2275b3720e7e9b9127a))
+
+
+### Bug Fixes
+
+* **avis:** Key already exists in the object store. ([cb9bd03](https://github.com/bibudem/ui/commit/cb9bd03e73c3e18f0da622dac168a2b1add87561))
+* **bib-retroaction-usager:** Correction stylistique mineurs ([51023b9](https://github.com/bibudem/ui/commit/51023b9025e00442aca12b5bc65dd50b3e9e455a))
+
+
+### Miscellaneous Chores
+
+* release 0.8.0 ([49021de](https://github.com/bibudem/ui/commit/49021decf73cf934afbad0f2738465bdac115476))
+* release 0.8.0 ([e6e7eae](https://github.com/bibudem/ui/commit/e6e7eaef7767830ff6b48ed2f13797016a1261cf))
+
 ## [0.7.0](https://github.com/bibudem/ui/compare/v0.6.2...v0.7.0) (2024-05-13)
 
 
