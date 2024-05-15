@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.10.0](https://github.com/bibudem/ui/compare/v0.9.0...v0.10.0) (2024-05-15)
+
+
+### Features
+
+* **bib-retroaction-usager:** Ajout d'une variable css pour le font-weight de l'intitulé ([d235697](https://github.com/bibudem/ui/commit/d2356976efe57b08305a809ccd3b21df39a83980))
+
+
+### Bug Fixes
+
+* Le script preview:serve n'ouvre plus de page dans un navigateur Web au démarrage ([2dc6ff9](https://github.com/bibudem/ui/commit/2dc6ff9a35eb7b8752a454e4a715ad4645bd9fd1))
+
+
+### Miscellaneous Chores
+
+* Build pour v0.10.0 ([93979dd](https://github.com/bibudem/ui/commit/93979ddbc0bfb7c9523e943dd5021fc25da97f92))
+
 ## [0.9.0](https://github.com/bibudem/ui/compare/v0.8.0...v0.9.0) (2024-05-15)
 
 
