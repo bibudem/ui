@@ -3,6 +3,7 @@
     "avis",
     "storybook",
     "udem-urgence",
-    "bib-retroaction-usager"
+    "bib-retroaction-usager",
+    "deps"
   ]
 }
