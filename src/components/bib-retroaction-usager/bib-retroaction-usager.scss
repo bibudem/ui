@@ -32,7 +32,7 @@ input {
 
 .survey-title {
   margin-bottom: var(--_size-large);
-  font-weight: 450;
+  font-weight: var(--bib-comp-retroaction-usager-title-weight, var(--md-sys-typescale-title-medium-weight, 450));
 }
 
 .radio-group {
