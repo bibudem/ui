@@ -76,7 +76,6 @@ export class BibRetroactionUsager extends LitElement {
         const voteData = new VoteData(id)
         voteData.vote = vote
         voteData.comment = data.get('comment')
-        voteData.email = data.get('email')
 
         await fetch(`${this.#service}/insertSubmission`, {
           method: 'POST',
@@ -152,12 +151,7 @@ export class BibRetroactionUsager extends LitElement {
           </label>
           <textarea class="form-control input-sm width-full" name="comment" id="survey-comment"></textarea>
         </p>
-        <div class="form-group">
-          <label class="label width-full" for="survey-email">
-            <span>Si nous pouvons vous contacter pour plus de questions, veuillez entrer votre adresse courriel</span>
-          </label>
-          <input type="email" class="form-control input-sm width-full" name="email" id="survey-email" placeholder="votre.nom@umontreal.ca" aria-invalid="false">
-        </div>
+
         <p class="write-us f6 color-fg-muted">Si vous avez besoin d'une réponse, <a href="https://bib.umontreal.ca/nous-joindre" target="_blank">veuillez plutôt nous écrire</a>.</p>
         <div class="form-group-submit d-flex flex-justify-end flex-items-center mt-3">
           <md-text-button class="btn" type="reset">Annuler</md-text-button>

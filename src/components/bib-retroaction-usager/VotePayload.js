@@ -33,14 +33,6 @@ export class VoteData {
         hidden: true,
         type: "control_multi",
         data: ""
-      },
-      {
-        flags: 0,
-        formId: 42971,
-        fieldId: 1567099,
-        hidden: true,
-        type: "control_sub_email",
-        data: ""
       }
     ]
   }
@@ -57,13 +49,6 @@ export class VoteData {
    */
   set comment(value) {
     this.data.find(data => data.fieldId === 1566358).data = value
-  }
-
-  /**
-   * @param {string} value
-   */
-  set email(value) {
-    this.data.find(data => data.fieldId === 1567099).data = value
   }
 
   toJSON() {
