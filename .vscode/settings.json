@@ -1,9 +1,9 @@
 {
   "conventionalCommits.scopes": [
-    "avis",
-    "storybook",
-    "udem-urgence",
+    "bib-avis",
     "bib-retroaction-usager",
-    "deps"
+    "deps",
+    "storybook",
+    "udem-urgence"
   ]
 }
