@@ -25,7 +25,7 @@
     "version": "npm run build",
     "preview": "npm-run-all set-env:production --parallel preview:*",
     "preview:build": "vite build --watch",
-    "preview:serve": "vite preview",
+    "preview:serve": "vite preview --no-open",
     "set-env:production": "cross-env NODE_ENV=production"
   },
   "dependencies": {
