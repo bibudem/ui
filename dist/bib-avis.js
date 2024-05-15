@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.8.0
+ * @version 0.9.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -35,9 +35,9 @@ var __privateMethod = (obj, member, method) => {
   return method;
 };
 var _e, _t, _n, n_fn, _s, s_fn, _r, r_fn, _i, i_fn, _o, o_fn;
-import { T as e } from "./task-B50inpYJ.js";
-import { L as t, c as n, u as s, h as r } from "./lit-element-DgcYs_ed.js";
-import { u as i } from "./unsafe-html-CYDD8bFW.js";
+import { h as e } from "./task-C8D8UDHH.js";
+import { s as t, i as n, r as s, x as r } from "./lit-element-C-D0oZt5.js";
+import { o as i } from "./unsafe-html-ChSn7HJx.js";
 const o = (e2, t2) => t2.some((t3) => e2 instanceof t3);
 let a, c;
 const l = /* @__PURE__ */ new WeakMap(), d = /* @__PURE__ */ new WeakMap(), u = /* @__PURE__ */ new WeakMap();
