@@ -17,9 +17,7 @@ const config = {
     name: '@storybook/web-components-vite',
     options: {},
   },
-  docs: {
-    autodocs: 'tag',
-  },
+  docs: {},
   core: {
     disableWhatsNewNotifications: true
   }
