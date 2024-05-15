@@ -133,7 +133,7 @@ export class BibRetroactionUsager extends LitElement {
             </md-outlined-icon-button>
           </div>
           ${this.#renderSurveyComment()}
-          <a rel="" class="privacy-link" target="_blank" href="https://bib.umontreal.ca/politique-confidentialite">Politique de confidentialité</a>
+          <a rel="" class="privacy-link" target="_blank" href="https://vie-privee.umontreal.ca/confidentialite/">Politique de confidentialité</a>
         </form>
       `
     }
