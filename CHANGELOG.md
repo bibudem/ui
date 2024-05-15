@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.9.0](https://github.com/bibudem/ui/compare/v0.8.0...v0.9.0) (2024-05-15)
+
+
+### Features
+
+* **bib-retroaction-usager:** Changement du lien vers la politique de confidentialité actuellement utilisée sur le site ([514ede1](https://github.com/bibudem/ui/commit/514ede1808a9e7b5339cb126cea377aba74de6e1))
+* **bib-retroaction-usager:** Retrait du champs courriel ([a909321](https://github.com/bibudem/ui/commit/a909321c436de01f35cb45ab61d9f29a424013ff))
+
+
+### Bug Fixes
+
+* Les fichiers builds utilisent désormais Lit en mode production ([4167977](https://github.com/bibudem/ui/commit/41679778eb249d7424d4eb24c32e4f07bedbb907))
+
+
+### Miscellaneous Chores
+
+* Build pour v0.9.0 ([e182db9](https://github.com/bibudem/ui/commit/e182db9e233357d5868444065a10464ee6e9188e))
+
 ## [0.8.0](https://github.com/bibudem/ui/compare/v0.7.0...v0.8.0) (2024-05-14)
 
 
