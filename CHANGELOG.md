@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.1](https://github.com/bibudem/ui/compare/v0.10.0...v0.10.1) (2024-05-31)
+
+
+### Bug Fixes
+
+* **bib-retroaction-usager:** Le champs vote (pouce en haut/bas)  n'était pas comptabilisé. ([c81cc2a](https://github.com/bibudem/ui/commit/c81cc2a09c26b760a6aa569b02eb36453dde1cff))
+
 ## [0.10.0](https://github.com/bibudem/ui/compare/v0.9.0...v0.10.0) (2024-05-15)
 
 
