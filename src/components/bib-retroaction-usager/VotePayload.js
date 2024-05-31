@@ -1,36 +1,28 @@
 export class VoteData {
   constructor(guid) {
-    this.formId = 42971
+    this.formId = 43176
     this.flags = 0
-    // this.arrive = "2024-05-10 20:02:46"
     this.collectIP = false
     this.collectBrowser = true
     this.collectRefer = true
     this.isPreview = false
-    // this.referrer = window.location.href
     this.guid = guid
     this.data = [
+      //Vote
       {
         flags: 0,
-        formId: 42971,
-        fieldId: 1567166,
+        formId: 43176,
+        fieldId: 1570387,
         hidden: false,
-        type: "control_image_choice",
+        type: "control_radio",
         data: ""
       },
+      // Commentaire
       {
         flags: 0,
-        formId: 42971,
-        fieldId: 1566358,
-        hidden: true,
-        type: "control_multi",
-        data: ""
-      },
-      {
-        flags: 0,
-        formId: 42971,
-        fieldId: 1567098,
-        hidden: true,
+        formId: 43176,
+        fieldId: 1570390,
+        hidden: false,
         type: "control_multi",
         data: ""
       }
@@ -41,14 +33,14 @@ export class VoteData {
    * @param {string} value
    */
   set vote(value) {
-    this.data.find(data => data.fieldId === 1567166).data = value
+    this.data.find(data => data.fieldId === 1570387).data = value
   }
 
   /**
    * @param {string} value
    */
   set comment(value) {
-    this.data.find(data => data.fieldId === 1566358).data = value
+    this.data.find(data => data.fieldId === 1570390).data = value
   }
 
   toJSON() {
