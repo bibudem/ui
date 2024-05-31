@@ -1,20 +1,20 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.10.0
+ * @version 0.10.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
 class t {
   constructor(t2) {
-    this.formId = 42971, this.flags = 0, this.collectIP = false, this.collectBrowser = true, this.collectRefer = true, this.isPreview = false, this.guid = t2, this.data = [{ flags: 0, formId: 42971, fieldId: 1567166, hidden: false, type: "control_image_choice", data: "" }, { flags: 0, formId: 42971, fieldId: 1566358, hidden: true, type: "control_multi", data: "" }, { flags: 0, formId: 42971, fieldId: 1567098, hidden: true, type: "control_multi", data: "" }];
+    this.formId = 43176, this.flags = 0, this.collectIP = false, this.collectBrowser = true, this.collectRefer = true, this.isPreview = false, this.guid = t2, this.data = [{ flags: 0, formId: 43176, fieldId: 1570387, hidden: false, type: "control_radio", data: "" }, { flags: 0, formId: 43176, fieldId: 1570390, hidden: false, type: "control_multi", data: "" }];
   }
   set vote(t2) {
-    this.data.find((t3) => 1567166 === t3.fieldId).data = t2;
+    this.data.find((t3) => 1570387 === t3.fieldId).data = t2;
   }
   set comment(t2) {
-    this.data.find((t3) => 1566358 === t3.fieldId).data = t2;
+    this.data.find((t3) => 1570390 === t3.fieldId).data = t2;
   }
   toJSON() {
     const t2 = /* @__PURE__ */ new Date();
