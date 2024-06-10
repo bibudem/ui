@@ -4,6 +4,7 @@
     "bib-retroaction-usager",
     "deps",
     "storybook",
-    "udem-urgence"
+    "udem-urgence",
+    "bib-button"
   ]
 }
