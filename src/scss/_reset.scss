@@ -1,0 +1,39 @@
+@use 'utils/layer';
+
+@mixin dialog {
+  @include layer.reset {
+    dialog {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+@mixin button {
+  @include layer.reset {
+    button,
+    [type='button'],
+    [type='reset'],
+    [type='submit'],
+    [role='button'] {
+      &:not(:disabled) {
+        cursor: pointer;
+      }
+    }
+  }
+
+  // @mixin reset($elements...) {
+  //   @for $i from 0 to length($elements) {
+  //     @include #{nth($elements, $i + 1)};
+  //   }
+  // }
+}
+
+// Common resets
+
+@include layer.reset {
+  :host,
+  * {
+    box-sizing: border-box;
+  }
+}

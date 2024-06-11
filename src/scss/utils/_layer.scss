@@ -1,0 +1,24 @@
+$layers: 'reset', 'component', 'states' !default;
+
+@mixin _layer($name) {
+  @layer #{$name} {
+    @content;
+  }
+}
+
+@mixin reset {
+  @include _layer(reset) {
+    @content;
+  }
+}
+
+@mixin component {
+  @include _layer(component) {
+    @content;
+  }
+}
+
+// Outputs the list of layers
+@mixin order {
+  @layer #{$layers};
+}

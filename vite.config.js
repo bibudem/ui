@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import { glob } from 'glob'
@@ -33,6 +34,11 @@ export default defineConfig({
     minifyHTMLLiterals(),
     banner(`/**\n * ${pkg.description}\n * @module ${pkg.name}\n * @version ${pkg.version}\n * @author ${pkg.author}\n * @license ${pkg.license}\n * @see ${pkg.homepage}\n */`)
   ],
+  resolve: {
+    alias: {
+      "@": resolve(import.meta.dirname, './src'),
+    },
+  },
   server: {
     host: true,
     port: 3001,

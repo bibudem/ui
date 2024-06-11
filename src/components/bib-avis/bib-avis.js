@@ -2,16 +2,13 @@ import { Task } from '@lit/task'
 import { LitElement, html, css, unsafeCSS } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import { openDB } from 'idb'
+import nodeIsEmpty from '@/utils/nodeIsEmpty.js'
 import { name as PKG_NAME } from '../../../package.json'
 import closeIcon from '../../icons/close_FILL0_wght400_GRAD0_opsz24.svg?raw'
 import bibAvisStyles from './bib-avis.scss?inline'
 
 const DB_VERSION = 1
 const STORE_NAME = 'avis'
-
-function isEmpty(node) {
-  return node.textContent.trim() === ""
-}
 
 async function hash(obj) {
   const utf8 = new TextEncoder().encode(JSON.stringify(obj))
@@ -72,7 +69,7 @@ export class BibAvis extends LitElement {
       task: async ([service, contexte, niveau], { signal }) => {
 
         const doGetAvis = new Promise(async (resolve, reject) => {
-          if (!isEmpty(this)) {
+          if (!nodeIsEmpty(this)) {
             return resolve({ isLocal: true, message: this.innerHTML.split(/<!--\?lit\$\d+\$-->/).join('') })
           }
 

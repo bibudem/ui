@@ -30,7 +30,11 @@
   },
   "dependencies": {
     "@material/web": "^1.4.1",
-    "idb": "^8.0.0"
+    "@whitespace/storybook-addon-html": "^6.1.1",
+    "boolify-string": "^2.0.2",
+    "express": "^4.19.2",
+    "idb": "^8.0.0",
+    "postmessage-promise": "^3.2.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.24.1",

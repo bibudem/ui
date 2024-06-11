@@ -13,6 +13,13 @@ export const parameters = {
       sourceState: 'shown'
     }
   },
+  html: {
+    root: '#root-inner',
+    removeEmptyComments: true, // default: false
+    highlighter: {
+      showLineNumbers: true
+    }
+  },
 }
 
 
