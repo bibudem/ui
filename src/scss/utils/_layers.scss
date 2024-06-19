@@ -1,4 +1,4 @@
-$layers: 'reset', 'component', 'states' !default;
+$layers: 'reset', 'theme', 'component', 'states' !default;
 
 @mixin _layer($name) {
   @layer #{$name} {
@@ -8,6 +8,12 @@ $layers: 'reset', 'component', 'states' !default;
 
 @mixin reset {
   @include _layer(reset) {
+    @content;
+  }
+}
+
+@mixin theme {
+  @include _layer(theme) {
     @content;
   }
 }

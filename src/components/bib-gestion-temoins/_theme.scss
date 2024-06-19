@@ -1,0 +1,9 @@
+@use '@/scss/utils/layers';
+
+@include layers.theme {
+  a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    color: inherit;
+  }
+}

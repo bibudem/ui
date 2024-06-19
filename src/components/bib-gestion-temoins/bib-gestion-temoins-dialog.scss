@@ -1,0 +1,69 @@
+@use '@/scss/utils/layers';
+@use '@/scss/reset';
+@use '@/scss/theme';
+@use '@/scss/tokens/ref-typeface';
+
+@include layers.order;
+
+@include reset.button;
+@include reset.dialog;
+
+@include layers.component {
+  :host {
+    --_gestion-temoins-text-size: 14.62px;
+    --_gestion-temoins-text-line-height: 17.5px;
+    --_gestion-temoins-title-text-size: 18px;
+    --_gestion-temoins-title-text-line-height: 20px;
+
+    font-size: var(--_gestion-temoins-text-size);
+    line-height: var(--_gestion-temoins-text-line-height);
+  }
+
+  .btn-close-modal {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    z-index: 10;
+  }
+
+  .modal-container {
+    border-top: 10px solid #0b113a;
+    bottom: 0;
+    color: #0b113a;
+    background: #e5f0f8;
+    height: 450px;
+    max-height: 80%;
+    text-align: left;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+
+    @media screen and (min-width: 640px) {
+      height: auto;
+    }
+  }
+
+  .content-container {
+    font-size: var(--_gestion-temoins-text-size);
+    height: 100%;
+    line-height: var(--_gestion-temoins-text-line-height);
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 60px 35px 25px;
+    z-index: 0;
+
+    @media screen and (min-width: 640px) {
+      height: 450px;
+    }
+    //x-sm
+    @media screen and (min-width: 375px) {
+      padding: 50px 35px 25px;
+    }
+
+    //sm
+    @media screen and (min-width: 640px) {
+      height: auto;
+      padding: 50px 50px 20px;
+    }
+  }
+}

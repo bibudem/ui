@@ -4,13 +4,11 @@
 @use '@/scss/states';
 @use '@/scss/tokens/ref-typeface';
 
-@use './toggle-switch';
+@import './theme';
 
 @include layers.order;
 
 @include reset.button;
-@include reset.dialog;
-@include reset.details;
 
 @include layers.reset {
   p {
@@ -19,158 +17,33 @@
 }
 
 @include layers.component {
-  :host {
-    --_gestion-temoins-text-size: 14.62px;
-    --_gestion-temoins-text-line-height: 17.5px;
-    --_gestion-temoins-title-text-size: 18px;
-    --_gestion-temoins-title-text-line-height: 20px;
-
-    /* Toggle */
-    --toggle-width: 40px;
-    --toggle-height: 17.5px;
-    --toggle-border: 1px;
-    --toggle-font-size: 7.5px;
-    --toggle-duration: 150ms;
-    --toggle-bg-on: #10b981;
-    --toggle-bg-off: #9397b0;
-    --toggle-bg-on-disabled: #d1d5db;
-    --toggle-bg-off-disabled: #e5e7eb;
-    --toggle-border-on: #10b981;
-    --toggle-border-off: #e5e7eb;
-    --toggle-border-on-disabled: #d1d5db;
-    --toggle-border-off-disabled: #e5e7eb;
-    --toggle-ring-width: 3px;
-    --toggle-ring-color: #10b98130;
-    --toggle-text-on: #ffffff;
-    --toggle-text-off: #374151;
-    --toggle-text-on-disabled: #9ca3af;
-    --toggle-text-off-disabled: #9ca3af;
-    --toggle-handle-enabled: #ffffff;
-    --toggle-handle-disabled: #f3f4f6;
-
+  p {
     font-size: var(--_gestion-temoins-text-size);
-  }
-
-  /* Style */
-  .modal-backdrop {
-    background-color: transparent;
-    bottom: 0;
-    left: 0;
-    overflow-y: auto;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
-    z-index: 200;
-
-    > div {
-      display: flex;
-      justify-content: center;
-    }
-  }
-
-  .modal-container {
-    border-top: 10px solid #0b113a;
-    bottom: 0;
-    color: #0b113a;
-    background: #e5f0f8;
-    height: 450px;
-    max-height: 80%;
-    text-align: left;
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-
-    @media screen and (min-width: 640px) {
-      height: auto;
-    }
-
-    a {
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-  }
-
-  .step-two-container {
-    height: 80%;
-
-    //sm
-    @media screen and (min-width: 640px) {
-      height: 450px;
-    }
-  }
-
-  .btn-close-modal {
-    position: absolute;
-    right: 10px;
-    top: 15px;
-    z-index: 10;
-  }
-
-  .consent-container,
-  .preferences-container {
-    font-size: var(--_gestion-temoins-text-size);
-    height: 100%;
     line-height: var(--_gestion-temoins-text-line-height);
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 60px 35px 25px;
-    z-index: 0;
+  }
 
-    p {
-      font-size: var(--_gestion-temoins-text-size);
-      line-height: var(--_gestion-temoins-text-line-height);
-    }
+  .title {
+    font-size: var(--_gestion-temoins-title-text-size);
+    line-height: var(--_gestion-temoins-title-text-line-height);
+    padding-bottom: 12.5px;
+  }
 
-    > span {
-      display: block;
-      font-size: var(--_gestion-temoins-title-text-size);
-      line-height: var(--_gestion-temoins-title-text-line-height);
-      padding-bottom: 12.5px;
-    }
-
-    div.learn-more-container {
-      font-size: var(--_gestion-temoins-text-size);
-      line-height: var(--_gestion-temoins-text-line-height);
-
-      @media screen and (min-width: 640px) {
-        padding-bottom: 5px;
-      }
-    }
-
-    div.learn-more-container {
-      margin: 20px 0 0;
-
-      @media screen and (min-width: 640px) {
-        margin: 14px 0 0;
-      }
-    }
+  .learn-more-container {
+    margin: 20px 0 0;
 
     @media screen and (min-width: 640px) {
-      height: 450px;
+      margin: 14px 0 0;
+      padding-bottom: 5px;
     }
   }
 
-  .consent-container {
-    //x-sm
-    @media screen and (min-width: 375px) {
-      padding: 50px 35px 25px;
-    }
+  p {
+    font-size: var(--_gestion-temoins-text-size);
+    line-height: var(--_gestion-temoins-text-line-height);
+    padding-bottom: 20px;
 
-    //sm
     @media screen and (min-width: 640px) {
-      height: auto;
-      padding: 50px 50px 20px;
-    }
-
-    p {
-      font-size: var(--_gestion-temoins-text-size);
-      line-height: var(--_gestion-temoins-text-line-height);
-      padding-bottom: 20px;
-
-      @media screen and (min-width: 640px) {
-        padding-bottom: 5px;
-      }
+      padding-bottom: 5px;
     }
   }
 

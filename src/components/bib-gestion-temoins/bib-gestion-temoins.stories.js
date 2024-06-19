@@ -21,7 +21,7 @@ export default {
  */
 export const GestionTemoins = {
   render: function () {
-    return html`<bib-gestion-temoins server-url="/server-gestion-temoins?debug"><p>Ceci est du texte avec du <strong>gras</strong>...</p></bib-gestion-temoins>`
+    return html`<bib-gestion-temoins debug server-url="/server-gestion-temoins"><p>Ceci est du texte avec du <strong>gras</strong>...</p></bib-gestion-temoins>`
   }
 }
 

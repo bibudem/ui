@@ -1,50 +1,107 @@
-import { LitElement, css, html, unsafeCSS } from 'lit'
-import '../bib-button/bib-button-close.js'
+import { css, html, LitElement, nothing, unsafeCSS } from 'lit'
+import { createRef, ref } from 'lit/directives/ref.js'
+import PerfectScrollbar from 'perfect-scrollbar'
+import { DEFAULT_PREFERENCES } from './constants.js'
+import styles from './bib-gestion-temoins-dialog.scss?inline'
+
+function all(value) {
+  return Object.keys(DEFAULT_PREFERENCES).reduce((prefs, prop) => ({ ...prefs, [prop]: value }), {})
+}
 
 export class BibGestionTemoinsDialog extends LitElement {
   static properties = {
+    debug: {
+      type: Boolean,
+      reflect: true
+    },
     open: {
-      type: Boolean
+      type: Boolean,
+      reflect: true
+    },
+    showClose: {
+      type: Boolean,
+      reflect: true,
+      attribute: 'show-close'
     }
   }
+
+  static styles = [
+    css`${unsafeCSS(styles)}`
+  ]
 
   constructor() {
     super()
     this.open = false
+    this.showClose = false
+    this.dialogRef = createRef()
   }
 
-  // createRenderRoot() {
-  //   return document.body
-  // }
-
-  _onCloseBtnClick(event) {
-    console.log('[_onCloseBtnClick] event: ', event)
+  connectedCallback() {
+    super.connectedCallback()
+    console.log('this.dialogRef.value: ', this.dialogRef.value)
+    console.log('this.dialogRef.value?.querySelector...:', this.dialogRef.value?.querySelector('> .content-container'))
+    this.#initScrollbars()
+    this.dialogRef.value?.addEventListener('close', () => this.#close())
   }
 
-  renderConsent() {
-    return html`
-      <div class="show-modal">
-        <span>L’UdeM reconnaît l’importance de respecter la vie privée</span>
-        <p>L’utilisation de témoins nous permet d’améliorer et de personnaliser votre expérience Web. Certains témoins sont obligatoires pour assurer le fonctionnement et la sécurité du site Web, alors que d’autres enregistrent vos préférences. En acceptant tout, vous consentez à notre utilisation de témoins pour mieux répondre à vos besoins.</p>
-        <div class="btn-modal-container">
-          <button class="btn-consent open-modal-parameter" type="button">Personnaliser les témoins <span>&gt;</span></button>
-          <button class="btn-consent" type="button">Tout refuser</button>
-          <button class="btn-consent" type="button">Tout accepter</button>
-        </div>
-        <div class="learn-more-container">
-          Voir notre <a href="https://vie-privee.umontreal.ca/confidentialite">politique de confidentialité</a> et nos <a href="https://vie-privee.umontreal.ca/conditions-dutilisation">conditions d’utilisation</a>.
-        </div>
-      </div>
-    `
+  setPreferences(preferences) {
+    this.dispatchEvent(new CustomEvent('update', { detail: preferences }))
+  }
+
+  show() {
+    console.log('show')
+    if (this.dialogRef.value && !this.dialogRef.value.open) {
+      this.dialogRef.value?.show()
+      this.open = true
+    }
+
+  }
+
+  #close() {
+    this.open = false
+  }
+
+  close() {
+    if (this.dialogRef.value && this.dialogRef.value.open) {
+      this.dialogRef.value?.close()
+    }
+  }
+
+  #initScrollbars() {
+
+    const scrollBarOptions = {
+      maxScrollbarLength: 150,
+      minScrollbarLength: 150,
+      suppressScrollX: true
+    }
+
+    this.contentScrollBar = new PerfectScrollbar(this.dialogRef.value.querySelector('> .content-container'), scrollBarOptions)
+  }
+
+  #handleOnCloseBtnClick(event) {
+    this.dispatchEvent(new Event('close'))
+  }
+
+  #showCloseButton() {
+    return this.showClose ? html`
+        <bib-button-close @click="${this.#handleOnCloseBtnClick}" class="btn-close-modal"></bib-button-close>
+        ` : nothing
+  }
+
+  showPreferences() {
+    console.log('parent: ', this.parentElement)
+    this.dispatchEvent(new CustomEvent('show-preferences'))
   }
 
   render() {
     return html`
-    <dialog ?open=${this.open}>
-      <bib-button-close @click="${this._onCloseBtnClick}" class="btn-close-modal"></bib-button-close>
-      <slot></slot>
-      <!-- ${this.renderConsent()} -->
-    </dialog>
+      <dialog id="consent-dialog" class='modal-container' ${ref(this.dialogRef)}>
+        ${this.#showCloseButton()}
+        <div class="content-container">
+          <slot></slot>
+          </div>
+        </div>
+      </dialog>
     `
   }
 }

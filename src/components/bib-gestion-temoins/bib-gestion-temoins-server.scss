@@ -1,0 +1,50 @@
+:host {
+  display: none;
+}
+
+:host([debug]) {
+  display: block;
+}
+
+body {
+  margin: 0;
+}
+
+h1 {
+  text-align: center;
+  padding: 0.25em 0;
+  margin: 0;
+  font: unset;
+  font-variant: all-small-caps;
+  background-color: rgb(229 229 229);
+}
+
+.log-container {
+  padding: 0.25rem 0.25rem 0;
+  font-size: small;
+  border: 1px solid silver;
+}
+
+.log {
+  -webkit-text-size-adjust: 100%;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace !important;
+  font-size: small;
+  margin: 0;
+  padding: 0.25rem 0 0;
+  resize: none;
+  width: 100%;
+  background-color: unset;
+  box-sizing: border-box;
+  // color: transparent;
+  border: none;
+  tab-size: 8;
+  outline: none;
+  // overflow: auto hidden;
+  // height: 1200px;
+  // font-size: 12px;
+  line-height: 20px;
+  overflow-wrap: normal;
+  overscroll-behavior-x: none;
+  white-space: pre;
+  z-index: 1;
+}

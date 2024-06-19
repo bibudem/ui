@@ -1,16 +1,19 @@
-import { SERVER_MODE } from './constants.js'
+import { callServer } from 'postmessage-promise'
 import PreferencesStorage from './preferencesStorage.js'
-import { getIframeServer, getServerMode, hasDebugParam } from './utils.js'
+import { getIframeServer, getServerMode } from './utils.js'
+import { SERVER_MODE } from './constants.js'
+import { stringIsUrl } from '@/utils/url.js'
 
 export default class PreferencesProxy extends EventTarget {
   #remoteServer
   #localServer
   #debugIsOn = false
 
-  constructor(serverUrl, options) {
+  constructor(client, { reflectEvents = true } = {}) {
     super()
-    this.serverUrl = new URL(serverUrl, location)
-    this.#debugIsOn = hasDebugParam(this.serverUrl)
+
+    this.client = client
+    this.reflectEvents = reflectEvents
     this.init()
   }
 
@@ -20,12 +23,41 @@ export default class PreferencesProxy extends EventTarget {
     }
   }
 
+  dispatchEvent(event) {
+    super.dispatchEvent(event)
+    if (this.reflectEvents) {
+      this.client.dispatchEvent(event)
+    }
+  }
+
   async init() {
 
+    if (
+      (
+        Reflect.has(this.client, SERVER_MODE.LOCAL)
+        &&
+        this.client[SERVER_MODE.LOCAL] === true
+      )
+      ||
+      !Reflect.has(this.client, 'serverUrl')
+      ||
+      !stringIsUrl(this.client.serverUrl)
+    ) {
+      this.serverMode = SERVER_MODE.LOCAL
+    } else {
+
+      this.serverUrl = new URL(this.client.serverUrl, location)
+
+      if (this.client.debug) {
+        this.serverUrl.searchParams.set('debug', '')
+      }
+
+      this.serverMode = await getServerMode(this)
+
+    }
+    this.#debugIsOn = Reflect.has(this.client, 'debug')
+
     this.debug('init')
-
-    this.serverMode = await getServerMode(this)
-
     this.debug('init', `server mode: ${this.serverMode}`)
 
     if (this.serverMode === SERVER_MODE.REMOTE) {
@@ -41,7 +73,7 @@ export default class PreferencesProxy extends EventTarget {
       const preferences = await server.postMessage('getPreferences')
       console.log('Got response from server: ', preferences)
 
-      const proxyReadyEvent = new CustomEvent('proxy-ready', { detail: preferences })
+      const proxyReadyEvent = new CustomEvent('ready', { detail: preferences })
       this.dispatchEvent(proxyReadyEvent)
 
     } else {
@@ -52,7 +84,7 @@ export default class PreferencesProxy extends EventTarget {
       })
 
       const preferences = await this.#localServer.getPreferences()
-      const proxyReadyEvent = new CustomEvent('proxy-ready', { detail: preferences })
+      const proxyReadyEvent = new CustomEvent('ready', { detail: preferences })
       this.dispatchEvent(proxyReadyEvent)
     }
   }

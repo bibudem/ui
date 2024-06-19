@@ -1,8 +1,5 @@
-import { EVENT_TYPE_CONSENT } from './constants.js'
-import { k } from './utils.js'
-
-const PREFERENCES_TEMPLATE = { performanceCookies: null, functionalityCookies: null, adsCookies: null }
-
+import { EVENT_TYPES, DEFAULT_PREFERENCES } from './constants.js'
+import { getKeyName } from './utils.js'
 
 // Wraps a localstorage for now, but it may evolve...
 // Async methods, which make it easier to adapt to other storages
@@ -18,7 +15,7 @@ export default class PreferenceStorage extends EventTarget {
    * @return void
    */
   addEventListener(listener) {
-    super.addEventListener(EVENT_TYPE_CONSENT, listener)
+    super.addEventListener(EVENT_TYPES.CONSENT, listener)
   }
 
   /*
@@ -28,7 +25,7 @@ export default class PreferenceStorage extends EventTarget {
   dispatchEvent(detail) {
     super.dispatchEvent(
       new CustomEvent(
-        EVENT_TYPE_CONSENT,
+        EVENT_TYPES.CONSENT,
         { detail }
       )
     )
@@ -37,14 +34,14 @@ export default class PreferenceStorage extends EventTarget {
   async getPreferences() {
     await Promise.resolve()
 
-    const preferences = Object.assign({}, PREFERENCES_TEMPLATE)
+    const preferences = Object.assign({}, DEFAULT_PREFERENCES)
 
     for (const key of Object.keys(preferences)) {
       // Si une clé n'est pas définie, on retourne null pour "Tout doit être redemandé"
-      if (localStorage.getItem(k(key)) === null) {
+      if (localStorage.getItem(getKeyName(key)) === null) {
         return null
       } else {
-        preferences[key] = localStorage.getItem(k(key)) === 'true'
+        preferences[key] = localStorage.getItem(getKeyName(key)) === 'true'
       }
     }
 
@@ -69,7 +66,7 @@ export default class PreferenceStorage extends EventTarget {
 
       if ((oldValue !== null && value !== oldValue[key]) || oldValue === null) {
         //localStorage always stores strings, be to be clear, let's write explicit 'true' / 'false'
-        localStorage.setItem(k(key), value ? 'true' : 'false')
+        localStorage.setItem(getKeyName(key), value ? 'true' : 'false')
 
         update = true
         preferences[key] = value

@@ -1,25 +1,9 @@
 import { utils as postmessageUtils } from 'postmessage-promise'
-import boolifyString from 'boolify-string'
+import { hasBooleanParam } from '@/utils/url.js'
 import { PREFIX, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT } from './constants.js'
 
-export function k(key) {
+export function getKeyName(key) {
   return `${PREFIX}-${key}`
-}
-
-export function hasDebugParam(url) {
-  url = typeof url === 'string' ? new URL(url, location) : url
-
-  const debugParam = url.searchParams.get('debug')
-
-  if (debugParam === null) {
-    return false
-  }
-
-  if (debugParam === '') {
-    return true
-  }
-
-  return boolifyString(debugParam)
 }
 
 export function getIframeServer(
@@ -28,18 +12,28 @@ export function getIframeServer(
 ) {
   const root = typeof container !== 'undefined' ? container : document.body
   const origin = postmessageUtils.resolveOrigin(targetUrl)
-  const iframe = document.createElement('iframe')
-  const isDebugOn = hasDebugParam(targetUrl)
+  const iframeId = getKeyName('iframe')
+  let iframe
+  if (document.querySelector(`#${iframeId}`)) {
+    iframe = document.querySelector(`#${iframeId}`)
+  } else {
+    iframe = document.createElement('iframe')
+    iframe.id = iframeId
 
-  if (!isDebugOn) {
-    iframe.ariaHidden = true
-    iframe.tabIndex = -1
-    iframe.hidden = true
-    iframe.style.setProperty('display', 'none')
+    const isDebugOn = hasBooleanParam(targetUrl, 'debug')
+
+    if (!isDebugOn) {
+      iframe.ariaHidden = true
+      iframe.tabIndex = -1
+      iframe.hidden = true
+      iframe.style.setProperty('display', 'none')
+    } else {
+      iframe.style.cssText = 'width: 100%; height: 100%; border: 0;'
+    }
+
+    root.appendChild(iframe)
+    iframe.src = targetUrl
   }
-
-  root.appendChild(iframe)
-  iframe.src = targetUrl
 
   const iframeWindow = iframe.contentWindow || iframe.contentDocument.parentWindow
 
@@ -50,19 +44,12 @@ export function getIframeServer(
   }
 }
 
-export async function getServerMode(client, timeout) {
+export async function getServerMode(client, timeout = SERVER_REQUEST_DEFAULT_TIMEOUT) {
 
-  timeout = timeout || client.timeout || SERVER_REQUEST_DEFAULT_TIMEOUT
+  const serverUrl = client.serverUrl
 
-  if (!client.server) {
+  if (!serverUrl) {
     return SERVER_MODE.LOCAL
-  }
-
-  let serverUrl
-  try {
-    serverUrl = new URL(client.server, location)
-  } catch (error) {
-    throw new Error('The server property has an invalid value: ', error)
   }
 
   // Check if server page exists
@@ -71,7 +58,7 @@ export async function getServerMode(client, timeout) {
 
   try {
     const timeoutHandle = setTimeout(() => {
-      console.log('Aborting request...')
+      console.log('Request timed out. Aborting request...')
       controller.abort()
     }, timeout)
     response = await fetch(serverUrl, { signal: controller.signal })

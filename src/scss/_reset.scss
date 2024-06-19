@@ -1,39 +1,66 @@
-@use 'utils/layer';
+@use 'utils/layers';
+
+// Common resets applied to all elements
+
+@include layers.reset {
+  :host,
+  * {
+    box-sizing: border-box;
+  }
+
+  :host {
+    -webkit-font-smoothing: antialiased;
+  }
+}
 
 @mixin dialog {
-  @include layer.reset {
+  @include layers.reset {
     dialog {
       margin: 0;
       padding: 0;
+      border: unset;
     }
   }
 }
 
 @mixin button {
-  @include layer.reset {
-    button,
-    [type='button'],
-    [type='reset'],
-    [type='submit'],
-    [role='button'] {
-      &:not(:disabled) {
-        cursor: pointer;
+  @include layers.reset {
+    button {
+      border: unset;
+
+      &,
+      [type='button'],
+      [type='reset'],
+      [type='submit'],
+      [role='button'] {
+        &:not(:disabled) {
+          cursor: pointer;
+        }
       }
     }
   }
-
-  // @mixin reset($elements...) {
-  //   @for $i from 0 to length($elements) {
-  //     @include #{nth($elements, $i + 1)};
-  //   }
-  // }
 }
 
-// Common resets
+//
+// source: https://css-tricks.com/two-issues-styling-the-details-element-and-how-to-solve-them/
+//
 
-@include layer.reset {
-  :host,
-  * {
-    box-sizing: border-box;
+@mixin details {
+  @include layers.reset {
+    details {
+      summary {
+        cursor: pointer;
+
+        > * {
+          display: inline;
+        }
+      }
+    }
   }
 }
+
+// @mixin reset($elements...) {
+//   @for $i from 0 to length($elements) {
+//     @include #{nth($elements, $i + 1)};
+//   }
+// }

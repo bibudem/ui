@@ -1,0 +1,180 @@
+@use '@/scss/utils/layers';
+@use '@/scss/reset';
+@use '@/scss/theme';
+@use '@/scss/states';
+@use '@/scss/tokens/ref-typeface';
+
+@use './toggle-switch';
+
+@include layers.order;
+
+@include reset.button;
+@include reset.dialog;
+@include reset.details;
+
+@include layers.reset {
+  p {
+    margin: 0;
+  }
+}
+
+@include layers.component {
+  :host {
+    --_gestion-temoins-text-size: 14.62px;
+    --_gestion-temoins-text-line-height: 17.5px;
+    --_gestion-temoins-title-text-size: 18px;
+    --_gestion-temoins-title-text-line-height: 20px;
+
+    font-size: var(--_gestion-temoins-text-size);
+  }
+
+  .modal-container {
+    border-top: 10px solid #0b113a;
+    bottom: 0;
+    color: #0b113a;
+    background: #e5f0f8;
+    height: 450px;
+    max-height: 80%;
+    text-align: left;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+
+    @media screen and (min-width: 640px) {
+      height: auto;
+    }
+
+    a {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  }
+
+  .consent-container,
+  .preferences-container {
+    font-size: var(--_gestion-temoins-text-size);
+    height: 100%;
+    line-height: var(--_gestion-temoins-text-line-height);
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 60px 35px 25px;
+    z-index: 0;
+
+    p {
+      font-size: var(--_gestion-temoins-text-size);
+      line-height: var(--_gestion-temoins-text-line-height);
+    }
+
+    > span {
+      display: block;
+      font-size: var(--_gestion-temoins-title-text-size);
+      line-height: var(--_gestion-temoins-title-text-line-height);
+      padding-bottom: 12.5px;
+    }
+
+    div.learn-more-container {
+      font-size: var(--_gestion-temoins-text-size);
+      line-height: var(--_gestion-temoins-text-line-height);
+
+      @media screen and (min-width: 640px) {
+        padding-bottom: 5px;
+      }
+    }
+
+    div.learn-more-container {
+      margin: 20px 0 0;
+
+      @media screen and (min-width: 640px) {
+        margin: 14px 0 0;
+      }
+    }
+
+    @media screen and (min-width: 640px) {
+      height: 450px;
+    }
+  }
+
+  .consent-container {
+    //x-sm
+    @media screen and (min-width: 375px) {
+      padding: 50px 35px 25px;
+    }
+
+    //sm
+    @media screen and (min-width: 640px) {
+      height: auto;
+      padding: 50px 50px 20px;
+    }
+
+    p {
+      font-size: var(--_gestion-temoins-text-size);
+      line-height: var(--_gestion-temoins-text-line-height);
+      padding-bottom: 20px;
+
+      @media screen and (min-width: 640px) {
+        padding-bottom: 5px;
+      }
+    }
+  }
+
+  .btn-modal-container {
+    justify-content: center;
+    margin: 0 auto;
+
+    //x-sm
+    @media screen and (min-width: 375px) {
+    }
+
+    //sm
+    @media screen and (min-width: 640px) {
+      display: flex;
+      justify-content: normal;
+      margin: 0;
+    }
+  }
+
+  .btn-consent {
+    background-color: #0b113a;
+    color: #fff;
+    display: flex;
+    font-weight: 500;
+    font-size: var(--_gestion-temoins-text-size);
+    line-height: var(--_gestion-temoins-text-line-height);
+    justify-content: center;
+    margin: 7.5px auto 0;
+    padding: 5px 15px;
+    width: 200px;
+
+    //sm
+    @media screen and (min-width: 640px) {
+      float: left;
+      margin: 7.5px 0 0 7.5px;
+      width: auto;
+    }
+
+    span {
+      color: #0057ac;
+      padding-left: 6.25px;
+    }
+  }
+
+  .btn-consent.open-modal-parameter {
+    background-color: transparent;
+    border: 1px solid #0057ac;
+    color: #0b113a;
+
+    @media screen and (min-width: 640px) {
+      margin-left: 0;
+    }
+  }
+
+  .confirm-selection {
+    @media screen and (min-width: 640px) {
+      margin-left: 0;
+    }
+  }
+
+  .update-information {
+    margin-top: 20px;
+  }
+}
