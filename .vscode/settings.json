@@ -5,6 +5,7 @@
     "deps",
     "storybook",
     "udem-urgence",
-    "bib-button"
+    "bib-button",
+    "bib-consent"
   ]
 }

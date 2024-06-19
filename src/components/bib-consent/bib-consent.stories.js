@@ -1,10 +1,10 @@
 import { html } from 'lit'
-import './bib-gestion-temoins'
-import './bib-gestion-temoins-server'
+import './bib-consent'
+import './bib-consent-server'
 
 export default {
   title: 'Composants/Gestion des témoins',
-  component: 'BibGestionTemoins',
+  component: 'BibConsent',
   tags: ['autodocs'],
   parameters: {
     cssprops: {
@@ -21,7 +21,7 @@ export default {
  */
 export const GestionTemoins = {
   render: function () {
-    return html`<bib-gestion-temoins debug server-url="/server-gestion-temoins"><p>Ceci est du texte avec du <strong>gras</strong>...</p></bib-gestion-temoins>`
+    return html`<bib-consent debug server-url="/consent-server"><p>Ceci est du texte avec du <strong>gras</strong>...</p></bib-consent>`
   }
 }
 
@@ -30,6 +30,6 @@ export const GestionTemoins = {
  */
 export const GestionTemoinsServer = {
   render: function () {
-    return html`<bib-gestion-temoins-server></bib-gestion-temoins-server>`
+    return html`<bib-consent-server></bib-consent-server>`
   }
 }

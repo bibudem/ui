@@ -20,10 +20,10 @@
 
 @include layers.component {
   :host {
-    --_gestion-temoins-text-size: 14.62px;
-    --_gestion-temoins-text-line-height: 17.5px;
-    --_gestion-temoins-title-text-size: 18px;
-    --_gestion-temoins-title-text-line-height: 20px;
+    --_consent-text-size: 14.62px;
+    --_consent-text-line-height: 17.5px;
+    --_consent-title-text-size: 18px;
+    --_consent-title-text-line-height: 20px;
 
     /* Toggle */
     --toggle-width: 40px;
@@ -48,7 +48,7 @@
     --toggle-handle-enabled: #ffffff;
     --toggle-handle-disabled: #f3f4f6;
 
-    font-size: var(--_gestion-temoins-text-size);
+    font-size: var(--_consent-text-size);
   }
 
   /* Style */
@@ -109,29 +109,29 @@
 
   .consent-container,
   .preferences-container {
-    font-size: var(--_gestion-temoins-text-size);
+    font-size: var(--_consent-text-size);
     height: 100%;
-    line-height: var(--_gestion-temoins-text-line-height);
+    line-height: var(--_consent-text-line-height);
     margin: 0 auto;
     max-width: 1200px;
     padding: 60px 35px 25px;
     z-index: 0;
 
     p {
-      font-size: var(--_gestion-temoins-text-size);
-      line-height: var(--_gestion-temoins-text-line-height);
+      font-size: var(--_consent-text-size);
+      line-height: var(--_consent-text-line-height);
     }
 
     > span {
       display: block;
-      font-size: var(--_gestion-temoins-title-text-size);
-      line-height: var(--_gestion-temoins-title-text-line-height);
+      font-size: var(--_consent-title-text-size);
+      line-height: var(--_consent-title-text-line-height);
       padding-bottom: 12.5px;
     }
 
     div.learn-more-container {
-      font-size: var(--_gestion-temoins-text-size);
-      line-height: var(--_gestion-temoins-text-line-height);
+      font-size: var(--_consent-text-size);
+      line-height: var(--_consent-text-line-height);
 
       @media screen and (min-width: 640px) {
         padding-bottom: 5px;
@@ -164,8 +164,8 @@
     }
 
     p {
-      font-size: var(--_gestion-temoins-text-size);
-      line-height: var(--_gestion-temoins-text-line-height);
+      font-size: var(--_consent-text-size);
+      line-height: var(--_consent-text-line-height);
       padding-bottom: 20px;
 
       @media screen and (min-width: 640px) {
@@ -214,8 +214,8 @@
     color: #fff;
     display: flex;
     font-weight: 500;
-    font-size: var(--_gestion-temoins-text-size);
-    line-height: var(--_gestion-temoins-text-line-height);
+    font-size: var(--_consent-text-size);
+    line-height: var(--_consent-text-line-height);
     justify-content: center;
     margin: 7.5px auto 0;
     padding: 5px 15px;
@@ -282,7 +282,7 @@
     }
 
     ul li {
-      font-size: var(--_gestion-temoins-text-size);
+      font-size: var(--_consent-text-size);
       list-style-type: disc;
       margin: 10px 0 0 15px;
     }
@@ -476,8 +476,8 @@
 
   .toggle-container.label {
     color: #0b113a;
-    font-size: var(--_gestion-temoins-text-size);
-    line-height: var(--_gestion-temoins-text-line-height);
+    font-size: var(--_consent-text-size);
+    line-height: var(--_consent-text-line-height);
     right: 10px;
     text-align: right;
     text-wrap: wrap;

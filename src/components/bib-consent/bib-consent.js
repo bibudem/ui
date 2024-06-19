@@ -8,9 +8,9 @@ import './consent-dialog.js'
 import './preferences-dialog.js'
 import PreferencesProxy from './PreferencesProxy.js'
 import { SERVER_MODE, DEFAULT_PREFERENCES } from './constants.js'
-import styles from './bib-gestion-temoins.scss?inline'
+import styles from './bib-consent.scss?inline'
 
-export class BibGestionTemoins extends LitElement {
+export class BibConsent extends LitElement {
   static properties = {
     serverUrl: {
       type: String,
@@ -73,7 +73,7 @@ export class BibGestionTemoins extends LitElement {
     super.connectedCallback()
     const self = this
     this.debug = this.debug || false
-    this.serverUrl = this.serverUrl || 'https://bib.umontreal.ca/gestion-temoins/server'
+    this.serverUrl = this.serverUrl || 'https://bib.umontreal.ca/consent/server'
     this.serverRequestTimeout = this.serverRequestTimeout || 500
     this.#preferencesProxy = new PreferencesProxy(this)
     this.#preferencesProxy.addEventListener.call(self, 'ready', event => {
@@ -81,7 +81,7 @@ export class BibGestionTemoins extends LitElement {
 
       // this.#initScrollbars()
 
-      this.dispatchEvent(new CustomEvent('bib:gestion-temoins:ready'))
+      this.dispatchEvent(new CustomEvent('bib:consent:ready'))
 
       if (event.detail) {
         this.#preferences = event.detail
@@ -138,4 +138,4 @@ export class BibGestionTemoins extends LitElement {
   }
 }
 
-customElements.define('bib-gestion-temoins', BibGestionTemoins)
+customElements.define('bib-consent', BibConsent)

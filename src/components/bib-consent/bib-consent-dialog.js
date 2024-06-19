@@ -2,13 +2,13 @@ import { css, html, LitElement, nothing, unsafeCSS } from 'lit'
 import { createRef, ref } from 'lit/directives/ref.js'
 import PerfectScrollbar from 'perfect-scrollbar'
 import { DEFAULT_PREFERENCES } from './constants.js'
-import styles from './bib-gestion-temoins-dialog.scss?inline'
+import styles from './bib-consent-dialog.scss?inline'
 
 function all(value) {
   return Object.keys(DEFAULT_PREFERENCES).reduce((prefs, prop) => ({ ...prefs, [prop]: value }), {})
 }
 
-export class BibGestionTemoinsDialog extends LitElement {
+export class BibConsentDialog extends LitElement {
   static properties = {
     debug: {
       type: Boolean,
@@ -106,4 +106,4 @@ export class BibGestionTemoinsDialog extends LitElement {
   }
 }
 
-customElements.define('bib-gestion-temoins-dialog', BibGestionTemoinsDialog)
+customElements.define('bib-consent-dialog', BibConsentDialog)

@@ -3,21 +3,10 @@ import { createRef, ref } from 'lit/directives/ref.js'
 import PerfectScrollbar from 'perfect-scrollbar'
 import '@auroratide/toggle-switch/lib/define.js'
 import { SERVER_MODE, DEFAULT_PREFERENCES } from './constants.js'
-import styles from './bib-gestion-temoins.scss?inline'
+// import styles from './bib-consent.scss?inline'
 
 export class PreferencesDialog extends LitElement {
   static properties = {
-    serverUrl: {
-      type: String,
-      attribute: 'server-url'
-    },
-    serverRequestTimeout: {
-      type: Number,
-      attribute: 'server-request-timeout'
-    },
-    [SERVER_MODE.LOCAL]: {
-      type: Boolean
-    },
     debug: {
       type: Boolean,
       reflect: true
@@ -28,9 +17,9 @@ export class PreferencesDialog extends LitElement {
     },
   }
 
-  static styles = [
-    css`${unsafeCSS(styles)}`
-  ]
+  // static styles = [
+  //   css`${unsafeCSS(styles)}`
+  // ]
 
   #preferencesProxy
   #preferences
@@ -69,7 +58,7 @@ export class PreferencesDialog extends LitElement {
     super.connectedCallback()
     const self = this
     this.debug = this.debug || false
-    this.serverUrl = this.serverUrl || 'https://bib.umontreal.ca/gestion-temoins/server'
+    this.serverUrl = this.serverUrl || 'https://bib.umontreal.ca/consent/server'
     this.serverRequestTimeout = this.serverRequestTimeout || 500
     this.#preferencesProxy = new PreferencesProxy(this)
     this.#preferencesProxy.addEventListener.call(self, 'ready', event => {
@@ -77,7 +66,7 @@ export class PreferencesDialog extends LitElement {
 
       // this.#initScrollbars()
 
-      this.dispatchEvent(new CustomEvent('bib:gestion-temoins:ready'))
+      this.dispatchEvent(new CustomEvent('bib:consent:ready'))
 
       if (event.detail) {
         this.#preferences = event.detail
@@ -130,7 +119,7 @@ export class PreferencesDialog extends LitElement {
 
   render() {
     return html`
-      <bib-gestion-temoins-dialog id="preferences-dialog" class='modal-container step-two-container' ${ref(this.preferencesPanelRef)}>
+      <bib-consent-dialog id="preferences-dialog" class='modal-container step-two-container' ${ref(this.preferencesPanelRef)}>
           <div class="title">Personnaliser les témoins</div>
           <div class="personalized-cookies-description">
             <p>Les témoins (aussi appelés «&nbsp;cookies&nbsp;») sont de petits fichiers textes qui sont téléchargés lorsque vous consultez certaines pages d’un site et qui sont enregistrés dans la mémoire de l’appareil que vous utilisez. Ils permettent d’enregistrer certaines informations (type de navigateur, langue, pays, adresse IP, identifiant, etc.) afin d’être récupérées par le serveur lors de visites subséquentes. Ils sont utilisés pour mettre à jour et optimiser nos plateformes en fonction de l’utilisation que vous en faites et de vos besoins.</p>
@@ -209,7 +198,7 @@ export class PreferencesDialog extends LitElement {
             <div class="learn-more-container">Voir notre <a href="https://vie-privee.umontreal.ca/confidentialite">politique de confidentialité</a> et nos <a href="https://vie-privee.umontreal.ca/conditions-dutilisation">conditions d’utilisation</a>. </div>
           </div>
         </div>
-      </bib-gestion-temoins-dialog>
+      </bib-consent-dialog>
     `
   }
 }

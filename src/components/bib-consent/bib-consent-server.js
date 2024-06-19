@@ -2,9 +2,9 @@ import { css, html, LitElement, unsafeCSS } from 'lit'
 import { startListening } from 'postmessage-promise'
 import { createRef, ref } from 'lit/directives/ref.js'
 import PreferencesStorage from './preferencesStorage.js'
-import styles from './bib-gestion-temoins-server.scss?inline'
+import styles from './bib-consent-server.scss?inline'
 
-export class BibGestionTemoinsServer extends LitElement {
+export class BibConsentServer extends LitElement {
   #storage = new PreferencesStorage()
 
   static properties = {
@@ -31,7 +31,7 @@ export class BibGestionTemoinsServer extends LitElement {
 
   log() {
     const msg = [...arguments].map(part => typeof part === 'string' ? part : JSON.stringify(part)).join(' ')
-    console.log.apply(console, ['%c[bib-gestion-temoins-server]', 'color: green; font-weight: bold;', ...arguments])
+    console.log.apply(console, ['%c[bib-consent-server]', 'color: green; font-weight: bold;', ...arguments])
     this.loggerRef.value.value += `${this.loggerRef.value.value === '' ? '' : '\r'}${msg}`
   }
 
@@ -73,11 +73,11 @@ export class BibGestionTemoinsServer extends LitElement {
 
   render() {
     return html`
-      <h1>I am bib-gestion-temoins-server</h1>
+      <h1>I am bib-consent-server</h1>
       <div class="log-container">
         <textarea class="log" ${ref(this.loggerRef)}></textarea>
       </div>`
   }
 }
 
-customElements.define('bib-gestion-temoins-server', BibGestionTemoinsServer)
+customElements.define('bib-consent-server', BibConsentServer)

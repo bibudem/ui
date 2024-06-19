@@ -1,7 +1,7 @@
 export const EVENT_TYPES = {
-  CONSENT: 'bib:gestion-temoins:consent'
+  CONSENT: 'bib:consent:consent'
 }
-export const PREFIX = 'bib-gestion-temoins'
+export const PREFIX = 'bib-consent'
 export const SERVER_MODE = {
   LOCAL: 'local',
   REMOTE: 'remote'

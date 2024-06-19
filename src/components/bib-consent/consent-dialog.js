@@ -1,6 +1,6 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
 import { createRef, ref } from 'lit/directives/ref.js'
-import './bib-gestion-temoins-dialog.js'
+import './bib-consent-dialog.js'
 import { DEFAULT_PREFERENCES } from './constants.js'
 import styles from './consent-dialog.scss?inline'
 
@@ -53,7 +53,7 @@ export class ConsentDialog extends LitElement {
 
   render() {
     return html`
-      <bib-gestion-temoins-dialog id="consent-dialog" class='modal-container' ${ref(this.dialogRef)}>
+      <bib-consent-dialog id="consent-dialog" class='modal-container' ${ref(this.dialogRef)}>
           <div class="title">L’UdeM reconnaît l’importance de respecter la vie privée</div>
           <p>L’utilisation de témoins nous permet d’améliorer et de personnaliser votre expérience Web. Certains témoins sont obligatoires pour assurer le fonctionnement et la sécurité du site Web, alors que d’autres enregistrent vos préférences. En acceptant tout, vous consentez à notre utilisation de témoins pour mieux répondre à vos besoins.</p>
           <div class="btn-modal-container">
@@ -64,7 +64,7 @@ export class ConsentDialog extends LitElement {
           <div class="learn-more-container">
             Voir notre <a href="https://vie-privee.umontreal.ca/confidentialite">politique de confidentialité</a> et nos <a href="https://vie-privee.umontreal.ca/conditions-dutilisation">conditions d’utilisation</a>.
           </div>
-      </bib-gestion-temoins-dialog>
+      </bib-consent-dialog>
     `
   }
 }

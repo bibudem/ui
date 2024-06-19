@@ -10,13 +10,13 @@
 
 @include layers.component {
   :host {
-    --_gestion-temoins-text-size: 14.62px;
-    --_gestion-temoins-text-line-height: 17.5px;
-    --_gestion-temoins-title-text-size: 18px;
-    --_gestion-temoins-title-text-line-height: 20px;
+    --_consent-text-size: 14.62px;
+    --_consent-text-line-height: 17.5px;
+    --_consent-title-text-size: 18px;
+    --_consent-title-text-line-height: 20px;
 
-    font-size: var(--_gestion-temoins-text-size);
-    line-height: var(--_gestion-temoins-text-line-height);
+    font-size: var(--_consent-text-size);
+    line-height: var(--_consent-text-line-height);
   }
 
   .btn-close-modal {
@@ -44,9 +44,9 @@
   }
 
   .content-container {
-    font-size: var(--_gestion-temoins-text-size);
+    font-size: var(--_consent-text-size);
     height: 100%;
-    line-height: var(--_gestion-temoins-text-line-height);
+    line-height: var(--_consent-text-line-height);
     margin: 0 auto;
     max-width: 1200px;
     padding: 60px 35px 25px;

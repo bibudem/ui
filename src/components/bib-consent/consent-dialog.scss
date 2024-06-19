@@ -18,13 +18,13 @@
 
 @include layers.component {
   p {
-    font-size: var(--_gestion-temoins-text-size);
-    line-height: var(--_gestion-temoins-text-line-height);
+    font-size: var(--_consent-text-size);
+    line-height: var(--_consent-text-line-height);
   }
 
   .title {
-    font-size: var(--_gestion-temoins-title-text-size);
-    line-height: var(--_gestion-temoins-title-text-line-height);
+    font-size: var(--_consent-title-text-size);
+    line-height: var(--_consent-title-text-line-height);
     padding-bottom: 12.5px;
   }
 
@@ -38,8 +38,8 @@
   }
 
   p {
-    font-size: var(--_gestion-temoins-text-size);
-    line-height: var(--_gestion-temoins-text-line-height);
+    font-size: var(--_consent-text-size);
+    line-height: var(--_consent-text-line-height);
     padding-bottom: 20px;
 
     @media screen and (min-width: 640px) {
@@ -87,8 +87,8 @@
     color: #fff;
     display: flex;
     font-weight: 500;
-    font-size: var(--_gestion-temoins-text-size);
-    line-height: var(--_gestion-temoins-text-line-height);
+    font-size: var(--_consent-text-size);
+    line-height: var(--_consent-text-line-height);
     justify-content: center;
     margin: 7.5px auto 0;
     padding: 5px 15px;
@@ -155,7 +155,7 @@
     }
 
     ul li {
-      font-size: var(--_gestion-temoins-text-size);
+      font-size: var(--_consent-text-size);
       list-style-type: disc;
       margin: 10px 0 0 15px;
     }
@@ -349,8 +349,8 @@
 
   .toggle-container.label {
     color: #0b113a;
-    font-size: var(--_gestion-temoins-text-size);
-    line-height: var(--_gestion-temoins-text-line-height);
+    font-size: var(--_consent-text-size);
+    line-height: var(--_consent-text-line-height);
     right: 10px;
     text-align: right;
     text-wrap: wrap;
