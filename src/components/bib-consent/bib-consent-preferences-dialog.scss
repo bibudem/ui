@@ -1,0 +1,29 @@
+@use '@/scss/utils/layers';
+@use '@/scss/reset';
+@use '@/scss/tokens/ref-typeface';
+@use 'theme';
+@use 'content';
+@use 'accordion';
+@use 'switch';
+
+@include layers.order;
+
+@include reset.button;
+@include reset.dialog;
+@include reset.details;
+
+@include layers.reset {
+  p {
+    margin: 0;
+  }
+}
+
+@include layers.component {
+  .preferences {
+    position: fixed;
+    bottom: 0;
+    height: 400px;
+    display: block;
+    width: 100%;
+  }
+}

@@ -1,24 +1,16 @@
 @use 'utils/layers';
 
-// Common resets applied to all elements
-
-@include layers.reset {
-  :host,
-  * {
-    box-sizing: border-box;
-  }
-
-  :host {
-    -webkit-font-smoothing: antialiased;
-  }
-}
-
 @mixin dialog {
   @include layers.reset {
     dialog {
       margin: 0;
       padding: 0;
       border: unset;
+      color: inherit;
+      background-color: white;
+      inset-block: 0;
+      max-width: unset;
+      max-height: unset;
     }
   }
 }
@@ -59,8 +51,17 @@
   }
 }
 
-// @mixin reset($elements...) {
-//   @for $i from 0 to length($elements) {
-//     @include #{nth($elements, $i + 1)};
-//   }
-// }
+//
+// Common resets applied to all elements
+//
+
+@include layers.reset {
+  :host,
+  * {
+    box-sizing: border-box;
+  }
+
+  :host {
+    -webkit-font-smoothing: antialiased;
+  }
+}

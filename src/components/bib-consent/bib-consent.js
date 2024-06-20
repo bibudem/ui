@@ -3,9 +3,8 @@ import { createRef, ref } from 'lit/directives/ref.js'
 import PerfectScrollbar from 'perfect-scrollbar'
 import '@auroratide/toggle-switch/lib/define.js'
 import '../bib-button/bib-button-close.js'
-import './dialog-consent.js'
-import './consent-dialog.js'
-import './preferences-dialog.js'
+import './bib-consent-consent-dialog.js'
+import './bib-consent-preferences-dialog.js'
 import PreferencesProxy from './PreferencesProxy.js'
 import { SERVER_MODE, DEFAULT_PREFERENCES } from './constants.js'
 import styles from './bib-consent.scss?inline'
@@ -77,7 +76,6 @@ export class BibConsent extends LitElement {
     this.serverRequestTimeout = this.serverRequestTimeout || 500
     this.#preferencesProxy = new PreferencesProxy(this)
     this.#preferencesProxy.addEventListener.call(self, 'ready', event => {
-      console.log('[#preferencesProxy] ready event: ', event)
 
       // this.#initScrollbars()
 
@@ -127,13 +125,14 @@ export class BibConsent extends LitElement {
     }
 
     this.currentDialog = panel === 'consent' ? this.consentDialogRef.value : this.preferencesDialogRef.value
+    this.preferencesDialogRef.value?.show()
     // this.currentDialog.show()
   }
 
   render() {
     return html`
-        <consent-dialog @update="${(event) => this.savePreferences(event.detail)}" @show-preferences="${() => this.show('preferences')}" ${ref(this.consentDialogRef)}></consent-dialog>
-        <preferences-dialog @update="${(event) => this.savePreferences(event.detail)}" ${ref(this.preferencesDialogRef)}></preferences-dialog>
+        <bib-consent-consent-dialog @update="${(event) => this.savePreferences(event.detail)}" @show-preferences="${() => this.show('preferences')}" ${ref(this.consentDialogRef)}></bib-consent-consent-dialog>
+        <bib-consent-preferences-dialog @update="${(event) => this.savePreferences(event.detail)}" ${ref(this.preferencesDialogRef)}></bib-consent-preferences-dialog>
     `
   }
 }

@@ -2,10 +2,10 @@ import { css, html, LitElement, unsafeCSS } from 'lit'
 import { createRef, ref } from 'lit/directives/ref.js'
 import PerfectScrollbar from 'perfect-scrollbar'
 import '@auroratide/toggle-switch/lib/define.js'
-import { SERVER_MODE, DEFAULT_PREFERENCES } from './constants.js'
-// import styles from './bib-consent.scss?inline'
+import { DEFAULT_PREFERENCES } from './constants.js'
+import styles from './bib-consent-preferences-dialog.scss?inline'
 
-export class PreferencesDialog extends LitElement {
+export class BibConsentPreferencesDialog extends LitElement {
   static properties = {
     debug: {
       type: Boolean,
@@ -17,9 +17,9 @@ export class PreferencesDialog extends LitElement {
     },
   }
 
-  // static styles = [
-  //   css`${unsafeCSS(styles)}`
-  // ]
+  static styles = [
+    css`${unsafeCSS(styles)}`
+  ]
 
   #preferencesProxy
   #preferences
@@ -27,10 +27,13 @@ export class PreferencesDialog extends LitElement {
   constructor() {
     super()
     this.open = false
-    this.consentPanelRef = createRef()
-    this.preferencesPanelRef = createRef()
-    this.consentDialogRef = createRef()
+    this._dialogRef = createRef()
     this.#preferences = Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
+  }
+
+  firstUpdated() {
+    super.firstUpdated()
+    console.log('[firstUpdated] this._containerRef.value:', this._containerRef.value)
   }
 
   get preferences() {
@@ -54,72 +57,21 @@ export class PreferencesDialog extends LitElement {
     this.#preferences = await this.#preferencesProxy.getPreferences()
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    const self = this
-    this.debug = this.debug || false
-    this.serverUrl = this.serverUrl || 'https://bib.umontreal.ca/consent/server'
-    this.serverRequestTimeout = this.serverRequestTimeout || 500
-    this.#preferencesProxy = new PreferencesProxy(this)
-    this.#preferencesProxy.addEventListener.call(self, 'ready', event => {
-      console.log('[#preferencesProxy] ready event: ', event)
-
-      // this.#initScrollbars()
-
-      this.dispatchEvent(new CustomEvent('bib:consent:ready'))
-
-      if (event.detail) {
-        this.#preferences = event.detail
-      } else {
-        this.show('consent')
-      }
-    })
-
-    this.#preferencesProxy.addEventListener.call(self, 'update', event => {
-      console.log('[#preferencesProxy] update event: ', event)
-
-      this.#preferences = event.detail
-    })
-
-    console.log('ici: ', this.consentDialogRef.value)
+  show() {
+    this._dialogRef.value?.showModal()
   }
 
-  #initScrollbars() {
-
-    const scrollBarOptions = {
-      maxScrollbarLength: 150,
-      minScrollbarLength: 150,
-      suppressScrollX: true
+  onDetailsClick(event) {
+    // Prevent the <details> element to open if user clics on the toggle button
+    if (event.composedPath().some(node => node.matches?.('toggle-switch.switch'))) {
+      event.preventDefault()
     }
-    const consentPanel = this.renderRoot.querySelector('#consent-dialog .consent-container')
-    console.log('consentPanel: ', this.consentPanelRef.value)
-    const consentPanelScrollBar = new PerfectScrollbar(this.consentPanelRef.value, scrollBarOptions)
-    const preferencesPanelScrollBar = new PerfectScrollbar(this.preferencesPanelRef.value, scrollBarOptions)
-
-    console.log('preferencesPanelScrollBar: ', preferencesPanelScrollBar)
-  }
-
-  show(panel = 'consent') {
-    console.log('[show] ', panel)
-    if (typeof panel !== 'string' && !['consent', 'preferences'].includes(panel)) {
-      throw new TypeError(`The panel argument must be a string of either values 'consent' or 'preferences'. `, panel)
-    }
-
-    this.open = true
-
-    const newPanel = this.shadowRoot.querySelector(`#${panel}-dialog`)
-    const newDialog = panel === 'consent' ? this.consentDialogRef.value : null
-
-    if (newPanel) {
-      this.shadowRoot.querySelector('dialog[open]')?.close()
-      // newPanel.show()
-    }
-    newDialog.show()
   }
 
   render() {
     return html`
-      <bib-consent-dialog id="preferences-dialog" class='modal-container step-two-container' ${ref(this.preferencesPanelRef)}>
+      <bib-consent-dialog show-close class='preferences' ${ref(this._dialogRef)}>
+        <div class="content-container" ${ref(this._containerRef)}>
           <div class="title">Personnaliser les témoins</div>
           <div class="personalized-cookies-description">
             <p>Les témoins (aussi appelés «&nbsp;cookies&nbsp;») sont de petits fichiers textes qui sont téléchargés lorsque vous consultez certaines pages d’un site et qui sont enregistrés dans la mémoire de l’appareil que vous utilisez. Ils permettent d’enregistrer certaines informations (type de navigateur, langue, pays, adresse IP, identifiant, etc.) afin d’être récupérées par le serveur lors de visites subséquentes. Ils sont utilisés pour mettre à jour et optimiser nos plateformes en fonction de l’utilisation que vous en faites et de vos besoins.</p>
@@ -129,7 +81,7 @@ export class PreferencesDialog extends LitElement {
           </div>
           <div class="accordion-container">
             <div class="accordion-list">
-              <details class="accordion-item" data-id="" data-is-on-server-opened="false" style="--summary-height: 0px; --content-height: 0px;">
+              <details class="accordion-item">
                 <summary class="accordion-item__summary">
                   <span class="accordion-item__summary-title">Témoins nécessaires</span>
                   <span class="accordion-item__summary-icon">
@@ -151,14 +103,14 @@ export class PreferencesDialog extends LitElement {
                 </div>
               </details>
 
-              <details class="accordion-item" data-id="" data-is-on-server-opened="false" style="--summary-height: 0px; --content-height: 0px;">
+              <details class="accordion-item" @click="${{ handleEvent: this.onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary">
                   <div class="accordion-item__summary-title">Témoins de performance</div>
                   <div class="accordion-item__summary-icon">
                     <span class="close">+</span>
                     <span class="open">-</span>
-                    <div class="toggle-container" @click="${event => { event.stopPropagation() }}">
-                      <toggle-switch ?checked="${this.#preferences.performanceCookies}" @toggle-switch:change="${event => { this.setPreference('performanceCookies', event.detail.checked); event.stopPropagation() }}"></toggle-switch>
+                    <div class="toggle-container">
+                      <toggle-switch class="switch" ?checked="${this.#preferences.performanceCookies}" @toggle-switch:change="${event => { this.setPreference('performanceCookies', event.detail.checked) }}"></toggle-switch>
                     </div>
                   </div>
                 </summary>
@@ -167,14 +119,14 @@ export class PreferencesDialog extends LitElement {
                 </div>
               </details>
 
-              <details class="accordion-item" data-id="" data-is-on-server-opened="false" style="--summary-height: 0px; --content-height: 0px;">
+              <details class="accordion-item" @click="${{ handleEvent: this.onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary">
                   <span class="accordion-item__summary-title">Témoins de fonctionnalité</span>
                   <span class="accordion-item__summary-icon">
                     <span class="close">+</span>
                     <span class="open">-</span>
-                    <div class="toggle-container" tabindex="0" aria-checked="false" role="switch"><input type="checkbox" id="toggle" name="toggle" value="true" style="display: none;">
-                      <div class="toggle toggle-off"><span class="toggle-handle toggle-handle-off"></span><span class="toggle-label">&nbsp;</span></div>
+                    <div class="toggle-container">
+                      <toggle-switch class="switch" ?checked="${this.#preferences.functionalityCookies}" @toggle-switch:change="${event => { this.setPreference('functionalityCookies', event.detail.checked) }}"></toggle-switch>
                     </div>
                   </span>
                 </summary>
@@ -182,10 +134,10 @@ export class PreferencesDialog extends LitElement {
                   <p>Ces témoins permettent d’améliorer les fonctionnalités et la personnalisation de nos sites. Par exemple, ils rendent possible l’utilisation de vidéos et de services de messagerie instantanée ou encore le partage de contenus de nos sites sur des plateformes de médias sociaux. Si vous désactivez ces témoins, votre expérience de navigation et les services que nous sommes en mesure de vous offrir peuvent être impactés.</p>
                 </div>
               </details>
-              <details class="accordion-item" data-id="" data-is-on-server-opened="false" style="--summary-height: 0px; --content-height: 0px;">
+              <details class="accordion-item" @click="${{ handleEvent: this.onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary"><span class="accordion-item__summary-title">Témoins publicitaires</span><span class="accordion-item__summary-icon"><span class="close">+</span><span class="open">-</span>
-                    <div class="toggle-container" tabindex="0" aria-checked="false" role="switch"><input type="checkbox" id="toggle" name="toggle" value="true" style="display: none;">
-                      <div class="toggle toggle-off"><span class="toggle-handle toggle-handle-off"></span><span class="toggle-label">&nbsp;</span></div>
+                    <div class="toggle-container">
+                      <toggle-switch class="switch" ?checked="${this.#preferences.adsCookies}" @toggle-switch:change="${event => { this.setPreference('adsCookies', event.detail.checked) }}"></toggle-switch>
                     </div>
                   </span></summary>
                 <div class="accordion-item__content">
@@ -203,4 +155,4 @@ export class PreferencesDialog extends LitElement {
   }
 }
 
-customElements.define('preferences-dialog', PreferencesDialog)
+customElements.define('bib-consent-preferences-dialog', BibConsentPreferencesDialog)

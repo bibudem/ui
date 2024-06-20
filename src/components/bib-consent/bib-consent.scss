@@ -4,8 +4,6 @@
 @use '@/scss/states';
 @use '@/scss/tokens/ref-typeface';
 
-@use './toggle-switch';
-
 @include layers.order;
 
 @include reset.button;

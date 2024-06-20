@@ -2,13 +2,13 @@ import { css, html, LitElement, unsafeCSS } from 'lit'
 import { createRef, ref } from 'lit/directives/ref.js'
 import './bib-consent-dialog.js'
 import { DEFAULT_PREFERENCES } from './constants.js'
-import styles from './consent-dialog.scss?inline'
+import styles from './bib-consent-consent-dialog.scss?inline'
 
 function all(value) {
   return Object.keys(DEFAULT_PREFERENCES).reduce((prefs, prop) => ({ ...prefs, [prop]: value }), {})
 }
 
-export class ConsentDialog extends LitElement {
+export class BibConsentConsentDialog extends LitElement {
   static properties = {
     debug: {
       type: Boolean,
@@ -69,4 +69,4 @@ export class ConsentDialog extends LitElement {
   }
 }
 
-customElements.define('consent-dialog', ConsentDialog)
+customElements.define('bib-consent-consent-dialog', BibConsentConsentDialog)

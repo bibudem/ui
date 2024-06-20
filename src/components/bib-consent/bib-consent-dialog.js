@@ -29,32 +29,48 @@ export class BibConsentDialog extends LitElement {
     css`${unsafeCSS(styles)}`
   ]
 
+
+  _containerRef = createRef()
+
   constructor() {
     super()
     this.open = false
-    this.showClose = false
-    this.dialogRef = createRef()
+    this.showClose = this.showClose || false
+    this._dialogRef = createRef()
+    // this._containerRef = createRef()
   }
 
   connectedCallback() {
     super.connectedCallback()
-    console.log('this.dialogRef.value: ', this.dialogRef.value)
-    console.log('this.dialogRef.value?.querySelector...:', this.dialogRef.value?.querySelector('> .content-container'))
-    this.#initScrollbars()
-    this.dialogRef.value?.addEventListener('close', () => this.#close())
+    console.log('this._dialogRef.value: ', this._dialogRef.value)
+    console.log('this._dialogRef.value?.querySelector...:', this._dialogRef.value?.querySelector('> .content-container'))
+
+    console.log('[connectedCallback] this._containerRef.value:', this._containerRef.value)
+    this._dialogRef.value?.addEventListener('close', () => this.#close())
   }
+
+  // firstUpdated() {
+  //   console.log('[firstUpdated] this._containerRef.value:', this._containerRef.value)
+  //   this.#initScrollbars()
+  // }
 
   setPreferences(preferences) {
     this.dispatchEvent(new CustomEvent('update', { detail: preferences }))
   }
 
-  show() {
-    console.log('show')
-    if (this.dialogRef.value && !this.dialogRef.value.open) {
-      this.dialogRef.value?.show()
+  #show(mode = '') {
+    if (this._dialogRef.value && !this._dialogRef.value.open) {
+      mode === 'modal' ? this._dialogRef.value?.showModal() : this._dialogRef.value?.show()
       this.open = true
     }
+  }
 
+  show() {
+    this.#show()
+  }
+
+  showModal() {
+    this.#show('modal')
   }
 
   #close() {
@@ -62,8 +78,8 @@ export class BibConsentDialog extends LitElement {
   }
 
   close() {
-    if (this.dialogRef.value && this.dialogRef.value.open) {
-      this.dialogRef.value?.close()
+    if (this._dialogRef.value && this._dialogRef.value.open) {
+      this._dialogRef.value?.close()
     }
   }
 
@@ -75,7 +91,7 @@ export class BibConsentDialog extends LitElement {
       suppressScrollX: true
     }
 
-    this.contentScrollBar = new PerfectScrollbar(this.dialogRef.value.querySelector('> .content-container'), scrollBarOptions)
+    this.contentScrollBar = new PerfectScrollbar(this._containerRef.value, scrollBarOptions)
   }
 
   #handleOnCloseBtnClick(event) {
@@ -95,11 +111,10 @@ export class BibConsentDialog extends LitElement {
 
   render() {
     return html`
-      <dialog id="consent-dialog" class='modal-container' ${ref(this.dialogRef)}>
+      <dialog class='dialog' ${ref(this._dialogRef)}>
         ${this.#showCloseButton()}
-        <div class="content-container">
+        <div class="dialog-container">
           <slot></slot>
-          </div>
         </div>
       </dialog>
     `
