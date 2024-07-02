@@ -1,6 +1,5 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
 import { createRef, ref } from 'lit/directives/ref.js'
-import PerfectScrollbar from 'perfect-scrollbar'
 import '@auroratide/toggle-switch/lib/define.js'
 import '../bib-button/bib-button-close.js'
 import './bib-consent-consent-dialog.js'
@@ -77,10 +76,8 @@ export class BibConsent extends LitElement {
     this.#preferencesProxy = new PreferencesProxy(this)
     this.#preferencesProxy.addEventListener.call(self, 'ready', event => {
 
-      // this.#initScrollbars()
-
       this.dispatchEvent(new CustomEvent('bib:consent:ready'))
-
+      console.log('[#preferencesProxy] ready event: ', event)
       if (event.detail) {
         this.#preferences = event.detail
       } else {
@@ -97,21 +94,6 @@ export class BibConsent extends LitElement {
     console.log('ici: ', this.consentDialogRef.value)
   }
 
-  // #initScrollbars() {
-
-  //   const scrollBarOptions = {
-  //     maxScrollbarLength: 150,
-  //     minScrollbarLength: 150,
-  //     suppressScrollX: true
-  //   }
-  //   const consentPanel = this.renderRoot.querySelector('#consent-dialog .consent-container')
-
-  //   const consentPanelScrollBar = new PerfectScrollbar(this.consentPanelRef.value, scrollBarOptions)
-  //   const preferencesPanelScrollBar = new PerfectScrollbar(this.preferencesDialogRef.value, scrollBarOptions)
-
-  //   console.log('preferencesPanelScrollBar: ', preferencesPanelScrollBar)
-  // }
-
   show(panel = 'consent') {
     console.log('[show]', panel)
     if (typeof panel !== 'string' && !['consent', 'preferences'].includes(panel)) {
@@ -124,6 +106,8 @@ export class BibConsent extends LitElement {
       this.currentDialog.close()
     }
 
+    console.log('[show]', this.consentDialogRef.value)
+    console.log('[show]', this.preferencesDialogRef.value)
     this.currentDialog = panel === 'consent' ? this.consentDialogRef.value : this.preferencesDialogRef.value
     this.preferencesDialogRef.value?.show()
     // this.currentDialog.show()
@@ -131,8 +115,8 @@ export class BibConsent extends LitElement {
 
   render() {
     return html`
-        <bib-consent-consent-dialog @update="${(event) => this.savePreferences(event.detail)}" @show-preferences="${() => this.show('preferences')}" ${ref(this.consentDialogRef)}></bib-consent-consent-dialog>
-        <bib-consent-preferences-dialog @update="${(event) => this.savePreferences(event.detail)}" ${ref(this.preferencesDialogRef)}></bib-consent-preferences-dialog>
+        <bib-consent-consent-dialog .preferences=${this.#preferences} @update="${(event) => this.savePreferences(event.detail)}" @show-preferences="${() => this.show('preferences')}" ${ref(this.consentDialogRef)}></bib-consent-consent-dialog>
+        <bib-consent-preferences-dialog .preferences=${this.#preferences} @update="${(event) => this.savePreferences(event.detail)}" ${ref(this.preferencesDialogRef)}></bib-consent-preferences-dialog>
     `
   }
 }

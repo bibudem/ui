@@ -1,5 +1,6 @@
-import { EVENT_TYPES, DEFAULT_PREFERENCES } from './constants.js'
-import { getKeyName } from './utils.js'
+import { openDB } from 'idb'
+import { EVENT_TYPES, DEFAULT_PREFERENCES, DB_NAME, DB_VERSION, DB_STORE_NAME } from './constants.js'
+import { isEqual } from 'lodash-es'
 
 // Wraps a localstorage for now, but it may evolve...
 // Async methods, which make it easier to adapt to other storages
@@ -7,6 +8,7 @@ export default class PreferenceStorage extends EventTarget {
 
   constructor() {
     super()
+    this.db = null
   }
 
   /*
@@ -31,21 +33,48 @@ export default class PreferenceStorage extends EventTarget {
     )
   }
 
+  async init() {
+    try {
+      console.log('init begins...')
+      this.db = await openDB(DB_NAME, DB_VERSION, {
+        upgrade(db) {
+          console.log('db upgrade:', db)
+          console.log('DB_STORE_NAME:', DB_STORE_NAME)
+          console.log('db.objectStoreNames.contains(DB_STORE_NAME):', db.objectStoreNames.contains(DB_STORE_NAME))
+          // Checks if the object store exists:
+          if (!db.objectStoreNames.contains(DB_STORE_NAME)) {
+            db.createObjectStore(DB_STORE_NAME)
+          }
+        }
+      })
+
+    } catch (error) {
+      throw new Error('Something went wrong with indexedDB:', error)
+    }
+  }
+
   async getPreferences() {
-    await Promise.resolve()
 
-    const preferences = Object.assign({}, DEFAULT_PREFERENCES)
+    const preferences = await this.db.get(DB_STORE_NAME, 'preferences')
 
-    for (const key of Object.keys(preferences)) {
-      // Si une clé n'est pas définie, on retourne null pour "Tout doit être redemandé"
-      if (localStorage.getItem(getKeyName(key)) === null) {
-        return null
-      } else {
-        preferences[key] = localStorage.getItem(getKeyName(key)) === 'true'
-      }
+
+    // S'il n'y a pas de préférences dans la table, on retourne null pour "Tout doit être redemandé"
+    if (preferences === undefined) {
+      return null
     }
 
     return preferences
+  }
+
+  async #doSetPreferences(preferences) {
+
+    // Check if there is a change is preferences.
+    // If so, save it and dispatch an event
+    const oldPreferences = await this.getPreferences()
+    if (!isEqual(oldPreferences, preferences)) {
+      await this.db.put(DB_STORE_NAME, preferences, 'preferences')
+      this.dispatchEvent(preferences)
+    }
   }
 
   /*
@@ -53,29 +82,38 @@ export default class PreferenceStorage extends EventTarget {
    * @return void
    */
   async setPreferences(preferences) {
-    await Promise.resolve()
 
-    const oldValue = await this.getPreferences()
-    let update = false
+    // Data validation
+    // We check if all props are present and have boolean values
 
-    for (const [key, value] of Object.entries(preferences)) {
-      if (typeof value === 'undefined') {
-        console.log('WARNING setPreferences() was called with an undefined value!')
-        return
-      }
+    const requiredProps = Object.keys(DEFAULT_PREFERENCES)
+    const sameProps = arraysHaveSameProps(requiredProps, Object.keys(preferences))
 
-      if ((oldValue !== null && value !== oldValue[key]) || oldValue === null) {
-        //localStorage always stores strings, be to be clear, let's write explicit 'true' / 'false'
-        localStorage.setItem(getKeyName(key), value ? 'true' : 'false')
-
-        update = true
-        preferences[key] = value
-      }
+    if (!sameProps) {
+      throw new TypeError(`Preferences requires all those fields: ${requiredProps, join(', ')}.`)
     }
 
-    // Dispatches { update: Boolean, ...preferences }
-    preferences.update = update
+    const containsOnlyBooleanValues = Object.values(preferences).every(value => typeof value === 'boolean')
 
-    this.dispatchEvent(preferences)
+    if (!containsOnlyBooleanValues) {
+      throw new TypeError(`Preferences values must be a boolean.`)
+    }
+
+    await this.#doSetPreferences(preferences)
+
   }
+
+  async resetPreferences() {
+    await this.#doSetPreferences(null)
+  }
+}
+
+function arraysHaveSameProps(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false
+  }
+
+  const sortedArr1 = [...arr1].sort()
+  const sortedArr2 = [...arr2].sort()
+  return sortedArr1.every((item, index) => item === sortedArr2[index])
 }

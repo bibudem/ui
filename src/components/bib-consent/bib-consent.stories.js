@@ -1,6 +1,7 @@
 import { html } from 'lit'
 import './bib-consent'
 import './bib-consent-server'
+import PreferencesProxy from './PreferencesProxy.js'
 
 export default {
   title: 'Composants/Gestion des témoins',
@@ -16,12 +17,22 @@ export default {
   }
 }
 
+const consentElement = document.createElement('bib-consent')
+consentElement.debug = true
+consentElement.serverUrl = '/consent-server'
+
+const preferencesProxy = new PreferencesProxy(consentElement)
+
 /**
  * Widget de base
  */
 export const GestionTemoins = {
   render: function () {
-    return html`<bib-consent debug server-url="/consent-server"><p>Ceci est du texte avec du <strong>gras</strong>...</p></bib-consent>`
+    // return html`<bib-consent debug server-url="/consent-server"></bib-consent>`
+    return html`
+    ${consentElement}
+    <button @click="${() => preferencesProxy.resetPreferences(null)}">Reset preferences</button>
+    `
   }
 }
 

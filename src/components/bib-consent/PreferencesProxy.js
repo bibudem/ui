@@ -66,6 +66,7 @@ export default class PreferencesProxy extends EventTarget {
       const server = this.#remoteServer = await callServer(serverObject)
 
       server.listenMessage((method, detail) => {
+        console.log('[server.listenMessage] method: ', method, 'detail: ', detail)
         const event = new CustomEvent(`update`, { detail })
         this.dispatchEvent(event)
       })
@@ -78,6 +79,9 @@ export default class PreferencesProxy extends EventTarget {
 
     } else {
       this.#localServer = new PreferencesStorage()
+
+      await this.#localServer.init()
+
       this.#localServer.addEventListener(({ detail }) => {
         const event = new CustomEvent(`update`, { detail })
         this.dispatchEvent(event)
@@ -102,6 +106,14 @@ export default class PreferencesProxy extends EventTarget {
       await this.#localServer.getPreferences()
     } else {
       await this.#remoteServer.postMessage('getPreferences')
+    }
+  }
+
+  async resetPreferences() {
+    if (this.serverMode === SERVER_MODE.LOCAL) {
+      await this.#localServer.resetPreferences()
+    } else {
+      await this.#remoteServer.postMessage('resetPreferences')
     }
   }
 }

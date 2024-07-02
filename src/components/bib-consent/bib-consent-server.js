@@ -26,6 +26,13 @@ export class BibConsentServer extends LitElement {
     this.connected = false
     this.debug = false
     this.loggerRef = createRef()
+    this.init()
+  }
+
+  async init() {
+    console.log('[this.#storage.init()] start')
+    await this.#storage.init()
+    console.log('[this.#storage.init()] end')
     this.startListening()
   }
 
@@ -41,20 +48,23 @@ export class BibConsentServer extends LitElement {
 
     this.log('connected: ', this.connected)
 
-    this.#storage.addEventListener(preferences => {
-      console.log('event preference: ', preferences)
-    })
-
     listenMessage(async (method, payload, response) => {
       if (method === 'setPreferences') {
         this.log('#setPreferences:', payload)
         await this.#storage.setPreferences(payload)
         return
       }
+
       if (method === 'getPreferences') {
         const preferences = await this.#storage.getPreferences()
         this.log('#getPreferences:', preferences)
         response(preferences)
+      }
+
+      if (method === 'resetPreferences') {
+        await this.#storage.resetPreferences()
+        this.log('#resetPreferences')
+        response(await this.#storage.getPreferences())
       }
 
       if (method === 'ping') {

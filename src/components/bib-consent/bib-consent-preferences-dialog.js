@@ -1,8 +1,7 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
 import { createRef, ref } from 'lit/directives/ref.js'
-import PerfectScrollbar from 'perfect-scrollbar'
 import '@auroratide/toggle-switch/lib/define.js'
-import { DEFAULT_PREFERENCES } from './constants.js'
+import { DEFAULT_PREFERENCES, EVENT_TYPES } from './constants.js'
 import styles from './bib-consent-preferences-dialog.scss?inline'
 
 export class BibConsentPreferencesDialog extends LitElement {
@@ -21,23 +20,26 @@ export class BibConsentPreferencesDialog extends LitElement {
     css`${unsafeCSS(styles)}`
   ]
 
-  #preferencesProxy
-  #preferences
+  preferences
 
   constructor() {
     super()
     this.open = false
     this._dialogRef = createRef()
-    this.#preferences = Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
+    this.preferences = this.preferences || Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
   }
 
   firstUpdated() {
     super.firstUpdated()
-    console.log('[firstUpdated] this._containerRef.value:', this._containerRef.value)
+    console.log('[firstUpdated] this._containerRef.value:', this._containerRef?.value)
   }
 
-  get preferences() {
-    return this.#preferences
+  saveAll(choice) {
+    const preferences = { ...DEFAULT_PREFERENCES }
+    for (const prop in preferences) {
+      this.setPreference(prop, choice)
+    }
+    this.savePreferences()
   }
 
   setPreference(key, value) {
@@ -45,16 +47,12 @@ export class BibConsentPreferencesDialog extends LitElement {
       throw new Error(`${key} is not a valid key.`)
     }
 
-    this.#preferences[key] = value
+    this.preferences[key] = value
+    this.requestUpdate()
   }
 
-  async savePreferences(preferences) {
-    console.log(preferences)
-    await this.#preferencesProxy.setPreferences(preferences)
-  }
-
-  async loadPreferences() {
-    this.#preferences = await this.#preferencesProxy.getPreferences()
+  async savePreferences() {
+    this.dispatchEvent(new CustomEvent('update', { detail: this.preferences }))
   }
 
   show() {
@@ -110,7 +108,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch class="switch" ?checked="${this.#preferences.performanceCookies}" @toggle-switch:change="${event => { this.setPreference('performanceCookies', event.detail.checked) }}"></toggle-switch>
+                      <toggle-switch class="switch" ?checked="${this.preferences.performanceCookies}" @toggle-switch:change="${event => { this.setPreference('performanceCookies', event.detail.checked) }}"></toggle-switch>
                     </div>
                   </div>
                 </summary>
@@ -126,7 +124,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch class="switch" ?checked="${this.#preferences.functionalityCookies}" @toggle-switch:change="${event => { this.setPreference('functionalityCookies', event.detail.checked) }}"></toggle-switch>
+                      <toggle-switch class="switch" ?checked="${this.preferences.functionalityCookies}" @toggle-switch:change="${event => { this.setPreference('functionalityCookies', event.detail.checked) }}"></toggle-switch>
                     </div>
                   </span>
                 </summary>
@@ -137,7 +135,7 @@ export class BibConsentPreferencesDialog extends LitElement {
               <details class="accordion-item" @click="${{ handleEvent: this.onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary"><span class="accordion-item__summary-title">Témoins publicitaires</span><span class="accordion-item__summary-icon"><span class="close">+</span><span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch class="switch" ?checked="${this.#preferences.adsCookies}" @toggle-switch:change="${event => { this.setPreference('adsCookies', event.detail.checked) }}"></toggle-switch>
+                      <toggle-switch class="switch" ?checked="${this.preferences.adsCookies}" @toggle-switch:change="${event => { this.setPreference('adsCookies', event.detail.checked) }}"></toggle-switch>
                     </div>
                   </span></summary>
                 <div class="accordion-item__content">
@@ -146,7 +144,11 @@ export class BibConsentPreferencesDialog extends LitElement {
               </details>
             </div>
             <p class="update-information">Vous pouvez modifier en tout temps vos préférences en sélectionnant les paramètres appropriés dans votre navigateur pour accepter ou refuser les témoins.</p>
-            <div class="btn-modal-container"><button type="button" class="btn-consent confirm-selection">Enregistrer mes préférences</button><button class="btn-consent" type="button">Tout refuser</button><button class="btn-consent" type="button">Tout accepter</button></div>
+            <div class="btn-modal-container">
+              <button type="button" class="btn-consent confirm-selection">Enregistrer mes préférences</button>
+              <button class="btn-consent" type="button" @click="${() => this.saveAll(false)}">Tout refuser</button>
+              <button class="btn-consent" type="button" @click="${() => this.saveAll(true)}">Tout accepter</button>
+            </div>
             <div class="learn-more-container">Voir notre <a href="https://vie-privee.umontreal.ca/confidentialite">politique de confidentialité</a> et nos <a href="https://vie-privee.umontreal.ca/conditions-dutilisation">conditions d’utilisation</a>. </div>
           </div>
         </div>

@@ -1,3 +1,9 @@
+import { name } from '../../../package.json'
+
+export const DB_NAME = `${name}/consent`
+export const DB_VERSION = 1
+export const DB_STORE_NAME = 'consent'
+
 export const EVENT_TYPES = {
   CONSENT: 'bib:consent:consent'
 }
