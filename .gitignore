@@ -3,4 +3,5 @@ node_modules
 .env
 storybook-static
 * copie*
+* copy*
 src/components/udem-urgence/demo-data.json
