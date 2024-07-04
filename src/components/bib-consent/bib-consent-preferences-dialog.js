@@ -29,11 +29,6 @@ export class BibConsentPreferencesDialog extends LitElement {
     this.preferences = this.preferences || Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
   }
 
-  firstUpdated() {
-    super.firstUpdated()
-    console.log('[firstUpdated] this._containerRef.value:', this._containerRef?.value)
-  }
-
   saveAll(choice) {
     const preferences = { ...DEFAULT_PREFERENCES }
     for (const prop in preferences) {
@@ -68,8 +63,8 @@ export class BibConsentPreferencesDialog extends LitElement {
 
   render() {
     return html`
-      <bib-consent-dialog show-close class='preferences' ${ref(this._dialogRef)}>
-        <div class="content-container" ${ref(this._containerRef)}>
+      <bib-consent-dialog show-close class='preferences-dialog' ${ref(this._dialogRef)}>
+        <div class="content-container">
           <div class="title">Personnaliser les témoins</div>
           <div class="personalized-cookies-description">
             <p>Les témoins (aussi appelés «&nbsp;cookies&nbsp;») sont de petits fichiers textes qui sont téléchargés lorsque vous consultez certaines pages d’un site et qui sont enregistrés dans la mémoire de l’appareil que vous utilisez. Ils permettent d’enregistrer certaines informations (type de navigateur, langue, pays, adresse IP, identifiant, etc.) afin d’être récupérées par le serveur lors de visites subséquentes. Ils sont utilisés pour mettre à jour et optimiser nos plateformes en fonction de l’utilisation que vous en faites et de vos besoins.</p>
@@ -144,10 +139,10 @@ export class BibConsentPreferencesDialog extends LitElement {
               </details>
             </div>
             <p class="update-information">Vous pouvez modifier en tout temps vos préférences en sélectionnant les paramètres appropriés dans votre navigateur pour accepter ou refuser les témoins.</p>
-            <div class="btn-modal-container">
-              <button type="button" class="btn-consent confirm-selection">Enregistrer mes préférences</button>
-              <button class="btn-consent" type="button" @click="${() => this.saveAll(false)}">Tout refuser</button>
-              <button class="btn-consent" type="button" @click="${() => this.saveAll(true)}">Tout accepter</button>
+            <div class="actions-container">
+              <button class="btn--filled" type="button">Enregistrer mes préférences</button>
+              <button class="btn--filled" type="button" @click="${() => this.saveAll(false)}">Tout refuser</button>
+              <button class="btn--filled" type="button" @click="${() => this.saveAll(true)}">Tout accepter</button>
             </div>
             <div class="learn-more-container">Voir notre <a href="https://vie-privee.umontreal.ca/confidentialite">politique de confidentialité</a> et nos <a href="https://vie-privee.umontreal.ca/conditions-dutilisation">conditions d’utilisation</a>. </div>
           </div>

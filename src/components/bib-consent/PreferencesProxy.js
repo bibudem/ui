@@ -5,8 +5,8 @@ import { SERVER_MODE } from './constants.js'
 import { stringIsUrl } from '@/utils/url.js'
 
 export default class PreferencesProxy extends EventTarget {
-  #remoteServer
-  #localServer
+  _server
+  _storage
   #debugIsOn = false
 
   constructor(client, { reflectEvents = true } = {}) {
@@ -57,63 +57,80 @@ export default class PreferencesProxy extends EventTarget {
     }
     this.#debugIsOn = Reflect.has(this.client, 'debug')
 
-    this.debug('init')
     this.debug('init', `server mode: ${this.serverMode}`)
+
+    let preferences
 
     if (this.serverMode === SERVER_MODE.REMOTE) {
       const serverObject = getIframeServer(document.body, this.serverUrl.href)
       // { postMessage, listenMessage, destroy }
-      const server = this.#remoteServer = await callServer(serverObject)
 
-      server.listenMessage((method, detail) => {
+      console.log('[callServer] serverObject: ', serverObject)
+
+      this._server = await callServer(serverObject)
+        .then(serverObject => {
+          console.log('[callServer] serverObject: ', serverObject)
+          return serverObject
+        })
+        .catch(error => {
+          console.error('[callServer] error: ', error)
+          throw error
+        })
+
+      this._server.listenMessage((method, detail) => {
         console.log('[server.listenMessage] method: ', method, 'detail: ', detail)
         const event = new CustomEvent(`update`, { detail })
         this.dispatchEvent(event)
       })
 
-      const preferences = await server.postMessage('getPreferences')
-      console.log('Got response from server: ', preferences)
-
-      const proxyReadyEvent = new CustomEvent('ready', { detail: preferences })
-      this.dispatchEvent(proxyReadyEvent)
+      preferences = await this._server.postMessage('getPreferences')
+      console.log('[remote] Got response from server: ', preferences)
 
     } else {
-      this.#localServer = new PreferencesStorage()
+      this._storage = new PreferencesStorage()
 
-      await this.#localServer.init()
+      await this._storage.init()
 
-      this.#localServer.addEventListener(({ detail }) => {
+      this._storage.addEventListener(({ detail }) => {
         const event = new CustomEvent(`update`, { detail })
         this.dispatchEvent(event)
       })
 
-      const preferences = await this.#localServer.getPreferences()
+      preferences = await this._storage.getPreferences()
+      console.log('[local] Got response from storage: ', preferences)
+    }
+
+    if (preferences !== undefined) {
+
       const proxyReadyEvent = new CustomEvent('ready', { detail: preferences })
+
+      // Dispatch inital data
       this.dispatchEvent(proxyReadyEvent)
     }
   }
 
   async setPreferences(preferences) {
     if (this.serverMode === SERVER_MODE.LOCAL) {
-      await this.#localServer.setPreferences(preferences)
+      await this._storage.setPreferences(preferences)
     } else {
-      await this.#remoteServer.postMessage('setPreferences', preferences)
+      console.log('[#setPreferences] this._server:', this.server)
+      await this._server.postMessage('setPreferences', preferences)
     }
   }
 
   async getPreferences() {
     if (this.serverMode === SERVER_MODE.LOCAL) {
-      await this.#localServer.getPreferences()
+      await this._storage.getPreferences()
     } else {
-      await this.#remoteServer.postMessage('getPreferences')
+      await this._server.postMessage('getPreferences')
     }
   }
 
   async resetPreferences() {
     if (this.serverMode === SERVER_MODE.LOCAL) {
-      await this.#localServer.resetPreferences()
+      await this._storage.resetPreferences()
     } else {
-      await this.#remoteServer.postMessage('resetPreferences')
+      await this._server.postMessage('resetPreferences')
     }
   }
 }

@@ -2,6 +2,7 @@ import { css, html, LitElement, unsafeCSS } from 'lit'
 import { startListening } from 'postmessage-promise'
 import { createRef, ref } from 'lit/directives/ref.js'
 import PreferencesStorage from './preferencesStorage.js'
+import { escapeStringRegexp } from '@/utils/url.js'
 import styles from './bib-consent-server.scss?inline'
 
 export class BibConsentServer extends LitElement {
@@ -14,6 +15,14 @@ export class BibConsentServer extends LitElement {
     debug: {
       type: Boolean,
       reflect: true
+    },
+    allowedOrigins: {
+      type: String,
+      attribute: 'allowed-origins',
+      converter: {
+        fromAttribute: (value) => value.split(/\s+/).map(origin => origin.trim()),
+        toAttribute: (value) => value.join(' ')
+      }
     }
   }
 
@@ -26,6 +35,7 @@ export class BibConsentServer extends LitElement {
     this.connected = false
     this.debug = false
     this.loggerRef = createRef()
+    this.allowedOrigins = this.allowedOrigins || [] // Default: none
     this.init()
   }
 
@@ -43,7 +53,23 @@ export class BibConsentServer extends LitElement {
   }
 
   async startListening() {
-    const { postMessage, listenMessage } = await startListening()
+    const { postMessage, listenMessage } = await startListening({
+      eventFilter: event => {
+        console.log('event:', event)
+        console.log('this.allowedOrigins:', this.allowedOrigins)
+        const originURL = new URL(event.origin)
+        const originRegex = new RegExp(`${escapeStringRegexp(originURL.origin)}`)
+        const originIsAllowed = this.allowedOrigins.length > 0 && this.allowedOrigins.every(origin => {
+          return originRegex.test(origin)
+        })
+        console.log('originIsAllowed:', originIsAllowed)
+
+        // return originIsAllowed
+
+        console.log('================= eventFilter')
+        return true
+      }
+    })
     this.connected = true
 
     this.log('connected: ', this.connected)

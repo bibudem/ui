@@ -6,7 +6,6 @@ import './bib-consent-consent-dialog.js'
 import './bib-consent-preferences-dialog.js'
 import PreferencesProxy from './PreferencesProxy.js'
 import { SERVER_MODE, DEFAULT_PREFERENCES } from './constants.js'
-import styles from './bib-consent.scss?inline'
 
 export class BibConsent extends LitElement {
   static properties = {
@@ -31,18 +30,16 @@ export class BibConsent extends LitElement {
     },
   }
 
-  static styles = [
-    css`${unsafeCSS(styles)}`
-  ]
-
   #preferencesProxy
   #preferences
+  #consentDialogRef
+  #preferencesDialogRef
 
   constructor() {
     super()
     this.open = false
-    this.preferencesDialogRef = createRef()
-    this.consentDialogRef = createRef()
+    this.#consentDialogRef = createRef()
+    this.#preferencesDialogRef = createRef()
     this.#preferences = Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
   }
 
@@ -59,7 +56,6 @@ export class BibConsent extends LitElement {
   }
 
   async savePreferences(preferences) {
-    console.log(preferences)
     await this.#preferencesProxy.setPreferences(preferences)
   }
 
@@ -81,7 +77,7 @@ export class BibConsent extends LitElement {
       if (event.detail) {
         this.#preferences = event.detail
       } else {
-        this.show('consent')
+        this.#show('consent')
       }
     })
 
@@ -91,11 +87,16 @@ export class BibConsent extends LitElement {
       this.#preferences = event.detail
     })
 
-    console.log('ici: ', this.consentDialogRef.value)
+    this.addEventListener('bib:close', () => {
+      console.log('[bib:close]')
+      this.close()
+    })
+
+    console.log('[bib-consent] update: ', this.#preferences)
   }
 
-  show(panel = 'consent') {
-    console.log('[show]', panel)
+  #show(panel = 'consent') {
+
     if (typeof panel !== 'string' && !['consent', 'preferences'].includes(panel)) {
       throw new TypeError(`The panel argument must be a string of either values 'consent' or 'preferences'. `, panel)
     }
@@ -103,20 +104,35 @@ export class BibConsent extends LitElement {
     this.open = true
 
     if (this.currentDialog) {
+      console.log('[#show] this.currentDialog', this.currentDialog)
       this.currentDialog.close()
     }
 
-    console.log('[show]', this.consentDialogRef.value)
-    console.log('[show]', this.preferencesDialogRef.value)
-    this.currentDialog = panel === 'consent' ? this.consentDialogRef.value : this.preferencesDialogRef.value
-    this.preferencesDialogRef.value?.show()
-    // this.currentDialog.show()
+    console.log('[show]', this.#consentDialogRef.value)
+    console.log('[show]', this.#preferencesDialogRef.value)
+    this.currentDialog = panel === 'consent' ? this.#consentDialogRef.value : this.#preferencesDialogRef.value
+    // this.#preferencesDialogRef.value?.show()
+    this.currentDialog.show()
+  }
+
+  close() {
+    this.open = false
+    this.currentDialog?.close()
+    this.currentDialog = null
+  }
+
+  show() {
+    this.#show('consent')
+  }
+
+  showPreferences() {
+    this.#show('preferences')
   }
 
   render() {
     return html`
-        <bib-consent-consent-dialog .preferences=${this.#preferences} @update="${(event) => this.savePreferences(event.detail)}" @show-preferences="${() => this.show('preferences')}" ${ref(this.consentDialogRef)}></bib-consent-consent-dialog>
-        <bib-consent-preferences-dialog .preferences=${this.#preferences} @update="${(event) => this.savePreferences(event.detail)}" ${ref(this.preferencesDialogRef)}></bib-consent-preferences-dialog>
+        <bib-consent-consent-dialog .preferences=${this.#preferences} @update="${(event) => this.savePreferences(event.detail)}" @show-preferences="${() => this.#show('preferences')}" ${ref(this.#consentDialogRef)} @bib:close="${() => console.log('--- bib:close')}" @close="${() => console.log('--- close')}"></bib-consent-consent-dialog>
+        <bib-consent-preferences-dialog .preferences=${this.#preferences} @update="${(event) => this.savePreferences(event.detail)}" ${ref(this.#preferencesDialogRef)} @bib:close="${() => console.log('--- bib:close')}" @close="${() => console.log('--- close')}"></bib-consent-preferences-dialog>
     `
   }
 }

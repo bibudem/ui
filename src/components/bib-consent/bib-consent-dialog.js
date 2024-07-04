@@ -28,37 +28,22 @@ export class BibConsentDialog extends LitElement {
     css`${unsafeCSS(styles)}`
   ]
 
-
-  _containerRef = createRef()
-
   constructor() {
     super()
     this.open = false
     this.showClose = this.showClose || false
     this._dialogRef = createRef()
-    // this._containerRef = createRef()
   }
 
   connectedCallback() {
     super.connectedCallback()
-    console.log('this._dialogRef.value: ', this._dialogRef.value)
-    console.log('this._dialogRef.value?.querySelector...:', this._dialogRef.value?.querySelector('> .content-container'))
 
-    console.log('[connectedCallback] this._containerRef.value:', this._containerRef.value)
-    this._dialogRef.value?.addEventListener('close', () => this.#close())
-  }
-
-  setPreferences(preferences) {
-    this.dispatchEvent(new CustomEvent('update', { detail: preferences }))
-  }
-
-  #handleOnCloseBtnClick(event) {
-    this.dispatchEvent(new Event('close'))
+    this._dialogRef.value?.addEventListener('close', () => this.close())
   }
 
   #showCloseButton() {
     return this.showClose ? html`
-        <bib-button-close @click="${this.#handleOnCloseBtnClick}" class="btn-close-modal"></bib-button-close>
+        <bib-button-close @click="${() => this.close()}" class="btn-close"></bib-button-close>
         ` : nothing
   }
 
@@ -77,22 +62,22 @@ export class BibConsentDialog extends LitElement {
     this.#show('modal')
   }
 
-  #close() {
-    this.open = false
-  }
-
   close() {
+    this.open = false
     if (this._dialogRef.value && this._dialogRef.value.open) {
       this._dialogRef.value?.close()
     }
+    this.dispatchEvent(new CustomEvent('bib:close'))
   }
 
   render() {
     return html`
-      <dialog class='dialog' ${ref(this._dialogRef)}>
+      <dialog class="dialog" ${ref(this._dialogRef)}>
         ${this.#showCloseButton()}
         <div class="dialog-container">
-          <slot></slot>
+          <div class="content-container">
+            <slot></slot>
+          </div>
         </div>
       </dialog>
     `

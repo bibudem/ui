@@ -1,37 +1,6 @@
 @use '@/scss/utils/layers';
-@use 'scrollbar';
 
 @include layers.component {
-  .content-container {
-    font-size: var(--_consent-text-size);
-    height: auto;
-    line-height: var(--_consent-text-line-height);
-    margin: 10px auto !important;
-    max-width: 1200px;
-    padding: 0 35px 15px;
-    z-index: 0;
-    position: absolute;
-    top: 50px;
-    bottom: 0;
-    overflow-y: auto;
-
-    @include scrollbar.scrollbar;
-
-    @media screen and (min-width: 640px) {
-      height: 450px;
-    }
-    //x-sm
-    @media screen and (min-width: 375px) {
-      padding: 0 35px 25px;
-    }
-
-    //sm
-    @media screen and (min-width: 640px) {
-      height: auto;
-      padding: 0 50px 20px;
-    }
-  }
-
   p {
     font-size: var(--_consent-text-size);
     line-height: var(--_consent-text-line-height);
@@ -62,73 +31,16 @@
     }
   }
 
-  .preferences {
-    .personalized-cookies-description p {
-      padding: 0 15px 20px 0;
-    }
-
-    .btn-consent {
-      width: 100%;
-
-      //sm
-      @media screen and (min-width: 640px) {
-        width: auto;
-      }
-    }
-
-    .btn-modal-container {
-      margin-top: 20px;
-    }
-  }
-
-  .btn-modal-container {
+  .actions-container {
+    display: flex;
     justify-content: center;
     margin: 0 auto;
-
-    //x-sm
-    @media screen and (min-width: 375px) {
-    }
 
     //sm
     @media screen and (min-width: 640px) {
       display: flex;
       justify-content: normal;
       margin: 0;
-    }
-  }
-
-  .btn-consent {
-    background-color: #0b113a;
-    color: #fff;
-    display: flex;
-    font-weight: 500;
-    font-size: var(--_consent-text-size);
-    line-height: var(--_consent-text-line-height);
-    justify-content: center;
-    margin: 7.5px auto 0;
-    padding: 5px 15px;
-    width: 200px;
-
-    //sm
-    @media screen and (min-width: 640px) {
-      float: left;
-      margin: 7.5px 0 0 7.5px;
-      width: auto;
-    }
-
-    span {
-      color: #0057ac;
-      padding-left: 6.25px;
-    }
-  }
-
-  .btn-consent.open-modal-parameter {
-    background-color: transparent;
-    border: 1px solid #0057ac;
-    color: #0b113a;
-
-    @media screen and (min-width: 640px) {
-      margin-left: 0;
     }
   }
 
