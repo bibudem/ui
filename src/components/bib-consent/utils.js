@@ -16,9 +16,12 @@ export function getIframeServer(
   let iframe
   if (document.querySelector(`#${iframeId}`)) {
     iframe = document.querySelector(`#${iframeId}`)
+    console.log('[getIframeServer] Found existing iframe:', iframe)
   } else {
     iframe = document.createElement('iframe')
     iframe.id = iframeId
+
+    console.log('[getIframeServer] Creating new iframe:', iframe)
 
     const isDebugOn = hasBooleanParam(targetUrl, 'debug')
 

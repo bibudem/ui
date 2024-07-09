@@ -3,6 +3,8 @@ import { createRef, ref } from 'lit/directives/ref.js'
 import '@auroratide/toggle-switch/lib/define.js'
 import { DEFAULT_PREFERENCES, EVENT_TYPES } from './constants.js'
 import styles from './bib-consent-preferences-dialog.scss?inline'
+import { ContextConsumer, ContextProvider } from '@lit/context'
+import { consentContext } from './consent-context.js'
 
 export class BibConsentPreferencesDialog extends LitElement {
   static properties = {
@@ -21,19 +23,34 @@ export class BibConsentPreferencesDialog extends LitElement {
   ]
 
   preferences
+  #consentProvider
+  #consentConsumer
+  #toggleChoices = Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
 
   constructor() {
     super()
     this.open = false
     this._dialogRef = createRef()
-    this.preferences = this.preferences || Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
+    this.#consentProvider = new ContextProvider(this, { context: consentContext, initialValue: null })
+    // this.preferences = this.preferences || Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
+    this.#consentConsumer = new ContextConsumer(this, { context: consentContext, subscribe: true })
+
+    if (this.#consentConsumer.value) {
+      this.#toggleChoices = this.#consentConsumer.value
+    }
+  }
+
+  get preferences() {
+    return this.#consentConsumer.value ?? null
   }
 
   saveAll(choice) {
     const preferences = { ...DEFAULT_PREFERENCES }
+
     for (const prop in preferences) {
       this.setPreference(prop, choice)
     }
+
     this.savePreferences()
   }
 
@@ -46,8 +63,27 @@ export class BibConsentPreferencesDialog extends LitElement {
     this.requestUpdate()
   }
 
-  async savePreferences() {
-    this.dispatchEvent(new CustomEvent('update', { detail: this.preferences }))
+  async savePreferences(preference) {
+    try {
+      let preferences
+
+      if (preference) {
+        preferences = Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: preference }), {})
+      } else {
+        preferences = this.preferences
+      }
+
+      this.#consentProvider.setValue(preferences)
+    } catch (error) {
+      console.error('[savePreferences] error: ', error)
+      throw error
+    }
+    // const success = this.dispatchEvent(new CustomEvent('update', { detail: this.preferences }))
+    // if (success) {
+    //   this._dialogRef.value?.close()
+    // } else {
+    //   console.warn('Preferences could not be saved.')
+    // }
   }
 
   show() {
@@ -62,6 +98,7 @@ export class BibConsentPreferencesDialog extends LitElement {
   }
 
   render() {
+
     return html`
       <bib-consent-dialog show-close class='preferences-dialog' ${ref(this._dialogRef)}>
         <div class="content-container">
@@ -103,7 +140,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch class="switch" ?checked="${this.preferences.performanceCookies}" @toggle-switch:change="${event => { this.setPreference('performanceCookies', event.detail.checked) }}"></toggle-switch>
+                      <toggle-switch class="switch" ?checked="${this.#toggleChoices.performanceCookies}" @toggle-switch:change="${event => { this.#toggleChoices.performanceCookies = event.detail.checked }}"></toggle-switch>
                     </div>
                   </div>
                 </summary>
@@ -119,7 +156,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch class="switch" ?checked="${this.preferences.functionalityCookies}" @toggle-switch:change="${event => { this.setPreference('functionalityCookies', event.detail.checked) }}"></toggle-switch>
+                      <toggle-switch class="switch" ?checked="${this.#toggleChoices.functionalityCookies}" @toggle-switch:change="${event => { this.#toggleChoices.functionalityCookies = event.detail.checked }}"></toggle-switch>
                     </div>
                   </span>
                 </summary>
@@ -130,7 +167,7 @@ export class BibConsentPreferencesDialog extends LitElement {
               <details class="accordion-item" @click="${{ handleEvent: this.onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary"><span class="accordion-item__summary-title">Témoins publicitaires</span><span class="accordion-item__summary-icon"><span class="close">+</span><span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch class="switch" ?checked="${this.preferences.adsCookies}" @toggle-switch:change="${event => { this.setPreference('adsCookies', event.detail.checked) }}"></toggle-switch>
+                      <toggle-switch class="switch" ?checked="${this.#toggleChoices.adsCookies}" @toggle-switch:change="${event => { this.#toggleChoices.adsCookies = event.detail.checked }}"></toggle-switch>
                     </div>
                   </span></summary>
                 <div class="accordion-item__content">
@@ -140,9 +177,9 @@ export class BibConsentPreferencesDialog extends LitElement {
             </div>
             <p class="update-information">Vous pouvez modifier en tout temps vos préférences en sélectionnant les paramètres appropriés dans votre navigateur pour accepter ou refuser les témoins.</p>
             <div class="actions-container">
-              <button class="btn--filled" type="button">Enregistrer mes préférences</button>
-              <button class="btn--filled" type="button" @click="${() => this.saveAll(false)}">Tout refuser</button>
-              <button class="btn--filled" type="button" @click="${() => this.saveAll(true)}">Tout accepter</button>
+              <button class="btn--filled" type="button" @click="${() => this.savePreferences()}">Enregistrer mes préférences</button>
+              <button class="btn--filled" type="button" @click="${() => this.savePreferences(false)}">Tout refuser</button>
+              <button class="btn--filled" type="button" @click="${() => this.savePreferences(true)}">Tout accepter</button>
             </div>
             <div class="learn-more-container">Voir notre <a href="https://vie-privee.umontreal.ca/confidentialite">politique de confidentialité</a> et nos <a href="https://vie-privee.umontreal.ca/conditions-dutilisation">conditions d’utilisation</a>. </div>
           </div>

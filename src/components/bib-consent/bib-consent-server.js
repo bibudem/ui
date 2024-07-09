@@ -4,9 +4,11 @@ import { createRef, ref } from 'lit/directives/ref.js'
 import PreferencesStorage from './preferencesStorage.js'
 import { escapeStringRegexp } from '@/utils/url.js'
 import styles from './bib-consent-server.scss?inline'
+import logger from '@/utils/logger.js'
 
 export class BibConsentServer extends LitElement {
   #storage = new PreferencesStorage()
+  #logger = logger('bib-consent-server')
 
   static properties = {
     connected: {
@@ -40,15 +42,14 @@ export class BibConsentServer extends LitElement {
   }
 
   async init() {
-    console.log('[this.#storage.init()] start')
     await this.#storage.init()
-    console.log('[this.#storage.init()] end')
     this.startListening()
   }
 
   log() {
+    // console.log.apply(console, ['%c[bib-consent-server]', 'color: green; font-weight: bold;', ...arguments])
+    this.#logger(arguments)
     const msg = [...arguments].map(part => typeof part === 'string' ? part : JSON.stringify(part)).join(' ')
-    console.log.apply(console, ['%c[bib-consent-server]', 'color: green; font-weight: bold;', ...arguments])
     this.loggerRef.value.value += `${this.loggerRef.value.value === '' ? '' : '\r'}${msg}`
   }
 
@@ -65,8 +66,6 @@ export class BibConsentServer extends LitElement {
         console.log('originIsAllowed:', originIsAllowed)
 
         // return originIsAllowed
-
-        console.log('================= eventFilter')
         return true
       }
     })

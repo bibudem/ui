@@ -18,10 +18,12 @@ export const parameters = {
   },
   html: {
     root: '#root-inner',
+    removeComments: /^\?lit\$\d+\$$/,
     removeEmptyComments: true, // default: false
     highlighter: {
       showLineNumbers: true
-    }
+    },
+    transform: code => code.replace(/<button[^<]+<\/button>/g, '')
   },
 }
 

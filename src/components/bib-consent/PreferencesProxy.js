@@ -55,6 +55,7 @@ export default class PreferencesProxy extends EventTarget {
       this.serverMode = await getServerMode(this)
 
     }
+
     this.#debugIsOn = Reflect.has(this.client, 'debug')
 
     this.debug('init', `server mode: ${this.serverMode}`)
@@ -69,7 +70,7 @@ export default class PreferencesProxy extends EventTarget {
 
       this._server = await callServer(serverObject)
         .then(serverObject => {
-          console.log('[callServer] serverObject: ', serverObject)
+          console.log('[callServer] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! serverObject: ', serverObject)
           return serverObject
         })
         .catch(error => {
@@ -83,6 +84,7 @@ export default class PreferencesProxy extends EventTarget {
         this.dispatchEvent(event)
       })
 
+      console.log('[ici] this._server: ', this._server)
       preferences = await this._server.postMessage('getPreferences')
       console.log('[remote] Got response from server: ', preferences)
 

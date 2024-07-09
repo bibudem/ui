@@ -4,23 +4,17 @@ import './bib-consent-server'
 import PreferencesProxy from './PreferencesProxy.js'
 
 export default {
-  title: 'Composants/Gestion des témoins',
+  title: 'Composants/Consentement des témoins',
   component: 'BibConsent',
-  tags: ['autodocs'],
   parameters: {
-    cssprops: {
-      'bib-comp-retroaction-usager-size': {
-        value: 'inherit',
-        description: 'Taille de la police'
-      }
-    }
+    cssprops: {}
   }
 }
 
 const consentElement = document.createElement('bib-consent')
-consentElement.debug = true
-consentElement.serverUrl = '/consent-server'
-consentElement.allowedOrigins = ['http://localhost:*']
+consentElement.setAttribute('debug', '')
+consentElement.setAttribute('server-url', '/consent-server')
+consentElement.setAttribute('allowed-origins', 'http://localhost:*')
 
 const preferencesProxy = new PreferencesProxy(consentElement)
 
@@ -38,12 +32,3 @@ export const GestionTemoins = {
     `
   }
 }
-
-// /**
-//  * Composant serveur
-//  */
-// export const GestionTemoinsServer = {
-//   render: function () {
-//     return html`<bib-consent-server></bib-consent-server>`
-//   }
-// }
