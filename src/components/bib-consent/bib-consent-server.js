@@ -1,14 +1,17 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
 import { startListening } from 'postmessage-promise'
 import { createRef, ref } from 'lit/directives/ref.js'
-import PreferencesStorage from './preferencesStorage.js'
 import { escapeStringRegexp } from '@/utils/url.js'
+import { loggerFactory } from '@/utils/logger.js'
+import PreferenceStorage from './PreferenceStorage.js'
 import styles from './bib-consent-server.scss?inline'
-import logger from '@/utils/logger.js'
+import { EVENT_NAMES } from './constants.js'
+import getPreferenceStorage from './PreferenceStorage.js'
 
 export class BibConsentServer extends LitElement {
-  #storage = new PreferencesStorage()
-  #logger = logger('bib-consent-server')
+  #storage
+  #logger = loggerFactory('consent-server')
+  #preferences
 
   static properties = {
     connected: {
@@ -35,73 +38,78 @@ export class BibConsentServer extends LitElement {
   constructor() {
     super()
     this.connected = false
-    this.debug = false
+    this.debug = this.debug || false
     this.loggerRef = createRef()
     this.allowedOrigins = this.allowedOrigins || [] // Default: none
     this.init()
   }
 
   async init() {
-    await this.#storage.init()
+    this.#storage = await getPreferenceStorage()
+    this.#storage.listen(event => {
+      this.log('Storage updated with data', event.detail)
+      this.#preferences = event.detail
+    })
     this.startListening()
   }
 
   log() {
-    // console.log.apply(console, ['%c[bib-consent-server]', 'color: green; font-weight: bold;', ...arguments])
-    this.#logger(arguments)
-    const msg = [...arguments].map(part => typeof part === 'string' ? part : JSON.stringify(part)).join(' ')
-    this.loggerRef.value.value += `${this.loggerRef.value.value === '' ? '' : '\r'}${msg}`
+    if (this.debug) {
+      this.#logger(...arguments)
+      const msg = [...arguments].map(part => typeof part === 'string' ? part : JSON.stringify(part)).join(' ')
+      this.loggerRef.value.value += `${this.loggerRef.value.value === '' ? '' : '\r'}${msg}`
+    }
   }
 
   async startListening() {
     const { postMessage, listenMessage } = await startListening({
       eventFilter: event => {
-        console.log('event:', event)
-        console.log('this.allowedOrigins:', this.allowedOrigins)
-        const originURL = new URL(event.origin)
-        const originRegex = new RegExp(`${escapeStringRegexp(originURL.origin)}`)
-        const originIsAllowed = this.allowedOrigins.length > 0 && this.allowedOrigins.every(origin => {
+        const { origin } = event
+        const originIsAllowed = this.allowedOrigins.length > 0 && this.allowedOrigins.some(originPattern => {
+          const originRegex = new RegExp(`${escapeStringRegexp(originPattern)}`)
           return originRegex.test(origin)
         })
-        console.log('originIsAllowed:', originIsAllowed)
 
-        // return originIsAllowed
-        return true
+        return originIsAllowed
       }
     })
-    this.connected = true
 
-    this.log('connected: ', this.connected)
+    this.connected = true
+    this.log('connected:', this.connected)
 
     listenMessage(async (method, payload, response) => {
-      if (method === 'setPreferences') {
-        this.log('#setPreferences:', payload)
-        await this.#storage.setPreferences(payload)
-        return
+
+      let responseData
+
+      switch (method) {
+        case 'setPreferences':
+          responseData = await this.#storage.setPreferences(payload)
+          break
+
+        case 'getPreferences':
+          responseData = await this.#storage.getPreferences()
+          break
+
+        case 'resetPreferences':
+          responseData = await this.#storage.resetPreferences()
+          break
+
+        case 'ping':
+          responseData = "pong"
+          break
+
+        default:
+          this.log(`Unknown method: ${method}. Payload:`, payload)
+          throw new Error(`Unknown method: ${method}`)
       }
 
-      if (method === 'getPreferences') {
-        const preferences = await this.#storage.getPreferences()
-        this.log('#getPreferences:', preferences)
-        response(preferences)
+      if (payload) {
+        this.log(`Method \`${method}\` called with payload:`, payload, 'response:', responseData)
+      } else {
+        this.log(`Method \`${method}\` called.`, 'response:', responseData)
       }
 
-      if (method === 'resetPreferences') {
-        await this.#storage.resetPreferences()
-        this.log('#resetPreferences')
-        response(await this.#storage.getPreferences())
-      }
-
-      if (method === 'ping') {
-        const responseData = {
-          success: true,
-          msg: "pong"
-        }
-
-        this.log('[ping]', responseData)
-
-        response(responseData)
-      }
+      response(responseData)
 
     })
   }

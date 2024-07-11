@@ -1,10 +1,14 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
+import { ContextConsumer, ContextProvider } from '@lit/context'
 import { createRef, ref } from 'lit/directives/ref.js'
 import '@auroratide/toggle-switch/lib/define.js'
-import { DEFAULT_PREFERENCES, EVENT_TYPES } from './constants.js'
+import { DEFAULT_PREFERENCES, EVENT_NAMES } from './constants.js'
 import styles from './bib-consent-preferences-dialog.scss?inline'
-import { ContextConsumer, ContextProvider } from '@lit/context'
 import { consentContext } from './consent-context.js'
+
+function getConsentValues(value) {
+  return Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: value }), {})
+}
 
 export class BibConsentPreferencesDialog extends LitElement {
   static properties = {
@@ -22,17 +26,13 @@ export class BibConsentPreferencesDialog extends LitElement {
     css`${unsafeCSS(styles)}`
   ]
 
-  preferences
-  #consentProvider
   #consentConsumer
-  #toggleChoices = Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
+  #toggleChoices = getConsentValues(false)
 
   constructor() {
     super()
     this.open = false
     this._dialogRef = createRef()
-    this.#consentProvider = new ContextProvider(this, { context: consentContext, initialValue: null })
-    // this.preferences = this.preferences || Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
     this.#consentConsumer = new ContextConsumer(this, { context: consentContext, subscribe: true })
 
     if (this.#consentConsumer.value) {
@@ -40,40 +40,17 @@ export class BibConsentPreferencesDialog extends LitElement {
     }
   }
 
-  get preferences() {
-    return this.#consentConsumer.value ?? null
-  }
-
-  saveAll(choice) {
-    const preferences = { ...DEFAULT_PREFERENCES }
-
-    for (const prop in preferences) {
-      this.setPreference(prop, choice)
-    }
-
-    this.savePreferences()
-  }
-
-  setPreference(key, value) {
-    if (!Object.keys(DEFAULT_PREFERENCES).includes(key)) {
-      throw new Error(`${key} is not a valid key.`)
-    }
-
-    this.preferences[key] = value
-    this.requestUpdate()
-  }
-
   async savePreferences(preference) {
     try {
       let preferences
 
       if (preference) {
-        preferences = Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: preference }), {})
+        preferences = getConsentValues(preference)
       } else {
-        preferences = this.preferences
+        preferences = this.#toggleChoices
       }
 
-      this.#consentProvider.setValue(preferences)
+      this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: preferences }))
     } catch (error) {
       console.error('[savePreferences] error: ', error)
       throw error
@@ -95,6 +72,14 @@ export class BibConsentPreferencesDialog extends LitElement {
     if (event.composedPath().some(node => node.matches?.('toggle-switch.switch'))) {
       event.preventDefault()
     }
+  }
+
+  onToggleSwitchChange(event) {
+    console.log('[onToggleSwitchChange] event: ', event)
+    const { target, detail } = event
+    const { checked } = detail
+    const name = target.getAttribute('name')
+    this.#toggleChoices[name] = checked
   }
 
   render() {
@@ -140,7 +125,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch class="switch" ?checked="${this.#toggleChoices.performanceCookies}" @toggle-switch:change="${event => { this.#toggleChoices.performanceCookies = event.detail.checked }}"></toggle-switch>
+                      <toggle-switch name="performanceCookies" class="switch" ?checked="${this.#toggleChoices.performanceCookies}" @toggle-switch:change="${this.onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </div>
                 </summary>
@@ -156,7 +141,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch class="switch" ?checked="${this.#toggleChoices.functionalityCookies}" @toggle-switch:change="${event => { this.#toggleChoices.functionalityCookies = event.detail.checked }}"></toggle-switch>
+                      <toggle-switch name="functionalityCookies" class="switch" ?checked="${this.#toggleChoices.functionalityCookies}" @toggle-switch:change="${this.onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </span>
                 </summary>
@@ -167,7 +152,7 @@ export class BibConsentPreferencesDialog extends LitElement {
               <details class="accordion-item" @click="${{ handleEvent: this.onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary"><span class="accordion-item__summary-title">Témoins publicitaires</span><span class="accordion-item__summary-icon"><span class="close">+</span><span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch class="switch" ?checked="${this.#toggleChoices.adsCookies}" @toggle-switch:change="${event => { this.#toggleChoices.adsCookies = event.detail.checked }}"></toggle-switch>
+                      <toggle-switch name="adsCookies" class="switch" ?checked="${this.#toggleChoices.adsCookies}" @toggle-switch:change="${this.onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </span></summary>
                 <div class="accordion-item__content">

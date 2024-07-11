@@ -12,7 +12,7 @@ export default function middleware(router) {
         <script type="module" src="/@vite/client"></script>
       </head>
     <body style="margin: 0;">
-      <bib-consent-server${debug ? ' debug' : ''}></bib-consent-server$>
+      <bib-consent-server allowed-origins="http://localhost:*"${debug ? ' debug' : ''}></bib-consent-server>
       <script type="module" src="./sb-preview/runtime.js"></script>
       <script type="module" src="/virtual:/@storybook/builder-vite/vite-app.js"></script>
       <script type="module" src="/src/components/bib-consent/bib-consent-server.js"></script>

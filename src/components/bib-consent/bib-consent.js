@@ -1,13 +1,16 @@
-import { css, html, LitElement, unsafeCSS } from 'lit'
+import { html, LitElement } from 'lit'
 import { createRef, ref } from 'lit/directives/ref.js'
+import { ContextProvider, ContextConsumer } from '@lit/context'
 import '@auroratide/toggle-switch/lib/define.js'
 import '../bib-button/bib-button-close.js'
 import './bib-consent-consent-dialog.js'
 import './bib-consent-preferences-dialog.js'
-import PreferencesProxy from './PreferencesProxy.js'
-import { SERVER_MODE, DEFAULT_PREFERENCES } from './constants.js'
-import { ContextProvider, ContextConsumer } from '@lit/context'
+import createPreferencesClient from './preferencesClient.js'
 import { consentContext } from './consent-context.js'
+import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT } from './constants.js'
+import { loggerFactory } from '@/utils/logger.js'
+
+const debug = loggerFactory('bib-consent', '#cd5300')
 
 export class BibConsent extends LitElement {
   static properties = {
@@ -34,106 +37,71 @@ export class BibConsent extends LitElement {
     },
   }
 
-  #preferencesProxy
+  #preferencesClient
   #preferences
   #consentDialogRef
   #preferencesDialogRef
   #consentProvider
   #consentConsumer
+  #debug
 
   constructor() {
     super()
-    console.log('-----------------------------------------------------')
     this.open = false
     this.#consentDialogRef = createRef()
     this.#preferencesDialogRef = createRef()
-    // this.#preferences = Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: false }), {})
     this.#consentProvider = new ContextProvider(this, { context: consentContext, initialValue: null })
     this.#consentConsumer = new ContextConsumer(this, { context: consentContext, callback: this.savePreferences })
-  }
-
-  get preferences() {
-    return this.#preferences
-  }
-
-  async savePreferences(preferences) {
-    console.log('[savePreferences] preferences: ', preferences)
-    try {
-      await this.#preferencesProxy.setPreferences(preferences)
-      return true
-    } catch (error) {
-      console.error('[savePreferences] error: ', error)
-      // throw error
-      return false
+    this.#debug = function () {
+      if (this.debug) {
+        debug(...arguments)
+      }
     }
   }
 
-  connectedCallback() {
+  /**
+   * Gets the user's consent preferences.
+   * @returns {Object} The user's consent preferences.
+   */
+  get preferences() {
+    return this.#consentConsumer.value
+  }
+
+  async connectedCallback() {
     super.connectedCallback()
     const self = this
     this.debug = this.debug || false
     this.serverUrl = this.serverUrl || 'https://bib.umontreal.ca/consent/server'
-    this.serverRequestTimeout = this.serverRequestTimeout || 500
-    this.#preferencesProxy = new PreferencesProxy(this)
-    this.#preferencesProxy.addEventListener.call(self, 'ready', event => {
+    this.serverRequestTimeout = this.serverRequestTimeout || SERVER_REQUEST_DEFAULT_TIMEOUT
+    this.#preferencesClient = await createPreferencesClient({ host: this, serverUrl: this.serverUrl, reflectEvents: true })
 
-      this.dispatchEvent(new CustomEvent('bib:consent:ready'))
-      console.log('[#preferencesProxy] ready event: ', event)
+    this.#preferencesClient.addEventListener(EVENT_NAMES.READY, event => {
+
+      this.#debug(EVENT_NAMES.READY, 'event: ', event)
+
       if (event.detail) {
         // this.#preferences = event.detail
-        this.#consentProvider.setValue(event.detail)
+        // this.#consentProvider.setValue(event.detail)
       } else {
         this.#show('consent')
       }
     })
 
-    this.#preferencesProxy.addEventListener.call(self, 'update', event => {
-      console.log('[#preferencesProxy] update event: ', event)
-
-      // this.#preferences = event.detail
-      this.#consentProvider.setValue(event.detail)
+    this.#preferencesClient.addEventListener(EVENT_NAMES.UPDATE, event => {
+      this.#debug(EVENT_NAMES.UPDATE, 'event:', event)
+      // this.#consentProvider.setValue(event.detail)
     })
 
     this.addEventListener('bib:close', () => {
-      console.log('[bib:close]')
+      this.#debug('[bib:close]')
       this.close()
     })
 
-    let i = 0
-    const initialProp = this.#preferencesProxy._server
-    console.log('[timeout] starting timeout. this.#preferencesProxy._server:', initialProp)
-    const handle = setInterval(() => {
-      i++
-      if (this.#preferencesProxy._server !== initialProp) {
-        console.log('[timeout] %s this.#preferencesProxy._server:', i, this.#preferencesProxy._server)
-      }
-
-      if (i === 25 || this.#preferencesProxy._server) {
-        clearInterval(handle)
-      }
-    }, 1000)
-
-    console.log('[bib-consent] update: ', this.#preferences)
-  }
-
-  #show(panel = 'consent') {
-
-    if (typeof panel !== 'string' && !['consent', 'preferences'].includes(panel)) {
-      throw new TypeError(`The panel argument must be a string of either values 'consent' or 'preferences'. `, panel)
-    }
-
-    this.open = true
-
-    if (this.currentDialog) {
-      console.log('[#show] this.currentDialog', this.currentDialog)
-      this.currentDialog.close()
-    }
-
-    console.log('[show]', this.#consentDialogRef.value)
-    console.log('[show]', this.#preferencesDialogRef.value)
-    this.currentDialog = panel === 'consent' ? this.#consentDialogRef.value : this.#preferencesDialogRef.value
-    // this.#preferencesDialogRef.value?.show()
-    this.currentDialog.show()
+    this.shadowRoot.addEventListener('context-request', event => {
+      event.stopPropagation()
+      this.#debug('%c[context-request] event: ', 'color: red; font-weight: bold;', event)
+      event.callback(this.preferences)
+    })
   }
 
   close() {
@@ -150,20 +118,69 @@ export class BibConsent extends LitElement {
     this.#show('preferences')
   }
 
-  async _handleUpdateEvent(event) {
-    console.log('[#handleUpdateEvent]', event)
-    const success = await this.savePreferences(event.detail)
-    if (!success) {
-      event.preventDefault()
-      return
+  async getPreferences() {
+    this.#preferences = await this.#preferencesClient.getPreferences()
+    return this.#preferences
+  }
+
+  /**
+   * Saves the user's consent preferences to the server.
+   *
+   * @param {Object} preferences - The user's consent preferences.
+   * @returns {Promise<boolean>} - A promise that resolves to `true` if the preferences were saved successfully, or `false` if there was an error.
+   */
+
+  async savePreferences(preferences) {
+    this.#debug('[savePreferences] preferences: ', preferences)
+    try {
+      await this.#preferencesClient.setPreferences(preferences)
+      this.#consentProvider.setValue(preferences)
+      return true
+    } catch (error) {
+      console.error('[savePreferences] error: ', error)
+      throw error
     }
-    this.dispatchEvent(new CustomEvent('update', { detail: event.detail }))
+  }
+
+  async resetPreferences() {
+    this.#preferences = await this.#preferencesClient.resetPreferences()
+    return this.#preferences
+  }
+
+  #show(panel = 'consent') {
+
+    if (typeof panel !== 'string' && !['consent', 'preferences'].includes(panel)) {
+      throw new TypeError(`The panel argument must be a string of either values 'consent' or 'preferences'. `, panel)
+    }
+
+    this.open = true
+
+    if (this.currentDialog) {
+      this.#debug('[#show] this.currentDialog', this.currentDialog)
+      this.currentDialog.close()
+    }
+
+    this.#debug('[show]', this.#consentDialogRef.value)
+    this.#debug('[show]', this.#preferencesDialogRef.value)
+    this.currentDialog = panel === 'consent' ? this.#consentDialogRef.value : this.#preferencesDialogRef.value
+    // this.#preferencesDialogRef.value?.show()
+    this.currentDialog.show()
+  }
+
+  async _handleUpdateEvent(event) {
+    this.#debug('[#handleUpdateEvent]', event)
+    const success = await this.savePreferences(event.detail)
+    this.#debug('[#handleUpdateEvent] success: ', success)
+    // if (!success) {
+    //   return
+    // }
+    // this.dispatchEvent(new CustomEvent(prefixedEventName('update'), { detail: event.detail }))
   }
 
   render() {
     return html`
-        <bib-consent-consent-dialog .preferences=${this.#preferences} @update="${this._handleUpdateEvent}" @show-preferences="${() => this.#show('preferences')}" ${ref(this.#consentDialogRef)} @bib:close="${() => console.log('--- bib:close')}" @close="${() => console.log('--- close')}"></bib-consent-consent-dialog>
-        <bib-consent-preferences-dialog .preferences=${this.#preferences} @update="${this._handleUpdateEvent}" ${ref(this.#preferencesDialogRef)} @bib:close="${() => console.log('--- bib:close')}" @close="${() => console.log('--- close')}"></bib-consent-preferences-dialog>
+        <bib-consent-consent-dialog @update="${this._handleUpdateEvent}" @show-preferences="${() => this.#show('preferences')}" ${ref(this.#consentDialogRef)} @bib:close="${() => this.#debug('--- bib:close')}" @close="${() => this.#debug('--- close')}"></bib-consent-consent-dialog>
+        <bib-consent-preferences-dialog @update="${this._handleUpdateEvent}" ${ref(this.#preferencesDialogRef)} @bib:close="${() => this.#debug('--- bib:close')}" @close="${() => this.#debug('--- close')}"></bib-consent-preferences-dialog>
     `
   }
 }
