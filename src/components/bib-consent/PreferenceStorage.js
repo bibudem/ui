@@ -44,6 +44,16 @@ class PreferenceStorage extends EventTarget {
     )
   }
 
+  /**
+   * Initializes the IndexedDB database for storing user preferences.
+   *
+   * This method is responsible for creating the IndexedDB database and the object store
+   * if it doesn't already exist. It uses the `openDB` function from the `idb` library
+   * to interact with IndexedDB.
+   *
+   * If there is an error while initializing the database, it throws an error with the
+   * message "Something went wrong with indexedDB:".
+   */
   async init() {
     try {
       this.db = await openDB(DB_NAME, DB_VERSION, {
@@ -60,6 +70,14 @@ class PreferenceStorage extends EventTarget {
     }
   }
 
+  /**
+   * Retrieves the user preferences from the IndexedDB database.
+   *
+   * This method checks if the preferences are stored in the database, and if so, returns them.
+   * If the preferences are not found in the database, it returns `null`.
+   *
+   * @returns {object|null} The user preferences, or `null` if not found.
+   */
   async getPreferences() {
 
     const preferences = await this.db.get(DB_STORE_NAME, 'preferences')
@@ -128,11 +146,21 @@ class PreferenceStorage extends EventTarget {
 
   }
 
+  /**
+   * Resets the user's preferences to their default values.
+   * @returns {Promise<void>} A promise that resolves when the preferences have been reset.
+   */
   async resetPreferences() {
     return await this.#doSetPreferences(null)
   }
 }
 
+/**
+ * Checks if two arrays have the same items, regardless of order.
+ * @param {Array} arr1 - The first array to compare.
+ * @param {Array} arr2 - The second array to compare.
+ * @returns {boolean} - True if the arrays have the same items, false otherwise.
+ */
 function arraysHaveSameItems(arr1, arr2) {
   if (arr1.length !== arr2.length) {
     return false

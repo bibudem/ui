@@ -3,10 +3,15 @@ import { createRef, ref } from 'lit/directives/ref.js'
 import { DEFAULT_PREFERENCES } from './constants.js'
 import styles from './bib-consent-dialog.scss?inline'
 
-function all(value) {
-  return Object.keys(DEFAULT_PREFERENCES).reduce((prefs, prop) => ({ ...prefs, [prop]: value }), {})
-}
-
+/**
+ * A custom dialog element that can be shown or hidden, with an optional close button.
+ * 
+ * The dialog can be shown either as a modal or non-modal dialog. It dispatches a 'close' event when closed.
+ * 
+ * @property {boolean} debug - Indicates whether the dialog is in debug mode.
+ * @property {boolean} open - Indicates whether the dialog is currently open.
+ * @property {boolean} showClose - Indicates whether a close button should be displayed.
+ */
 export class BibConsentDialog extends LitElement {
   static properties = {
     debug: {
@@ -28,6 +33,13 @@ export class BibConsentDialog extends LitElement {
     css`${unsafeCSS(styles)}`
   ]
 
+  /**
+   * Initializes the `BibConsentDialog` component.
+   * 
+   * This constructor sets the initial state of the component, including whether the dialog is open and whether a close button should be displayed.
+   * 
+   * The `_dialogRef` property is a reference to the dialog element, which is used to control the dialog's visibility and behavior.
+   */
   constructor() {
     super()
     this.open = false
@@ -35,6 +47,11 @@ export class BibConsentDialog extends LitElement {
     this._dialogRef = createRef()
   }
 
+  /**
+   * Adds an event listener to the dialog element to listen for the 'close' event, and calls the `close()` method when the dialog is closed.
+   * 
+   * This method is called when the component is connected to the DOM, and sets up the necessary event listener to handle the dialog's closing.
+   */
   connectedCallback() {
     super.connectedCallback()
 
@@ -54,20 +71,37 @@ export class BibConsentDialog extends LitElement {
     }
   }
 
+  /**
+   * Shows the dialog.
+   * 
+   * This method sets the `open` property to `true` and calls the `show()` method on the dialog element to display it.
+   */
   show() {
     this.#show()
   }
 
+  /**
+   * Shows the dialog in modal mode.
+   * 
+   * This method sets the `open` property to `true` and calls the `showModal()` method on the dialog element to display it in modal mode.
+   */
   showModal() {
     this.#show('modal')
   }
 
-  close() {
+  /**
+   * Closes the dialog and optionally dispatches a 'close' event.
+   * 
+   * This method sets the `open` property to `false` and calls the `close()` method on the dialog element to hide it. If the `emit` parameter is `true`, it also dispatches a 'close' event that bubbles up and is composed.
+   * 
+   * @param {boolean} [emit=true] - Whether to dispatch a 'close' event.
+   */
+  close(emit = true) {
     this.open = false
     if (this._dialogRef.value && this._dialogRef.value.open) {
       this._dialogRef.value?.close()
     }
-    this.dispatchEvent(new CustomEvent('bib:close'))
+    emit && this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }))
   }
 
   render() {

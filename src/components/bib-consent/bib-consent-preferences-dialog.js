@@ -1,15 +1,21 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
 import { ContextConsumer, ContextProvider } from '@lit/context'
 import { createRef, ref } from 'lit/directives/ref.js'
+import { isBoolean } from 'lodash-es'
 import '@auroratide/toggle-switch/lib/define.js'
-import { DEFAULT_PREFERENCES, EVENT_NAMES } from './constants.js'
-import styles from './bib-consent-preferences-dialog.scss?inline'
 import { consentContext } from './consent-context.js'
+import { DEFAULT_PREFERENCES } from './constants.js'
+import styles from './bib-consent-preferences-dialog.scss?inline'
 
+/**
+ * Generates an object with the default consent preferences, where each key is set to the provided boolean value.
+ *
+ * @param {boolean} value - The boolean value to set for each consent preference.
+ * @returns {Object} An object with the default consent preferences, where each key is set to the provided value.
+ */
 function getConsentValues(value) {
   return Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: value }), {})
 }
-
 export class BibConsentPreferencesDialog extends LitElement {
   static properties = {
     debug: {
@@ -26,51 +32,85 @@ export class BibConsentPreferencesDialog extends LitElement {
     css`${unsafeCSS(styles)}`
   ]
 
-  #consentConsumer
+  _consentConsumer
   #toggleChoices = getConsentValues(false)
 
+  /**
+   * Constructs a new `BibConsentPreferencesDialog` instance.
+   *
+   * This constructor initializes the component's state, creates a reference to the dialog element, and subscribes to the consent context to retrieve the user's consent preferences.
+   *
+   * The `open` property is initially set to `false`, and the `#toggleChoices` property is initialized based on the consent context value. If the consent context value is `null`, `#toggleChoices` is set to the default consent preferences.
+   */
   constructor() {
     super()
     this.open = false
     this._dialogRef = createRef()
-    this.#consentConsumer = new ContextConsumer(this, { context: consentContext, subscribe: true })
-
-    if (this.#consentConsumer.value) {
-      this.#toggleChoices = this.#consentConsumer.value
-    }
+    this._consentConsumer = new ContextConsumer(this, {
+      context: consentContext, subscribe: true, callback: value => {
+        console.log('callback: ', value)
+        this.#toggleChoices = value === null ? getConsentValues(false) : value
+        // this.requestUpdate()
+      }
+    })
   }
 
+  /**
+   * Saves the user's consent preferences.
+   *
+   * @param {boolean|Object} preference - The consent preferences to save. If a boolean is provided, it will be used to generate a full set of consent values. If an object is provided, it will be used directly as the consent preferences.
+   * @returns {void}
+   * @throws {Error} If there is an error saving the preferences.
+   */
   async savePreferences(preference) {
     try {
       let preferences
 
-      if (preference) {
+      if (isBoolean(preference)) {
         preferences = getConsentValues(preference)
       } else {
         preferences = this.#toggleChoices
       }
 
-      console.log('[savePreferences] preferences: ', preferences)
-      this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: preferences }))
+      this.dispatchEvent(new CustomEvent('update', { detail: preferences }))
     } catch (error) {
       console.error('[savePreferences] error: ', error)
       throw error
     }
   }
 
+  /**
+   * Shows the consent preferences dialog.
+   *
+   * This method retrieves the user's consent preferences from the consent context and initializes the `#toggleChoices` property with the values. It then shows the dialog modal.
+   *
+   * @returns {void}
+   */
   show() {
+    console.log('[show] this._consentConsumer.value: ', this._consentConsumer.value)
+    this.#toggleChoices = this._consentConsumer.value ? { ...this._consentConsumer.value } : getConsentValues(false)
     this._dialogRef.value?.showModal()
   }
 
-  onDetailsClick(event) {
+  /**
+   * Closes the dialog and optionally emits an event.
+   *
+   * @param {boolean} [emit=true] - Whether to emit the 'close' event when the dialog is closed.
+   * @returns {void}
+   */
+  close(emit = true) {
+    this._dialogRef.value?.close(emit)
+  }
+
+  #onDetailsClick(event) {
     // Prevent the <details> element to open if user clics on the toggle button
     if (event.composedPath().some(node => node.matches?.('toggle-switch.switch'))) {
       event.preventDefault()
     }
   }
 
-  onToggleSwitchChange(event) {
-    console.log('[onToggleSwitchChange] event: ', event)
+  #onToggleSwitchChange(event) {
+    console.log('[#onToggleSwitchChange] event: ', event)
     const { target, detail } = event
     const { checked } = detail
     const name = target.getAttribute('name')
@@ -113,14 +153,14 @@ export class BibConsentPreferencesDialog extends LitElement {
                 </div>
               </details>
 
-              <details class="accordion-item" @click="${{ handleEvent: this.onDetailsClick, capture: true }}">
+              <details class="accordion-item" @click="${{ handleEvent: this.#onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary">
                   <div class="accordion-item__summary-title">Témoins de performance</div>
                   <div class="accordion-item__summary-icon">
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="performanceCookies" class="switch" ?checked="${this.#toggleChoices.performanceCookies}" @toggle-switch:change="${this.onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="performanceCookies" class="switch" ?checked="${this.#toggleChoices.performanceCookies}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </div>
                 </summary>
@@ -129,14 +169,14 @@ export class BibConsentPreferencesDialog extends LitElement {
                 </div>
               </details>
 
-              <details class="accordion-item" @click="${{ handleEvent: this.onDetailsClick, capture: true }}">
+              <details class="accordion-item" @click="${{ handleEvent: this.#onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary">
                   <span class="accordion-item__summary-title">Témoins de fonctionnalité</span>
                   <span class="accordion-item__summary-icon">
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="functionalityCookies" class="switch" ?checked="${this.#toggleChoices.functionalityCookies}" @toggle-switch:change="${this.onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="functionalityCookies" class="switch" ?checked="${this.#toggleChoices.functionalityCookies}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </span>
                 </summary>
@@ -144,10 +184,10 @@ export class BibConsentPreferencesDialog extends LitElement {
                   <p>Ces témoins permettent d’améliorer les fonctionnalités et la personnalisation de nos sites. Par exemple, ils rendent possible l’utilisation de vidéos et de services de messagerie instantanée ou encore le partage de contenus de nos sites sur des plateformes de médias sociaux. Si vous désactivez ces témoins, votre expérience de navigation et les services que nous sommes en mesure de vous offrir peuvent être impactés.</p>
                 </div>
               </details>
-              <details class="accordion-item" @click="${{ handleEvent: this.onDetailsClick, capture: true }}">
+              <details class="accordion-item" @click="${{ handleEvent: this.#onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary"><span class="accordion-item__summary-title">Témoins publicitaires</span><span class="accordion-item__summary-icon"><span class="close">+</span><span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="adsCookies" class="switch" ?checked="${this.#toggleChoices.adsCookies}" @toggle-switch:change="${this.onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="adsCookies" class="switch" ?checked="${this.#toggleChoices.adsCookies}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </span></summary>
                 <div class="accordion-item__content">

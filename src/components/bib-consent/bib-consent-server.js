@@ -4,13 +4,11 @@ import { createRef, ref } from 'lit/directives/ref.js'
 import { escapeStringRegexp } from '@/utils/url.js'
 import { loggerFactory } from '@/utils/logger.js'
 import getPreferenceStorage from './PreferenceStorage.js'
-import { EVENT_NAMES } from './constants.js'
 import styles from './bib-consent-server.scss?inline'
 
 export class BibConsentServer extends LitElement {
   #storage
   #logger = loggerFactory('consent-server')
-  #preferences
 
   static properties = {
     connected: {
@@ -34,6 +32,18 @@ export class BibConsentServer extends LitElement {
     css`${unsafeCSS(styles)}`
   ]
 
+  /**
+   * Constructs a new `BibConsentServer` instance.
+   * 
+   * The `BibConsentServer` is responsible for managing the consent preferences for the BIB application. It initializes the preference storage, starts listening for postMessage events, and provides methods for setting, getting, and resetting the user's consent preferences.
+   * 
+   * The constructor sets the initial state of the `BibConsentServer` instance, including whether it is connected, the debug mode, a reference to a logger, and the allowed origins for postMessage events.
+   * 
+   * @constructor
+   * @param {boolean} [connected=false] - Indicates whether the `BibConsentServer` is currently connected and listening for postMessage events.
+   * @param {boolean} [debug=false] - Enables debug logging if set to `true`.
+   * @param {string[]} [allowedOrigins=[]] - An array of allowed origin patterns for postMessage events.
+   */
   constructor() {
     super()
     this.connected = false
@@ -43,11 +53,19 @@ export class BibConsentServer extends LitElement {
     this.init()
   }
 
+  /**
+   * Initializes the BibConsentServer instance.
+   * 
+   * This method sets up the preference storage, starts listening for storage update events, and begins listening for postMessage events from allowed origins.
+   * 
+   * The preference storage is initialized using the `getPreferenceStorage()` function, and a listener is added to the storage to log any updates to the preferences.
+   * 
+   * The `startListening()` method is then called to begin listening for postMessage events and handle requests to set, get, and reset the user's consent preferences.
+   */
   async init() {
     this.#storage = await getPreferenceStorage()
     this.#storage.listen(event => {
       this.log('Storage updated with data', event.detail)
-      this.#preferences = event.detail
     })
     this.startListening()
   }
@@ -60,6 +78,18 @@ export class BibConsentServer extends LitElement {
     }
   }
 
+  /**
+   * Starts listening for postMessage events from allowed origins and handles requests to set, get, and reset the user's consent preferences.
+   * 
+   * This method sets up a message listener that filters incoming messages based on the allowed origins specified in the `allowedOrigins` property. It then handles the following methods:
+   * 
+   * - `setPreferences`: Sets the user's consent preferences in the preference storage.
+   * - `getPreferences`: Retrieves the user's consent preferences from the preference storage.
+   * - `resetPreferences`: Resets the user's consent preferences in the preference storage.
+   * - `ping`: Responds with "pong" to a ping request.
+   * 
+   * The method logs the method call and the response data, if any, to the debug logger.
+   */
   async startListening() {
     const { postMessage, listenMessage } = await startListening({
       eventFilter: event => {
