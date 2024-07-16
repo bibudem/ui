@@ -97,4 +97,6 @@ export class UdeMUrgence extends LitElement {
   }
 }
 
-customElements.define('udem-urgence', UdeMUrgence)
+if (!window.customElements.get('udem-urgence')) {
+  window.customElements.define('udem-urgence', UdeMUrgence)
+}

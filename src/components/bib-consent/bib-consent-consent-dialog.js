@@ -69,4 +69,6 @@ export class BibConsentConsentDialog extends LitElement {
   }
 }
 
-customElements.define('bib-consent-consent-dialog', BibConsentConsentDialog)
+if (!window.customElements.get('bib-consent-consent-dialog')) {
+  window.customElements.define('bib-consent-consent-dialog', BibConsentConsentDialog)
+}

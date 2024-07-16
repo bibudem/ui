@@ -35,4 +35,6 @@ export class BibFooterCopyright extends LitElement {
   }
 }
 
-window.customElements.define('bib-footer-copyright', BibFooterCopyright)
+if (!window.customElements.get('bib-footer-copyright')) {
+  window.customElements.define('bib-footer-copyright', BibFooterCopyright)
+}

@@ -50,17 +50,12 @@ export class BibConsentPreferencesDialog extends LitElement {
         preferences = this.#toggleChoices
       }
 
+      console.log('[savePreferences] preferences: ', preferences)
       this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: preferences }))
     } catch (error) {
       console.error('[savePreferences] error: ', error)
       throw error
     }
-    // const success = this.dispatchEvent(new CustomEvent('update', { detail: this.preferences }))
-    // if (success) {
-    //   this._dialogRef.value?.close()
-    // } else {
-    //   console.warn('Preferences could not be saved.')
-    // }
   }
 
   show() {
@@ -174,4 +169,6 @@ export class BibConsentPreferencesDialog extends LitElement {
   }
 }
 
-customElements.define('bib-consent-preferences-dialog', BibConsentPreferencesDialog)
+if (!window.customElements.get('bib-consent-preferences-dialog')) {
+  window.customElements.define('bib-consent-preferences-dialog', BibConsentPreferencesDialog)
+}

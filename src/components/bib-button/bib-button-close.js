@@ -24,4 +24,6 @@ export class BibButtonClose extends LitElement {
   }
 }
 
-customElements.define('bib-button-close', BibButtonClose)
+if (!window.customElements.get('bib-button-close')) {
+  window.customElements.define('bib-button-close', BibButtonClose)
+}

@@ -8,8 +8,8 @@ const config = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
-    '@chromatic-com/storybook',
     '@ljcl/storybook-addon-cssprops',
+    '@chromatic-com/storybook',
     '@whitespace/storybook-addon-html'
   ],
   framework: {

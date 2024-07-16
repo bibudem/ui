@@ -88,7 +88,7 @@ export class BibConsent extends LitElement {
     })
 
     this.#preferencesClient.addEventListener(EVENT_NAMES.UPDATE, event => {
-      this.#debug(EVENT_NAMES.UPDATE, 'event:', event)
+      this.#debug('============>', EVENT_NAMES.UPDATE, 'event:', event)
       // this.#consentProvider.setValue(event.detail)
     })
 
@@ -171,10 +171,12 @@ export class BibConsent extends LitElement {
     this.#debug('[#handleUpdateEvent]', event)
     const success = await this.savePreferences(event.detail)
     this.#debug('[#handleUpdateEvent] success: ', success)
-    // if (!success) {
-    //   return
-    // }
-    // this.dispatchEvent(new CustomEvent(prefixedEventName('update'), { detail: event.detail }))
+    if (!success) {
+      // TODO: show error message
+      return
+    }
+    this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: event.detail }))
+    this.close()
   }
 
   render() {
@@ -185,4 +187,6 @@ export class BibConsent extends LitElement {
   }
 }
 
-customElements.define('bib-consent', BibConsent)
+if (!window.customElements.get('bib-consent')) {
+  window.customElements.define('bib-consent', BibConsent)
+}

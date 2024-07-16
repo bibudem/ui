@@ -211,4 +211,6 @@ export class BibAvis extends LitElement {
   }
 }
 
-customElements.define('bib-avis', BibAvis)
+if (!window.customElements.get('bib-avis')) {
+  window.customElements.define('bib-avis', BibAvis)
+}

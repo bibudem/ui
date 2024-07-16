@@ -3,10 +3,9 @@ import { startListening } from 'postmessage-promise'
 import { createRef, ref } from 'lit/directives/ref.js'
 import { escapeStringRegexp } from '@/utils/url.js'
 import { loggerFactory } from '@/utils/logger.js'
-import PreferenceStorage from './PreferenceStorage.js'
-import styles from './bib-consent-server.scss?inline'
-import { EVENT_NAMES } from './constants.js'
 import getPreferenceStorage from './PreferenceStorage.js'
+import { EVENT_NAMES } from './constants.js'
+import styles from './bib-consent-server.scss?inline'
 
 export class BibConsentServer extends LitElement {
   #storage
@@ -123,4 +122,6 @@ export class BibConsentServer extends LitElement {
   }
 }
 
-customElements.define('bib-consent-server', BibConsentServer)
+if (!window.customElements.get('bib-consent-server')) {
+  window.customElements.define('bib-consent-server', BibConsentServer)
+}

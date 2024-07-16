@@ -137,8 +137,6 @@ class PreferencesClient extends EventTarget {
           throw error
         })
 
-      console.log('[callServer] ============================= server: ', this._server)
-
       this._server.listenMessage((method, detail) => {
         this.#debug('[remote] server.listenMessage method: ', method, 'detail: ', detail)
         const event = new CustomEvent(EVENT_NAMES.UPDATE, { detail })
@@ -206,7 +204,6 @@ class PreferencesClient extends EventTarget {
       if (this.serverMode === SERVER_MODE.LOCAL) {
         response = await this._storage.setPreferences(preferences)
       } else {
-        this.#debug('[#setPreferences] this._server:', this.server)
         response = await this._server.postMessage('setPreferences', preferences)
       }
 
