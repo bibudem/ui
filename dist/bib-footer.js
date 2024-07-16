@@ -6,7 +6,7 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { s as e, x as r } from "./lit-element-C-D0oZt5.js";
+import { s as e, x as r } from "./lit-element-Dj1nHH6C.js";
 class t extends e {
   render() {
     return r``;

@@ -6,5 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("./bib-avis.cjs"),r=require("./udem-urgence.cjs");exports.BibAvis=e.BibAvis,exports.UdeMUrgence=r.UdeMUrgence;
+Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("./bib-avis.cjs"),r=require("./udem-urgence.cjs"),o=require("./bib-button-close.cjs");exports.BibAvis=e.BibAvis,exports.UdeMUrgence=r.UdeMUrgence,exports.BibButtonClose=o.BibButtonClose;
 //# sourceMappingURL=index.cjs.map
