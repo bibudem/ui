@@ -12,7 +12,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
 import { s as e, i as t, r as o, x as n } from "./lit-element-Dj1nHH6C.js";
 import { e as i, n as r } from "./ref-B-kqFHPy.js";
 import "./bib-consent-dialog.js";
-import { D as a } from "./utils-D8yXit-9.js";
+import { D as a } from "./utils-CIJ6S_fL.js";
 function l(e2) {
   return Object.keys(a).reduce((t2, o2) => ({ ...t2, [o2]: e2 }), {});
 }

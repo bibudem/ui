@@ -6,5 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"}),require("./package-rdB_0wNv.cjs");const E=require("./utils-f95NoEuq.cjs");exports.DB_NAME=E.DB_NAME,exports.DB_STORE_NAME=E.DB_STORE_NAME,exports.DB_VERSION=E.DB_VERSION,exports.DEFAULT_PREFERENCES=E.DEFAULT_PREFERENCES,exports.EVENT_NAMES=E.EVENT_NAMES,exports.PREFIX=E.PREFIX,exports.SERVER_MODE=E.SERVER_MODE,exports.SERVER_REQUEST_DEFAULT_TIMEOUT=E.SERVER_REQUEST_DEFAULT_TIMEOUT;
+Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"}),require("./package-rdB_0wNv.cjs");const E=require("./utils-Vd97wIOO.cjs");exports.DB_NAME=E.DB_NAME,exports.DB_STORE_NAME=E.DB_STORE_NAME,exports.DB_VERSION=E.DB_VERSION,exports.DEFAULT_PREFERENCES=E.DEFAULT_PREFERENCES,exports.EVENT_NAMES=E.EVENT_NAMES,exports.PREFIX=E.PREFIX,exports.SERVER_MODE=E.SERVER_MODE,exports.SERVER_REQUEST_DEFAULT_TIMEOUT=E.SERVER_REQUEST_DEFAULT_TIMEOUT;
 //# sourceMappingURL=constants.cjs.map

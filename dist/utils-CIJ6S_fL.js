@@ -269,14 +269,14 @@ function S(e4) {
   if ("string" != typeof e4) throw new TypeError("Expected a string");
   return e4.replace(/[|\\{}()[\]^$+?.]/g, "\\$&").replace(/-/g, "\\x2d");
 }
-const T = N("consent"), q = `${n}/consent`, D = 1, L = "consent", R = { CONSENT: T("consent"), READY: T("ready"), UPDATE: T("update") }, C = "bib-consent", $ = { LOCAL: "local", REMOTE: "remote" }, x = 500, A = { performanceCookies: null, functionalityCookies: null, adsCookies: null };
+const T = N("consent"), q = `${n}/consent`, D = 1, L = "consent", C = { CONSENT: T("consent"), READY: T("ready"), UPDATE: T("update") }, R = "bib-consent", $ = { LOCAL: "local", REMOTE: "remote" }, x = 500, A = { performanceCookies: null, functionalityCookies: null, adsCookies: null };
 function N(e4) {
   return function(n2) {
     return `bib:${e4}:${n2}`;
   };
 }
 function _(e4) {
-  return `${C}-${e4}`;
+  return `${R}-${e4}`;
 }
 function U(e4, n2) {
   const t2 = void 0 !== e4 ? e4 : document.body, r2 = P.resolveOrigin(n2), o2 = _("iframe");
@@ -297,15 +297,15 @@ async function F(e4) {
     }, t2);
     if (o2 = await fetch(n2, { signal: r2.signal }), clearTimeout(e5), o2.ok) return $.REMOTE;
   } catch (e5) {
-    if (r2.signal.aborted) throw new Error(`Unable to locate server page. The request timed out after ${t2}ms. url: ${n2.href}`);
-    throw new Error(`Unable to locate server page. Request url: ${n2.href}.`, e5);
+    if (console.error(e5), r2.signal.aborted) throw new Error(`Unable to locate server page. The request timed out after ${t2}ms. url: ${n2.href}`);
+    throw new Error(`Unable to locate server page : ${n2.href}.`, e5);
   }
   throw new Error(`Unable to locate server page. The request failed with status code ${o2.status}. url: ${n2.href}`);
 }
 export {
   A as D,
-  R as E,
-  C as P,
+  C as E,
+  R as P,
   $ as S,
   U as a,
   I as b,
@@ -320,4 +320,4 @@ export {
   N as k,
   M as s
 };
-//# sourceMappingURL=utils-D8yXit-9.js.map
+//# sourceMappingURL=utils-CIJ6S_fL.js.map

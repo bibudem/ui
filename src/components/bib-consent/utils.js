@@ -104,12 +104,13 @@ export async function getServerMode(client) {
       return SERVER_MODE.REMOTE
     }
   } catch (error) {
+    console.error(error)
 
     if (controller.signal.aborted) {
       throw new Error(`Unable to locate server page. The request timed out after ${timeout}ms. url: ${serverUrl.href}`)
     }
 
-    throw new Error(`Unable to locate server page. Request url: ${serverUrl.href}.`, error)
+    throw new Error(`Unable to locate server page : ${serverUrl.href}.`, error)
   }
 
   throw new Error(`Unable to locate server page. The request failed with status code ${response.status}. url: ${serverUrl.href}`)
