@@ -20,12 +20,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
 var _e, _t, _s, _n, _r, _o, _v_instances, i_fn, a_fn, c_fn, h_fn, l_fn;
 import { s as e, x as t } from "./lit-element-Dj1nHH6C.js";
 import { e as s, n } from "./ref-B-kqFHPy.js";
-import { s as r, a as o } from "./bib-consent-preferences-dialog-DWNlo4pY.js";
+import { s as r, a as o } from "./bib-consent-preferences-dialog-COTD4sH7.js";
 import "./bib-button-close.js";
 import "./bib-consent-consent-dialog.js";
 import i from "./preferencesClient.js";
 import { consentContext as c } from "./consent-context.js";
-import { S as a, f as h, E as l } from "./utils-CIJ6S_fL.js";
+import { S as a, b as h, E as l } from "./utils-XhNB6dKZ.js";
 import { l as u } from "./logger-2PyXT5Qg.js";
 /**
  * @license
@@ -107,7 +107,7 @@ class v extends e {
     return __privateGet(this, _o).value;
   }
   async connectedCallback() {
-    super.connectedCallback(), this.debug = this.debug || false, this.serverUrl = this.serverUrl || "https://bib.umontreal.ca/consent/server", this.serverRequestTimeout = this.serverRequestTimeout || h, __privateSet(this, _e, await i({ host: this, serverUrl: this.serverUrl, reflectEvents: true })), __privateGet(this, _e).addEventListener(l.READY, (e2) => {
+    super.connectedCallback(), this.debug = this.debug || false, this.serverUrl = this.serverUrl || "https://bib.umontreal.ca/consent/server", this.serverRequestTimeout = this.serverRequestTimeout || h, __privateSet(this, _e, await i({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true })), __privateGet(this, _e).addEventListener(l.READY, (e2) => {
       __privateMethod(this, _v_instances, i_fn).call(this, l.READY, "event: ", e2), e2.detail ? __privateGet(this, _r).setValue(e2.detail) : __privateMethod(this, _v_instances, c_fn).call(this, "consent");
     });
   }

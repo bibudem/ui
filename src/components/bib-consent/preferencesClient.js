@@ -3,7 +3,7 @@ import { stringIsUrl } from '@/utils/url.js'
 import { loggerFactory } from '@/utils/logger.js'
 import PreferenceStorage from './PreferenceStorage.js'
 import { getIframeServer, getServerMode } from './utils.js'
-import { EVENT_NAMES, SERVER_MODE } from './constants.js'
+import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT } from './constants.js'
 
 /**
  * Represents a client for managing user preferences, with the ability to interact with a remote server or local storage.
@@ -81,15 +81,17 @@ class PreferencesClient extends EventTarget {
    * @param {Object} [options.host] - The host object that will receive preference update events.
    * @param {string} [options.serverMode] - The server mode, either 'LOCAL' or 'REMOTE'.
    * @param {string} [options.serverUrl] - The URL of the remote server.
+   * @param {number} [options.serverRequestTimeout=SERVER_REQUEST_DEFAULT_TIMEOUT] - The timeout for server requests in milliseconds.
    * @param {boolean} [options.reflectEvents=true] - Whether to reflect preference update events to the host.
-   * @returns {Promise<PreferencesClient>} - The initialized PreferencesClient instance.
+   * @returns {Promise<void>} - A promise that resolves when initialization is complete.
    *
    * @event EVENT_NAMES.READY - Dispatched when the initial preferences data is available. The event detail contains the preferences object.
    * @event EVENT_NAMES.UPDATE - Dispatched when the preferences are updated. The event detail contains the updated preferences object.
    */
 
-  async init({ host, serverMode, serverUrl, reflectEvents = true }) {
+  async init({ host, serverMode, serverUrl, serverRequestTimeout = SERVER_REQUEST_DEFAULT_TIMEOUT, reflectEvents = true }) {
     this.readyState = 'connecting'
+    this.serverRequestTimeout = serverRequestTimeout
 
     if (host) {
       this.addHost({ host, reflectEvents })

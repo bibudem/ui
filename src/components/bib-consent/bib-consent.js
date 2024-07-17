@@ -109,7 +109,7 @@ export class BibConsent extends LitElement {
     this.debug = this.debug || false
     this.serverUrl = this.serverUrl || 'https://bib.umontreal.ca/consent/server'
     this.serverRequestTimeout = this.serverRequestTimeout || SERVER_REQUEST_DEFAULT_TIMEOUT
-    this.#preferencesClient = await createPreferencesClient({ host: this, serverUrl: this.serverUrl, reflectEvents: true })
+    this.#preferencesClient = await createPreferencesClient({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true })
 
     this.#preferencesClient.addEventListener(EVENT_NAMES.READY, event => {
 

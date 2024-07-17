@@ -6,7 +6,7 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { d as o } from "./utils-CIJ6S_fL.js";
+import { f as o } from "./utils-XhNB6dKZ.js";
 /**
  * @license
  * Copyright 2021 Google LLC
