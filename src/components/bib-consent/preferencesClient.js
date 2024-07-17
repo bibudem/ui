@@ -16,7 +16,7 @@ import { EVENT_NAMES, SERVER_MODE } from './constants.js'
  * - Debugging functionality with configurable debug mode.
  * - Methods to set, get, and reset user preferences, with different behavior based on server mode.
  *
- * @property {string} readyState - The current state of the PreferencesClient instance. Can be 'created', 'connecting' or 'ready'.
+ * @property {string} readyState - The current state of the PreferencesClient instance. Can be 'initial', 'connecting' or 'ready'.
  */
 class PreferencesClient extends EventTarget {
   _server
@@ -27,7 +27,7 @@ class PreferencesClient extends EventTarget {
 
   constructor() {
     super()
-    this.readyState = 'created'
+    this.readyState = 'initial'
     this.hosts = []
   }
 

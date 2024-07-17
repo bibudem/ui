@@ -30,7 +30,7 @@ class h extends EventTarget {
     __privateAdd(this, _e);
     __privateAdd(this, _t, false);
     __privateAdd(this, _s);
-    this.readyState = "created", this.hosts = [];
+    this.readyState = "initial", this.hosts = [];
   }
   addHost({ host: e2, reflectEvents: t2 }) {
     this.hosts.push({ host: e2, reflectEvents: t2 });

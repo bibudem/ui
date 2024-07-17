@@ -1,9 +1,13 @@
-import { LitElement, html } from 'lit'
+import { LitElement, css, html, unsafeCSS } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
-import '@material/web/iconbutton/icon-button.js'
 import closeIcon from '../../icons/close_24dp_FILL0_wght400_GRAD0_opsz24.svg?raw'
+import styles from './bib-button-close.scss?inline'
 
 export class BibButtonClose extends LitElement {
+
+  static styles = [
+    css`${unsafeCSS(styles)}`
+  ]
 
   constructor() {
     super()
@@ -17,9 +21,9 @@ export class BibButtonClose extends LitElement {
 
   render() {
     return html`
-      <md-icon-button aria-label="fermer">
+      <button aria-label="fermer">
         ${unsafeHTML(closeIcon)}
-      </md-icon-button>
+      </button>
     `
   }
 }

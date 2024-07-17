@@ -19,6 +19,18 @@
   @include layers.reset {
     button {
       border: unset;
+      padding: 0;
+      background: none;
+      font: inherit;
+      border: none;
+
+      &::-moz-focus-inner {
+        border: none;
+      }
+
+      &:focus {
+        outline: none;
+      }
 
       &,
       [type='button'],
@@ -28,6 +40,10 @@
         &:not(:disabled) {
           cursor: pointer;
         }
+      }
+
+      &:disabled {
+        pointer-events: none;
       }
     }
   }
