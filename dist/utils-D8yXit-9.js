@@ -269,14 +269,14 @@ function S(e4) {
   if ("string" != typeof e4) throw new TypeError("Expected a string");
   return e4.replace(/[|\\{}()[\]^$+?.]/g, "\\$&").replace(/-/g, "\\x2d");
 }
-const T = N("consent"), q = `${n}/consent`, D = 1, L = "consent", C = { CONSENT: T("consent"), READY: T("ready"), UPDATE: T("update") }, R = "bib-consent", $ = { LOCAL: "local", REMOTE: "remote" }, x = 500, A = { performanceCookies: null, functionalityCookies: null, adsCookies: null };
+const T = N("consent"), q = `${n}/consent`, D = 1, L = "consent", R = { CONSENT: T("consent"), READY: T("ready"), UPDATE: T("update") }, C = "bib-consent", $ = { LOCAL: "local", REMOTE: "remote" }, x = 500, A = { performanceCookies: null, functionalityCookies: null, adsCookies: null };
 function N(e4) {
   return function(n2) {
     return `bib:${e4}:${n2}`;
   };
 }
 function _(e4) {
-  return `${R}-${e4}`;
+  return `${C}-${e4}`;
 }
 function U(e4, n2) {
   const t2 = void 0 !== e4 ? e4 : document.body, r2 = P.resolveOrigin(n2), o2 = _("iframe");
@@ -286,26 +286,26 @@ function U(e4, n2) {
     return null !== t3 && ("" === t3 || k(t3));
   }(n2) ? s2.style.cssText = "width: 100%; height: 100%; border: 0;" : (s2.ariaHidden = true, s2.tabIndex = -1, s2.hidden = true, s2.style.setProperty("display", "none")), t2.appendChild(s2), s2.src = n2), { server: s2.contentWindow || s2.contentDocument.parentWindow, origin: r2, iframe: s2 };
 }
-async function F(e4, n2 = 500) {
-  const t2 = e4.serverUrl;
-  if (!t2) return $.LOCAL;
+async function F(e4) {
+  const n2 = e4.serverUrl, t2 = e4.serverRequestTimeout || 500;
+  if (!n2) return $.LOCAL;
   const r2 = new AbortController();
   let o2;
   try {
     const e5 = setTimeout(() => {
-      console.log("Request timed out. Aborting request..."), r2.abort();
-    }, n2);
-    if (o2 = await fetch(t2, { signal: r2.signal }), clearTimeout(e5), o2.ok) return $.REMOTE;
+      console.warn(`Request timed out after ${t2}ms. Aborting request...`), r2.abort();
+    }, t2);
+    if (o2 = await fetch(n2, { signal: r2.signal }), clearTimeout(e5), o2.ok) return $.REMOTE;
   } catch (e5) {
-    if (r2.signal.aborted) throw new Error(`Unable to locate server page. The request timed out after ${n2}ms. url: ${t2.href}`);
-    throw new Error(`Unable to locate server page. Request url: ${t2.href}.`, e5);
+    if (r2.signal.aborted) throw new Error(`Unable to locate server page. The request timed out after ${t2}ms. url: ${n2.href}`);
+    throw new Error(`Unable to locate server page. Request url: ${n2.href}.`, e5);
   }
-  throw new Error(`Unable to locate server page. The request failed with status code ${o2.status}. url: ${t2.href}`);
+  throw new Error(`Unable to locate server page. The request failed with status code ${o2.status}. url: ${n2.href}`);
 }
 export {
   A as D,
-  C as E,
-  R as P,
+  R as E,
+  C as P,
   $ as S,
   U as a,
   I as b,
@@ -320,4 +320,4 @@ export {
   N as k,
   M as s
 };
-//# sourceMappingURL=utils-BHHBgssx.js.map
+//# sourceMappingURL=utils-D8yXit-9.js.map

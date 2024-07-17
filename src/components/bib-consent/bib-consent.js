@@ -132,7 +132,6 @@ export class BibConsent extends LitElement {
 
   #close(emit = true) {
     this.open = false
-    console.log('this.currentDialog: ', this.currentDialog)
     this.currentDialog?.close(emit)
     this.currentDialog = null
   }

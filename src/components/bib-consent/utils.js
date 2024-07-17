@@ -79,9 +79,10 @@ export function getIframeServer(
  * @returns {string} - The server mode, either `SERVER_MODE.LOCAL` or `SERVER_MODE.REMOTE`.
  * @throws {Error} - If the server page cannot be located or the request fails.
  */
-export async function getServerMode(client, timeout = SERVER_REQUEST_DEFAULT_TIMEOUT) {
+export async function getServerMode(client) {
 
   const serverUrl = client.serverUrl
+  const timeout = client.serverRequestTimeout || SERVER_REQUEST_DEFAULT_TIMEOUT
 
   if (!serverUrl) {
     return SERVER_MODE.LOCAL
@@ -93,7 +94,7 @@ export async function getServerMode(client, timeout = SERVER_REQUEST_DEFAULT_TIM
 
   try {
     const timeoutHandle = setTimeout(() => {
-      console.log('Request timed out. Aborting request...')
+      console.warn(`Request timed out after ${timeout}ms. Aborting request...`)
       controller.abort()
     }, timeout)
     response = await fetch(serverUrl, { signal: controller.signal })

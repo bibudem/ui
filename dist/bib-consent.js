@@ -20,12 +20,12 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
 var _e, _t, _s, _n, _r, _o, _v_instances, i_fn, a_fn, c_fn, h_fn, l_fn;
 import { s as e, x as t } from "./lit-element-Dj1nHH6C.js";
 import { e as s, n } from "./ref-B-kqFHPy.js";
-import { s as r, a as o } from "./bib-consent-preferences-dialog-CTPjgAWz.js";
+import { s as r, a as o } from "./bib-consent-preferences-dialog-BNCiyLPW.js";
 import "./bib-button-close.js";
 import "./bib-consent-consent-dialog.js";
 import i from "./preferencesClient.js";
 import { consentContext as c } from "./consent-context.js";
-import { S as a, f as h, E as l } from "./utils-BHHBgssx.js";
+import { S as a, f as h, E as l } from "./utils-D8yXit-9.js";
 import { l as u } from "./logger-2PyXT5Qg.js";
 /**
  * @license
@@ -149,7 +149,7 @@ i_fn = function() {
   this.debug && b(...arguments);
 };
 a_fn = function(e2 = true) {
-  this.open = false, console.log("this.currentDialog: ", this.currentDialog), this.currentDialog?.close(e2), this.currentDialog = null;
+  this.open = false, this.currentDialog?.close(e2), this.currentDialog = null;
 };
 c_fn = function(e2 = "consent") {
   if ("string" != typeof e2 && !["consent", "preferences"].includes(e2)) throw new TypeError("The panel argument must be a string of either values 'consent' or 'preferences'. ", e2);

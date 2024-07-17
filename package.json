@@ -20,6 +20,7 @@
     "storybook": "storybook dev -p 6006 --no-open",
     "storybook-docs": "storybook dev --docs",
     "build": "cross-env NODE_ENV=production vite build",
+    "build:watch": "cross-env NODE_ENV=production vite build --watch",
     "build-storybook": "storybook build --output-dir build-storybook",
     "chromatic": "npx chromatic",
     "version": "npm run build",

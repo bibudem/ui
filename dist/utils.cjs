@@ -6,5 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("./utils-CpyYfGsw.cjs");exports.createPrefixedEventName=e.createPrefixedEventName,exports.getIframeServer=e.getIframeServer,exports.getKeyName=e.getKeyName,exports.getServerMode=e.getServerMode;
+Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("./utils-f95NoEuq.cjs");exports.createPrefixedEventName=e.createPrefixedEventName,exports.getIframeServer=e.getIframeServer,exports.getKeyName=e.getKeyName,exports.getServerMode=e.getServerMode;
 //# sourceMappingURL=utils.cjs.map
