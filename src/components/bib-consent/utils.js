@@ -93,14 +93,14 @@ export async function getServerMode(client) {
   // Check if server page exists
   const controller = new AbortController()
   let response
+  let timeoutHandle
 
   try {
-    const timeoutHandle = setTimeout(() => {
+    timeoutHandle = setTimeout(() => {
       console.warn(`Request timed out after ${timeout}ms. Aborting request...`)
       controller.abort()
     }, timeout)
     response = await fetch(serverUrl, { signal: controller.signal })
-    clearTimeout(timeoutHandle)
 
     if (response.ok) {
       return SERVER_MODE.REMOTE
@@ -113,6 +113,8 @@ export async function getServerMode(client) {
     }
 
     throw new Error(`Unable to locate server page : ${serverUrl.href}.`, error)
+  } finally {
+    clearTimeout(timeoutHandle)
   }
 
   throw new Error(`Unable to locate server page. The request failed with status code ${response.status}. url: ${serverUrl.href}`)
