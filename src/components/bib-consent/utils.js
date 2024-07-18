@@ -84,6 +84,8 @@ export async function getServerMode(client) {
   const serverUrl = client.serverUrl
   const timeout = client.serverRequestTimeout || SERVER_REQUEST_DEFAULT_TIMEOUT
 
+  console.log('timeout:', timeout)
+
   if (!serverUrl) {
     return SERVER_MODE.LOCAL
   }

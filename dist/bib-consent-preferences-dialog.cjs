@@ -6,5 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"}),require("./lit-element-BHNMc-Kg.cjs");const e=require("./bib-consent-preferences-dialog-DRurk8s5.cjs");require("./ref-mxufyLY8.cjs"),require("./consent-context.cjs"),require("./utils-Vd97wIOO.cjs"),exports.BibConsentPreferencesDialog=e.BibConsentPreferencesDialog;
+Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"}),require("./lit-element-BHNMc-Kg.cjs");const e=require("./bib-consent-preferences-dialog-Dzey7sb8.cjs");require("./ref-mxufyLY8.cjs"),require("./consent-context.cjs"),require("./utils-Ce6Jygwj.cjs"),exports.BibConsentPreferencesDialog=e.BibConsentPreferencesDialog;
 //# sourceMappingURL=bib-consent-preferences-dialog.cjs.map

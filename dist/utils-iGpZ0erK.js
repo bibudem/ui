@@ -288,7 +288,7 @@ function U(e4, n2) {
 }
 async function F(e4) {
   const n2 = e4.serverUrl, t2 = e4.serverRequestTimeout || 500;
-  if (!n2) return $.LOCAL;
+  if (console.log("timeout:", t2), !n2) return $.LOCAL;
   const r2 = new AbortController();
   let o2;
   try {
@@ -320,4 +320,4 @@ export {
   N as k,
   M as s
 };
-//# sourceMappingURL=utils-XhNB6dKZ.js.map
+//# sourceMappingURL=utils-iGpZ0erK.js.map

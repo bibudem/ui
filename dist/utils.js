@@ -6,7 +6,7 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { k, a, f, g } from "./utils-XhNB6dKZ.js";
+import { k, a, f, g } from "./utils-iGpZ0erK.js";
 export {
   k as createPrefixedEventName,
   a as getIframeServer,

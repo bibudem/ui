@@ -18,7 +18,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _e, _t, _s, _d_instances, r_fn;
-import { E as e, S as t, s, g as r, a as i, c as a, b as n } from "./utils-XhNB6dKZ.js";
+import { E as e, S as t, s, g as r, a as i, c as a, b as n } from "./utils-iGpZ0erK.js";
 import { l as o } from "./logger-2PyXT5Qg.js";
 import h from "./PreferenceStorage.js";
 class d extends EventTarget {
@@ -47,7 +47,7 @@ class d extends EventTarget {
   }
   async init({ host: d2, serverMode: c2, serverUrl: v2, serverRequestTimeout: g = n, reflectEvents: l = true }) {
     let u;
-    if (this.readyState = "connecting", this.serverRequestTimeout = g, d2 && this.addHost({ host: d2, reflectEvents: l }), c2 && c2 === t.LOCAL || void 0 === v2 || !s(v2) ? this.serverMode = t.LOCAL : (this.serverUrl = new URL(v2, location), d2.debug && this.serverUrl.searchParams.set("debug", ""), this.serverMode = await r(this)), __privateSet(this, _t, Reflect.has(d2, "debug")), __privateGet(this, _t) && __privateSet(this, _s, o("preferencesClient", "purple")), this.debug("init", `server mode: ${this.serverMode}`), this.serverMode === t.REMOTE) {
+    if (this.serverRequestTimeout = g, d2 && this.addHost({ host: d2, reflectEvents: l }), this.readyState = "connecting", c2 && c2 === t.LOCAL || void 0 === v2 || !s(v2) ? this.serverMode = t.LOCAL : (this.serverUrl = new URL(v2, location), d2.debug && this.serverUrl.searchParams.set("debug", ""), this.serverMode = await r(this)), __privateSet(this, _t, Reflect.has(d2, "debug")), __privateGet(this, _t) && __privateSet(this, _s, o("preferencesClient", "purple")), this.debug("init", `server mode: ${this.serverMode}`), this.serverMode === t.REMOTE) {
       const t2 = i(document.body, this.serverUrl.href);
       __privateGet(this, _s).call(this, "[remote] callServer serverObject: ", t2), this._server = await a(t2).catch((e2) => {
         throw console.error("[callServer] error: ", e2), e2;

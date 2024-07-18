@@ -90,12 +90,13 @@ class PreferencesClient extends EventTarget {
    */
 
   async init({ host, serverMode, serverUrl, serverRequestTimeout = SERVER_REQUEST_DEFAULT_TIMEOUT, reflectEvents = true }) {
-    this.readyState = 'connecting'
     this.serverRequestTimeout = serverRequestTimeout
 
     if (host) {
       this.addHost({ host, reflectEvents })
     }
+
+    this.readyState = 'connecting'
 
     if (
       (
