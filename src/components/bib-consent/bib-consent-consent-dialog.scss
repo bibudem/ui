@@ -14,10 +14,3 @@
     margin: 0;
   }
 }
-
-@include layers.component {
-  ::part(dialog)::backdrop {
-    outline: 10px solid #da042b;
-    outline-offset: -10px;
-  }
-}
