@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.1](https://github.com/bibudem/ui/compare/v0.12.0...v0.12.1) (2024-07-24)
+
+
+### Bug Fixes
+
+* **bib-consent:** Les boutons pour accepter, refuser ou modifier les témoins ne s'affichaient pas en colonne en résolution xs. ([ae3e39d](https://github.com/bibudem/ui/commit/ae3e39dfd8e9d4c08891a5d258b870dc14e86251))
+
 ## [0.12.0](https://github.com/bibudem/ui/compare/v0.11.0...v0.12.0) (2024-07-24)
 
 
