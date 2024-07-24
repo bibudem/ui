@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.12.0](https://github.com/bibudem/ui/compare/v0.11.0...v0.12.0) (2024-07-24)
+
+
+### Features
+
+* **bib-consent:** Build ([b21f19f](https://github.com/bibudem/ui/commit/b21f19ff59c9e6940ffb0ab247583b0621c9adf5))
+* Build pour v0.12.0 ([5576bb7](https://github.com/bibudem/ui/commit/5576bb7a0fa1bfba7d75612dbbb63da104e52bbd))
+
 ## [0.11.0](https://github.com/bibudem/ui/compare/v0.10.1...v0.11.0) (2024-07-24)
 
 
