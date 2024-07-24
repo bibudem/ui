@@ -134,17 +134,18 @@ class PreferencesClient extends EventTarget {
 
       this.#debug('[remote] callServer serverObject: ', serverObject)
 
-      this._server = await callServer(serverObject)
-        .catch(error => {
-          console.error('[callServer] error: ', error)
-          throw error
-        })
+      try {
+        this._server = await callServer(serverObject)
 
-      this._server.listenMessage((method, detail) => {
-        this.#debug('[remote] server.listenMessage method: ', method, 'detail: ', detail)
-        const event = new CustomEvent(EVENT_NAMES.UPDATE, { detail })
-        this.dispatchEvent(event)
-      })
+        this._server.listenMessage((method, detail) => {
+          this.#debug('[remote] server.listenMessage method: ', method, 'detail: ', detail)
+          const event = new CustomEvent(EVENT_NAMES.UPDATE, { detail })
+          this.dispatchEvent(event)
+        })
+      } catch (error) {
+        console.error('[callServer] error: ', error)
+        throw error
+      }
 
       preferences = await this._server.postMessage('getPreferences')
       this.#debug('[remote] Got response from server: ', preferences)

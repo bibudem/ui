@@ -1,11 +1,18 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
 import { startListening } from 'postmessage-promise'
 import { createRef, ref } from 'lit/directives/ref.js'
-import { escapeStringRegexp } from '@/utils/url.js'
+import { patternMatchesOrigin } from '@/utils/url.js'
 import { loggerFactory } from '@/utils/logger.js'
 import getPreferenceStorage from './PreferenceStorage.js'
 import styles from './bib-consent-server.scss?inline'
 
+/**
+ * @class BibConsentServer
+ * @extends LitElement
+ * @description A custom element that manages consent preferences for the BIB application.
+ * It handles storage of preferences, listens for postMessage events, and provides methods
+ * for setting, getting, and resetting user consent preferences.
+ */
 export class BibConsentServer extends LitElement {
   #storage
   #logger = loggerFactory('consent-server')
@@ -33,16 +40,9 @@ export class BibConsentServer extends LitElement {
   ]
 
   /**
-   * Constructs a new `BibConsentServer` instance.
-   * 
-   * The `BibConsentServer` is responsible for managing the consent preferences for the BIB application. It initializes the preference storage, starts listening for postMessage events, and provides methods for setting, getting, and resetting the user's consent preferences.
-   * 
-   * The constructor sets the initial state of the `BibConsentServer` instance, including whether it is connected, the debug mode, a reference to a logger, and the allowed origins for postMessage events.
-   * 
+   * Creates an instance of BibConsentServer.
    * @constructor
-   * @param {boolean} [connected=false] - Indicates whether the `BibConsentServer` is currently connected and listening for postMessage events.
-   * @param {boolean} [debug=false] - Enables debug logging if set to `true`.
-   * @param {string[]} [allowedOrigins=[]] - An array of allowed origin patterns for postMessage events.
+   * @description Initializes the BibConsentServer with default values and starts the initialization process.
    */
   constructor() {
     super()
@@ -55,59 +55,65 @@ export class BibConsentServer extends LitElement {
 
   /**
    * Initializes the BibConsentServer instance.
-   * 
-   * This method sets up the preference storage, starts listening for storage update events, and begins listening for postMessage events from allowed origins.
-   * 
-   * The preference storage is initialized using the `getPreferenceStorage()` function, and a listener is added to the storage to log any updates to the preferences.
-   * 
-   * The `startListening()` method is then called to begin listening for postMessage events and handle requests to set, get, and reset the user's consent preferences.
+   * @async
+   * @description Sets up preference storage, starts listening for storage updates,
+   * and begins listening for postMessage events from allowed origins.
    */
   async init() {
+    this.log('Initializing BibConsentServer...')
     this.#storage = await getPreferenceStorage()
+    this.log('Connected to storage.')
+
     this.#storage.listen(event => {
       this.log('Storage updated with data', event.detail)
     })
+
+    this.log('Start listening for storage updates...')
     this.startListening()
   }
 
-  log() {
-    if (this.debug) {
-      this.#logger(...arguments)
-      const msg = [...arguments].map(part => typeof part === 'string' ? part : JSON.stringify(part)).join(' ')
-      this.loggerRef.value.value += `${this.loggerRef.value.value === '' ? '' : '\r'}${msg}`
+  /**
+   * Logs messages when in debug mode.
+   * @description If debug attribute is set, logs messages to the console and updates the UI logger.
+   * @param {...any} args - The messages or data to log.
+   */
+  log(...args) {
+    if (this.hasAttribute('debug')) {
+      this.#logger(...args)
+
+      const msg = args.map(part => typeof part === 'string' ? part : JSON.stringify(part)).join(' ')
+      if (this.loggerRef.value) {
+        this.loggerRef.value.value += `${this.loggerRef.value.value === '' ? '' : '\r'}${msg}`
+      }
     }
   }
 
   /**
-   * Starts listening for postMessage events from allowed origins and handles requests to set, get, and reset the user's consent preferences.
-   * 
-   * This method sets up a message listener that filters incoming messages based on the allowed origins specified in the `allowedOrigins` property. It then handles the following methods:
-   * 
-   * - `setPreferences`: Sets the user's consent preferences in the preference storage.
-   * - `getPreferences`: Retrieves the user's consent preferences from the preference storage.
-   * - `resetPreferences`: Resets the user's consent preferences in the preference storage.
-   * - `ping`: Responds with "pong" to a ping request.
-   * 
-   * The method logs the method call and the response data, if any, to the debug logger.
+   * Starts listening for postMessage events and handles consent-related requests.
+   * @async
+   * @description Sets up a message listener for allowed origins and handles the following methods:
+   * - setPreferences: Sets the user's consent preferences in the storage.
+   * - getPreferences: Retrieves the user's current consent preferences from storage.
+   * - resetPreferences: Resets the user's consent preferences to default values.
+   * - ping: Responds with "pong" to check if the server is responsive.
+   * The method also logs all incoming requests and their responses when in debug mode.
    */
   async startListening() {
-    const { postMessage, listenMessage } = await startListening({
+    this.log('startListening()')
+
+    const { listenMessage } = await startListening({
       eventFilter: event => {
         const { origin } = event
-        const originIsAllowed = this.allowedOrigins.length > 0 && this.allowedOrigins.some(originPattern => {
-          const originRegex = new RegExp(`${escapeStringRegexp(originPattern)}`)
-          return originRegex.test(origin)
-        })
-
-        return originIsAllowed
+        return this.allowedOrigins.length > 0 && this.allowedOrigins.some(originPattern => patternMatchesOrigin(originPattern, origin))
       }
     })
+
+    this.log('Listening for postMessage events...')
 
     this.connected = true
     this.log('connected:', this.connected)
 
     listenMessage(async (method, payload, response) => {
-
       let responseData
 
       switch (method) {
@@ -139,10 +145,14 @@ export class BibConsentServer extends LitElement {
       }
 
       response(responseData)
-
     })
   }
 
+  /**
+   * Renders the BibConsentServer element.
+   * @returns {TemplateResult} The HTML template for the BibConsentServer.
+   * @description Renders a title and a textarea for logging when in debug mode.
+   */
   render() {
     return html`
       <h1>I am bib-consent-server</h1>

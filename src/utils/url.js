@@ -26,14 +26,12 @@ export function stringIsUrl(string) {
 }
 
 // This is a modified version of https://www.npmjs.com/package/escape-string-regexp
-export function escapeStringRegexp(string) {
-  if (typeof string !== 'string') {
-    throw new TypeError('Expected a string')
-  }
+export function patternMatchesOrigin(pattern, origin) {
 
-  // Escape characters with special meaning either inside or outside character sets.
-  // Use a simple backslash escape when it’s always valid, and a `\xnn` escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
-  return string
-    .replace(/[|\\{}()[\]^$+?.]/g, '\\$&')
+  const escapedPattern = pattern
+    .replace(/[.]/g, '\\$&')
     .replace(/-/g, '\\x2d')
+    .replace(/[*]/g, '.*')
+
+  return new RegExp(`^${escapedPattern}$`, 'u').test(origin)
 }

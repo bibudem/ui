@@ -16,6 +16,7 @@ import styles from './bib-consent-preferences-dialog.scss?inline'
 function getConsentValues(value) {
   return Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: value }), {})
 }
+
 export class BibConsentPreferencesDialog extends LitElement {
   static properties = {
     debug: {

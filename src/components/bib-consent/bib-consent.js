@@ -55,7 +55,7 @@ export class BibConsent extends LitElement {
     },
   }
 
-  #preferencesClient
+  _preferencesClient
   #preferences
   #consentDialogRef
   #preferencesDialogRef
@@ -99,8 +99,8 @@ export class BibConsent extends LitElement {
    * - Sets the `debug` property to `false` if it is not already defined
    * - Sets the `serverUrl` property to `'https://bib.umontreal.ca/consent/server'` if it is not already defined
    * - Sets the `serverRequestTimeout` property to `SERVER_REQUEST_DEFAULT_TIMEOUT` if it is not already defined
-   * - Creates a `PreferencesClient` instance and assigns it to the `#preferencesClient` property
-   * - Adds event listeners for the `EVENT_NAMES.READY` and `EVENT_NAMES.UPDATE` events on the `#preferencesClient` instance
+   * - Creates a `PreferencesClient` instance and assigns it to the `_preferencesClient` property
+   * - Adds event listeners for the `EVENT_NAMES.READY` and `EVENT_NAMES.UPDATE` events on the `_preferencesClient` instance
    * - Adds an event listener for the `context-request` event on the component's shadow root, which responds with the current preferences
    */
   async connectedCallback() {
@@ -109,9 +109,9 @@ export class BibConsent extends LitElement {
     this.debug = this.debug || false
     this.serverUrl = this.serverUrl || 'https://bib.umontreal.ca/consent/server'
     this.serverRequestTimeout = this.serverRequestTimeout || SERVER_REQUEST_DEFAULT_TIMEOUT
-    this.#preferencesClient = await createPreferencesClient({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true })
+    this._preferencesClient = await createPreferencesClient({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true })
 
-    this.#preferencesClient.addEventListener(EVENT_NAMES.READY, event => {
+    this._preferencesClient.addEventListener(EVENT_NAMES.READY, event => {
 
       this.#debug(EVENT_NAMES.READY, 'event: ', event)
 
@@ -159,7 +159,6 @@ export class BibConsent extends LitElement {
     this.#debug('[show]', this.#consentDialogRef.value)
     this.#debug('[show]', this.#preferencesDialogRef.value)
     this.currentDialog = panel === 'consent' ? this.#consentDialogRef.value : this.#preferencesDialogRef.value
-    // this.#preferencesDialogRef.value?.show()
     this.currentDialog.show()
   }
 
@@ -174,6 +173,7 @@ export class BibConsent extends LitElement {
    * Shows the preferences dialog.
    */
   showPreferences() {
+    this.#debug('[showPreferences]')
     this.#show('preferences')
   }
 
@@ -183,7 +183,7 @@ export class BibConsent extends LitElement {
    * @returns {Promise<Object>} - A promise that resolves to the user's consent preferences.
    */
   async getPreferences() {
-    this.#preferences = await this.#preferencesClient.getPreferences()
+    this.#preferences = await this._preferencesClient.getPreferences()
     return this.#preferences
   }
 
@@ -197,7 +197,7 @@ export class BibConsent extends LitElement {
   async savePreferences(preferences) {
     this.#debug('[savePreferences] preferences: ', preferences)
     try {
-      await this.#preferencesClient.setPreferences(preferences)
+      await this._preferencesClient.setPreferences(preferences)
       this.#consentProvider.setValue(preferences)
       return true
     } catch (error) {
@@ -212,7 +212,7 @@ export class BibConsent extends LitElement {
    * @returns {Promise<Object>} - A promise that resolves to the user's reset consent preferences.
    */
   async resetPreferences() {
-    this.#preferences = await this.#preferencesClient.resetPreferences()
+    this.#preferences = await this._preferencesClient.resetPreferences()
     return this.#preferences
   }
 

@@ -173,6 +173,10 @@ function arraysHaveSameItems(arr1, arr2) {
 
 let preferenceStorage
 
+/**
+ * Gets the singleton instance of the PreferenceStorage class, initializing it if necessary.
+ * @returns {Promise<PreferenceStorage>} The singleton instance of PreferenceStorage.
+ */
 export default async function getPreferenceStorage() {
   if (!preferenceStorage) {
     preferenceStorage = new PreferenceStorage()
