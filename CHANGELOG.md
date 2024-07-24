@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.11.0](https://github.com/bibudem/ui/compare/v0.10.1...v0.11.0) (2024-07-24)
+
+
+### Features
+
+* **bib-button:** Nouveau composant bib-button-close ([929eea5](https://github.com/bibudem/ui/commit/929eea5ce600593089e9ac7870437296c1587ca6))
+* **bib-consent:** Correction mineure des marges de la boîte de contenu des dialogues. ([619ea40](https://github.com/bibudem/ui/commit/619ea4000f55e0ecd09f8227caaf2f2782b3f076))
+* **bib-consent:** Renommage du composant bib-gestion-usager pour bib-consent ([5f9c4d1](https://github.com/bibudem/ui/commit/5f9c4d155994f49301f49a16bd47fd3b2b13fe1e))
+* **deps:** Mise à jour de la librairie [@storybook](https://github.com/storybook) ([f710ed2](https://github.com/bibudem/ui/commit/f710ed27c999d8130ffed1050cecb9e057df313a))
+* Mise à jour des librairies  @storybook/* ([9c8912e](https://github.com/bibudem/ui/commit/9c8912e9f9ce7586b420fd5a31981e62df46af58))
+
 ## [0.10.1](https://github.com/bibudem/ui/compare/v0.10.0...v0.10.1) (2024-05-31)
 
 
