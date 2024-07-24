@@ -8,8 +8,14 @@
  */
 import { BibAvis } from "./bib-avis.js";
 import { UdeMUrgence } from "./udem-urgence.js";
+import { BibButtonClose } from "./bib-button-close.js";
+import { BibConsent } from "./bib-consent.js";
+import { BibConsentServer } from "./bib-consent-server.js";
 export {
   BibAvis,
+  BibButtonClose,
+  BibConsent,
+  BibConsentServer,
   UdeMUrgence
 };
 //# sourceMappingURL=index.js.map

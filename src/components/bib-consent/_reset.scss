@@ -1,0 +1,7 @@
+@use '@/scss/utils/layer';
+
+@include layer.reset {
+  p {
+    margin: 0;
+  }
+}

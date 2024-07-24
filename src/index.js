@@ -1,2 +1,5 @@
 export * from './components/bib-avis/bib-avis.js'
 export * from './components/udem-urgence/udem-urgence.js'
+export * from './components/bib-button/bib-button-close.js'
+export * from './components/bib-consent/bib-consent.js'
+export * from './components/bib-consent/bib-consent-server.js'

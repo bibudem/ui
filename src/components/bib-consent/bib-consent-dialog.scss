@@ -1,0 +1,87 @@
+@use '@/scss/utils/layers';
+@use '@/scss/reset';
+@use '@/scss/theme';
+@use '@/scss/tokens/ref-typeface';
+@use 'scrollbar';
+
+@include layers.order;
+
+@include reset.button;
+@include reset.dialog;
+
+@include layers.component {
+  :host {
+    --_consent-dialog-height: 450px;
+    --_consent-dialog-max-height: 80%;
+    --_consent-dialog-height-sm: auto;
+    --_consent-content-height: 100%;
+    --_consent-text-size: 14.62px;
+    --_consent-text-line-height: 17.5px;
+    --_consent-title-text-size: 18px;
+    --_consent-title-text-line-height: 20px;
+
+    font-size: var(--_consent-text-size);
+    line-height: var(--_consent-text-line-height);
+  }
+
+  :host(.preferences-dialog) {
+    --_consent-dialog-height: 80%;
+    --_consent-dialog-height-sm: 450px;
+    --_consent-content-height: auto;
+  }
+
+  .btn-close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 10;
+  }
+
+  .dialog {
+    border-top: 10px solid #0b113a;
+    top: auto;
+    bottom: 0;
+    color: #0b113a;
+    background: #e5f0f8;
+    height: var(--_consent-dialog-height);
+    max-height: var(--_consent-dialog-max-height);
+    text-align: left;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    z-index: 10000;
+
+    @media screen and (min-width: 640px) {
+      height: var(--_consent-dialog-height-sm);
+    }
+
+    &::backdrop {
+      background-color: #00000080;
+    }
+
+    &-container {
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      overflow-y: auto;
+
+      @include scrollbar.scrollbar;
+    }
+  }
+
+  .content-container {
+    height: var(--_consent-content-height);
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 35px 15px;
+    z-index: 0;
+
+    // >= sm
+    @media screen and (min-width: 640px) {
+      height: auto;
+      padding: 0 50px 20px;
+    }
+  }
+}

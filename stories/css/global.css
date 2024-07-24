@@ -1,8 +1,10 @@
 html {
   font-family: "Figtree", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 350;
+  font-weight: 400;
   font-style: normal;
   font-variation-settings:
     "slnt" 0;
+  font-size: clamp(0.938rem, 0.431vw + 0.837rem, 1.25rem);
+  line-height: clamp(1.5rem, 0.345vw + 1.419rem, 1.75rem);
 }

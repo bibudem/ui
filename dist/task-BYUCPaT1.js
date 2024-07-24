@@ -6,7 +6,7 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { f as t } from "./lit-element-C-D0oZt5.js";
+import { f as t } from "./lit-element-Dj1nHH6C.js";
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -31,11 +31,9 @@ class i {
     "afterUpdate" === this.autoRun && this.O();
   }
   A() {
-    if (void 0 === this.v)
-      return;
+    if (void 0 === this.v) return;
     const t2 = this.v();
-    if (!Array.isArray(t2))
-      throw Error("The args function must return an array");
+    if (!Array.isArray(t2)) throw Error("The args function must return an array");
     return t2;
   }
   async O() {
@@ -54,8 +52,7 @@ class i {
       r = true, h2 = t3;
     }
     if (this.u === e) {
-      if (i2 === s)
-        this.status = 0;
+      if (i2 === s) this.status = 0;
       else {
         if (false === r) {
           try {
@@ -103,4 +100,4 @@ const h = (s2, i2) => s2 === i2 || s2.length === i2.length && s2.every((s3, h2) 
 export {
   i as h
 };
-//# sourceMappingURL=task-C8D8UDHH.js.map
+//# sourceMappingURL=task-BYUCPaT1.js.map

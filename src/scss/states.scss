@@ -1,13 +1,15 @@
 @mixin _focus-state {
   // Show focus styles on keyboard focus.
-  outline: 2px solid #bde4ff;
+  outline: var(--md-focus-ring-width, 3px) solid currentColor;
   outline-offset: 3px;
+  border-radius: 99999px;
 }
 
 // Show focus styles on keyboard focus.
 @mixin _keyboard-focus-state {
-  outline: 2px solid #bde4ff;
+  outline: var(--md-focus-ring-width, 3px) solid currentColor;
   outline-offset: 3px;
+  border-radius: 99999px;
 }
 
 // Hide focus styles if they're not needed, for example,
@@ -43,7 +45,7 @@
   // outline-offset: 3px;
 }
 
-@mixin state {
+@mixin focus {
   @if (length(&) != 1) {
     @error "Selector muse be a simple one";
   } @else {

@@ -1,0 +1,23 @@
+@use '@/scss/utils/layers';
+@use '@/scss/reset';
+@use '@/scss/tokens/ref-typeface';
+@use 'theme';
+@use 'content';
+@use 'button';
+
+@include layers.order;
+
+@include reset.button;
+
+@include layers.reset {
+  p {
+    margin: 0;
+  }
+}
+
+@include layers.component {
+  ::part(dialog)::backdrop {
+    outline: 10px solid #da042b;
+    outline-offset: -10px;
+  }
+}

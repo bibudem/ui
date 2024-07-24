@@ -1,0 +1,83 @@
+@use 'utils/layers';
+
+@mixin dialog {
+  @include layers.reset {
+    dialog {
+      margin: 0;
+      padding: 0;
+      border: unset;
+      color: inherit;
+      background-color: white;
+      inset-block: 0;
+      max-width: unset;
+      max-height: unset;
+    }
+  }
+}
+
+@mixin button {
+  @include layers.reset {
+    button {
+      border: unset;
+      padding: 0;
+      background: none;
+      font: inherit;
+      border: none;
+
+      &::-moz-focus-inner {
+        border: none;
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &,
+      [type='button'],
+      [type='reset'],
+      [type='submit'],
+      [role='button'] {
+        &:not(:disabled) {
+          cursor: pointer;
+        }
+      }
+
+      &:disabled {
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+//
+// source: https://css-tricks.com/two-issues-styling-the-details-element-and-how-to-solve-them/
+//
+
+@mixin details {
+  @include layers.reset {
+    details {
+      summary {
+        cursor: pointer;
+
+        > * {
+          display: inline;
+        }
+      }
+    }
+  }
+}
+
+//
+// Common resets applied to all elements
+//
+
+@include layers.reset {
+  :host,
+  * {
+    box-sizing: border-box;
+  }
+
+  :host {
+    -webkit-font-smoothing: antialiased;
+  }
+}

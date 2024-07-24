@@ -175,4 +175,6 @@ export class BibRetroactionUsager extends LitElement {
   }
 }
 
-customElements.define('bib-retroaction-usager', BibRetroactionUsager)
+if (!window.customElements.get('bib-retroaction-usager')) {
+  window.customElements.define('bib-retroaction-usager', BibRetroactionUsager)
+}

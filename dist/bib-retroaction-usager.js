@@ -7,44 +7,25 @@
  * @see https://github.com/bibudem/ui
  */
 var __defProp = Object.defineProperty;
+var __typeError = (msg) => {
+  throw TypeError(msg);
+};
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => {
-  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-  return value;
-};
-var __accessCheck = (obj, member, msg) => {
-  if (!member.has(obj))
-    throw TypeError("Cannot " + msg);
-};
-var __privateGet = (obj, member, getter) => {
-  __accessCheck(obj, member, "read from private field");
-  return getter ? getter.call(obj) : member.get(obj);
-};
-var __privateAdd = (obj, member, value) => {
-  if (member.has(obj))
-    throw TypeError("Cannot add the same private member more than once");
-  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
-};
-var __privateSet = (obj, member, value, setter) => {
-  __accessCheck(obj, member, "write to private field");
-  setter ? setter.call(obj, value) : member.set(obj, value);
-  return value;
-};
-var __privateMethod = (obj, member, method) => {
-  __accessCheck(obj, member, "access private method");
-  return method;
-};
-var _e2, _t, t_fn, _r, r_fn, _o, o_fn, _a, a_fn, _i, i_fn;
-import { u as e, f as t, s as r, x as o, i as a, w as i, T as n, r as s } from "./lit-element-C-D0oZt5.js";
-import { e as l, i as c, t as d, o as h } from "./unsafe-html-ChSn7HJx.js";
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
+var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
+var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
+var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
+var _e2, __e_instances, t_fn, r_fn, o_fn, a_fn, i_fn;
+import { u as e, f as t, s as r, x as o, i as a, w as i, T as n, r as s } from "./lit-element-Dj1nHH6C.js";
+import { o as l } from "./unsafe-html-hzUS4Xy_.js";
+import { e as c, i as d, t as h } from "./directive-Ce1M5_Fy.js";
 import { VoteData as u } from "./VotePayload.js";
 function p(e2, t2, r2, o2) {
   var a2, i2 = arguments.length, n2 = i2 < 3 ? t2 : null === o2 ? o2 = Object.getOwnPropertyDescriptor(t2, r2) : o2;
-  if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-    n2 = Reflect.decorate(e2, t2, r2, o2);
-  else
-    for (var s2 = e2.length - 1; s2 >= 0; s2--)
-      (a2 = e2[s2]) && (n2 = (i2 < 3 ? a2(n2) : i2 > 3 ? a2(t2, r2, n2) : a2(t2, r2)) || n2);
+  if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) n2 = Reflect.decorate(e2, t2, r2, o2);
+  else for (var s2 = e2.length - 1; s2 >= 0; s2--) (a2 = e2[s2]) && (n2 = (i2 < 3 ? a2(n2) : i2 > 3 ? a2(t2, r2, n2) : a2(t2, r2)) || n2);
   return i2 > 3 && n2 && Object.defineProperty(t2, r2, n2), n2;
 }
 "function" == typeof SuppressedError && SuppressedError;
@@ -138,8 +119,7 @@ C.styles = [w], C = p([v("md-elevation")], C);
 const k = Symbol("attachableController");
 let z;
 z = new MutationObserver((e2) => {
-  for (const t2 of e2)
-    t2.target[k]?.hostConnected();
+  for (const t2 of e2) t2.target[k]?.hostConnected();
 });
 class I {
   get htmlFor() {
@@ -220,8 +200,7 @@ class S extends r {
     }
   }
   onControlChange(e2, t2) {
-    for (const r2 of T)
-      e2?.removeEventListener(r2, this), t2?.addEventListener(r2, this);
+    for (const r2 of T) e2?.removeEventListener(r2, this), t2?.addEventListener(r2, this);
   }
   update(e2) {
     e2.has("visible") && this.dispatchEvent(new Event("visibility-changed")), super.update(e2);
@@ -242,10 +221,9 @@ A.styles = [E], A = p([v("md-focus-ring")], A);
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const R = l(class extends c {
+const R = c(class extends d {
   constructor(e2) {
-    if (super(e2), e2.type !== d.ATTRIBUTE || "class" !== e2.name || e2.strings?.length > 2)
-      throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
+    if (super(e2), e2.type !== h.ATTRIBUTE || "class" !== e2.name || e2.strings?.length > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
   }
   render(e2) {
     return " " + Object.keys(e2).filter((t2) => e2[t2]).join(" ") + " ";
@@ -253,13 +231,11 @@ const R = l(class extends c {
   update(e2, [t2]) {
     if (void 0 === this.st) {
       this.st = /* @__PURE__ */ new Set(), void 0 !== e2.strings && (this.nt = new Set(e2.strings.join(" ").split(/\s/).filter((e3) => "" !== e3)));
-      for (const e3 in t2)
-        t2[e3] && !this.nt?.has(e3) && this.st.add(e3);
+      for (const e3 in t2) t2[e3] && !this.nt?.has(e3) && this.st.add(e3);
       return this.render(t2);
     }
     const r2 = e2.element.classList;
-    for (const e3 of this.st)
-      e3 in t2 || (r2.remove(e3), this.st.delete(e3));
+    for (const e3 of this.st) e3 in t2 || (r2.remove(e3), this.st.delete(e3));
     for (const e3 in t2) {
       const o2 = !!t2[e3];
       o2 === this.st.has(e3) || this.nt?.has(e3) || (o2 ? (r2.add(e3), this.st.add(e3)) : (r2.remove(e3), this.st.delete(e3)));
@@ -317,15 +293,13 @@ class B extends r {
   }
   handlePointerup(e2) {
     if (this.shouldReactToEvent(e2)) {
-      if (this.state !== P.HOLDING)
-        return this.state === P.TOUCH_DELAY ? (this.state = P.WAITING_FOR_CLICK, void this.startPressAnimation(this.rippleStartEvent)) : void 0;
+      if (this.state !== P.HOLDING) return this.state === P.TOUCH_DELAY ? (this.state = P.WAITING_FOR_CLICK, void this.startPressAnimation(this.rippleStartEvent)) : void 0;
       this.state = P.WAITING_FOR_CLICK;
     }
   }
   async handlePointerdown(e2) {
     if (this.shouldReactToEvent(e2)) {
-      if (this.rippleStartEvent = e2, !this.isTouch(e2))
-        return this.state = P.WAITING_FOR_CLICK, void this.startPressAnimation(e2);
+      if (this.rippleStartEvent = e2, !this.isTouch(e2)) return this.state = P.WAITING_FOR_CLICK, void this.startPressAnimation(e2);
       this.checkBoundsAfterContextMenu && !this.inBounds(e2) || (this.checkBoundsAfterContextMenu = false, this.state = P.TOUCH_DELAY, await new Promise((e3) => {
         setTimeout(e3, 150);
       }), this.state === P.TOUCH_DELAY && (this.state = P.HOLDING, this.startPressAnimation(e2)));
@@ -354,8 +328,7 @@ class B extends r {
     return a2 = e2 instanceof PointerEvent ? this.getNormalizedPointerEventCoords(e2) : { x: r2 / 2, y: t2 / 2 }, a2 = { x: a2.x - this.initialSize / 2, y: a2.y - this.initialSize / 2 }, { startPoint: a2, endPoint: o2 };
   }
   startPressAnimation(e2) {
-    if (!this.mdRoot)
-      return;
+    if (!this.mdRoot) return;
     this.pressed = true, this.growAnimation?.cancel(), this.determineRippleSize();
     const { startPoint: t2, endPoint: r2 } = this.getTranslationCoordinates(e2), o2 = `${t2.x}px, ${t2.y}px`, a2 = `${r2.x}px, ${r2.y}px`;
     this.growAnimation = this.mdRoot.animate({ top: [0, 0], left: [0, 0], height: [this.rippleSize, this.rippleSize], width: [this.rippleSize, this.rippleSize], transform: [`translate(${o2}) scale(1)`, `translate(${a2}) scale(${this.rippleScale})`] }, { pseudoElement: "::after", duration: 450, easing: "cubic-bezier(0.2, 0, 0, 1)", fill: "forwards" });
@@ -369,12 +342,9 @@ class B extends r {
     }), this.growAnimation === e2 && (this.pressed = false));
   }
   shouldReactToEvent(e2) {
-    if (this.disabled || !e2.isPrimary)
-      return false;
-    if (this.rippleStartEvent && this.rippleStartEvent.pointerId !== e2.pointerId)
-      return false;
-    if ("pointerenter" === e2.type || "pointerleave" === e2.type)
-      return !this.isTouch(e2);
+    if (this.disabled || !e2.isPrimary) return false;
+    if (this.rippleStartEvent && this.rippleStartEvent.pointerId !== e2.pointerId) return false;
+    if ("pointerenter" === e2.type || "pointerleave" === e2.type) return !this.isTouch(e2);
     const t2 = 1 === e2.buttons;
     return this.isTouch(e2) || t2;
   }
@@ -386,33 +356,31 @@ class B extends r {
     return "touch" === e2;
   }
   async handleEvent(e2) {
-    if (!O?.matches)
-      switch (e2.type) {
-        case "click":
-          this.handleClick();
-          break;
-        case "contextmenu":
-          this.handleContextmenu();
-          break;
-        case "pointercancel":
-          this.handlePointercancel(e2);
-          break;
-        case "pointerdown":
-          await this.handlePointerdown(e2);
-          break;
-        case "pointerenter":
-          this.handlePointerenter(e2);
-          break;
-        case "pointerleave":
-          this.handlePointerleave(e2);
-          break;
-        case "pointerup":
-          this.handlePointerup(e2);
-      }
+    if (!O?.matches) switch (e2.type) {
+      case "click":
+        this.handleClick();
+        break;
+      case "contextmenu":
+        this.handleContextmenu();
+        break;
+      case "pointercancel":
+        this.handlePointercancel(e2);
+        break;
+      case "pointerdown":
+        await this.handlePointerdown(e2);
+        break;
+      case "pointerenter":
+        this.handlePointerenter(e2);
+        break;
+      case "pointerleave":
+        this.handlePointerleave(e2);
+        break;
+      case "pointerup":
+        this.handlePointerup(e2);
+    }
   }
   onControlChange(e2, t2) {
-    for (const r2 of L)
-      e2?.removeEventListener(r2, this), t2?.addEventListener(r2, this);
+    for (const r2 of L) e2?.removeEventListener(r2, this), t2?.addEventListener(r2, this);
   }
 }
 p([f({ type: Boolean, reflect: true })], B.prototype, "disabled", void 0), p([g()], B.prototype, "hovered", void 0), p([g()], B.prototype, "pressed", void 0), p([x(".surface")], B.prototype, "mdRoot", void 0);
@@ -440,8 +408,7 @@ function q(e2) {
  * SPDX-License-Identifier: Apache-2.0
  */
 function j(e2) {
-  for (const t2 of N)
-    e2.createProperty(t2, { attribute: q(t2), reflect: true });
+  for (const t2 of N) e2.createProperty(t2, { attribute: q(t2), reflect: true });
   e2.addInitializer((e3) => {
     const t2 = { hostConnected() {
       e3.setAttribute("role", "presentation");
@@ -599,11 +566,9 @@ re.styles = [J, te], re = p([v("md-text-button")], re);
  * SPDX-License-Identifier: BSD-3-Clause
  */
 const oe = Symbol.for(""), ae = (e2) => {
-  if (e2?.r === oe)
-    return e2?._$litStatic$;
+  if (e2?.r === oe) return e2?._$litStatic$;
 }, ie = (e2, ...t2) => ({ _$litStatic$: t2.reduce((t3, r2, o2) => t3 + ((e3) => {
-  if (void 0 !== e3._$litStatic$)
-    return e3._$litStatic$;
+  if (void 0 !== e3._$litStatic$) return e3._$litStatic$;
   throw Error(`Value passed to 'literal' function must be a 'literal' result: ${e3}. Use 'unsafeStatic' to pass non-literal values, but
             take care to ensure page security.`);
 })(r2) + e2[o2 + 1], e2[0]), r: oe }), ne = /* @__PURE__ */ new Map(), se = /* @__PURE__ */ ((e2) => (t2, ...r2) => {
@@ -612,8 +577,7 @@ const oe = Symbol.for(""), ae = (e2) => {
   const n2 = [], s2 = [];
   let l2, c2 = 0, d2 = false;
   for (; c2 < o2; ) {
-    for (l2 = t2[c2]; c2 < o2 && void 0 !== (i2 = r2[c2], a2 = ae(i2)); )
-      l2 += a2 + t2[++c2], d2 = true;
+    for (l2 = t2[c2]; c2 < o2 && void 0 !== (i2 = r2[c2], a2 = ae(i2)); ) l2 += a2 + t2[++c2], d2 = true;
     c2 !== o2 && s2.push(i2), n2.push(l2), c2++;
   }
   if (c2 === o2 && n2.push(t2[o2]), d2) {
@@ -804,30 +768,25 @@ xe.styles = [ye], xe = p([v("md-icon")], xe);
 const __e = class __e extends r {
   constructor() {
     super();
-    __privateAdd(this, _t);
-    __privateAdd(this, _r);
-    __privateAdd(this, _o);
-    __privateAdd(this, _a);
-    __privateAdd(this, _i);
-    __privateAdd(this, _e2, void 0);
+    __privateAdd(this, __e_instances);
+    __privateAdd(this, _e2);
     __privateSet(this, _e2, "https://umontreal.libwizard.com/api/v1/submission"), this._vote = null, this.state = "loaded";
   }
   _onIconClick(e2) {
     this._vote = e2.target.selected ? e2.target.value : null;
   }
   render() {
-    return o`<p id="survey-title" class="survey-title">Cette page vous a été utile?</p>${__privateMethod(this, _a, a_fn).call(this)} ${__privateMethod(this, _o, o_fn).call(this)}`;
+    return o`<p id="survey-title" class="survey-title">Cette page vous a été utile?</p>${__privateMethod(this, __e_instances, a_fn).call(this)} ${__privateMethod(this, __e_instances, o_fn).call(this)}`;
   }
 };
 _e2 = new WeakMap();
-_t = new WeakSet();
+__e_instances = new WeakSet();
 t_fn = async function(e2) {
   e2.preventDefault();
   const t2 = e2.submitter, r2 = new FormData(e2.currentTarget), o2 = this.renderRoot.querySelector(".btn-vote[selected]").value;
   return new Promise(async (e3, r3) => {
     this.state = __e.STATES.SUBMITTING, t2.disabled = true, fetch(`${__privateGet(this, _e2)}/getguid`).then(async (t3) => {
-      if (!t3.ok)
-        return r3(new Error("Could not fetch service. response: ", t3));
+      if (!t3.ok) return r3(new Error("Could not fetch service. response: ", t3));
       e3(await t3.json());
     }).catch((e4) => r3(`Could not GET /guid. Returned status: ${e4}`));
   }).then(async (e3) => {
@@ -843,29 +802,23 @@ t_fn = async function(e2) {
     t2.disabled = false;
   });
 };
-_r = new WeakSet();
 r_fn = function() {
   this._vote = null, this.state = __e.STATES.INITIAL;
 };
-_o = new WeakSet();
 o_fn = function() {
   return "submitted" === this.state ? o`<p>Merci! Nous avons reçu vos commentaires.</p>` : "error" === this.state ? o`<p>Mmm, quelque chose s'est mal passé. Nous tâcherons de réparer le problème.</p>` : void 0;
 };
-_a = new WeakSet();
 a_fn = function() {
-  if ("loaded" === this.state)
-    return o`<form aria-live="polite" @submit="${__privateMethod(this, _t, t_fn)}" @reset="${__privateMethod(this, _r, r_fn)}"><div role="radiogroup" aria-labelledby="survey-title" class="radio-group"><md-outlined-icon-button id="btn-vote-y" class="btn-vote" value="oui" name="vote" type="button" toggle aria-label="oui" @click="${this._onIconClick}" ?selected="${"oui" === this._vote}"><md-icon>${h('<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M840-640q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14H280v-520l240-238q15-15 35.5-17.5T595-888q19 10 28 28t4 37l-45 183h258Zm-480 34v406h360l120-280v-80H480l54-220-174 174ZM160-120q-33 0-56.5-23.5T80-200v-360q0-33 23.5-56.5T160-640h120v80H160v360h120v80H160Zm200-80v-406 406Z"/></svg>')}</md-icon></md-outlined-icon-button><md-outlined-icon-button id="btn-vote-n" class="btn-vote" value="non" name="vote" type="button" toggle aria-label="non" @click="${this._onIconClick}" ?selected="${"non" === this._vote}"><md-icon>${h('<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M120-320q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14h440v520L440-82q-15 15-35.5 17.5T365-72q-19-10-28-28t-4-37l45-183H120Zm480-34v-406H240L120-480v80h360l-54 220 174-174Zm200-486q33 0 56.5 23.5T880-760v360q0 33-23.5 56.5T800-320H680v-80h120v-360H680v-80h120Zm-200 80v406-406Z"/></svg>')}</md-icon></md-outlined-icon-button></div>${__privateMethod(this, _i, i_fn).call(this)} <a rel="" class="privacy-link" target="_blank" href="https://vie-privee.umontreal.ca/confidentialite/">Politique de confidentialité</a></form>`;
+  if ("loaded" === this.state) return o`<form aria-live="polite" @submit="${__privateMethod(this, __e_instances, t_fn)}" @reset="${__privateMethod(this, __e_instances, r_fn)}"><div role="radiogroup" aria-labelledby="survey-title" class="radio-group"><md-outlined-icon-button id="btn-vote-y" class="btn-vote" value="oui" name="vote" type="button" toggle aria-label="oui" @click="${this._onIconClick}" ?selected="${"oui" === this._vote}"><md-icon>${l('<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M840-640q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14H280v-520l240-238q15-15 35.5-17.5T595-888q19 10 28 28t4 37l-45 183h258Zm-480 34v406h360l120-280v-80H480l54-220-174 174ZM160-120q-33 0-56.5-23.5T80-200v-360q0-33 23.5-56.5T160-640h120v80H160v360h120v80H160Zm200-80v-406 406Z"/></svg>')}</md-icon></md-outlined-icon-button><md-outlined-icon-button id="btn-vote-n" class="btn-vote" value="non" name="vote" type="button" toggle aria-label="non" @click="${this._onIconClick}" ?selected="${"non" === this._vote}"><md-icon>${l('<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M120-320q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14h440v520L440-82q-15 15-35.5 17.5T365-72q-19-10-28-28t-4-37l45-183H120Zm480-34v-406H240L120-480v80h360l-54 220 174-174Zm200-486q33 0 56.5 23.5T880-760v360q0 33-23.5 56.5T800-320H680v-80h120v-360H680v-80h120Zm-200 80v406-406Z"/></svg>')}</md-icon></md-outlined-icon-button></div>${__privateMethod(this, __e_instances, i_fn).call(this)} <a rel="" class="privacy-link" target="_blank" href="https://vie-privee.umontreal.ca/confidentialite/">Politique de confidentialité</a></form>`;
 };
-_i = new WeakSet();
 i_fn = function() {
-  if (this._vote)
-    return o`<p class="form-group"><label class="label width-full" for="survey-comment"><span>${"oui" === this._vote ? "Faites-nous savoir ce que nous faisons bien" : "Faites-nous savoir ce que nous pouvons faire mieux"}</span></label> <textarea class="form-control input-sm width-full" name="comment" id="survey-comment"></textarea></p><p class="write-us f6 color-fg-muted">Si vous avez besoin d'une réponse, <a href="https://bib.umontreal.ca/nous-joindre" target="_blank">veuillez plutôt nous écrire</a>.</p><div class="form-group-submit d-flex flex-justify-end flex-items-center mt-3"><md-text-button class="btn" type="reset">Annuler</md-text-button><md-filled-button class="btn btn-submit"><span>Envoyer<md-circular-progress class="progress" indeterminate></md-circular-progress></span></md-filled-button></div>`;
+  if (this._vote) return o`<p class="form-group"><label class="label width-full" for="survey-comment"><span>${"oui" === this._vote ? "Faites-nous savoir ce que nous faisons bien" : "Faites-nous savoir ce que nous pouvons faire mieux"}</span></label> <textarea class="form-control input-sm width-full" name="comment" id="survey-comment"></textarea></p><p class="write-us f6 color-fg-muted">Si vous avez besoin d'une réponse, <a href="https://bib.umontreal.ca/nous-joindre" target="_blank">veuillez plutôt nous écrire</a>.</p><div class="form-group-submit d-flex flex-justify-end flex-items-center mt-3"><md-text-button class="btn" type="reset">Annuler</md-text-button><md-filled-button class="btn btn-submit"><span>Envoyer<md-circular-progress class="progress" indeterminate></md-circular-progress></span></md-filled-button></div>`;
 };
 __publicField(__e, "STATES", { INITIAL: "initial", SUBMITTING: "submitting", SUBMITTED: "submitted", ERROR: "error" });
 __publicField(__e, "properties", { state: { state: true }, _vote: { state: true } });
 __publicField(__e, "styles", [a`${s(":host{--md-sys-color-primary: rgb(64 95 144);--md-sys-color-surface-tint: rgb(64 95 144);--md-sys-color-on-primary: rgb(255 255 255);--md-sys-color-primary-container: rgb(214 227 255);--md-sys-color-on-primary-container: rgb(0 27 61);--md-sys-color-secondary: rgb(85 95 113);--md-sys-color-on-secondary: rgb(255 255 255);--md-sys-color-secondary-container: rgb(218 226 249);--md-sys-color-on-secondary-container: rgb(18 28 43);--md-sys-color-tertiary: rgb(144 74 69);--md-sys-color-on-tertiary: rgb(255 255 255);--md-sys-color-tertiary-container: rgb(255 218 214);--md-sys-color-on-tertiary-container: rgb(59 9 8);--md-sys-color-error: rgb(144 74 67);--md-sys-color-on-error: rgb(255 255 255);--md-sys-color-error-container: rgb(255 218 214);--md-sys-color-on-error-container: rgb(59 9 7);--md-sys-color-background: rgb(249 249 255);--md-sys-color-on-background: rgb(25 28 32);--md-sys-color-surface: rgb(249 249 255);--md-sys-color-on-surface: rgb(25 28 32);--md-sys-color-surface-variant: rgb(224 226 236);--md-sys-color-on-surface-variant: rgb(68 71 78);--md-sys-color-outline: rgb(116 119 127);--md-sys-color-outline-variant: rgb(196 198 207);--md-sys-color-shadow: rgb(0 0 0);--md-sys-color-scrim: rgb(0 0 0);--md-sys-color-inverse-surface: rgb(46 48 54);--md-sys-color-inverse-on-surface: rgb(240 240 247);--md-sys-color-inverse-primary: rgb(169 199 255);--md-sys-color-primary-fixed: rgb(214 227 255);--md-sys-color-on-primary-fixed: rgb(0 27 61);--md-sys-color-primary-fixed-dim: rgb(169 199 255);--md-sys-color-on-primary-fixed-variant: rgb(39 71 119);--md-sys-color-secondary-fixed: rgb(218 226 249);--md-sys-color-on-secondary-fixed: rgb(18 28 43);--md-sys-color-secondary-fixed-dim: rgb(189 199 220);--md-sys-color-on-secondary-fixed-variant: rgb(62 71 88);--md-sys-color-tertiary-fixed: rgb(255 218 214);--md-sys-color-on-tertiary-fixed: rgb(59 9 8);--md-sys-color-tertiary-fixed-dim: rgb(255 179 173);--md-sys-color-on-tertiary-fixed-variant: rgb(115 51 47);--md-sys-color-surface-dim: rgb(217 217 224);--md-sys-color-surface-bright: rgb(249 249 255);--md-sys-color-surface-container-lowest: rgb(255 255 255);--md-sys-color-surface-container-low: rgb(243 243 250);--md-sys-color-surface-container: rgb(237 237 244);--md-sys-color-surface-container-high: rgb(231 232 238);--md-sys-color-surface-container-highest: rgb(226 226 233);--md-extended-color-warning-color: rgb(100 97 22);--md-extended-color-warning-on-color: rgb(255 255 255);--md-extended-color-warning-color-container: rgb(236 230 141);--md-extended-color-warning-on-color-container: rgb(30 28 0)}:host,*{box-sizing:border-box}:host{--_size-large: calc(16 / 14 * 1em);--_size-small: .8125em ;--_leading-space: .5em;--bib-comp-retroaction-usager-size: var(--md-sys-typescale-body-small-size, inherit);display:inline-block;font-size:var(--bib-comp-retroaction-usager-size)}p{margin:0}textarea,input{font-family:inherit;font-size:inherit;line-height:inherit;padding:var(--_leading-space) var(--_leading-space)}.survey-title{margin-bottom:var(--_size-large);font-weight:var(--bib-comp-retroaction-usager-title-weight, var(--md-sys-typescale-title-medium-weight, 450))}.radio-group{display:flex;gap:.25em;margin-bottom:.5em}.btn-vote{--md-outlined-icon-button-container-height: var(--_icon-btn-size);--md-outlined-icon-button-container-width: var(--_icon-btn-size);--md-outlined-icon-button-selected-container-color: var(--md-sys-color-surface-tint);--md-outlined-icon-button-outline-width: 0}.form-group{margin:1em 0 .5em}.form-group .label{display:flex;margin-bottom:.325em}.form-group .label :first-child{flex-grow:1}.form-group-submit{margin-block-start:1em;display:flex;align-items:center;justify-content:flex-end;gap:.5em}.privacy-link{text-decoration:underline;font-size:var(--_size-small)}.width-full{width:100%}.write-us{color:#3d4248;font-size:var(--_size-small)}.btn{font-family:inherit}.btn-submit:not(disabled) .progress{display:none}.btn-submit span{display:inline-flex;gap:.5em;align-items:center}.progress{--md-circular-progress-size: 20px;--md-circular-progress-active-indicator-width: 16}")}`]);
 let _e = __e;
-customElements.define("bib-retroaction-usager", _e);
+window.customElements.get("bib-retroaction-usager") || window.customElements.define("bib-retroaction-usager", _e);
 export {
   _e as BibRetroactionUsager
 };

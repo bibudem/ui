@@ -1,8 +1,6 @@
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
   stories: [
-    // '../stories/**/*.mdx',
-    // '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
     '../src/**/*.mdx',
     '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
@@ -10,8 +8,9 @@ const config = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
+    '@ljcl/storybook-addon-cssprops',
     '@chromatic-com/storybook',
-    '@ljcl/storybook-addon-cssprops'
+    '@whitespace/storybook-addon-html'
   ],
   framework: {
     name: '@storybook/web-components-vite',

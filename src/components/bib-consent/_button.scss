@@ -1,0 +1,47 @@
+@use '@/scss/utils/layers';
+
+%_btn {
+  font-size: var(--_consent-text-size);
+  line-height: var(--_consent-text-line-height);
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  margin: 7.5px auto 0;
+  padding: 5px 15px;
+  width: 200px;
+
+  //sm
+  @media screen and (min-width: 640px) {
+    float: left;
+    margin: 7.5px 0 0 7.5px;
+    width: auto;
+  }
+
+  span {
+    color: #0057ac;
+    padding-left: 6.25px;
+  }
+}
+
+@include layers.component {
+  .btn {
+    &--filled {
+      @extend %_btn;
+
+      background-color: #0b113a;
+      color: #fff;
+    }
+
+    &--outlined {
+      @extend %_btn;
+
+      background-color: transparent;
+      border: 1px solid #0057ac;
+      color: #0b113a;
+
+      @media screen and (min-width: 640px) {
+        margin-left: 0;
+      }
+    }
+  }
+}

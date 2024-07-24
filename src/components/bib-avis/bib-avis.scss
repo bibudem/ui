@@ -33,7 +33,7 @@
 }
 
 .btn-close {
-  @include states.state;
+  @include states.focus;
 
   display: inline-flex;
   -webkit-box-align: center;

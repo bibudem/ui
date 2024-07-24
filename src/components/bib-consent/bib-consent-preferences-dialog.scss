@@ -1,0 +1,47 @@
+@use '@/scss/utils/layers';
+@use '@/scss/reset';
+@use '@/scss/tokens/ref-typeface';
+@use 'theme';
+@use 'content';
+@use 'button';
+@use 'accordion';
+@use 'switch';
+
+@include layers.order;
+
+@include reset.button;
+@include reset.dialog;
+@include reset.details;
+
+@include layers.reset {
+  p {
+    margin: 0;
+  }
+}
+
+@include layers.component {
+  .dialog-container--preferences {
+    position: fixed;
+    bottom: 0;
+    height: 400px;
+    display: block;
+    width: 100%;
+  }
+
+  .personalized-cookies-description p {
+    padding: 0 15px 20px 0;
+  }
+
+  .btn-consent {
+    width: 100%;
+
+    //sm
+    @media screen and (min-width: 640px) {
+      width: auto;
+    }
+  }
+
+  .actions-container {
+    margin-top: 20px;
+  }
+}
