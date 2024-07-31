@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.12.0
+ * @version 0.13.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -17,22 +17,23 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _e, _t, _s, _n, _r, _v_instances, o_fn, c_fn, i_fn, a_fn, h_fn;
+var _e, _t, _s, _n, _r, _g_instances, o_fn, c_fn, i_fn, a_fn, h_fn;
 import { s as e, x as t } from "./lit-element-Dj1nHH6C.js";
 import { e as s, n } from "./ref-B-kqFHPy.js";
-import { s as r, a as o } from "./bib-consent-preferences-dialog-uDD7B7ur.js";
+import { s as r, a as o } from "./bib-consent-preferences-dialog-Cad7T2xM.js";
+import { l as i } from "./logger-DG93hjV0.js";
+import { a as c } from "./bib-2qdb5tWe.js";
 import "./bib-button-close.js";
 import "./bib-consent-consent-dialog.js";
-import i from "./preferencesClient.js";
-import { consentContext as c } from "./consent-context.js";
-import { S as a, b as h, E as l } from "./constants-CIEfKCDG.js";
-import { l as u } from "./logger-2PyXT5Qg.js";
+import a from "./preferencesClient.js";
+import { consentContext as h } from "./consent-context.js";
+import { S as l, b as u, E as p } from "./constants-DMzZzv_T.js";
 /**
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-class p {
+class d {
   get value() {
     return this.o;
   }
@@ -65,12 +66,12 @@ class p {
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-class d extends Event {
+class f extends Event {
   constructor(e2) {
     super("context-provider", { bubbles: true, composed: true }), this.context = e2;
   }
 }
-class f extends p {
+class b extends d {
   constructor(e2, t2, s2) {
     super(void 0 !== t2.context ? t2.initialValue : s2), this.onContextRequest = (e3) => {
       const t3 = e3.composedPath()[0];
@@ -87,44 +88,44 @@ class f extends p {
     this.host.addEventListener("context-request", this.onContextRequest), this.host.addEventListener("context-provider", this.onProviderRequest);
   }
   hostConnected() {
-    this.host.dispatchEvent(new d(this.context));
+    this.host.dispatchEvent(new f(this.context));
   }
 }
-const b = u("bib-consent", "#cd5300");
-class v extends e {
+const v = i("bib-consent", "#cd5300");
+class g extends e {
   constructor() {
     super();
-    __privateAdd(this, _v_instances);
+    __privateAdd(this, _g_instances);
     __publicField(this, "_preferencesClient");
     __privateAdd(this, _e);
     __privateAdd(this, _t);
     __privateAdd(this, _s);
     __privateAdd(this, _n);
     __privateAdd(this, _r);
-    this.open = false, this.currentDialog = null, __privateSet(this, _t, s()), __privateSet(this, _s, s()), __privateSet(this, _n, new f(this, { context: c, initialValue: null })), __privateSet(this, _r, new o(this, { context: c, callback: this.savePreferences }));
+    this.open = false, this.currentDialog = null, __privateSet(this, _t, s()), __privateSet(this, _s, s()), __privateSet(this, _n, new b(this, { context: h, initialValue: null })), __privateSet(this, _r, new o(this, { context: h, callback: this.savePreferences }));
   }
   get preferences() {
     return __privateGet(this, _r).value;
   }
   async connectedCallback() {
-    super.connectedCallback(), this.debug = this.debug || false, this.serverUrl = this.serverUrl || "https://bib.umontreal.ca/consent/server", this.serverRequestTimeout = this.serverRequestTimeout || h, this._preferencesClient = await i({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true }), this._preferencesClient.addEventListener(l.READY, (e2) => {
-      __privateMethod(this, _v_instances, o_fn).call(this, l.READY, "event: ", e2), e2.detail ? __privateGet(this, _n).setValue(e2.detail) : __privateMethod(this, _v_instances, i_fn).call(this, "consent");
+    super.connectedCallback(), this.debug = this.debug || false, this.serverUrl = this.serverUrl || "https://bib.umontreal.ca/consent/server", this.serverRequestTimeout = this.serverRequestTimeout || u, this._preferencesClient = await a({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true }), this._preferencesClient.addEventListener(p.READY, (e2) => {
+      __privateMethod(this, _g_instances, o_fn).call(this, p.READY, "event: ", e2), e2.detail ? __privateGet(this, _n).setValue(e2.detail) : __privateMethod(this, _g_instances, i_fn).call(this, "consent");
     });
   }
   close() {
-    __privateMethod(this, _v_instances, c_fn).call(this);
+    __privateMethod(this, _g_instances, c_fn).call(this);
   }
   show() {
-    __privateMethod(this, _v_instances, i_fn).call(this, "consent");
+    __privateMethod(this, _g_instances, i_fn).call(this, "consent");
   }
   showPreferences() {
-    __privateMethod(this, _v_instances, o_fn).call(this, "[showPreferences]"), __privateMethod(this, _v_instances, i_fn).call(this, "preferences");
+    __privateMethod(this, _g_instances, o_fn).call(this, "[showPreferences]"), __privateMethod(this, _g_instances, i_fn).call(this, "preferences");
   }
   async getPreferences() {
     return __privateSet(this, _e, await this._preferencesClient.getPreferences()), __privateGet(this, _e);
   }
   async savePreferences(e2) {
-    __privateMethod(this, _v_instances, o_fn).call(this, "[savePreferences] preferences: ", e2);
+    __privateMethod(this, _g_instances, o_fn).call(this, "[savePreferences] preferences: ", e2);
     try {
       return await this._preferencesClient.setPreferences(e2), __privateGet(this, _n).setValue(e2), true;
     } catch (e3) {
@@ -135,7 +136,7 @@ class v extends e {
     return __privateSet(this, _e, await this._preferencesClient.resetPreferences()), __privateGet(this, _e);
   }
   render() {
-    return t`<bib-consent-consent-dialog @update="${__privateMethod(this, _v_instances, a_fn)}" @show-preferences="${() => __privateMethod(this, _v_instances, i_fn).call(this, "preferences")}" ${n(__privateGet(this, _t))} @close="${__privateMethod(this, _v_instances, h_fn)}"></bib-consent-consent-dialog><bib-consent-preferences-dialog @update="${__privateMethod(this, _v_instances, a_fn)}" ${n(__privateGet(this, _s))} @close="${__privateMethod(this, _v_instances, h_fn)}"></bib-consent-preferences-dialog>`;
+    return t`<bib-consent-consent-dialog @update="${__privateMethod(this, _g_instances, a_fn)}" @show-preferences="${() => __privateMethod(this, _g_instances, i_fn).call(this, "preferences")}" ${n(__privateGet(this, _t))} @close="${__privateMethod(this, _g_instances, h_fn)}"></bib-consent-consent-dialog><bib-consent-preferences-dialog @update="${__privateMethod(this, _g_instances, a_fn)}" ${n(__privateGet(this, _s))} @close="${__privateMethod(this, _g_instances, h_fn)}"></bib-consent-preferences-dialog>`;
   }
 }
 _e = new WeakMap();
@@ -143,28 +144,28 @@ _t = new WeakMap();
 _s = new WeakMap();
 _n = new WeakMap();
 _r = new WeakMap();
-_v_instances = new WeakSet();
+_g_instances = new WeakSet();
 o_fn = function() {
-  this.debug && b(...arguments);
+  this.debug && v(...arguments);
 };
 c_fn = function(e2 = true) {
   this.open = false, this.currentDialog?.close(e2), this.currentDialog = null;
 };
 i_fn = function(e2 = "consent") {
   if ("string" != typeof e2 && !["consent", "preferences"].includes(e2)) throw new TypeError("The panel argument must be a string of either values 'consent' or 'preferences'. ", e2);
-  this.open = true, this.currentDialog && (__privateMethod(this, _v_instances, o_fn).call(this, "[#show] this.currentDialog", this.currentDialog), this.currentDialog.close()), __privateMethod(this, _v_instances, o_fn).call(this, "[show]", __privateGet(this, _t).value), __privateMethod(this, _v_instances, o_fn).call(this, "[show]", __privateGet(this, _s).value), this.currentDialog = "consent" === e2 ? __privateGet(this, _t).value : __privateGet(this, _s).value, this.currentDialog.show();
+  this.open = true, this.currentDialog && (__privateMethod(this, _g_instances, o_fn).call(this, "[#show] this.currentDialog", this.currentDialog), this.currentDialog.close()), __privateMethod(this, _g_instances, o_fn).call(this, "[show]", __privateGet(this, _t).value), __privateMethod(this, _g_instances, o_fn).call(this, "[show]", __privateGet(this, _s).value), this.currentDialog = "consent" === e2 ? __privateGet(this, _t).value : __privateGet(this, _s).value, this.currentDialog.show();
 };
 a_fn = async function(e2) {
-  __privateMethod(this, _v_instances, o_fn).call(this, "[#handleUpdateEvent]", e2);
+  __privateMethod(this, _g_instances, o_fn).call(this, "[#handleUpdateEvent]", e2);
   const t2 = await this.savePreferences(e2.detail);
-  __privateMethod(this, _v_instances, o_fn).call(this, "[#handleUpdateEvent] success: ", t2), t2 && (this.dispatchEvent(new CustomEvent(l.UPDATE, { detail: e2.detail })), __privateMethod(this, _v_instances, c_fn).call(this));
+  __privateMethod(this, _g_instances, o_fn).call(this, "[#handleUpdateEvent] success: ", t2), t2 && (this.dispatchEvent(new CustomEvent(p.UPDATE, { detail: e2.detail })), __privateMethod(this, _g_instances, c_fn).call(this));
 };
 h_fn = function(e2) {
-  e2.stopPropagation(), __privateMethod(this, _v_instances, c_fn).call(this, false);
+  e2.stopPropagation(), __privateMethod(this, _g_instances, c_fn).call(this, false);
 };
-__publicField(v, "properties", { serverUrl: { type: String, attribute: "server-url", reflect: true }, serverRequestTimeout: { type: Number, attribute: "server-request-timeout", reflect: true }, [a.LOCAL]: { type: Boolean }, debug: { type: Boolean, reflect: true }, open: { type: Boolean, reflect: true } });
-window.customElements.get("bib-consent") || window.customElements.define("bib-consent", v);
+__publicField(g, "properties", { serverUrl: { type: String, attribute: "server-url", reflect: true }, serverRequestTimeout: { type: Number, attribute: "server-request-timeout", reflect: true }, [l.LOCAL]: { type: Boolean }, debug: { type: Boolean, reflect: true }, open: { type: Boolean, reflect: true } });
+window.customElements.get("bib-consent") || window.customElements.define("bib-consent", g), c("consent", {});
 export {
-  v as BibConsent
+  g as BibConsent
 };
 //# sourceMappingURL=bib-consent.js.map

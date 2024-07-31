@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.12.0
+ * @version 0.13.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("./constants-CCyyIJHD.cjs"),t=Symbol(e.getKeyName("consent-context"));
+Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("./constants-BgVe0aC4.cjs"),t=Symbol(e.getKeyName("consent-context"));
 /**
  * @license
  * Copyright 2021 Google LLC
