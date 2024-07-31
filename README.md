@@ -19,3 +19,13 @@ puis, insérez le custom element:
 La documentation des composants est gérée à l'aide de [Storybook](https://storybook.js.org/) et publiée sur GitHub Pages:
 
 [https://bibudem.github.io/ui](https://bibudem.github.io/ui/)
+
+## Pour créer un `release`
+
+Exécuter la commande suivante, en adaptant le niveau de version en fonction des commits faits depuis le dernier `release`:
+
+```
+npm version minor -m "Bump v%s" -m "Release-As: 0.13.0"
+```
+
+Puis naviguer sur les [pull requests du dépôt GitHub](https://github.com/bibudem/ui/pulls) et acceptez le pull request généré par Release Please.
