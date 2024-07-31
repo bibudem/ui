@@ -2,13 +2,14 @@ import { html, LitElement } from 'lit'
 import { createRef, ref } from 'lit/directives/ref.js'
 import { ContextProvider, ContextConsumer } from '@lit/context'
 import '@auroratide/toggle-switch/lib/define.js'
+import { loggerFactory } from '@/utils/logger.js'
+import { addToGlobalBib } from '@/utils/bib.js'
 import '../bib-button/bib-button-close.js'
 import './bib-consent-consent-dialog.js'
 import './bib-consent-preferences-dialog.js'
 import createPreferencesClient from './preferencesClient.js'
 import { consentContext } from './consent-context.js'
 import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT } from './constants.js'
-import { loggerFactory } from '@/utils/logger.js'
 
 const debug = loggerFactory('bib-consent', '#cd5300')
 
@@ -244,3 +245,5 @@ export class BibConsent extends LitElement {
 if (!window.customElements.get('bib-consent')) {
   window.customElements.define('bib-consent', BibConsent)
 }
+
+addToGlobalBib('consent', {})

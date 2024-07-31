@@ -3,6 +3,7 @@ import { LitElement, html, css, unsafeCSS } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import { openDB } from 'idb'
 import { nodeIsEmpty } from '@/utils/dom.js'
+import { addToGlobalBib } from '@/utils/bib.js'
 import { name as PKG_NAME } from '../../../package.json'
 import closeIcon from '../../icons/close_FILL0_wght400_GRAD0_opsz24.svg?raw'
 import bibAvisStyles from './bib-avis.scss?inline'
@@ -214,3 +215,5 @@ export class BibAvis extends LitElement {
 if (!window.customElements.get('bib-avis')) {
   window.customElements.define('bib-avis', BibAvis)
 }
+
+addToGlobalBib('avis', {})

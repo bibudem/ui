@@ -10,6 +10,7 @@ import { VoteData } from './VotePayload'
 import thumbUpIcon from '../../icons/thumb_up_24dp_FILL0_wght400_GRAD0_opsz24.svg?raw'
 import thumbDownIcon from '../../icons/thumb_down_24dp_FILL0_wght400_GRAD0_opsz24.svg?raw'
 import styles from './bib-retroaction-usager.scss?inline'
+import { addToGlobalBib } from '@/utils/bib.js'
 
 /**
  * Collecte les impressions d'usagers à propos de la page
@@ -178,3 +179,5 @@ export class BibRetroactionUsager extends LitElement {
 if (!window.customElements.get('bib-retroaction-usager')) {
   window.customElements.define('bib-retroaction-usager', BibRetroactionUsager)
 }
+
+addToGlobalBib('retroactionUsager', {})
