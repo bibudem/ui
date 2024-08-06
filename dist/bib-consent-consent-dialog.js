@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.13.1
+ * @version 0.13.2
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -12,7 +12,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
 import { s as e, i as t, r as o, x as n } from "./lit-element-Dj1nHH6C.js";
 import { e as i, n as r } from "./ref-B-kqFHPy.js";
 import "./bib-consent-dialog.js";
-import { D as a } from "./constants-C4fSqP7Z.js";
+import { D as a } from "./constants-B2Plycc7.js";
 function l(e2) {
   return Object.keys(a).reduce((t2, o2) => ({ ...t2, [o2]: e2 }), {});
 }

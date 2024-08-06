@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.13.1
+ * @version 0.13.2
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { n as e } from "./package-BUO2f-K0.js";
+import { n as e } from "./package-eM4icSas.js";
 import { t as n } from "./type-BPiIb9Kq.js";
 function t(e4, n2, t2) {
   return n2 in e4 ? Object.defineProperty(e4, n2, { value: t2, enumerable: true, configurable: true, writable: true }) : e4[n2] = t2, e4;
@@ -53,7 +53,7 @@ var s = "client_response", i = "server_response", a = { server: { receive: s, po
   }), t(this, "destroy", function() {
     i2.destroyed = true, i2.unListen && (i2.unListen(), i2.unListen = null), i2.listener = null, i2.messageResponse = null, i2.messageProxy && (i2.messageProxy.destroy(), i2.messageProxy = null);
   }), this.type = n2, this.messageProxy = r2, this.listener = null, this.messageResponse = {}, this.timeout = s2, this.unListen = this.messageProxy.listen(this.receiveMessage);
-}), u = "postmessage-promise_client", d = "postmessage-promise_server", f = "identity_key", h = { server: { key: d, accept: u }, client: { key: u, accept: d } }, p = r(function e3(n2, r2, s2) {
+}), u = "postmessage-promise_client", d = "postmessage-promise_server", f = "identity_key", h = { server: { key: d, accept: u }, client: { key: u, accept: d } }, v = r(function e3(n2, r2, s2) {
   var i2 = this;
   o(this, e3), t(this, "listen", function(e4) {
     var n3 = i2, t2 = function(t3) {
@@ -73,7 +73,7 @@ var s = "client_response", i = "server_response", a = { server: { receive: s, po
   var a2 = r2.origin, c2 = r2.source, l2 = r2.channelId;
   this.origin = a2, this.source = c2, this.channelId = l2, this.eventFilter = s2;
 });
-function v(e4, n2) {
+function p(e4, n2) {
   var t2 = Object.keys(e4);
   if (Object.getOwnPropertySymbols) {
     var r2 = Object.getOwnPropertySymbols(e4);
@@ -86,9 +86,9 @@ function v(e4, n2) {
 function m(e4) {
   for (var n2 = 1; n2 < arguments.length; n2++) {
     var r2 = null != arguments[n2] ? arguments[n2] : {};
-    n2 % 2 ? v(Object(r2), true).forEach(function(n3) {
+    n2 % 2 ? p(Object(r2), true).forEach(function(n3) {
       t(e4, n3, r2[n3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e4, Object.getOwnPropertyDescriptors(r2)) : v(Object(r2)).forEach(function(n3) {
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e4, Object.getOwnPropertyDescriptors(r2)) : p(Object(r2)).forEach(function(n3) {
       Object.defineProperty(e4, n3, Object.getOwnPropertyDescriptor(r2, n3));
     });
   }
@@ -102,15 +102,15 @@ function g(e4) {
   } : o2, i2 = n2.timeout, a2 = void 0 === i2 ? 2e4 : i2, c2 = n2.clientInfo, u2 = void 0 === c2 ? {} : c2, d2 = n2.onDestroy, f2 = Math.random().toString().substr(3, 10), h2 = { source: t2, origin: r2, channelId: f2 };
   return new Promise(function(e5, n3) {
     if (t2 && !t2.closed) {
-      var r3 = new p("client", h2, s2);
+      var r3 = new v("client", h2, s2);
       (function(e6, n4, t3, r4) {
         return new Promise(function(o3, s3) {
           var i3 = e6.source, a3 = e6.origin, c3 = e6.channelId, l2 = Number(Math.random().toString().substr(3, 10)), u3 = null, d3 = /* @__PURE__ */ new Date(), f3 = null;
           f3 = n4.listen(function(e7, t4) {
             var s4 = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {};
             if ("hand-shake" === e7) {
-              var d4 = s4 || {}, h3 = d4.SYN, p2 = d4.ACK, v2 = d4.seqnumber, m2 = d4.acknumber;
-              1 === h3 && 1 === p2 && m2 === l2 + 1 && (clearInterval(u3), f3 && f3(), n4.request("hand-shake", "hand-shake-event", { clientInfo: r4, ACK: 1, seqnumber: l2 + 1, acknumber: v2 + 1 }), o3({ server: i3, origin: a3, channelId: c3, serverInfo: s4.serverInfo, clientInfo: r4 }));
+              var d4 = s4 || {}, h3 = d4.SYN, v2 = d4.ACK, p2 = d4.seqnumber, m2 = d4.acknumber;
+              1 === h3 && 1 === v2 && m2 === l2 + 1 && (clearInterval(u3), f3 && f3(), n4.request("hand-shake", "hand-shake-event", { clientInfo: r4, ACK: 1, seqnumber: l2 + 1, acknumber: p2 + 1 }), o3({ server: i3, origin: a3, channelId: c3, serverInfo: s4.serverInfo, clientInfo: r4 }));
             }
           }), u3 = setInterval(function() {
             if (!i3 || i3.closed) throw clearInterval(u3), f3 && f3(), s3(new Error("server closed.")), new Error("server closed.");
@@ -175,14 +175,14 @@ function I() {
         var o3 = "syn", s3 = Number(Math.random().toString().substr(3, 10)), i3 = -1, a3 = null, c3 = 5;
         window.addEventListener("message", function l2(u2) {
           if (u2.data && "postmessage-promise_client" === u2.data[b] && u2.data.channelId && u2.data.method && "hand-shake" === u2.data.method && e6(u2)) {
-            var d2 = u2.data.payload || {}, f2 = d2.SYN, h2 = d2.ACK, p2 = d2.seqnumber, v2 = d2.acknumber;
+            var d2 = u2.data.payload || {}, f2 = d2.SYN, h2 = d2.ACK, v2 = d2.seqnumber, p2 = d2.acknumber;
             if (1 === f2 && 0 === h2) {
               if ("syn" !== o3) return;
-              i3 = p2, o3 = "ack";
+              i3 = v2, o3 = "ack";
               var m2 = function() {
                 if (!u2.source || u2.source.closed) return console.info("client closed and reset to listening."), o3 = "syn", clearTimeout(a3), a3 = null, c3 = 5, s3 = Number(Math.random().toString().substr(3, 10)), i3 = -1, false;
                 try {
-                  u2.source.postMessage(t(t(t(t({}, b, "postmessage-promise_server"), "channelId", u2.data.channelId), "method", "hand-shake"), "payload", { serverInfo: n3, acknumber: p2 + 1, SYN: 1, ACK: 1, seqnumber: s3 }), u2.origin);
+                  u2.source.postMessage(t(t(t(t({}, b, "postmessage-promise_server"), "channelId", u2.data.channelId), "method", "hand-shake"), "payload", { serverInfo: n3, acknumber: v2 + 1, SYN: 1, ACK: 1, seqnumber: s3 }), u2.origin);
                 } catch (e7) {
                   return console.error(e7), true;
                 }
@@ -192,7 +192,7 @@ function I() {
               a3 || (a3 = setTimeout(function e7() {
                 c3 > 0 ? "ack" === o3 && (c3 -= 1, m2() && (a3 = setTimeout(e7, 1e3))) : (console.info("server three-way hand shake timeout and reset to listening."), o3 = "syn", clearTimeout(a3), a3 = null, c3 = 5, s3 = Number(Math.random().toString().substr(3, 10)), i3 = -1);
               }, 1e3));
-            } else if ("ack" === o3 && 1 === h2 && p2 === i3 + 1 && v2 === s3 + 1) {
+            } else if ("ack" === o3 && 1 === h2 && v2 === i3 + 1 && p2 === s3 + 1) {
               o3 = "finish", clearTimeout(a3), a3 = null, window.removeEventListener("message", l2);
               var g2 = u2.data.payload, y2 = void 0 === g2 ? {} : g2;
               r3({ client: u2.source, origin: u2.origin, channelId: u2.data.channelId, serverInfo: n3, clientInfo: y2.clientInfo });
@@ -202,7 +202,7 @@ function I() {
       });
     })(r2, a2).then(function(n3) {
       (function(e6, n4, t2) {
-        var r3 = e6.origin, o3 = e6.client, s3 = e6.channelId, i3 = e6.clientInfo, a3 = void 0 === i3 ? {} : i3, c3 = new p("server", { origin: r3, source: o3, channelId: s3 }, n4), u2 = new l("server", c3, t2), d2 = function() {
+        var r3 = e6.origin, o3 = e6.client, s3 = e6.channelId, i3 = e6.clientInfo, a3 = void 0 === i3 ? {} : i3, c3 = new v("server", { origin: r3, source: o3, channelId: s3 }, n4), u2 = new l("server", c3, t2), d2 = function() {
           u2 && (u2.destroy(), u2 = null), c3 = null, e6.destroy && e6.destroy();
         }, f2 = null;
         return f2 = setInterval(function() {
@@ -269,31 +269,31 @@ function S(e4, n2) {
   const t2 = e4.replace(/[.]/g, "\\$&").replace(/-/g, "\\x2d").replace(/[*]/g, ".*");
   return new RegExp(`^${t2}$`, "u").test(n2);
 }
-function T(e4) {
+function q(e4) {
   return function(n2) {
     return `bib:${e4}:${n2}`;
   };
 }
-function q(e4) {
-  return `${N}-${e4}`;
+function D(e4) {
+  return `${C}-${e4}`;
 }
-function D(e4, n2) {
-  const t2 = void 0 !== e4 ? e4 : document.body, r2 = P.resolveOrigin(n2), o2 = q("iframe");
+function L(e4, n2) {
+  const t2 = void 0 !== e4 ? e4 : document.body, r2 = P.resolveOrigin(n2), o2 = D("iframe");
   let s2;
   return document.querySelector(`#${o2}`) ? s2 = document.querySelector(`#${o2}`) : (s2 = document.createElement("iframe"), s2.id = o2, function(e5, n3) {
     const t3 = (e5 = "string" == typeof e5 ? new URL(e5, location) : e5).searchParams.get("debug");
     return null !== t3 && ("" === t3 || k(t3));
   }(n2) ? s2.style.cssText = "width: 100%; height: 100%; border: 0;" : (s2.ariaHidden = true, s2.tabIndex = -1, s2.hidden = true, s2.style.setProperty("display", "none")), t2.appendChild(s2), s2.src = n2), { server: s2.contentWindow || s2.contentDocument.parentWindow, origin: r2, iframe: s2 };
 }
-async function L(e4) {
+async function R(e4) {
   const n2 = e4.serverUrl, t2 = e4.serverRequestTimeout || U;
-  if (!n2) return _.LOCAL;
+  if (!n2) return N.LOCAL;
   const r2 = new AbortController();
   let o2, s2;
   try {
     if (s2 = setTimeout(() => {
       console.warn(`Request timed out after ${t2}ms. Aborting request...`), r2.abort();
-    }, t2), o2 = await fetch(n2, { signal: r2.signal }), o2.ok) return _.REMOTE;
+    }, t2), o2 = await fetch(n2, { signal: r2.signal }), o2.ok) return N.REMOTE;
   } catch (e5) {
     if (console.error(e5), r2.signal.aborted) throw new Error(`Unable to locate server page. The request timed out after ${t2}ms. url: ${n2.href}`);
     throw new Error(`Unable to locate server page : ${n2.href}.`, e5);
@@ -302,23 +302,23 @@ async function L(e4) {
   }
   throw new Error(`Unable to locate server page. The request failed with status code ${o2.status}. url: ${n2.href}`);
 }
-const R = T("consent"), C = `${e}/consent`, $ = 1, x = "consent", A = { CONSENT: R("consent"), READY: R("ready"), UPDATE: R("update") }, N = "bib-consent", _ = { LOCAL: "local", REMOTE: "remote" }, U = 500, F = { performanceCookies: null, functionalityCookies: null, adsCookies: null };
+const T = q("consent"), $ = `${e}/consent`, x = 1, _ = "consent", A = { READY: T("ready"), UPDATE: T("update") }, C = "bib-consent", N = { LOCAL: "local", REMOTE: "remote" }, U = 500, F = { analytics_storage: null, functionality_storage: null, ad_storage: null };
 export {
   F as D,
   A as E,
-  N as P,
-  _ as S,
-  D as a,
+  C as P,
+  N as S,
+  L as a,
   U as b,
   g as c,
   I as d,
-  q as e,
-  C as f,
-  L as g,
-  $ as h,
-  x as i,
-  T as j,
+  D as e,
+  $ as f,
+  R as g,
+  x as h,
+  _ as i,
+  q as j,
   S as p,
   M as s
 };
-//# sourceMappingURL=constants-C4fSqP7Z.js.map
+//# sourceMappingURL=constants-B2Plycc7.js.map

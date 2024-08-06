@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.13.1
+ * @version 0.13.2
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -14,29 +14,29 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _ce_instances, e_fn;
 import { o as e } from "./index-CRxQMTzC.js";
-import { E as t, f as r, h as n, i as a, D as o } from "./constants-C4fSqP7Z.js";
+import { E as t, f as r, h as n, i as a, D as o } from "./constants-B2Plycc7.js";
 import { g as s, o as c, i, a as u, b as f, c as l, t as b, M as h, d as v, e as p, U as d, f as w, S as y, h as j, j as g } from "./_Uint8Array-DzlTzPS7.js";
-import { r as _, b as m, S as O, i as P } from "./isObjectLike-DmmXH0U-.js";
-var E = s(_, "WeakMap"), S = c(Object.keys, Object), D = Object.prototype.hasOwnProperty;
-var k = Object.prototype.propertyIsEnumerable, A = Object.getOwnPropertySymbols, T = A ? function(e2) {
+import { r as _, b as m, S as O, i as E } from "./isObjectLike-DmmXH0U-.js";
+var P = s(_, "WeakMap"), S = c(Object.keys, Object), k = Object.prototype.hasOwnProperty;
+var A = Object.prototype.propertyIsEnumerable, D = Object.getOwnPropertySymbols, x = D ? function(e2) {
   return null == e2 ? [] : (e2 = Object(e2), function(t2, r2) {
     for (var n2 = -1, a2 = null == t2 ? 0 : t2.length, o2 = 0, s2 = []; ++n2 < a2; ) {
       var c2 = t2[n2];
-      i2 = c2, k.call(e2, i2) && (s2[o2++] = c2);
+      i2 = c2, A.call(e2, i2) && (s2[o2++] = c2);
     }
     var i2;
     return s2;
-  }(A(e2)));
+  }(D(e2)));
 } : function() {
   return [];
 };
-function x(e2) {
+function L(e2) {
   return function(e3, t2, r2) {
     var n2 = function(e4) {
       return u(e4) ? f(e4) : function(e5) {
         if (!i(e5)) return S(e5);
         var t3 = [];
-        for (var r3 in Object(e5)) D.call(e5, r3) && "constructor" != r3 && t3.push(r3);
+        for (var r3 in Object(e5)) k.call(e5, r3) && "constructor" != r3 && t3.push(r3);
         return t3;
       }(e4);
     }(e3);
@@ -44,9 +44,9 @@ function x(e2) {
       for (var r3 = -1, n3 = t3.length, a2 = e4.length; ++r3 < n3; ) e4[a2 + r3] = t3[r3];
       return e4;
     }(n2, r2(e3));
-  }(e2, 0, T);
+  }(e2, 0, x);
 }
-var L = s(_, "DataView"), B = s(_, "Promise"), M = s(_, "Set"), U = "[object Map]", z = "[object Promise]", V = "[object Set]", N = "[object WeakMap]", W = "[object DataView]", $ = b(L), q = b(h), C = b(B), I = b(M), R = b(E), F = m;
+var T = s(_, "DataView"), B = s(_, "Promise"), M = s(_, "Set"), z = "[object Map]", U = "[object Promise]", V = "[object Set]", N = "[object WeakMap]", W = "[object DataView]", q = b(T), C = b(h), I = b(B), R = b(M), $ = b(P), F = m;
 function G(e2) {
   var t2 = -1, r2 = null == e2 ? 0 : e2.length;
   for (this.__data__ = new v(); ++t2 < r2; ) this.add(e2[t2]);
@@ -55,18 +55,18 @@ function H(e2, t2) {
   for (var r2 = -1, n2 = null == e2 ? 0 : e2.length; ++r2 < n2; ) if (t2(e2[r2], r2, e2)) return true;
   return false;
 }
-(L && F(new L(new ArrayBuffer(1))) != W || h && F(new h()) != U || B && F(B.resolve()) != z || M && F(new M()) != V || E && F(new E()) != N) && (F = function(e2) {
+(T && F(new T(new ArrayBuffer(1))) != W || h && F(new h()) != z || B && F(B.resolve()) != U || M && F(new M()) != V || P && F(new P()) != N) && (F = function(e2) {
   var t2 = m(e2), r2 = "[object Object]" == t2 ? e2.constructor : void 0, n2 = r2 ? b(r2) : "";
   if (n2) switch (n2) {
-    case $:
-      return W;
     case q:
-      return U;
+      return W;
     case C:
       return z;
     case I:
-      return V;
+      return U;
     case R:
+      return V;
+    case $:
       return N;
   }
   return t2;
@@ -119,7 +119,7 @@ function Y(e2) {
 }
 var Z = O ? O.prototype : void 0, ee = Z ? Z.valueOf : void 0, te = Object.prototype.hasOwnProperty, re = "[object Arguments]", ne = "[object Array]", ae = "[object Object]", oe = Object.prototype.hasOwnProperty;
 function se(e2, t2, r2, n2, a2) {
-  return e2 === t2 || (null == e2 || null == t2 || !P(e2) && !P(t2) ? e2 != e2 && t2 != t2 : function(e3, t3, r3, n3, a3, o2) {
+  return e2 === t2 || (null == e2 || null == t2 || !E(e2) && !E(t2) ? e2 != e2 && t2 != t2 : function(e3, t3, r3, n3, a3, o2) {
     var s2 = l(e3), c2 = l(t3), i2 = s2 ? ne : F(e3), u2 = c2 ? ne : F(t3), f2 = (i2 = i2 == re ? ae : i2) == ae, b2 = (u2 = u2 == re ? ae : u2) == ae, h2 = i2 == u2;
     if (h2 && w(e3)) {
       if (!w(t3)) return false;
@@ -164,8 +164,8 @@ function se(e2, t2, r2, n2, a2) {
       }
     }
     return !!h2 && (o2 || (o2 = new y()), function(e4, t4, r4, n4, a4, o3) {
-      var s3 = 1 & r4, c3 = x(e4), i3 = c3.length;
-      if (i3 != x(t4).length && !s3) return false;
+      var s3 = 1 & r4, c3 = L(e4), i3 = c3.length;
+      if (i3 != L(t4).length && !s3) return false;
       for (var u3 = i3; u3--; ) {
         var f3 = c3[u3];
         if (!(s3 ? f3 in t4 : te.call(t4, f3))) return false;
@@ -201,7 +201,7 @@ class ce extends EventTarget {
     super.addEventListener(t.UPDATE, e2);
   }
   dispatchEvent({ detail: e2 }) {
-    console.log(`Dispatching ${t.UPDATE} event with data:`, e2), super.dispatchEvent(new CustomEvent(t.UPDATE, { detail: e2 }));
+    super.dispatchEvent(new CustomEvent(t.UPDATE, { detail: e2 }));
   }
   async init() {
     try {
@@ -234,7 +234,7 @@ class ce extends EventTarget {
 _ce_instances = new WeakSet();
 e_fn = async function(e2) {
   try {
-    return se(await this.getPreferences(), e2) ? (console.log("[setPreferences] preferences not updated: ", e2), false) : (await this.db.put(a, e2, "preferences"), console.log("[setPreferences] preferences updated: ", e2), e2);
+    return !se(await this.getPreferences(), e2) && (await this.db.put(a, e2, "preferences"), e2);
   } catch (e3) {
     throw new Error("Something went wrong with indexedDB:", e3);
   }
