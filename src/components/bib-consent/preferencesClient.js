@@ -59,7 +59,7 @@ class PreferencesClient extends EventTarget {
    */
   addEventListener(type, listener, options) {
     if (type === EVENT_NAMES.READY && this.readyState === 'ready') {
-      this.#debug('Firing ready event immediately since readyState is already ready')
+      this.debug('Firing ready event immediately since readyState is already ready')
       this.#fireReadyListener(listener)
       return
     }
@@ -70,7 +70,7 @@ class PreferencesClient extends EventTarget {
   async #fireReadyListener(listener) {
     const preferences = await this.getPreferences()
     const readyEvent = new CustomEvent(EVENT_NAMES.READY, { detail: preferences })
-    this.#debug('Firing ready event with preferences: ', preferences)
+    this.debug('Firing ready event with preferences: ', preferences)
     listener(readyEvent)
   }
 
@@ -119,7 +119,7 @@ class PreferencesClient extends EventTarget {
 
     }
 
-    this.#debugIsOn = Reflect.has(host, 'debug')
+    this.#debugIsOn = !!host.debug
 
     if (this.#debugIsOn) {
       this.#debug = loggerFactory('preferencesClient', 'purple')
@@ -132,13 +132,13 @@ class PreferencesClient extends EventTarget {
     if (this.serverMode === SERVER_MODE.REMOTE) {
       const serverObject = getIframeServer(document.body, this.serverUrl.href)
 
-      this.#debug('[remote] callServer serverObject: ', serverObject)
+      this.debug('[remote] callServer serverObject: ', serverObject)
 
       try {
         this._server = await callServer(serverObject)
 
         this._server.listenMessage((method, detail) => {
-          this.#debug('[remote] server.listenMessage method: ', method, 'detail: ', detail)
+          this.debug('[remote] server.listenMessage method: ', method, 'detail: ', detail)
           const event = new CustomEvent(EVENT_NAMES.UPDATE, { detail })
           this.dispatchEvent(event)
         })
@@ -148,7 +148,7 @@ class PreferencesClient extends EventTarget {
       }
 
       preferences = await this._server.postMessage('getPreferences')
-      this.#debug('[remote] Got response from server: ', preferences)
+      this.debug('[remote] Got response from server: ', preferences)
 
     } else {
       this._storage = new PreferenceStorage()
@@ -156,10 +156,10 @@ class PreferencesClient extends EventTarget {
       await this._storage.init()
 
       preferences = await this._storage.getPreferences()
-      this.#debug('[local] Got response from storage: ', preferences)
+      this.debug('[local] Got response from storage: ', preferences)
     }
 
-    this.#debug('[local] preferences: ', preferences)
+    this.debug('[local] preferences: ', preferences)
 
     if (preferences !== undefined) {
 
@@ -167,7 +167,7 @@ class PreferencesClient extends EventTarget {
       this.readyState = 'ready'
       this.#preferences = preferences
 
-      this.#debug('dispatchEvent', EVENT_NAMES.READY, preferences)
+      this.debug('dispatchEvent', EVENT_NAMES.READY, preferences)
       this.dispatchEvent(new CustomEvent(EVENT_NAMES.READY, { detail: preferences }))
     }
   }
