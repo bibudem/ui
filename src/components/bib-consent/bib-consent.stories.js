@@ -30,7 +30,7 @@ export const ConsentementTemoins = {
     <button @click="${() => consentElement.show()}">Open</button>
     <button @click="${() => consentElement.showPreferences()}">Open preferences</button>
     <button @click="${() => consentElement.getPreferences()}">Get preferences</button>
-    <button @click="${() => consentElement.savePreferences({ performanceCookies: true, functionalityCookies: false, adsCookies: false })}">Save preferences</button>
+    <button @click="${() => consentElement.savePreferences({ analytics_storage: true, functionality_storage: false, ad_storage: false })}">Save preferences</button>
     <button @click="${() => consentElement.resetPreferences()}">Reset preferences</button>
     `
   }

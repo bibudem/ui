@@ -8,7 +8,6 @@ export const DB_VERSION = 1
 export const DB_STORE_NAME = 'consent'
 
 export const EVENT_NAMES = {
-  CONSENT: eventName('consent'),
   READY: eventName('ready'),
   UPDATE: eventName('update'),
 }
@@ -19,7 +18,7 @@ export const SERVER_MODE = {
 }
 export const SERVER_REQUEST_DEFAULT_TIMEOUT = 500
 export const DEFAULT_PREFERENCES = {
-  performanceCookies: null,
-  functionalityCookies: null,
-  adsCookies: null
+  analytics_storage: null,
+  functionality_storage: null,
+  ad_storage: null
 }

@@ -1,5 +1,5 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
-import { ContextConsumer, ContextProvider } from '@lit/context'
+import { ContextConsumer } from '@lit/context'
 import { createRef, ref } from 'lit/directives/ref.js'
 import { isBoolean } from 'lodash-es'
 import '@auroratide/toggle-switch/lib/define.js'
@@ -50,7 +50,6 @@ export class BibConsentPreferencesDialog extends LitElement {
     this._consentConsumer = new ContextConsumer(this, {
       context: consentContext, subscribe: true, callback: value => {
         this.#toggleChoices = value === null ? getConsentValues(false) : value
-        // this.requestUpdate()
       }
     })
   }
@@ -158,7 +157,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="performanceCookies" class="switch" ?checked="${this.#toggleChoices.performanceCookies}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="analytics_storage" class="switch" ?checked="${this.#toggleChoices.analytics_storage}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </div>
                 </summary>
@@ -174,7 +173,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="functionalityCookies" class="switch" ?checked="${this.#toggleChoices.functionalityCookies}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="functionality_storage" class="switch" ?checked="${this.#toggleChoices.functionality_storage}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </span>
                 </summary>
@@ -185,7 +184,7 @@ export class BibConsentPreferencesDialog extends LitElement {
               <details class="accordion-item" @click="${{ handleEvent: this.#onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary"><span class="accordion-item__summary-title">Témoins publicitaires</span><span class="accordion-item__summary-icon"><span class="close">+</span><span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="adsCookies" class="switch" ?checked="${this.#toggleChoices.adsCookies}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="ad_storage" class="switch" ?checked="${this.#toggleChoices.ad_storage}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </span></summary>
                 <div class="accordion-item__content">
