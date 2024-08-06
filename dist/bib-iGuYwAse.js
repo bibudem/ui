@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.13.0
+ * @version 0.13.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { p as r } from "./package-CcUCpIoR.js";
+import { p as r } from "./package-BUO2f-K0.js";
 import { j as t, g as n, e, a as o, k as i, i as a, b as u, o as c, U as f, f as s, h as l, c as v, l as p, m as b, S as y } from "./_Uint8Array-DzlTzPS7.js";
 import { i as d, b as h, r as g } from "./isObjectLike-DmmXH0U-.js";
 function j(r2) {
@@ -158,4 +158,4 @@ function X(n2, e2) {
 export {
   X as a
 };
-//# sourceMappingURL=bib-2qdb5tWe.js.map
+//# sourceMappingURL=bib-iGuYwAse.js.map

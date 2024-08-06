@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.13.0
+ * @version 0.13.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -18,8 +18,8 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _e, _t, _s, _d_instances, r_fn;
-import { E as e, S as t, s, g as r, a as i, c as a, b as n } from "./constants-DMzZzv_T.js";
-import { l as o } from "./logger-DG93hjV0.js";
+import { E as e, S as t, s, g as r, a as i, c as a, b as n } from "./constants-C4fSqP7Z.js";
+import { l as o } from "./logger-BEdk5hAI.js";
 import h from "./PreferenceStorage.js";
 class d extends EventTarget {
   constructor() {
@@ -42,26 +42,26 @@ class d extends EventTarget {
     super.dispatchEvent(e2), this.hosts.forEach(({ host: t2, reflectEvents: s2 }) => s2 && t2.dispatchEvent?.(e2));
   }
   addEventListener(t2, s2, r2) {
-    if (t2 === e.READY && "ready" === this.readyState) return __privateGet(this, _s).call(this, "Firing ready event immediately since readyState is already ready"), void __privateMethod(this, _d_instances, r_fn).call(this, s2);
+    if (t2 === e.READY && "ready" === this.readyState) return this.debug("Firing ready event immediately since readyState is already ready"), void __privateMethod(this, _d_instances, r_fn).call(this, s2);
     super.addEventListener(t2, s2, r2);
   }
   async init({ host: d2, serverMode: c2, serverUrl: v2, serverRequestTimeout: g = n, reflectEvents: l = true }) {
     let u;
-    if (this.serverRequestTimeout = g, d2 && this.addHost({ host: d2, reflectEvents: l }), this.readyState = "connecting", c2 && c2 === t.LOCAL || void 0 === v2 || !s(v2) ? this.serverMode = t.LOCAL : (this.serverUrl = new URL(v2, location), d2.debug && this.serverUrl.searchParams.set("debug", ""), this.serverMode = await r(this)), __privateSet(this, _t, Reflect.has(d2, "debug")), __privateGet(this, _t) && __privateSet(this, _s, o("preferencesClient", "purple")), this.debug("init", `server mode: ${this.serverMode}`), this.serverMode === t.REMOTE) {
+    if (this.serverRequestTimeout = g, d2 && this.addHost({ host: d2, reflectEvents: l }), this.readyState = "connecting", c2 && c2 === t.LOCAL || void 0 === v2 || !s(v2) ? this.serverMode = t.LOCAL : (this.serverUrl = new URL(v2, location), d2.debug && this.serverUrl.searchParams.set("debug", ""), this.serverMode = await r(this)), __privateSet(this, _t, !!d2.debug), __privateGet(this, _t) && __privateSet(this, _s, o("preferencesClient", "purple")), this.debug("init", `server mode: ${this.serverMode}`), this.serverMode === t.REMOTE) {
       const t2 = i(document.body, this.serverUrl.href);
-      __privateGet(this, _s).call(this, "[remote] callServer serverObject: ", t2);
+      this.debug("[remote] callServer serverObject: ", t2);
       try {
         this._server = await a(t2), this._server.listenMessage((t3, s2) => {
-          __privateGet(this, _s).call(this, "[remote] server.listenMessage method: ", t3, "detail: ", s2);
+          this.debug("[remote] server.listenMessage method: ", t3, "detail: ", s2);
           const r2 = new CustomEvent(e.UPDATE, { detail: s2 });
           this.dispatchEvent(r2);
         });
       } catch (e2) {
         throw console.error("[callServer] error: ", e2), e2;
       }
-      u = await this._server.postMessage("getPreferences"), __privateGet(this, _s).call(this, "[remote] Got response from server: ", u);
-    } else this._storage = new h(), await this._storage.init(), u = await this._storage.getPreferences(), __privateGet(this, _s).call(this, "[local] Got response from storage: ", u);
-    __privateGet(this, _s).call(this, "[local] preferences: ", u), void 0 !== u && (this.readyState = "ready", __privateSet(this, _e, u), __privateGet(this, _s).call(this, "dispatchEvent", e.READY, u), this.dispatchEvent(new CustomEvent(e.READY, { detail: u })));
+      u = await this._server.postMessage("getPreferences"), this.debug("[remote] Got response from server: ", u);
+    } else this._storage = new h(), await this._storage.init(), u = await this._storage.getPreferences(), this.debug("[local] Got response from storage: ", u);
+    this.debug("[local] preferences: ", u), void 0 !== u && (this.readyState = "ready", __privateSet(this, _e, u), this.debug("dispatchEvent", e.READY, u), this.dispatchEvent(new CustomEvent(e.READY, { detail: u })));
   }
   async getPreferences() {
     try {
@@ -93,7 +93,7 @@ _s = new WeakMap();
 _d_instances = new WeakSet();
 r_fn = async function(t2) {
   const s2 = await this.getPreferences(), r2 = new CustomEvent(e.READY, { detail: s2 });
-  __privateGet(this, _s).call(this, "Firing ready event with preferences: ", s2), t2(r2);
+  this.debug("Firing ready event with preferences: ", s2), t2(r2);
 };
 let c;
 async function v(e2) {
