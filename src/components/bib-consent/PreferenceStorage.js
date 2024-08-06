@@ -35,7 +35,6 @@ class PreferenceStorage extends EventTarget {
    * @return void
    */
   dispatchEvent({ detail }) {
-    console.log(`Dispatching ${EVENT_NAMES.UPDATE} event with data:`, detail)
     super.dispatchEvent(
       new CustomEvent(
         EVENT_NAMES.UPDATE,
@@ -98,14 +97,10 @@ class PreferenceStorage extends EventTarget {
       const oldPreferences = await this.getPreferences()
       if (!isEqual(oldPreferences, preferences)) {
         await this.db.put(DB_STORE_NAME, preferences, 'preferences')
-        // this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: preferences }))
-        console.log(`[setPreferences] preferences updated: `, preferences)
-        // return
         return preferences
       }
 
       // No change in preferences, return false
-      console.log(`[setPreferences] preferences not updated: `, preferences)
       return false
     } catch (error) {
       throw new Error('Something went wrong with indexedDB:', error)

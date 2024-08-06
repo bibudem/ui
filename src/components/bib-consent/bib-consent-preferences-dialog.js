@@ -49,7 +49,6 @@ export class BibConsentPreferencesDialog extends LitElement {
     this._dialogRef = createRef()
     this._consentConsumer = new ContextConsumer(this, {
       context: consentContext, subscribe: true, callback: value => {
-        console.log('callback: ', value)
         this.#toggleChoices = value === null ? getConsentValues(false) : value
         // this.requestUpdate()
       }
@@ -88,7 +87,6 @@ export class BibConsentPreferencesDialog extends LitElement {
    * @returns {void}
    */
   show() {
-    console.log('[show] this._consentConsumer.value: ', this._consentConsumer.value)
     this.#toggleChoices = this._consentConsumer.value ? { ...this._consentConsumer.value } : getConsentValues(false)
     this._dialogRef.value?.showModal()
   }
@@ -111,7 +109,6 @@ export class BibConsentPreferencesDialog extends LitElement {
   }
 
   #onToggleSwitchChange(event) {
-    console.log('[#onToggleSwitchChange] event: ', event)
     const { target, detail } = event
     const { checked } = detail
     const name = target.getAttribute('name')
