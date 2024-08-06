@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.1](https://github.com/bibudem/ui/compare/v0.13.0...v0.13.1) (2024-08-06)
+
+
+### Bug Fixes
+
+* **bib-retroaction-usager:** Des données de débogage étaient affichées dans la console même si le mode débogage n'était pas activé. ([e454dae](https://github.com/bibudem/ui/commit/e454daec691b4e00d87793627e62a5d8e080e2f9))
+* Journalise le bon fichier source. ([7cfa87a](https://github.com/bibudem/ui/commit/7cfa87a358cb9ec1dcef55eca791103418442d0b))
+
 ## [0.13.0](https://github.com/bibudem/ui/compare/v0.12.1...v0.13.0) (2024-07-31)
 
 
