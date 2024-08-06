@@ -8,7 +8,5 @@ import { name } from '../../package.json'
  */
 export function loggerFactory(prefix = name, color = 'green') {
 
-  return function logger() {
-    console.log.apply(console, [`%c[${prefix}]`, `color: ${color}; font-weight: bold;`, ...arguments])
-  }
+  return Function.prototype.bind.call(console.log, console, `%c[${prefix}]`, `color: ${color}; font-weight: bold;`)
 }
