@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.13.0
+ * @version 0.13.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -14,7 +14,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _ce_instances, e_fn;
 import { o as e } from "./index-CRxQMTzC.js";
-import { E as t, f as r, h as n, i as a, D as o } from "./constants-DMzZzv_T.js";
+import { E as t, f as r, h as n, i as a, D as o } from "./constants-C4fSqP7Z.js";
 import { g as s, o as c, i, a as u, b as f, c as l, t as b, M as h, d as v, e as p, U as d, f as w, S as y, h as j, j as g } from "./_Uint8Array-DzlTzPS7.js";
 import { r as _, b as m, S as O, i as P } from "./isObjectLike-DmmXH0U-.js";
 var E = s(_, "WeakMap"), S = c(Object.keys, Object), D = Object.prototype.hasOwnProperty;
