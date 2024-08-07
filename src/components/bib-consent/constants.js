@@ -18,7 +18,7 @@ export const SERVER_MODE = {
 }
 export const SERVER_REQUEST_DEFAULT_TIMEOUT = 500
 export const DEFAULT_PREFERENCES = {
-  analytics_storage: null,
-  functionality_storage: null,
-  ad_storage: null
+  analytics_consent: null,
+  functionality_consent: null,
+  ad_consent: null
 }

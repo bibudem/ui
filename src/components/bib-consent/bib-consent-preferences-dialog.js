@@ -157,7 +157,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="analytics_storage" class="switch" ?checked="${this.#toggleChoices.analytics_storage}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="analytics_consent" class="switch" ?checked="${this.#toggleChoices.analytics_consent}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </div>
                 </summary>
@@ -173,7 +173,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="functionality_storage" class="switch" ?checked="${this.#toggleChoices.functionality_storage}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="functionality_consent" class="switch" ?checked="${this.#toggleChoices.functionality_consent}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </span>
                 </summary>
@@ -184,7 +184,7 @@ export class BibConsentPreferencesDialog extends LitElement {
               <details class="accordion-item" @click="${{ handleEvent: this.#onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary"><span class="accordion-item__summary-title">Témoins publicitaires</span><span class="accordion-item__summary-icon"><span class="close">+</span><span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="ad_storage" class="switch" ?checked="${this.#toggleChoices.ad_storage}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="ad_consent" class="switch" ?checked="${this.#toggleChoices.ad_consent}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </span></summary>
                 <div class="accordion-item__content">
