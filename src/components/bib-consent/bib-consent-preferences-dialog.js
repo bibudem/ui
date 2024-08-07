@@ -6,6 +6,7 @@ import '@auroratide/toggle-switch/lib/define.js'
 import { consentContext } from './consent-context.js'
 import { DEFAULT_PREFERENCES } from './constants.js'
 import styles from './bib-consent-preferences-dialog.scss?inline'
+import { ConsentTokens } from './ConsentTokens.js'
 
 /**
  * Generates an object with the default consent preferences, where each key is set to the provided boolean value.
@@ -34,7 +35,7 @@ export class BibConsentPreferencesDialog extends LitElement {
   ]
 
   _consentConsumer
-  #toggleChoices = getConsentValues(false)
+  #toggleChoices
 
   /**
    * Constructs a new `BibConsentPreferencesDialog` instance.
@@ -47,9 +48,15 @@ export class BibConsentPreferencesDialog extends LitElement {
     super()
     this.open = false
     this._dialogRef = createRef()
+    this.#toggleChoices = new ConsentTokens(false)
     this._consentConsumer = new ContextConsumer(this, {
       context: consentContext, subscribe: true, callback: value => {
-        this.#toggleChoices = value === null ? getConsentValues(false) : value
+        if (value === null) {
+          this.#toggleChoices.setAll(false)
+          return
+        }
+
+        this.#toggleChoices.setAll(value)
       }
     })
   }
@@ -63,15 +70,11 @@ export class BibConsentPreferencesDialog extends LitElement {
    */
   async savePreferences(preference) {
     try {
-      let preferences
-
-      if (isBoolean(preference)) {
-        preferences = getConsentValues(preference)
-      } else {
-        preferences = this.#toggleChoices
+      if (typeof preference !== 'undefined') {
+        this.#toggleChoices.setAll(preference)
       }
 
-      this.dispatchEvent(new CustomEvent('update', { detail: preferences }))
+      this.dispatchEvent(new CustomEvent('update', { detail: this.#toggleChoices }))
     } catch (error) {
       console.error('[savePreferences] error: ', error)
       throw error
