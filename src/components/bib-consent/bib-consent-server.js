@@ -3,7 +3,7 @@ import { startListening } from 'postmessage-promise'
 import { createRef, ref } from 'lit/directives/ref.js'
 import { patternMatchesOrigin } from '@/utils/url.js'
 import { loggerFactory } from '@/utils/logger.js'
-import getPreferenceStorage from './PreferenceStorage.js'
+import getConsentStorage from './ConsentStorage.js'
 import styles from './bib-consent-server.scss?inline'
 
 /**
@@ -61,7 +61,7 @@ export class BibConsentServer extends LitElement {
    */
   async init() {
     this.log('Initializing BibConsentServer...')
-    this.#storage = await getPreferenceStorage()
+    this.#storage = await getConsentStorage()
     this.log('Connected to storage.')
 
     this.#storage.listen(event => {
@@ -92,14 +92,13 @@ export class BibConsentServer extends LitElement {
    * Starts listening for postMessage events and handles consent-related requests.
    * @async
    * @description Sets up a message listener for allowed origins and handles the following methods:
-   * - setPreferences: Sets the user's consent preferences in the storage.
-   * - getPreferences: Retrieves the user's current consent preferences from storage.
-   * - resetPreferences: Resets the user's consent preferences to default values.
+   * - setConsentTokens: Sets the user's consent preferences in the storage.
+   * - getConsentTokens: Retrieves the user's current consent preferences from storage.
+   * - resetConsentTokens: Resets the user's consent preferences to default values.
    * - ping: Responds with "pong" to check if the server is responsive.
    * The method also logs all incoming requests and their responses when in debug mode.
    */
   async startListening() {
-    this.log('startListening()')
 
     const { listenMessage } = await startListening({
       eventFilter: event => {
@@ -117,16 +116,16 @@ export class BibConsentServer extends LitElement {
       let responseData
 
       switch (method) {
-        case 'setPreferences':
-          responseData = await this.#storage.setPreferences(payload)
+        case 'setConsentTokens':
+          responseData = await this.#storage.setConsentTokens(payload)
           break
 
-        case 'getPreferences':
-          responseData = await this.#storage.getPreferences()
+        case 'getConsentTokens':
+          responseData = await this.#storage.getConsentTokens()
           break
 
-        case 'resetPreferences':
-          responseData = await this.#storage.resetPreferences()
+        case 'resetConsentTokens':
+          responseData = await this.#storage.resetConsentTokens()
           break
 
         case 'ping':

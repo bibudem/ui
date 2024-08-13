@@ -12,13 +12,20 @@ export const EVENT_NAMES = {
   UPDATE: eventName('update'),
 }
 export const PREFIX = 'bib-consent'
+
 export const SERVER_MODE = {
   LOCAL: 'local',
   REMOTE: 'remote'
 }
 export const SERVER_REQUEST_DEFAULT_TIMEOUT = 500
+
 export const DEFAULT_PREFERENCES = {
   analytics_consent: null,
   functionality_consent: null,
   ad_consent: null
+}
+
+export const STATES = {
+  INDETERMINATE: 'indeterminate',
+  DETERMINATE: 'determinate'
 }

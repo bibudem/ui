@@ -14,7 +14,6 @@ export default {
 const consentElement = document.createElement('bib-consent')
 consentElement.setAttribute('debug', '')
 consentElement.setAttribute('server-url', '/consent-server')
-consentElement.setAttribute('allowed-origins', 'http://localhost:*')
 consentElement.addEventListener(EVENT_NAMES.UPDATE, (event) => {
   console.log(`This element just got an ${EVENT_NAMES.UPDATE} event:`, event)
 })
@@ -29,9 +28,9 @@ export const ConsentementTemoins = {
     ${consentElement}
     <button @click="${() => consentElement.show()}">Open</button>
     <button @click="${() => consentElement.showPreferences()}">Open preferences</button>
-    <button @click="${() => consentElement.getPreferences()}">Get preferences</button>
+    <button @click="${() => consentElement.getConsentTokens()}">Get preferences</button>
     <button @click="${() => consentElement.savePreferences({ analytics_consent: true, functionality_consent: false, ad_consent: false })}">Save preferences</button>
-    <button @click="${() => consentElement.resetPreferences()}">Reset preferences</button>
+    <button @click="${() => consentElement.resetConsentTokens()}">Reset preferences</button>
     `
   }
 }

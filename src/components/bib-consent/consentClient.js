@@ -1,27 +1,27 @@
 import { callServer } from 'postmessage-promise'
 import { stringIsUrl } from '@/utils/url.js'
 import { loggerFactory } from '@/utils/logger.js'
-import PreferenceStorage from './PreferenceStorage.js'
+import ConsentStorage from './ConsentStorage.js'
+import { ConsentTokens } from './ConsentTokens.js'
 import { getIframeServer, getServerMode } from './utils.js'
 import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT } from './constants.js'
 
 /**
- * Represents a client for managing user preferences, with the ability to interact with a remote server or local storage.
+ * Represents a client for managing user consent tokens, with the ability to interact with a remote server or local storage.
  *
- * The `PreferencesClient` class extends the `EventTarget` class, allowing it to dispatch events related to preference updates.
+ * The `ConsentClient` class extends the `EventTarget` class, allowing it to dispatch events related to preference updates.
  *
  * Key features:
  * - Initialization with options for server mode (local or remote), server URL, and event reflection.
  * - Ability to add hosts that will receive preference update events.
  * - Debugging functionality with configurable debug mode.
- * - Methods to set, get, and reset user preferences, with different behavior based on server mode.
+ * - Methods to set, get, and reset user tokens, with different behavior based on server mode.
  *
- * @property {string} readyState - The current state of the PreferencesClient instance. Can be 'initial', 'connecting' or 'ready'.
+ * @property {string} readyState - The current state of the ConsentClient instance. Can be 'initial', 'connecting' or 'ready'.
  */
-class PreferencesClient extends EventTarget {
+class ConsentClient extends EventTarget {
   _server
   _storage
-  #preferences
   #debugIsOn = false
   #debug
 
@@ -47,7 +47,7 @@ class PreferencesClient extends EventTarget {
   }
 
   /**
-   * Adds an event listener to the PreferencesClient instance.
+   * Adds an event listener to the ConsentClient instance.
    *
    * If the event type is `EVENT_NAMES.READY` and the `readyState` is already `'ready'`, the listener function is called immediately with the current preferences object as the event detail.
    *
@@ -68,14 +68,14 @@ class PreferencesClient extends EventTarget {
   }
 
   async #fireReadyListener(listener) {
-    const preferences = await this.getPreferences()
-    const readyEvent = new CustomEvent(EVENT_NAMES.READY, { detail: preferences })
-    this.debug('Firing ready event with preferences: ', preferences)
+    const consentTokens = await this.getConsentTokens()
+    const readyEvent = new CustomEvent(EVENT_NAMES.READY, { detail: consentTokens })
+    this.debug('Firing ready event with preferences: ', consentTokens)
     listener(readyEvent)
   }
 
   /**
-   * Initializes the PreferencesClient instance with the provided options.
+   * Initializes the ConsentClient instance with the provided options.
    *
    * @param {Object} options - The initialization options.
    * @param {Object} [options.host] - The host object that will receive preference update events.
@@ -122,24 +122,23 @@ class PreferencesClient extends EventTarget {
     this.#debugIsOn = !!host.debug
 
     if (this.#debugIsOn) {
-      this.#debug = loggerFactory('preferencesClient', 'purple')
+      this.#debug = loggerFactory('consentClient', 'purple')
     }
 
     this.debug('init', `server mode: ${this.serverMode}`)
 
-    let preferences
+    let consentTokens
 
     if (this.serverMode === SERVER_MODE.REMOTE) {
       const serverObject = getIframeServer(document.body, this.serverUrl.href)
 
-      this.debug('[remote] callServer serverObject: ', serverObject)
-
       try {
         this._server = await callServer(serverObject)
 
-        this._server.listenMessage((method, detail) => {
-          this.debug('[remote] server.listenMessage method: ', method, 'detail: ', detail)
-          const event = new CustomEvent(EVENT_NAMES.UPDATE, { detail })
+        this._server.listenMessage((method, data) => {
+          this.debug('[remote] server.listenMessage method: ', method, 'data: ', data)
+          const consentTokens = ConsentTokens.from(data)
+          const event = new CustomEvent(EVENT_NAMES.UPDATE, { detail: consentTokens })
           this.dispatchEvent(event)
         })
       } catch (error) {
@@ -147,28 +146,27 @@ class PreferencesClient extends EventTarget {
         throw error
       }
 
-      preferences = await this._server.postMessage('getPreferences')
-      this.debug('[remote] Got response from server: ', preferences)
+      consentTokens = ConsentTokens.from(await this._server.postMessage('getConsentTokens'))
+      this.debug('[remote] Got response from server: ', consentTokens)
 
     } else {
-      this._storage = new PreferenceStorage()
+      this._storage = new ConsentStorage()
 
       await this._storage.init()
 
-      preferences = await this._storage.getPreferences()
-      this.debug('[local] Got response from storage: ', preferences)
+      consentTokens = await this._storage.getConsentTokens()
+      this.debug('[local] Got response from storage: ', consentTokens)
     }
 
-    this.debug('[local] preferences: ', preferences)
+    this.debug('[local] consentTokens: ', consentTokens)
 
-    if (preferences !== undefined) {
+    if (consentTokens !== undefined) {
 
       // Dispatch initial data with the ready state.
       this.readyState = 'ready'
-      this.#preferences = preferences
 
-      this.debug('dispatchEvent', EVENT_NAMES.READY, preferences)
-      this.dispatchEvent(new CustomEvent(EVENT_NAMES.READY, { detail: preferences }))
+      this.debug('dispatchEvent', EVENT_NAMES.READY, consentTokens)
+      this.dispatchEvent(new CustomEvent(EVENT_NAMES.READY, { detail: consentTokens }))
     }
   }
 
@@ -177,15 +175,15 @@ class PreferencesClient extends EventTarget {
    *
    * @returns {Promise<Object>} - A promise that resolves with the user's preferences, or rejects with an error if the operation fails.
    */
-  async getPreferences() {
+  async getConsentTokens() {
     try {
       if (this.serverMode === SERVER_MODE.LOCAL) {
-        return await this._storage.getPreferences()
+        return await this._storage.getConsentTokens()
       } else {
-        return await this._server.postMessage('getPreferences')
+        return ConsentTokens.from(await this._server.postMessage('getConsentTokens'))
       }
     } catch (error) {
-      console.error('[#getPreferences]', error)
+      console.error('[#getConsentTokens]', error)
       throw error
     }
   }
@@ -193,22 +191,19 @@ class PreferencesClient extends EventTarget {
   /**
   * Sets the user's preferences in either the local storage or the remote server, depending on the configured server mode.
   *
-  * @param {Object|null} preferences - The preferences object to be set. If null, it will reset the user's preferences.
+  * @param {Object} preferences - The preferences object to be set.
   * @returns {Promise} - A promise that resolves when the preferences have been set or reset, or rejects with an error if the operation fails.
   */
-  async setPreferences(preferences) {
+  async setConsentTokens(preferences) {
     try {
       let response
 
-      // When there is no preferences object, this is a reset of the user's preferences, so set it to null.
-      if (typeof preferences === 'undefined') {
-        preferences = null
-      }
+      const consentTokens = ConsentTokens.from(preferences)
 
       if (this.serverMode === SERVER_MODE.LOCAL) {
-        response = await this._storage.setPreferences(preferences)
+        response = await this._storage.setConsentTokens(consentTokens)
       } else {
-        response = await this._server.postMessage('setPreferences', preferences)
+        response = await this._server.postMessage('setConsentTokens', consentTokens)
       }
 
       if (response) {
@@ -216,7 +211,7 @@ class PreferencesClient extends EventTarget {
         return response
       }
     } catch (error) {
-      console.error('[#setPreferences]', error)
+      console.error('[#setConsentTokens]', error)
       throw error
     }
   }
@@ -226,39 +221,39 @@ class PreferencesClient extends EventTarget {
    *
    * @returns {Promise} - A promise that resolves when the preferences have been reset, or rejects with an error if the reset operation fails.
    */
-  async resetPreferences() {
+  async resetConsentTokens() {
     try {
       if (this.serverMode === SERVER_MODE.LOCAL) {
-        return await this._storage.resetPreferences()
+        return await this._storage.resetConsentTokens()
       } else {
-        await this._server.postMessage('resetPreferences')
+        await this._server.postMessage('resetConsentTokens')
       }
     } catch (error) {
-      console.error('[#resetPreferences]', error)
+      console.error('[#resetConsentTokens]', error)
       throw error
     }
   }
 }
 
-let preferencesClient
+let consentClient
 
 /**
- * Creates a new PreferencesClient instance and initializes it with the provided options.
+ * Creates a new ConsentClient instance and initializes it with the provided options.
  *
- * If a PreferencesClient instance already exists, it will add the provided host to the existing instance and return it.
+ * If a ConsentClient instance already exists, it will add the provided host to the existing instance and return it.
  *
- * @param {Object} options - The options to initialize the PreferencesClient with.
- * @returns {Promise<PreferencesClient>} - A Promise that resolves to the PreferencesClient instance.
+ * @param {Object} options - The options to initialize the ConsentClient with.
+ * @returns {Promise<ConsentClient>} - A Promise that resolves to the ConsentClient instance.
  */
-export default async function createPreferencesClient(options) {
-  if (preferencesClient) {
-    preferencesClient.addHost(options)
+export default async function createConsentClient(options) {
+  if (consentClient) {
+    consentClient.addHost(options)
 
-    return preferencesClient
+    return consentClient
   }
 
-  preferencesClient = new PreferencesClient()
-  await preferencesClient.init(options)
+  consentClient = new ConsentClient()
+  await consentClient.init(options)
 
-  return preferencesClient
+  return consentClient
 }

@@ -7,9 +7,10 @@ import { addToGlobalBib } from '@/utils/bib.js'
 import '../bib-button/bib-button-close.js'
 import './bib-consent-consent-dialog.js'
 import './bib-consent-preferences-dialog.js'
-import createPreferencesClient from './preferencesClient.js'
+import createConsentClient from './consentClient.js/index.js'
 import { consentContext } from './consent-context.js'
-import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT } from './constants.js'
+import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT, STATES } from './constants.js'
+import { isObject } from 'lodash-es'
 
 const debug = loggerFactory('bib-consent', '#cd5300')
 
@@ -29,7 +30,7 @@ const debug = loggerFactory('bib-consent', '#cd5300')
  * - `debug`: a boolean indicating whether debug logging should be enabled
  * - `open`: a boolean indicating whether the consent dialog or preferences dialog is currently open
  *
- * The component uses the `@lit/context` library to manage the consent preferences as a shared context, and the `createPreferencesClient` function to interact with the server.
+ * The component uses the `@lit/context` library to manage the consent preferences as a shared context, and the `createConsentClient` function to interact with the server.
  */
 export class BibConsent extends LitElement {
   static properties = {
@@ -45,6 +46,9 @@ export class BibConsent extends LitElement {
     },
     [SERVER_MODE.LOCAL]: {
       type: Boolean
+    },
+    state: {
+      type: String
     },
     debug: {
       type: Boolean,
@@ -62,6 +66,7 @@ export class BibConsent extends LitElement {
   #preferencesDialogRef
   #consentProvider
   #consentConsumer
+  #state = STATES.INDETERMINATE
 
   /**
    * Initializes the `BibConsent` component, setting up the necessary state and references.
@@ -80,12 +85,38 @@ export class BibConsent extends LitElement {
     this.currentDialog = null
     this.#consentDialogRef = createRef()
     this.#preferencesDialogRef = createRef()
-    this.#consentProvider = new ContextProvider(this, { context: consentContext, initialValue: null })
+    this.#consentProvider = new ContextProvider(this, { context: consentContext, initialValue: this.#state })
     this.#consentConsumer = new ContextConsumer(this, { context: consentContext, callback: this.savePreferences })
+  }
+
+  #setValue(value) {
+    this.#consentProvider.setValue(value)
+
+    if (value === null && this.#state === STATES.DETERMINATE) {
+      this.#state = STATES.INDETERMINATE
+      return
+    }
+
+    if (isObject(value) && this.#state === STATES.INDETERMINATE) {
+      this.#state = STATES.DETERMINATE
+    }
+  }
+
+  /**
+   * Gets the current state of the BibConsent component.
+   * The state is determined by the user's input. Initially `indeterminate`, it turns `determinate` when the user has indicated his/her consent preferences.
+   * @readonly
+   * @returns {string} The current state of the BibConsent component, which can be one of the following values:
+   * - `indeterminate`: The user has not yet indicated his/her consent preferences.
+   * - `determinate`: The user has made his/her consent preferences.
+   */
+  get state() {
+    return this.#state
   }
 
   /**
    * Gets the user's consent preferences.
+   * @readonly
    * @returns {Object} The user's consent preferences.
    */
   get preferences() {
@@ -100,7 +131,7 @@ export class BibConsent extends LitElement {
    * - Sets the `debug` property to `false` if it is not already defined
    * - Sets the `serverUrl` property to `'https://bib.umontreal.ca/consent/server'` if it is not already defined
    * - Sets the `serverRequestTimeout` property to `SERVER_REQUEST_DEFAULT_TIMEOUT` if it is not already defined
-   * - Creates a `PreferencesClient` instance and assigns it to the `_preferencesClient` property
+   * - Creates a `ConsentClient` instance and assigns it to the `_preferencesClient` property
    * - Adds event listeners for the `EVENT_NAMES.READY` and `EVENT_NAMES.UPDATE` events on the `_preferencesClient` instance
    * - Adds an event listener for the `context-request` event on the component's shadow root, which responds with the current preferences
    */
@@ -110,15 +141,14 @@ export class BibConsent extends LitElement {
     this.debug = this.debug || false
     this.serverUrl = this.serverUrl || 'https://bib.umontreal.ca/consent/server'
     this.serverRequestTimeout = this.serverRequestTimeout || SERVER_REQUEST_DEFAULT_TIMEOUT
-    this._preferencesClient = await createPreferencesClient({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true })
+    this._preferencesClient = await createConsentClient({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true })
 
     this._preferencesClient.addEventListener(EVENT_NAMES.READY, event => {
 
       this.#debug(EVENT_NAMES.READY, 'event: ', event)
 
       if (event.detail) {
-        // this.#preferences = event.detail
-        this.#consentProvider.setValue(event.detail)
+        this.#setValue(event.detail)
       } else {
         this.#show('consent')
       }
@@ -183,8 +213,8 @@ export class BibConsent extends LitElement {
    *
    * @returns {Promise<Object>} - A promise that resolves to the user's consent preferences.
    */
-  async getPreferences() {
-    this.#preferences = await this._preferencesClient.getPreferences()
+  async getConsentTokens() {
+    this.#preferences = await this._preferencesClient.getConsentTokens()
     return this.#preferences
   }
 
@@ -198,8 +228,8 @@ export class BibConsent extends LitElement {
   async savePreferences(preferences) {
     this.#debug('[savePreferences] preferences: ', preferences)
     try {
-      await this._preferencesClient.setPreferences(preferences)
-      this.#consentProvider.setValue(preferences)
+      await this._preferencesClient.setConsentTokens(preferences)
+      this.#setValue(preferences)
       return true
     } catch (error) {
       console.error('[savePreferences] error: ', error)
@@ -212,8 +242,8 @@ export class BibConsent extends LitElement {
    *
    * @returns {Promise<Object>} - A promise that resolves to the user's reset consent preferences.
    */
-  async resetPreferences() {
-    this.#preferences = await this._preferencesClient.resetPreferences()
+  async resetConsentTokens() {
+    this.#preferences = await this._preferencesClient.resetConsentTokens()
     return this.#preferences
   }
 

@@ -1,12 +1,11 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
 import { ContextConsumer } from '@lit/context'
 import { createRef, ref } from 'lit/directives/ref.js'
-import { isBoolean } from 'lodash-es'
 import '@auroratide/toggle-switch/lib/define.js'
 import { consentContext } from './consent-context.js'
-import { DEFAULT_PREFERENCES } from './constants.js'
-import styles from './bib-consent-preferences-dialog.scss?inline'
 import { ConsentTokens } from './ConsentTokens.js'
+import { DEFAULT_PREFERENCES, STATES } from './constants.js'
+import styles from './bib-consent-preferences-dialog.scss?inline'
 
 /**
  * Generates an object with the default consent preferences, where each key is set to the provided boolean value.
@@ -50,13 +49,14 @@ export class BibConsentPreferencesDialog extends LitElement {
     this._dialogRef = createRef()
     this.#toggleChoices = new ConsentTokens(false)
     this._consentConsumer = new ContextConsumer(this, {
-      context: consentContext, subscribe: true, callback: value => {
-        if (value === null) {
+      context: consentContext, subscribe: true, callback: consentTokens => {
+        console.log('consentTokens', consentTokens)
+        if (consentTokens.state() === STATES.INDETERMINATE) {
           this.#toggleChoices.setAll(false)
           return
         }
 
-        this.#toggleChoices.setAll(value)
+        this.#toggleChoices.setAll(consentTokens)
       }
     })
   }
