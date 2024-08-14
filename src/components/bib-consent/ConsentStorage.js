@@ -118,29 +118,8 @@ class ConsentStorage extends EventTarget {
 
     //
     // Data validation
-    // We check if:
-    // - argument is an object
-    // - all props are present
-    // - all props have boolean values
-
-    if (!isObject(tokens)) {
-      throw new TypeError('ConsentTokens must be an object.')
-    }
-
-    const requiredProps = Object.keys(DEFAULT_PREFERENCES)
-    const sameProps = arraysHaveSameItems(requiredProps, Object.keys(tokens))
-
-    if (!sameProps) {
-      throw new TypeError(`ConsentTokens requires all those fields: ${requiredProps.join(', ')}.`)
-    }
-
-    const containsOnlyBooleanValues = Object.values(tokens).every(value => typeof value === 'boolean')
-
-    if (!containsOnlyBooleanValues) {
-      throw new TypeError(`ConsentTokens values must be a boolean.`)
-    }
-
-    return await this.#doSetConsentTokens(tokens)
+    const consentTokens = ConsentTokens.from(tokens)
+    return await this.#doSetConsentTokens(consentTokens)
 
   }
 

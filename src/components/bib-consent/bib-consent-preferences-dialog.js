@@ -89,7 +89,9 @@ export class BibConsentPreferencesDialog extends LitElement {
    * @returns {void}
    */
   show() {
-    this.#toggleChoices = this._consentConsumer.value ? { ...this._consentConsumer.value } : getConsentValues(false)
+
+    this.#toggleChoices.setAll(this._consentConsumer.value ? this._consentConsumer.value : false)
+
     this._dialogRef.value?.showModal()
   }
 

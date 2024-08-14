@@ -1,7 +1,7 @@
 import { callServer } from 'postmessage-promise'
 import { stringIsUrl } from '@/utils/url.js'
 import { loggerFactory } from '@/utils/logger.js'
-import ConsentStorage from './ConsentStorage.js'
+import getConsentStorage from './ConsentStorage.js'
 import { ConsentTokens } from './ConsentTokens.js'
 import { getIframeServer, getServerMode } from './utils.js'
 import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT } from './constants.js'
@@ -150,9 +150,7 @@ class ConsentClient extends EventTarget {
       this.debug('[remote] Got response from server: ', consentTokens)
 
     } else {
-      this._storage = new ConsentStorage()
-
-      await this._storage.init()
+      this._storage = await getConsentStorage()
 
       consentTokens = await this._storage.getConsentTokens()
       this.debug('[local] Got response from storage: ', consentTokens)
@@ -189,16 +187,16 @@ class ConsentClient extends EventTarget {
   }
 
   /**
-  * Sets the user's preferences in either the local storage or the remote server, depending on the configured server mode.
+  * Sets the user's tokens in either the local storage or the remote server, depending on the configured server mode.
   *
-  * @param {Object} preferences - The preferences object to be set.
+  * @param {Object} tokens - The tokens object to be set.
   * @returns {Promise} - A promise that resolves when the preferences have been set or reset, or rejects with an error if the operation fails.
   */
-  async setConsentTokens(preferences) {
+  async setConsentTokens(tokens) {
     try {
       let response
 
-      const consentTokens = ConsentTokens.from(preferences)
+      const consentTokens = ConsentTokens.from(tokens)
 
       if (this.serverMode === SERVER_MODE.LOCAL) {
         response = await this._storage.setConsentTokens(consentTokens)

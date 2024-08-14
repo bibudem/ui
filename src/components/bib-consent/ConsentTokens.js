@@ -6,8 +6,9 @@ const keys = Object.keys(DEFAULT_PREFERENCES)
 function throwOnInvalidValue(value, { key, acceptNull = false } = {}) {
 
   if (
-    (!isBoolean(value) && !['granted', 'denied'].includes(value))
-    ||
+    !isBoolean(value)
+    && !['granted', 'denied'].includes(value)
+    &&
     (!acceptNull && value === null)
   ) {
     const message = `Invalid value${key ? ` for field \`${key}\`` : ''}: ${value}. Must be either boolean or one of 'granted' or 'denied'.`
@@ -27,7 +28,19 @@ function throwOnInvalidKey(key) {
 export class ConsentTokens {
 
   static from(tokens) {
-    return new ConsentTokens(tokens)
+    const consentTokens = new ConsentTokens()
+
+    if (tokens) {
+      if (isObject(tokens)) {
+        Object.keys(tokens).forEach(key => {
+          consentTokens.#setToken(key, tokens[key], true)
+        })
+      } else {
+        consentTokens.#setAll(tokens, true)
+      }
+    }
+
+    return consentTokens
   }
 
   #tokens = {
@@ -35,25 +48,20 @@ export class ConsentTokens {
   }
 
   #setToken(key, value, acceptNull = false) {
-    console.log('[#setToken]', key, value)
     throwOnInvalidKey(key)
     throwOnInvalidValue(value, { key, acceptNull })
 
     this.#tokens[key] = isBoolean(value) ? value ? 'granted' : 'denied' : value
-    console.log(`this.#tokens.${key}:`, this.#tokens[key])
+  }
+
+  #setAll(value, acceptNull = false) {
+
+    throwOnInvalidValue(value, { acceptNull })
+
+    Object.keys(this.#tokens).forEach(key => this.#tokens[key] = value)
   }
 
   constructor(tokens) {
-    console.log('[#constructor]', tokens)
-    if (isObject(tokens)) {
-      Object.keys(DEFAULT_PREFERENCES).forEach(key => {
-        if (Reflect.has(tokens, key)) {
-          this.#setToken(key, tokens[key], true)
-        }
-      })
-    } else if (typeof tokens !== 'undefined' && tokens !== null) {
-      this.setAll(tokens)
-    }
 
     // Defining getters and setters on the constructor function
     // so they are enumerables
@@ -75,6 +83,20 @@ export class ConsentTokens {
         set: value => this.#setToken('ad_consent', value)
       }
     })
+
+    if (tokens) {
+      if (isObject(tokens)) {
+        Object.keys(DEFAULT_PREFERENCES).forEach(key => {
+          if (Reflect.has(tokens, key)) {
+            this.#setToken(key, tokens[key])
+          }
+        })
+
+      } else {
+
+        this.#setAll(tokens)
+      }
+    }
   }
 
   state() {
@@ -87,9 +109,7 @@ export class ConsentTokens {
       return
     }
 
-    throwOnInvalidValue(data)
-
-    Object.keys(this.#tokens).forEach(key => this.#tokens[key] = data)
+    this.#setAll(data)
   }
 
   resetConsent() {
