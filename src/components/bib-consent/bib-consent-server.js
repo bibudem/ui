@@ -79,25 +79,23 @@ export class BibConsentServer extends LitElement {
    */
   log(...args) {
     if (this.hasAttribute('debug')) {
-      this.#logger(...args)
+      const strippedMsg = args.map(part => {
+        if (typeof part === 'string') {
+          return part.replace(/<\/?[^>]+(>|$)/g, "")
+        }
 
-      const msg = args.map(part => typeof part === 'string' ? part : JSON.stringify(part)).join(' ')
+        return part
+      })
+      this.#logger(...strippedMsg)
+
+      const msg = args.map(part => typeof part === 'string' ? part : `<code class="value">${JSON.stringify(part)}</code>`).join(' ')
       if (this.loggerRef.value) {
         const textarea = this.loggerRef.value
 
-        textarea.value += `${textarea.value === '' ? '' : '\r'}${msg}`
+        textarea.innerHTML += `${textarea.innerHTML === '' ? '' : '<br />'}${msg}`
 
         // Make sure the textarea always shows last line
-        // Inspired from https://stackoverflow.com/a/13062909/3390182
-
-        //Move the carret
-        textarea.setSelectionRange(textarea.value.length, textarea.value.length)
-
-        //For WebKit, the scroll bar has to be explicitly set
         textarea.scrollTop = textarea.scrollHeight
-
-        //Make is into view
-        textarea.scrollIntoView(false)
       }
     }
   }
@@ -108,7 +106,7 @@ export class BibConsentServer extends LitElement {
    * @description Sets up a message listener for allowed origins and handles the following methods:
    * - setConsentTokens: Sets the user's consent preferences in the storage.
    * - getConsentTokens: Retrieves the user's current consent preferences from storage.
-   * - resetConsentTokens: Resets the user's consent preferences to default values.
+   * - resetTokens: Resets the user's consent preferences to default values.
    * - ping: Responds with "pong" to check if the server is responsive.
    * The method also logs all incoming requests and their responses when in debug mode.
    */
@@ -121,10 +119,10 @@ export class BibConsentServer extends LitElement {
       }
     })
 
-    this.log('Listening for postMessage events...')
-
     this.connected = true
-    this.log('connected:', this.connected)
+    this.log('Connected:', `<code class="value">${this.connected}</code>`)
+
+    this.log('Listening for postMessage events...')
 
     listenMessage(async (method, payload, response) => {
       let responseData
@@ -138,8 +136,8 @@ export class BibConsentServer extends LitElement {
           responseData = await this.#storage.getConsentTokens()
           break
 
-        case 'resetConsentTokens':
-          responseData = await this.#storage.resetConsentTokens()
+        case 'resetTokens':
+          responseData = await this.#storage.resetTokens()
           break
 
         case 'ping':
@@ -147,14 +145,14 @@ export class BibConsentServer extends LitElement {
           break
 
         default:
-          this.log(`Unknown method: ${method}. Payload:`, payload)
+          this.log(`Unknown method: <code class="method">${method}</code>. Payload:`, payload)
           throw new Error(`Unknown method: ${method}`)
       }
 
       if (payload) {
-        this.log(`Method \`${method}\` called with payload:`, payload, 'response:', responseData)
+        this.log(`Method <code class="method">${method}</code> called with payload:`, payload, 'response:', responseData)
       } else {
-        this.log(`Method \`${method}\` called.`, 'response:', responseData)
+        this.log(`Method <code class="method">${method}</code> called.`, 'response:', responseData)
       }
 
       response(responseData)
@@ -170,7 +168,7 @@ export class BibConsentServer extends LitElement {
     return html`
       <h1>I am bib-consent-server</h1>
       <div class="log-container">
-        <textarea class="log" ${ref(this.loggerRef)}></textarea>
+        <div class="log" ${ref(this.loggerRef)}></div>
       </div>`
   }
 }

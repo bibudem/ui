@@ -1,5 +1,5 @@
 import { isBoolean, isObject } from 'lodash-es'
-import { DEFAULT_PREFERENCES, STATES } from './constants.js'
+import { DEFAULT_PREFERENCES, CONSENT_STATES } from './constants.js'
 
 const keys = Object.keys(DEFAULT_PREFERENCES)
 
@@ -24,6 +24,10 @@ function throwOnInvalidKey(key) {
     throw new TypeError(message)
   }
 }
+
+/**
+ * @typedef {(ConsentTokens|Tokens)} ConsentTokensOrTokens
+ */
 
 export class ConsentTokens {
 
@@ -100,7 +104,7 @@ export class ConsentTokens {
   }
 
   state() {
-    return Object.values(this.#tokens).every(value => value !== null) ? STATES.DETERMINATE : STATES.INDETERMINATE
+    return Object.values(this.#tokens).every(value => value !== null) ? CONSENT_STATES.DETERMINATE : CONSENT_STATES.INDETERMINATE
   }
 
   setAll(data) {
@@ -117,7 +121,7 @@ export class ConsentTokens {
   }
 
   toGTM(wait_for_update = 500) {
-    if (this.state() === STATES.INDETERMINATE) {
+    if (this.state() === CONSENT_STATES.INDETERMINATE) {
       const nullEntries = Object.entries(this.#tokens).filter(token => token[1] === null)
       throw new Error(`All tokens must have an explicit value. Undefined token${nullEntries.length > 1 ? 's' : ''}: ${nullEntries.map(token => token[0]).join(', ')}`)
     }

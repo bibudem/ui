@@ -219,15 +219,15 @@ class ConsentClient extends EventTarget {
    *
    * @returns {Promise} - A promise that resolves when the preferences have been reset, or rejects with an error if the reset operation fails.
    */
-  async resetConsentTokens() {
+  async resetTokens() {
     try {
       if (this.serverMode === SERVER_MODE.LOCAL) {
-        return await this._storage.resetConsentTokens()
+        return await this._storage.resetTokens()
       } else {
-        await this._server.postMessage('resetConsentTokens')
+        await this._server.postMessage('resetTokens')
       }
     } catch (error) {
-      console.error('[#resetConsentTokens]', error)
+      console.error('[#resetTokens]', error)
       throw error
     }
   }

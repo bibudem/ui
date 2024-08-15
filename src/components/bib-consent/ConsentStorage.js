@@ -127,7 +127,7 @@ class ConsentStorage extends EventTarget {
    * Resets the user's consent tokens to their default values.
    * @returns {Promise<void>} A promise that resolves when the consent tokens have been reset.
    */
-  async resetConsentTokens() {
+  async resetTokens() {
     return await this.#doSetConsentTokens()
   }
 }

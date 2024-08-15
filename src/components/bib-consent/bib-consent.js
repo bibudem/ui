@@ -9,12 +9,29 @@ import './bib-consent-consent-dialog.js'
 import './bib-consent-preferences-dialog.js'
 import createConsentClient from './consentClient.js'
 import { consentContext } from './consent-context.js'
-import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT, STATES } from './constants.js'
-import { isObject } from 'lodash-es'
+import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT, CONSENT_STATES } from './constants.js'
 import { ConsentTokens } from './ConsentTokens.js'
 
 const debug = loggerFactory('bib-consent', '#cd5300')
 
+/**
+ * The `BibConsent` class is a custom web component that provides a user interface for managing consent preferences.
+ *
+ * It includes the following functionality:
+ * - Fetching and displaying the user's consent preferences from a server
+ * - Allowing the user to update their consent preferences
+ * - Saving the updated consent preferences to the server
+ * - Providing a consent dialog and a preferences dialog for the user to interact with
+ *
+ * The component can be configured with the following properties:
+ * - `serverUrl`: the URL of the server where the consent preferences are stored
+ * - `serverRequestTimeout`: the timeout for requests to the server
+ * - `[SERVER_MODE.LOCAL]`: a boolean indicating whether the component is running in local mode
+ * - `debug`: a boolean indicating whether debug logging should be enabled
+ * - `open`: a boolean indicating whether the consent dialog or preferences dialog is currently open
+ *
+ * The component uses the `@lit/context` library to manage the consent preferences as a shared context, and the `createConsentClient` function to interact with the server.
+ */
 /**
  * The `BibConsent` class is a custom web component that provides a user interface for managing consent preferences.
  *
@@ -62,12 +79,12 @@ export class BibConsent extends LitElement {
   }
 
   _consentClient
-  #preferences
-  #consentDialogRef
-  #preferencesDialogRef
+  #consentTokens
   #consentProvider
   #consentConsumer
-  #state = STATES.INDETERMINATE
+  #state = CONSENT_STATES.INDETERMINATE
+  #consentDialogRef
+  #preferencesDialogRef
 
   /**
    * Initializes the `BibConsent` component, setting up the necessary state and references.
@@ -90,35 +107,29 @@ export class BibConsent extends LitElement {
     this.#consentConsumer = new ContextConsumer(this, { context: consentContext, callback: this.savePreferences })
   }
 
-  #setValue(value) {
-    this.#consentProvider.setValue(value)
-
-    this.#state = this.#consentProvider.value.state()
-  }
-
   /**
    * Gets the current state of the BibConsent component.
-   * The state is determined by the user's input. Initially `indeterminate`, it turns `determinate` when the user has indicated his/her consent preferences.
+   * The state is determined by the user's input. Initially `indeterminate`, it turns `determinate` when the user has indicated their consent preferences.
    * @readonly
-   * @returns {string} The current state of the BibConsent component, which can be one of the following values:
-   * - `indeterminate`: The user has not yet indicated his/her consent preferences.
-   * - `determinate`: The user has made his/her consent preferences.
+   * @returns {import('./constants.js').consentStateTypes} The current state of the BibConsent component, which can be one of the following values:
+   * - `indeterminate`: The user has not yet indicated their consent preferences.
+   * - `determinate`: The user has made their consent preferences.
    */
   get state() {
     return this.#state
   }
 
   /**
-   * Gets the user's consent preferences.
+   * Gets the user's consent tokens.
    * @readonly
-   * @returns {Object} The user's consent preferences.
+   * @returns {import('./ConsentTokens.js').ConsentTokens} The user's consent tokens.
    */
-  get preferences() {
+  get consentTokens() {
     return this.#consentConsumer.value
   }
 
   /**
-   * Initializes the `BibConsent` component, sets up the necessary state and references, and handles events related to the preferences client.
+   * Initializes the `BibConsent` component, sets up the necessary state and references, and handles events related to the consent client.
    * 
    * The `connectedCallback` method performs the following tasks:
    * - Calls the parent class's `connectedCallback` method
@@ -127,7 +138,7 @@ export class BibConsent extends LitElement {
    * - Sets the `serverRequestTimeout` property to `SERVER_REQUEST_DEFAULT_TIMEOUT` if it is not already defined
    * - Creates a `ConsentClient` instance and assigns it to the `_consentClient` property
    * - Adds event listeners for the `EVENT_NAMES.READY` and `EVENT_NAMES.UPDATE` events on the `_consentClient` instance
-   * - Adds an event listener for the `context-request` event on the component's shadow root, which responds with the current preferences
+   * - Adds an event listener for the `context-request` event on the component's shadow root, which responds with the current tokens
    */
   async connectedCallback() {
     super.connectedCallback()
@@ -142,12 +153,17 @@ export class BibConsent extends LitElement {
 
       this.#debug(EVENT_NAMES.READY, 'event: ', event)
 
-      if (detail.state() === STATES.DETERMINATE) {
+      if (detail.state() === CONSENT_STATES.DETERMINATE) {
         this.#setValue(detail)
       } else {
         this.#show('consent')
       }
     })
+  }
+
+  #setValue(value) {
+    this.#consentProvider.setValue(value)
+    this.#state = this.#consentProvider.value.state()
   }
 
   #debug() {
@@ -199,32 +215,32 @@ export class BibConsent extends LitElement {
    * Shows the preferences dialog.
    */
   showPreferences() {
-    this.#debug('[showPreferences]')
     this.#show('preferences')
   }
 
   /**
-   * Retrieves the user's consent preferences from the server.
+   * Retrieves the user's consent tokens from the server.
    *
-   * @returns {Promise<Object>} - A promise that resolves to the user's consent preferences.
+   * @returns {Promise<Object>} - A promise that resolves to the user's consent tokens.
    */
-  async getConsentTokens() {
-    this.#preferences = await this._consentClient.getConsentTokens()
-    return this.#preferences
+  async getTokens() {
+    this.#consentTokens = await this._consentClient.getConsentTokens()
+    return this.#consentTokens
   }
 
   /**
-   * Saves the user's consent preferences to the server.
+   * Saves the user's consent tokens to the server.
    *
    * @param {Object} preferences - The user's consent preferences.
    * @returns {Promise<boolean>} - A promise that resolves to `true` if the preferences were saved successfully, or `false` if there was an error.
    */
 
-  async savePreferences(preferences) {
-    this.#debug('[savePreferences] preferences: ', preferences)
+  async saveTokens(tokens) {
+    this.#debug('[save] tokens: ', tokens)
+    const consentTokens = ConsentTokens.from(tokens)
     try {
-      await this._consentClient.setConsentTokens(preferences)
-      this.#setValue(preferences)
+      await this._consentClient.setConsentTokens(consentTokens)
+      this.#setValue(consentTokens)
       return true
     } catch (error) {
       console.error('[savePreferences] error: ', error)
@@ -237,20 +253,20 @@ export class BibConsent extends LitElement {
    *
    * @returns {Promise<Object>} - A promise that resolves to the user's reset consent preferences.
    */
-  async resetConsentTokens() {
-    this.#preferences = await this._consentClient.resetConsentTokens()
-    return this.#preferences
+  async resetTokens() {
+    this.#consentTokens = await this._consentClient.resetTokens()
+    return this.#consentTokens
   }
 
   async #handleUpdateEvent(event) {
     this.#debug('[#handleUpdateEvent]', event)
-    const success = await this.savePreferences(event.detail)
+    const success = await this.saveTokens(event.detail)
     this.#debug('[#handleUpdateEvent] success: ', success)
     if (!success) {
       // TODO: show error message
       return
     }
-    this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: event.detail }))
+    this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: this.consentTokens }))
     this.#close()
   }
 

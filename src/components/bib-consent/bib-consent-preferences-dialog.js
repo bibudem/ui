@@ -4,7 +4,7 @@ import { createRef, ref } from 'lit/directives/ref.js'
 import '@auroratide/toggle-switch/lib/define.js'
 import { consentContext } from './consent-context.js'
 import { ConsentTokens } from './ConsentTokens.js'
-import { DEFAULT_PREFERENCES, STATES } from './constants.js'
+import { DEFAULT_PREFERENCES, CONSENT_STATES } from './constants.js'
 import styles from './bib-consent-preferences-dialog.scss?inline'
 
 /**
@@ -49,14 +49,22 @@ export class BibConsentPreferencesDialog extends LitElement {
     this._dialogRef = createRef()
     this.#toggleChoices = new ConsentTokens(false)
     this._consentConsumer = new ContextConsumer(this, {
-      context: consentContext, subscribe: true, callback: consentTokens => {
-        console.log('consentTokens', consentTokens)
-        if (consentTokens.state() === STATES.INDETERMINATE) {
-          this.#toggleChoices.setAll(false)
-          return
-        }
+      context: consentContext, subscribe: true, callback: tokens => {
+        try {
+          console.log('tokens', tokens)
 
-        this.#toggleChoices.setAll(consentTokens)
+          const consentTokens = ConsentTokens.from(tokens)
+
+          if (consentTokens.state() === CONSENT_STATES.INDETERMINATE) {
+            this.#toggleChoices.setAll(false)
+            return
+          }
+
+          this.#toggleChoices.setAll(consentTokens)
+        } catch (error) {
+          console.error('[BibConsentPreferencesDialog] error: ', error)
+          throw error
+        }
       }
     })
   }

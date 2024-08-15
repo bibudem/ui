@@ -19,13 +19,31 @@ export const SERVER_MODE = {
 }
 export const SERVER_REQUEST_DEFAULT_TIMEOUT = 500
 
+/**
+ * @typedef {('analytics_consent'|'functionality_consent'|'ad_consent')} consentTypes
+ */
+
+/**
+ * @typedef {('granted' | 'denied')} consentStateTypes
+ */
+
+/**
+ * @type {object} Tokens
+ * @property {string} analytics_consent
+ * @property {string} functionality_consent
+ * @property {string} ad_consent
+ */
 export const DEFAULT_PREFERENCES = {
   analytics_consent: null,
   functionality_consent: null,
   ad_consent: null
 }
 
-export const STATES = {
+/**
+ * @typedef {('determinate'|'indeterminate')} consentStateTypes
+ */
+
+export const CONSENT_STATES = {
   INDETERMINATE: 'indeterminate',
   DETERMINATE: 'determinate'
 }
