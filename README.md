@@ -8,11 +8,15 @@ Cette librairie n'exporte pas pour l'instant de module pour le _custom element_ 
 
 ### Via CDN
 
-`<script type="module" src="https://cdn.jsdelivr.net/gh/bibudem/ui@0/dist/bib-avis.js"></script>`
+```
+<script type="module" src="https://cdn.jsdelivr.net/gh/bibudem/ui@0/dist/bib-avis.js"></script>
+```
 
 puis, insérez le custom element:
 
-`<bib-avis bouton-fermer></bib-avis>`
+```
+<bib-avis bouton-fermer></bib-avis>
+```
 
 ## Documentation
 
