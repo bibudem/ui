@@ -132,22 +132,6 @@ class ConsentStorage extends EventTarget {
   }
 }
 
-/**
- * Checks if two arrays have the same items, regardless of order.
- * @param {Array} arr1 - The first array to compare.
- * @param {Array} arr2 - The second array to compare.
- * @returns {boolean} - True if the arrays have the same items, false otherwise.
- */
-function arraysHaveSameItems(arr1, arr2) {
-  if (arr1.length !== arr2.length) {
-    return false
-  }
-
-  const sortedArr1 = [...arr1].sort()
-  const sortedArr2 = [...arr2].sort()
-  return sortedArr1.every((item, index) => item === sortedArr2[index])
-}
-
 let consentStorage
 
 /**
