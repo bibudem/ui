@@ -83,7 +83,21 @@ export class BibConsentServer extends LitElement {
 
       const msg = args.map(part => typeof part === 'string' ? part : JSON.stringify(part)).join(' ')
       if (this.loggerRef.value) {
-        this.loggerRef.value.value += `${this.loggerRef.value.value === '' ? '' : '\r'}${msg}`
+        const textarea = this.loggerRef.value
+
+        textarea.value += `${textarea.value === '' ? '' : '\r'}${msg}`
+
+        // Make sure the textarea always shows last line
+        // Inspired from https://stackoverflow.com/a/13062909/3390182
+
+        //Move the carret
+        textarea.setSelectionRange(textarea.value.length, textarea.value.length)
+
+        //For WebKit, the scroll bar has to be explicitly set
+        textarea.scrollTop = textarea.scrollHeight
+
+        //Make is into view
+        textarea.scrollIntoView(false)
       }
     }
   }
