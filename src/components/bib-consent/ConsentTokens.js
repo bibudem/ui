@@ -26,11 +26,32 @@ function throwOnInvalidKey(key) {
 }
 
 /**
- * @typedef {(ConsentTokens|Tokens)} ConsentTokensOrTokens
+ * @typedef {(ConsentTokens|import('./constants.js').ConsentValues)} ConsentTokensOrTokens
  */
 
+/**
+ * Represents a set of consent tokens that can be used to track user consent preferences.
+ *
+ * The `ConsentTokens` class provides a way to manage and interact with consent tokens, which are used to track a user's preferences for various types of data processing, such as analytics, functionality, and advertising.
+ *
+ * The class provides methods for setting and retrieving individual consent tokens, as well as methods for setting all consent tokens at once and resetting the consent state. It also provides a method for generating a consent state object that can be used for integrating with third-party tools, such as Google Tag Manager.
+ *
+ * The class uses a set of default preferences defined in the `DEFAULT_PREFERENCES` constant, and provides validation to ensure that consent token values are valid.
+ */
 export class ConsentTokens {
 
+  /**
+   * Creates a new `ConsentTokens` instance from the provided `tokens` object or value.
+   *
+   * If `tokens` is an object, the method iterates over its keys and sets the corresponding consent token values.
+   *
+   * If `tokens` is not an object, the method sets all consent token values to the provided `tokens` value.
+   *
+   * The method returns the newly created `ConsentTokens` instance.
+   *
+   * @param {ConsentTokensOrTokens} tokens - An object or value representing the consent token values to initialize the `ConsentTokens` instance with.
+   * @returns {ConsentTokens} - A new `ConsentTokens` instance initialized with the provided `tokens`.
+   */
   static from(tokens) {
     const consentTokens = new ConsentTokens()
 

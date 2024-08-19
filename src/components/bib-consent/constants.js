@@ -24,7 +24,7 @@ export const SERVER_REQUEST_DEFAULT_TIMEOUT = 500
  */
 
 /**
- * @typedef {('granted' | 'denied')} consentStateTypes
+ * @typedef {('granted' | 'denied')} ConsentValues
  */
 
 /**
