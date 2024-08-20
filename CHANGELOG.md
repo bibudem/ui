@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/bibudem/ui/compare/v0.16.0...v0.17.0) (2024-08-20)
+
+
+### Miscellaneous Chores
+
+* Composant bib-gtm ([c531fca](https://github.com/bibudem/ui/commit/c531fcac64aedf14c0fe0e0a8fb02a9e19f9968b))
+
 ## [0.16.0](https://github.com/bibudem/ui/compare/v0.14.0...v0.16.0) (2024-08-20)
 
 
