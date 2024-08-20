@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/bibudem/ui/compare/v0.13.2...v0.14.0) (2024-08-07)
+
+
+### Features
+
+* **bib-consent:** Renommage des types de consentements afin de s'aligner sur le modèle de Google Tag Manager. ([e726aec](https://github.com/bibudem/ui/commit/e726aec92dfaff508aa1dd74a90d070ea8a6e574))
+
 ## [0.13.2](https://github.com/bibudem/ui/compare/v0.13.1...v0.13.2) (2024-08-06)
 
 
