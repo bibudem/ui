@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.1](https://github.com/bibudem/ui/compare/v0.17.0...v0.17.1) (2024-08-20)
+
+
+### Bug Fixes
+
+* Harmonisation des noms dans les object stores. ([d1cef46](https://github.com/bibudem/ui/commit/d1cef46f8f03c5a4f5197a62d1ecf7dc6b36c7f6))
+
 ## [0.17.0](https://github.com/bibudem/ui/compare/v0.16.0...v0.17.0) (2024-08-20)
 
 
