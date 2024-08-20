@@ -4,12 +4,9 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import { openDB } from 'idb'
 import { nodeIsEmpty } from '@/utils/dom.js'
 import { addToGlobalBib } from '@/utils/bib.js'
-import { name as PKG_NAME } from '../../../package.json'
+import { DB_NAME, DB_STORE_NAME, DB_VERSION } from './constants.js'
 import closeIcon from '../../icons/close_FILL0_wght400_GRAD0_opsz24.svg?raw'
 import bibAvisStyles from './bib-avis.scss?inline'
-
-const DB_VERSION = 1
-const STORE_NAME = 'avis'
 
 async function hash(obj) {
   const utf8 = new TextEncoder().encode(JSON.stringify(obj))
@@ -115,22 +112,22 @@ export class BibAvis extends LitElement {
       return
     }
 
-    const db = this.#db = await openDB(PKG_NAME, DB_VERSION, {
+    const db = this.#db = await openDB(DB_NAME, DB_VERSION, {
       upgrade(db) {
         // Checks if the object store exists:
-        if (!db.objectStoreNames.contains(STORE_NAME)) {
-          db.createObjectStore(STORE_NAME)
+        if (!db.objectStoreNames.contains(DB_STORE_NAME)) {
+          db.createObjectStore(DB_STORE_NAME)
         }
       }
     })
 
     try {
       const id = await hash(avis)
-      const storedAvis = await db.get(STORE_NAME, id)
+      const storedAvis = await db.get(DB_STORE_NAME, id)
       if (storedAvis) {
         if (!storedAvis.hidden) {
           // Delete old entries
-          await db.delete(STORE_NAME, id)
+          await db.delete(DB_STORE_NAME, id)
           this.#show(storedAvis)
         }
       } else {
@@ -154,7 +151,7 @@ export class BibAvis extends LitElement {
 
     if (this.#db) {
       const id = await hash(avis)
-      await this.#db.put(STORE_NAME, { ...avis, hidden: false }, id)
+      await this.#db.put(DB_STORE_NAME, { ...avis, hidden: false }, id)
     }
   }
 
@@ -167,7 +164,7 @@ export class BibAvis extends LitElement {
     }
 
     const id = await hash(this.#avis)
-    await this.#db.put(STORE_NAME, { ...this.#avis, hidden: true }, id)
+    await this.#db.put(DB_STORE_NAME, { ...this.#avis, hidden: true }, id)
     this.#avis = null
     this.requestUpdate()
   }

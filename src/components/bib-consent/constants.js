@@ -1,9 +1,9 @@
-import { name } from '../../../package.json'
+import { name as PKG_NAME } from '../../../package.json'
 import { createPrefixedEventName } from './utils.js'
 
 const eventName = createPrefixedEventName('consent')
 
-export const DB_NAME = `${name}/consent`
+export const DB_NAME = `${PKG_NAME}/consent`
 export const DB_VERSION = 1
 export const DB_STORE_NAME = 'consent'
 
