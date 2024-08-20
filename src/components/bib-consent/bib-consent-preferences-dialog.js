@@ -51,7 +51,6 @@ export class BibConsentPreferencesDialog extends LitElement {
     this._consentConsumer = new ContextConsumer(this, {
       context: consentContext, subscribe: true, callback: tokens => {
         try {
-          console.log('tokens', tokens)
 
           const consentTokens = ConsentTokens.from(tokens)
 

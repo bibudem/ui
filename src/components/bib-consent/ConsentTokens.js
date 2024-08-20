@@ -4,7 +4,6 @@ import { DEFAULT_PREFERENCES, CONSENT_STATES } from './constants.js'
 const keys = Object.keys(DEFAULT_PREFERENCES)
 
 function throwOnInvalidValue(value, { key, acceptNull = false } = {}) {
-
   if (
     !isBoolean(value)
     && !['granted', 'denied'].includes(value)
@@ -17,8 +16,6 @@ function throwOnInvalidValue(value, { key, acceptNull = false } = {}) {
 }
 
 function throwOnInvalidKey(key) {
-
-
   if (!keys.includes(key)) {
     const message = `Invalid key: ${key}. Must be one of ${keys.reduce((str, key, i) => i === keys.length ? `${str} or ${key}` : `${str}, ${key}`)}.`
     throw new TypeError(message)
@@ -83,10 +80,18 @@ export class ConsentTokens {
 
     throwOnInvalidValue(value, { acceptNull })
 
+    if (typeof value !== 'string') {
+      value = value ? 'granted' : 'denied'
+    }
+
     Object.keys(this.#tokens).forEach(key => this.#tokens[key] = value)
   }
+  #stack
 
   constructor(tokens) {
+
+    const t = new Error()
+    this.#stack = t.stack.split('\n').map(line => line.trim())
 
     // Defining getters and setters on the constructor function
     // so they are enumerables
@@ -109,7 +114,7 @@ export class ConsentTokens {
       }
     })
 
-    if (tokens) {
+    if (typeof tokens !== 'undefined') {
       if (isObject(tokens)) {
         Object.keys(DEFAULT_PREFERENCES).forEach(key => {
           if (Reflect.has(tokens, key)) {
@@ -122,6 +127,18 @@ export class ConsentTokens {
         this.#setAll(tokens)
       }
     }
+  }
+
+  isGranted(key) {
+    throwOnInvalidKey(key)
+
+    return this.#tokens[key] === CONSENT_STATES.GRANTED
+  }
+
+  isDenied(key) {
+    throwOnInvalidKey(key)
+
+    return this.#tokens[key] === CONSENT_STATES.DENIED
   }
 
   state() {
@@ -142,6 +159,7 @@ export class ConsentTokens {
   }
 
   toGTM(wait_for_update = 500) {
+    console.log(this)
     if (this.state() === CONSENT_STATES.INDETERMINATE) {
       const nullEntries = Object.entries(this.#tokens).filter(token => token[1] === null)
       throw new Error(`All tokens must have an explicit value. Undefined token${nullEntries.length > 1 ? 's' : ''}: ${nullEntries.map(token => token[0]).join(', ')}`)

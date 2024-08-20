@@ -82,8 +82,6 @@ class ConsentStorage extends EventTarget {
 
     const tokens = await this.db.get(DB_STORE_NAME, 'tokens')
 
-    console.log('tokens', tokens)
-
     // Rehydrate the consentTokens object
     return ConsentTokens.from(tokens)
   }
@@ -96,7 +94,6 @@ class ConsentStorage extends EventTarget {
       const oldConsentTokens = await this.getConsentTokens()
       const newConsentTokens = new ConsentTokens(tokens)
       if (!isEqual(oldConsentTokens, newConsentTokens)) {
-        console.log('[setConsentTokens] oldConsentTokens: ', oldConsentTokens, 'newConsentTokens: ', newConsentTokens)
         await this.db.put(DB_STORE_NAME, newConsentTokens, 'tokens')
         return newConsentTokens
       } else {
