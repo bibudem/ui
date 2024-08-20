@@ -21,31 +21,46 @@ h1 {
 }
 
 .log-container {
-  padding: 0.25rem 0.25rem 0;
-  font-size: small;
+  padding: 0;
+  font-size: 13px;
   border: 1px solid silver;
 }
 
 .log {
+  box-sizing: border-box;
   -webkit-text-size-adjust: 100%;
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace !important;
   font-size: small;
   margin: 0;
-  padding: 0.25rem 0 0;
-  resize: none;
+  padding: 0.35rem;
   width: 100%;
   background-color: unset;
-  box-sizing: border-box;
-  // color: transparent;
   border: none;
   tab-size: 8;
   outline: none;
-  // overflow: auto hidden;
+  overflow-y: auto;
   height: 100px;
   // font-size: 12px;
   line-height: 20px;
   overflow-wrap: normal;
   overscroll-behavior-x: none;
-  white-space: pre;
+  // white-space: pre;
   z-index: 1;
+
+  code {
+    font-size: 13px;
+  }
+
+  .function,
+  .method {
+    color: rgb(136, 18, 128);
+  }
+
+  .property {
+    color: rgb(153, 69, 0);
+  }
+
+  .value {
+    color: rgb(26, 26, 166);
+  }
 }

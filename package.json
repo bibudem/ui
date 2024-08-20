@@ -1,6 +1,6 @@
 {
   "name": "@bibudem/ui",
-  "version": "0.14.0",
+  "version": "0.16.0",
   "description": "Librairie du system desing des Bibliothèques de l'Université de Montréal",
   "author": "Christian Rémillard <christian.remillard@umontreal.ca>",
   "homepage": "https://github.com/bibudem/ui",
@@ -16,13 +16,13 @@
   "module": "src/index.js",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006 --no-open",
     "storybook-docs": "storybook dev --docs",
     "build": "cross-env NODE_ENV=production vite build",
     "build:watch": "cross-env NODE_ENV=production vite build --watch",
     "build-storybook": "storybook build --output-dir build-storybook",
     "chromatic": "npx chromatic",
+    "dev": "storybook dev -p 6006 --no-open",
     "version": "npm run build",
     "preview": "npm-run-all set-env:production --parallel preview:*",
     "preview:build": "vite build --watch",

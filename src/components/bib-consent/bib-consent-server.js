@@ -3,7 +3,7 @@ import { startListening } from 'postmessage-promise'
 import { createRef, ref } from 'lit/directives/ref.js'
 import { patternMatchesOrigin } from '@/utils/url.js'
 import { loggerFactory } from '@/utils/logger.js'
-import getPreferenceStorage from './PreferenceStorage.js'
+import getConsentStorage from './ConsentStorage.js'
 import styles from './bib-consent-server.scss?inline'
 
 /**
@@ -61,7 +61,7 @@ export class BibConsentServer extends LitElement {
    */
   async init() {
     this.log('Initializing BibConsentServer...')
-    this.#storage = await getPreferenceStorage()
+    this.#storage = await getConsentStorage()
     this.log('Connected to storage.')
 
     this.#storage.listen(event => {
@@ -79,11 +79,23 @@ export class BibConsentServer extends LitElement {
    */
   log(...args) {
     if (this.hasAttribute('debug')) {
-      this.#logger(...args)
+      const strippedMsg = args.map(part => {
+        if (typeof part === 'string') {
+          return part.replace(/<\/?[^>]+(>|$)/g, "")
+        }
 
-      const msg = args.map(part => typeof part === 'string' ? part : JSON.stringify(part)).join(' ')
+        return part
+      })
+      this.#logger(...strippedMsg)
+
+      const msg = args.map(part => typeof part === 'string' ? part : `<code class="value">${JSON.stringify(part)}</code>`).join(' ')
       if (this.loggerRef.value) {
-        this.loggerRef.value.value += `${this.loggerRef.value.value === '' ? '' : '\r'}${msg}`
+        const textarea = this.loggerRef.value
+
+        textarea.innerHTML += `${textarea.innerHTML === '' ? '' : '<br />'}${msg}`
+
+        // Make sure the textarea always shows last line
+        textarea.scrollTop = textarea.scrollHeight
       }
     }
   }
@@ -92,14 +104,13 @@ export class BibConsentServer extends LitElement {
    * Starts listening for postMessage events and handles consent-related requests.
    * @async
    * @description Sets up a message listener for allowed origins and handles the following methods:
-   * - setPreferences: Sets the user's consent preferences in the storage.
-   * - getPreferences: Retrieves the user's current consent preferences from storage.
-   * - resetPreferences: Resets the user's consent preferences to default values.
+   * - setConsentTokens: Sets the user's consent preferences in the storage.
+   * - getConsentTokens: Retrieves the user's current consent preferences from storage.
+   * - resetTokens: Resets the user's consent preferences to default values.
    * - ping: Responds with "pong" to check if the server is responsive.
    * The method also logs all incoming requests and their responses when in debug mode.
    */
   async startListening() {
-    this.log('startListening()')
 
     const { listenMessage } = await startListening({
       eventFilter: event => {
@@ -108,25 +119,25 @@ export class BibConsentServer extends LitElement {
       }
     })
 
-    this.log('Listening for postMessage events...')
-
     this.connected = true
-    this.log('connected:', this.connected)
+    this.log('Connected:', `<code class="value">${this.connected}</code>`)
+
+    this.log('Listening for postMessage events...')
 
     listenMessage(async (method, payload, response) => {
       let responseData
 
       switch (method) {
-        case 'setPreferences':
-          responseData = await this.#storage.setPreferences(payload)
+        case 'setConsentTokens':
+          responseData = await this.#storage.setConsentTokens(payload)
           break
 
-        case 'getPreferences':
-          responseData = await this.#storage.getPreferences()
+        case 'getConsentTokens':
+          responseData = await this.#storage.getConsentTokens()
           break
 
-        case 'resetPreferences':
-          responseData = await this.#storage.resetPreferences()
+        case 'resetTokens':
+          responseData = await this.#storage.resetTokens()
           break
 
         case 'ping':
@@ -134,14 +145,14 @@ export class BibConsentServer extends LitElement {
           break
 
         default:
-          this.log(`Unknown method: ${method}. Payload:`, payload)
+          this.log(`Unknown method: <code class="method">${method}</code>. Payload:`, payload)
           throw new Error(`Unknown method: ${method}`)
       }
 
       if (payload) {
-        this.log(`Method \`${method}\` called with payload:`, payload, 'response:', responseData)
+        this.log(`Method <code class="method">${method}</code> called with payload:`, payload, 'response:', responseData)
       } else {
-        this.log(`Method \`${method}\` called.`, 'response:', responseData)
+        this.log(`Method <code class="method">${method}</code> called.`, 'response:', responseData)
       }
 
       response(responseData)
@@ -157,7 +168,7 @@ export class BibConsentServer extends LitElement {
     return html`
       <h1>I am bib-consent-server</h1>
       <div class="log-container">
-        <textarea class="log" ${ref(this.loggerRef)}></textarea>
+        <div class="log" ${ref(this.loggerRef)}></div>
       </div>`
   }
 }

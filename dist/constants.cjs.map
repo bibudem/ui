@@ -1,1 +1,1 @@
-{"version":3,"file":"constants.cjs","sources":[],"sourcesContent":[],"names":[],"mappings":""}
+{"version":3,"file":"constants.cjs","sources":["../src/components/bib-gtm/constants.js"],"sourcesContent":["export const GTM_CONTAINER_ID = 'GTM-K8BQPC'"],"names":[],"mappings":"4FAAgC"}

@@ -1,12 +1,11 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
 import { ContextConsumer } from '@lit/context'
 import { createRef, ref } from 'lit/directives/ref.js'
-import { isBoolean } from 'lodash-es'
 import '@auroratide/toggle-switch/lib/define.js'
 import { consentContext } from './consent-context.js'
-import { DEFAULT_PREFERENCES } from './constants.js'
-import styles from './bib-consent-preferences-dialog.scss?inline'
 import { ConsentTokens } from './ConsentTokens.js'
+import { DEFAULT_PREFERENCES, CONSENT_STATES } from './constants.js'
+import styles from './bib-consent-preferences-dialog.scss?inline'
 
 /**
  * Generates an object with the default consent preferences, where each key is set to the provided boolean value.
@@ -50,13 +49,21 @@ export class BibConsentPreferencesDialog extends LitElement {
     this._dialogRef = createRef()
     this.#toggleChoices = new ConsentTokens(false)
     this._consentConsumer = new ContextConsumer(this, {
-      context: consentContext, subscribe: true, callback: value => {
-        if (value === null) {
-          this.#toggleChoices.setAll(false)
-          return
-        }
+      context: consentContext, subscribe: true, callback: tokens => {
+        try {
 
-        this.#toggleChoices.setAll(value)
+          const consentTokens = ConsentTokens.from(tokens)
+
+          if (consentTokens.state() === CONSENT_STATES.INDETERMINATE) {
+            this.#toggleChoices.setAll(false)
+            return
+          }
+
+          this.#toggleChoices.setAll(consentTokens)
+        } catch (error) {
+          console.error('[BibConsentPreferencesDialog] error: ', error)
+          throw error
+        }
       }
     })
   }
@@ -89,7 +96,12 @@ export class BibConsentPreferencesDialog extends LitElement {
    * @returns {void}
    */
   show() {
-    this.#toggleChoices = this._consentConsumer.value ? { ...this._consentConsumer.value } : getConsentValues(false)
+    const tokens = this._consentConsumer.value?.state() === CONSENT_STATES.DETERMINATE ? this._consentConsumer.value : false
+
+    console.log('tokens', tokens)
+
+    this.#toggleChoices.setAll(tokens)
+
     this._dialogRef.value?.showModal()
   }
 
@@ -160,7 +172,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="analytics_consent" class="switch" ?checked="${this.#toggleChoices.analytics_consent}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="analytics_consent" class="switch" ?checked="${this.#toggleChoices.analytics_consent === 'granted'}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </div>
                 </summary>
@@ -176,7 +188,7 @@ export class BibConsentPreferencesDialog extends LitElement {
                     <span class="close">+</span>
                     <span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="functionality_consent" class="switch" ?checked="${this.#toggleChoices.functionality_consent}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="functionality_consent" class="switch" ?checked="${this.#toggleChoices.functionality_consent === 'granted'}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </span>
                 </summary>
@@ -187,7 +199,7 @@ export class BibConsentPreferencesDialog extends LitElement {
               <details class="accordion-item" @click="${{ handleEvent: this.#onDetailsClick, capture: true }}">
                 <summary class="accordion-item__summary"><span class="accordion-item__summary-title">Témoins publicitaires</span><span class="accordion-item__summary-icon"><span class="close">+</span><span class="open">-</span>
                     <div class="toggle-container">
-                      <toggle-switch name="ad_consent" class="switch" ?checked="${this.#toggleChoices.ad_consent}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
+                      <toggle-switch name="ad_consent" class="switch" ?checked="${this.#toggleChoices.ad_consent === 'granted'}" @toggle-switch:change="${this.#onToggleSwitchChange}"></toggle-switch>
                     </div>
                   </span></summary>
                 <div class="accordion-item__content">
