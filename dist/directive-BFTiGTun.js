@@ -15,13 +15,13 @@ const t = { ATTRIBUTE: 1, CHILD: 2, PROPERTY: 3, BOOLEAN_ATTRIBUTE: 4, EVENT: 5,
 class r {
   constructor(t2) {
   }
-  get _$AU() {
-    return this._$AM._$AU;
+  get _$isConnected() {
+    return this._$parent._$isConnected;
   }
-  _$AT(t2, e2, r2) {
-    this._$Ct = t2, this._$AM = e2, this._$Ci = r2;
+  _$initialize(t2, e2, r2) {
+    this.__part = t2, this._$parent = e2, this.__attributeIndex = r2;
   }
-  _$AS(t2, e2) {
+  _$resolve(t2, e2) {
     return this.update(t2, e2);
   }
   update(t2, e2) {
@@ -29,8 +29,8 @@ class r {
   }
 }
 export {
-  e,
-  r as i,
-  t
+  r as D,
+  t as P,
+  e as d
 };
-//# sourceMappingURL=directive-Ce1M5_Fy.js.map
+//# sourceMappingURL=directive-BFTiGTun.js.map

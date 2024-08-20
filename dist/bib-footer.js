@@ -6,13 +6,13 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { s as e, x as r } from "./lit-element-Dj1nHH6C.js";
-class t extends e {
+import { L as e, h as r } from "./lit-element-DmnF17fR.js";
+class s extends e {
   render() {
     return r``;
   }
 }
 export {
-  t as BibFooter
+  s as BibFooter
 };
 //# sourceMappingURL=bib-footer.js.map

@@ -6,5 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("./lit-element-BHNMc-Kg.cjs");class r extends e.s{render(){return e.x``}}exports.BibFooter=r;
+Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("./lit-element-ibXEACGN.cjs");class t extends e.LitElement{render(){return e.html``}}exports.BibFooter=t;
 //# sourceMappingURL=bib-footer.cjs.map

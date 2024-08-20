@@ -18,9 +18,9 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _e, _t, _s, _n, _o, _i, _w_instances, c_fn, r_fn, h_fn, a_fn, l_fn, u_fn;
-import { s as e, x as t } from "./lit-element-Dj1nHH6C.js";
-import { e as s, n } from "./ref-B-kqFHPy.js";
-import { s as o, a as i } from "./bib-consent-preferences-dialog-nApIZzhr.js";
+import { L as e, h as t } from "./lit-element-DmnF17fR.js";
+import { c as s, r as n } from "./ref-DX06OUxP.js";
+import { C as o, a as i } from "./bib-consent-preferences-dialog-BZ3j11wE.js";
 import { l as r } from "./logger-CMarO751.js";
 import { a as c } from "./bib-BW5s0xHx.js";
 import "./bib-button-close.js";
@@ -28,26 +28,26 @@ import "./bib-consent-consent-dialog.js";
 import a from "./consentClient.js";
 import { consentContext as h } from "./consent-context.js";
 import { S as l, C as u, b as d, E as p } from "./constants-B_DnKz1g.js";
-import { ConsentTokens as b } from "./ConsentTokens.js";
+import { ConsentTokens as v } from "./ConsentTokens.js";
 /**
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-class v {
+class b {
   get value() {
-    return this.o;
+    return this._value;
   }
   set value(e2) {
     this.setValue(e2);
   }
   setValue(e2, t2 = false) {
-    const s2 = t2 || !Object.is(e2, this.o);
-    this.o = e2, s2 && this.updateObservers();
+    const s2 = t2 || !Object.is(e2, this._value);
+    this._value = e2, s2 && this.updateObservers();
   }
   constructor(e2) {
     this.subscriptions = /* @__PURE__ */ new Map(), this.updateObservers = () => {
-      for (const [e3, { disposer: t2 }] of this.subscriptions) e3(this.o, t2);
+      for (const [e3, { disposer: t2 }] of this.subscriptions) e3(this._value, t2);
     }, void 0 !== e2 && (this.value = e2);
   }
   addCallback(e2, t2, s2) {
@@ -72,7 +72,7 @@ class g extends Event {
     super("context-provider", { bubbles: true, composed: true }), this.context = e2;
   }
 }
-class f extends v {
+class f extends b {
   constructor(e2, t2, s2) {
     super(void 0 !== t2.context ? t2.initialValue : s2), this.onContextRequest = (e3) => {
       const t3 = e3.composedPath()[0];
@@ -104,7 +104,7 @@ class w extends e {
     __privateAdd(this, _n, u.INDETERMINATE);
     __privateAdd(this, _o);
     __privateAdd(this, _i);
-    this.open = false, this.currentDialog = null, __privateSet(this, _o, s()), __privateSet(this, _i, s()), __privateSet(this, _t, new f(this, { context: h, initialValue: new b() })), __privateSet(this, _s, new i(this, { context: h, callback: this.savePreferences }));
+    this.open = false, this.currentDialog = null, __privateSet(this, _o, s()), __privateSet(this, _i, s()), __privateSet(this, _t, new f(this, { context: h, initialValue: new v() })), __privateSet(this, _s, new i(this, { context: h, callback: this.savePreferences }));
   }
   get state() {
     return __privateGet(this, _n);
@@ -132,7 +132,7 @@ class w extends e {
   }
   async saveTokens(e2) {
     __privateMethod(this, _w_instances, r_fn).call(this, "[save] tokens: ", e2);
-    const t2 = b.from(e2);
+    const t2 = v.from(e2);
     try {
       return await this._consentClient.setConsentTokens(t2), __privateMethod(this, _w_instances, c_fn).call(this, t2), true;
     } catch (e3) {

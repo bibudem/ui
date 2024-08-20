@@ -6,9 +6,9 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import "./lit-element-Dj1nHH6C.js";
-import { B } from "./bib-consent-preferences-dialog-nApIZzhr.js";
-import "./ref-B-kqFHPy.js";
+import "./lit-element-DmnF17fR.js";
+import { B } from "./bib-consent-preferences-dialog-BZ3j11wE.js";
+import "./ref-DX06OUxP.js";
 import "./consent-context.js";
 import "./ConsentTokens.js";
 import "./constants-B_DnKz1g.js";

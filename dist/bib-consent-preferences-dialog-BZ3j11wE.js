@@ -18,8 +18,8 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _i, _t, _e, _s, _m_instances, o_fn, n_fn;
-import { s as e, i as t, r as i, x as s } from "./lit-element-Dj1nHH6C.js";
-import { e as o, n } from "./ref-B-kqFHPy.js";
+import { L as e, c as t, u as i, h as s } from "./lit-element-DmnF17fR.js";
+import { c as o, r as n } from "./ref-DX06OUxP.js";
 import { consentContext as a } from "./consent-context.js";
 import { ConsentTokens as r } from "./ConsentTokens.js";
 import { C as c } from "./constants-B_DnKz1g.js";
@@ -28,11 +28,11 @@ import { C as c } from "./constants-B_DnKz1g.js";
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-let l = class extends Event {
+class l extends Event {
   constructor(e2, t2, i2) {
     super("context-request", { bubbles: true, composed: true }), this.context = e2, this.callback = t2, this.subscribe = i2 ?? false;
   }
-};
+}
 /**
  * @license
  * Copyright 2021 Google LLC
@@ -40,7 +40,7 @@ let l = class extends Event {
  */
 class d {
   constructor(e2, t2, i2, s2) {
-    if (this.subscribe = false, this.provided = false, this.value = void 0, this.t = (e3, t3) => {
+    if (this.subscribe = false, this.provided = false, this.value = void 0, this._callback = (e3, t3) => {
       this.unsubscribe && (this.unsubscribe !== t3 && (this.provided = false, this.unsubscribe()), this.subscribe || this.unsubscribe()), this.value = e3, this.host.requestUpdate(), this.provided && !this.subscribe || (this.provided = true, this.callback && this.callback(e3, t3)), this.unsubscribe = t3;
     }, this.host = e2, void 0 !== t2.context) {
       const e3 = t2;
@@ -55,7 +55,7 @@ class d {
     this.unsubscribe && (this.unsubscribe(), this.unsubscribe = void 0);
   }
   dispatchRequest() {
-    this.host.dispatchEvent(new l(this.context, this.t, this.subscribe));
+    this.host.dispatchEvent(new l(this.context, this._callback, this.subscribe));
   }
 }
 const h = "checked", p = "disabled";
@@ -166,7 +166,7 @@ __publicField(m, "styles", [t`${i("@layer reset{:host,*{box-sizing:border-box}:h
 window.customElements.get("bib-consent-preferences-dialog") || window.customElements.define("bib-consent-preferences-dialog", m);
 export {
   m as B,
-  d as a,
-  l as s
+  l as C,
+  d as a
 };
-//# sourceMappingURL=bib-consent-preferences-dialog-nApIZzhr.js.map
+//# sourceMappingURL=bib-consent-preferences-dialog-BZ3j11wE.js.map

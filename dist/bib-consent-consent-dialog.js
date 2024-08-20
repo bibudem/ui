@@ -9,8 +9,8 @@
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { s as e, i as t, r as o, x as n } from "./lit-element-Dj1nHH6C.js";
-import { e as i, n as r } from "./ref-B-kqFHPy.js";
+import { L as e, c as t, u as o, h as n } from "./lit-element-DmnF17fR.js";
+import { c as i, r } from "./ref-DX06OUxP.js";
 import "./bib-consent-dialog.js";
 import "./type-BPiIb9Kq.js";
 class a extends e {
