@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.13.2
+ * @version 0.14.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -22,8 +22,8 @@ import { h as e } from "./task-BYUCPaT1.js";
 import { s as t, i as s, r as i, x as n } from "./lit-element-Dj1nHH6C.js";
 import { o } from "./unsafe-html-hzUS4Xy_.js";
 import { o as r } from "./index-CRxQMTzC.js";
-import { a } from "./bib-D91rP2yd.js";
-import { n as c } from "./package-eM4icSas.js";
+import { a } from "./bib-OZYNsP5_.js";
+import { n as c } from "./package-CQMYZJJu.js";
 const l = "avis";
 async function d(e2) {
   const t2 = new TextEncoder().encode(JSON.stringify(e2)), s2 = await crypto.subtle.digest("SHA-256", t2);
