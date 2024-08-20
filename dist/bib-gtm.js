@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.15.0
+ * @version 0.16.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -17,7 +17,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _a_instances, t_fn;
 import { s as t, i as e, r as n } from "./lit-element-Dj1nHH6C.js";
-import { a as o } from "./bib-DJYcAggi.js";
+import { a as o } from "./bib-BW5s0xHx.js";
 import { ConsentTokens as s } from "./ConsentTokens.js";
 import { GTM_CONTAINER_ID as i } from "./constants.js";
 class a extends t {

@@ -6,11 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { j, a, e, g } from "./constants-B_DnKz1g.js";
-export {
-  j as createPrefixedEventName,
-  a as getIframeServer,
-  e as getKeyName,
-  g as getServerMode
-};
-//# sourceMappingURL=utils.js.map
+const o=require("./package-BAdJsmmO.cjs");exports.loggerFactory=function(e=o.name,n="green"){return Function.prototype.bind.call(console.log,console,`%c[${e}]`,`color: ${n}; font-weight: bold;`)};
+//# sourceMappingURL=logger-C1M6pIZ-.cjs.map

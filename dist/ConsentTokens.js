@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.15.0
+ * @version 0.16.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -15,7 +15,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _n, _h_instances, e_fn, t_fn, _s;
-import { D as e, C as t } from "./constants-7Y3W5e6n.js";
+import { D as e, C as t } from "./constants-B_DnKz1g.js";
 import { i as n, b as s, a as o } from "./isObject-Dipzh7kZ.js";
 var i = "[object Boolean]";
 function a(e2) {
