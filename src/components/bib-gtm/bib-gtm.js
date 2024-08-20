@@ -50,17 +50,15 @@ export class BibGtm extends LitElement {
       const consentElem = document.querySelector('bib-consent')
 
       if (consentElem) {
-        console.warn('bib-consent element found')
-
-        // TEMP
-        globalThis.nogtm = true
+        // console.warn('bib-consent element found')
 
         function consentListener(event) {
-          console.log(`[bib-consent] événement ${event.type}`, event.detail)
+          // console.log(`[bib-consent] événement ${event.type}`, event.detail)
 
           const consentData = event.detail
 
           if (consentData !== null) {
+            // console.log('[bib-consent] tokens:', Object.entries(consentData).map(entry => entry.join(': ')).join(', '))
 
             loadGtm(containerId)
 
@@ -73,7 +71,7 @@ export class BibGtm extends LitElement {
               analytics_storage: analytics_consent
             }
 
-            console.log('Updating GTM consent with', gtmConsentData)
+            // console.log('Updating GTM consent with', gtmConsentData)
 
             gtag('consent', 'update', gtmConsentData)
           }
@@ -83,7 +81,7 @@ export class BibGtm extends LitElement {
         const gtag = globalThis.gtag = globalThis.gtag || function gtag() { dataLayer.push(arguments) }
 
         const defaultConsent = new ConsentTokens(false)
-        console.log('defaultConsent: ', defaultConsent)
+        // console.log('defaultConsent: ', defaultConsent)
 
         gtag('consent', 'default', defaultConsent.toGTM())
         dataLayer.push({ 'gtm.start': new Date().getTime(), 'event': 'gtm.js' })

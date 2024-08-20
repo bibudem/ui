@@ -86,12 +86,8 @@ export class ConsentTokens {
 
     Object.keys(this.#tokens).forEach(key => this.#tokens[key] = value)
   }
-  #stack
 
   constructor(tokens) {
-
-    const t = new Error()
-    this.#stack = t.stack.split('\n').map(line => line.trim())
 
     // Defining getters and setters on the constructor function
     // so they are enumerables
@@ -159,7 +155,6 @@ export class ConsentTokens {
   }
 
   toGTM(wait_for_update = 500) {
-    console.log(this)
     if (this.state() === CONSENT_STATES.INDETERMINATE) {
       const nullEntries = Object.entries(this.#tokens).filter(token => token[1] === null)
       throw new Error(`All tokens must have an explicit value. Undefined token${nullEntries.length > 1 ? 's' : ''}: ${nullEntries.map(token => token[0]).join(', ')}`)
