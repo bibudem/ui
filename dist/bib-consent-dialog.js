@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.16.0
+ * @version 0.17.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -16,8 +16,8 @@ var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _a_instances, o_fn, e_fn;
-import { L as o, c as e, u as r, h as t, a as s } from "./lit-element-DmnF17fR.js";
-import { c as n, r as i } from "./ref-DX06OUxP.js";
+import { s as o, i as e, r, x as t, T as s } from "./lit-element-Dj1nHH6C.js";
+import { e as n, n as i } from "./ref-B-kqFHPy.js";
 import "./type-BPiIb9Kq.js";
 class a extends o {
   constructor() {

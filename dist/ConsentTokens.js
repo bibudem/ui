@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.16.0
+ * @version 0.17.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -12,10 +12,9 @@ var __typeError = (msg) => {
 var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
 var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
-var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _n, _h_instances, e_fn, t_fn, _s;
-import { D as e, C as t } from "./constants-B_DnKz1g.js";
+var _n, _h_instances, e_fn, t_fn;
+import { D as e, C as t } from "./constants-DwY9Xkx4.js";
 import { i as n, b as s, a as o } from "./isObject-Dipzh7kZ.js";
 var i = "[object Boolean]";
 function a(e2) {
@@ -35,9 +34,7 @@ const _h = class _h {
   constructor(t2) {
     __privateAdd(this, _h_instances);
     __privateAdd(this, _n, { ...e });
-    __privateAdd(this, _s);
-    const n2 = new Error();
-    __privateSet(this, _s, n2.stack.split("\n").map((e2) => e2.trim())), Object.defineProperties(this, { analytics_consent: { enumerable: true, get: () => __privateGet(this, _n).analytics_consent, set: (e2) => __privateMethod(this, _h_instances, e_fn).call(this, "analytics_consent", e2) }, functionality_consent: { enumerable: true, get: () => __privateGet(this, _n).functionality_consent, set: (e2) => __privateMethod(this, _h_instances, e_fn).call(this, "functionality_consent", e2) }, ad_consent: { enumerable: true, get: () => __privateGet(this, _n).ad_consent, set: (e2) => __privateMethod(this, _h_instances, e_fn).call(this, "ad_consent", e2) } }), void 0 !== t2 && (o(t2) ? Object.keys(e).forEach((e2) => {
+    Object.defineProperties(this, { analytics_consent: { enumerable: true, get: () => __privateGet(this, _n).analytics_consent, set: (e2) => __privateMethod(this, _h_instances, e_fn).call(this, "analytics_consent", e2) }, functionality_consent: { enumerable: true, get: () => __privateGet(this, _n).functionality_consent, set: (e2) => __privateMethod(this, _h_instances, e_fn).call(this, "functionality_consent", e2) }, ad_consent: { enumerable: true, get: () => __privateGet(this, _n).ad_consent, set: (e2) => __privateMethod(this, _h_instances, e_fn).call(this, "ad_consent", e2) } }), void 0 !== t2 && (o(t2) ? Object.keys(e).forEach((e2) => {
       Reflect.has(t2, e2) && __privateMethod(this, _h_instances, e_fn).call(this, e2, t2[e2]);
     }) : __privateMethod(this, _h_instances, t_fn).call(this, t2));
   }
@@ -65,7 +62,7 @@ const _h = class _h {
     Object.keys(__privateGet(this, _n)).forEach((e2) => __privateGet(this, _n)[e2] = null);
   }
   toGTM(e2 = 500) {
-    if (console.log(this), this.state() === t.INDETERMINATE) {
+    if (this.state() === t.INDETERMINATE) {
       const e3 = Object.entries(__privateGet(this, _n)).filter((e4) => null === e4[1]);
       throw new Error(`All tokens must have an explicit value. Undefined token${e3.length > 1 ? "s" : ""}: ${e3.map((e4) => e4[0]).join(", ")}`);
     }
@@ -81,7 +78,6 @@ e_fn = function(e2, t2, n2 = false) {
 t_fn = function(e2, t2 = false) {
   c(e2, { acceptNull: t2 }), "string" != typeof e2 && (e2 = e2 ? "granted" : "denied"), Object.keys(__privateGet(this, _n)).forEach((t3) => __privateGet(this, _n)[t3] = e2);
 };
-_s = new WeakMap();
 let h = _h;
 export {
   h as ConsentTokens

@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.16.0
+ * @version 0.17.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { j, a, e, g } from "./constants-B_DnKz1g.js";
+import { j, a, e, g } from "./constants-DwY9Xkx4.js";
 export {
   j as createPrefixedEventName,
   a as getIframeServer,
