@@ -29,13 +29,13 @@ La documentation des composants est gérée à l'aide de [Storybook](https://sto
 Exécuter la commande suivante, en adaptant le niveau de version en fonction des commits faits depuis le dernier `release`:
 
 ```
-npm version minor -m "Bump v%s" -m "Release-As: 0.13.0"
+npm version minor -m "Bump v%s"
 ```
 
 Effectuer un commit des fichiers build, avec un message du genre:
 
 ```
-git commit . -m "Build pour v0.13.0" && git push
+git add --all dist && git commit -m "Build pour v0.13.0" -m "Release-As: 0.13.0" && git push
 ```
 
 Puis naviguer sur les [pull requests du dépôt GitHub](https://github.com/bibudem/ui/pulls) et acceptez le pull request généré par Release Please.
