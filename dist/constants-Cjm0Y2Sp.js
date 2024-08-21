@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.17.0
+ * @version 0.18.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { n as e } from "./package-CAHqFYhI.js";
+import { n as e } from "./package-D3uWQhxv.js";
 import { t as n } from "./type-BPiIb9Kq.js";
 function t(e4, n2, t2) {
   return n2 in e4 ? Object.defineProperty(e4, n2, { value: t2, enumerable: true, configurable: true, writable: true }) : e4[n2] = t2, e4;
@@ -322,4 +322,4 @@ export {
   T as p,
   M as s
 };
-//# sourceMappingURL=constants-DwY9Xkx4.js.map
+//# sourceMappingURL=constants-Cjm0Y2Sp.js.map

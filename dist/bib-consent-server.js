@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.17.0
+ * @version 0.18.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -18,9 +18,9 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var _e, _o;
 import { s as e, i as o, r as t, x as s } from "./lit-element-Dj1nHH6C.js";
-import { d as n, p as i } from "./constants-DwY9Xkx4.js";
+import { d as n, p as i } from "./constants-Cjm0Y2Sp.js";
 import { e as r, n as a } from "./ref-B-kqFHPy.js";
-import { l } from "./logger-C1cJseWj.js";
+import { l } from "./logger-BY9jLfMv.js";
 import g from "./ConsentStorage.js";
 class c extends e {
   constructor() {

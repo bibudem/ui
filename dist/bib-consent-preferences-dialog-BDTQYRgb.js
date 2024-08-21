@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.17.0
+ * @version 0.18.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -22,7 +22,7 @@ import { s as e, i as t, r as i, x as s } from "./lit-element-Dj1nHH6C.js";
 import { e as o, n } from "./ref-B-kqFHPy.js";
 import { consentContext as a } from "./consent-context.js";
 import { ConsentTokens as r } from "./ConsentTokens.js";
-import { C as c } from "./constants-DwY9Xkx4.js";
+import { C as c } from "./constants-Cjm0Y2Sp.js";
 /**
  * @license
  * Copyright 2021 Google LLC
@@ -169,4 +169,4 @@ export {
   d as a,
   l as s
 };
-//# sourceMappingURL=bib-consent-preferences-dialog-CkOkL-Hw.js.map
+//# sourceMappingURL=bib-consent-preferences-dialog-BDTQYRgb.js.map
