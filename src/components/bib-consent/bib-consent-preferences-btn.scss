@@ -1,0 +1,18 @@
+@use '@/scss/utils/layers';
+@use '@/scss/reset';
+@use '@/scss/theme';
+@use '@/scss/tokens/ref-typeface';
+
+@include layers.order;
+
+@include reset.button;
+
+@include layers.reset {
+  :host {
+    text-decoration: underline;
+  }
+
+  button {
+    all: unset;
+  }
+}
