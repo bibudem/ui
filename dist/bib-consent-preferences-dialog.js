@@ -1,17 +1,17 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.18.0
+ * @version 0.18.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
 import "./lit-element-Dj1nHH6C.js";
-import { B } from "./bib-consent-preferences-dialog-BDTQYRgb.js";
+import { B } from "./bib-consent-preferences-dialog-ByH_MjP-.js";
 import "./ref-B-kqFHPy.js";
 import "./consent-context.js";
 import "./ConsentTokens.js";
-import "./constants-Cjm0Y2Sp.js";
+import "./constants-B2WJQGFq.js";
 export {
   B as BibConsentPreferencesDialog
 };
