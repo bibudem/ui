@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.18.1](https://github.com/bibudem/ui/compare/v0.18.0...v0.18.1) (2024-08-21)
+
+
+### Bug Fixes
+
+* **bib-consent:** Retrait du style souligné sur bib-consent-preferences-btn ([a52db1e](https://github.com/bibudem/ui/commit/a52db1eecfffd8b58710f7d6434283991f21e5e7))
+
+
+### Miscellaneous Chores
+
+* v0.18.1 ([9c52327](https://github.com/bibudem/ui/commit/9c5232794315bf8f304588b8c64b538dedf7bc64))
+
 ## [0.18.0](https://github.com/bibudem/ui/compare/v0.17.1...v0.18.0) (2024-08-21)
 
 
