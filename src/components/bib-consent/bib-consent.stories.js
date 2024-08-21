@@ -1,6 +1,6 @@
 import { html } from 'lit'
-import './bib-consent'
-import './bib-consent-server'
+import './bib-consent.js'
+import './bib-consent-server.js'
 import { EVENT_NAMES } from './constants.js'
 
 export default {
