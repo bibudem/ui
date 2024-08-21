@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.18.0](https://github.com/bibudem/ui/compare/v0.17.1...v0.18.0) (2024-08-21)
+
+
+### Features
+
+* **bib-consent:** Ajout d'un composant bib-consent-preferences-btn ([dc2538e](https://github.com/bibudem/ui/commit/dc2538e30bab0f921423b4193267f4951f683737))
+
+
+### Miscellaneous Chores
+
+* v0.18.0 ([8cf5943](https://github.com/bibudem/ui/commit/8cf5943673906da8318820271551e13e92dd305f))
+
 ## [0.17.1](https://github.com/bibudem/ui/compare/v0.17.0...v0.17.1) (2024-08-20)
 
 
