@@ -12,7 +12,7 @@ export class BibConsentPreferencesBtn extends LitElement {
   }
 
   render() {
-    return html`<button class="btn-preferences" @click="${this.onBtnClick}" aria-label="Paramètres des témoins">Paramètres des témoins</button>`
+    return html`<button @click="${this.onBtnClick}" aria-label="Paramètres des témoins">Paramètres des témoins</button>`
   }
 }
 

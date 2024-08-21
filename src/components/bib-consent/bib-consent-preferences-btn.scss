@@ -8,10 +8,6 @@
 @include reset.button;
 
 @include layers.reset {
-  :host {
-    text-decoration: underline;
-  }
-
   button {
     all: unset;
   }
