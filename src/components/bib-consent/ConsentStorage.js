@@ -1,6 +1,6 @@
 import { openDB } from 'idb'
-import { EVENT_NAMES, DEFAULT_PREFERENCES, DB_NAME, DB_VERSION, DB_STORE_NAME } from './constants.js'
-import { isEqual, isObject } from 'lodash-es'
+import { EVENT_NAMES, DB_NAME, DB_VERSION, DB_STORE_NAME } from './constants.js'
+import { isEqual } from 'lodash-es'
 import { ConsentTokens } from './ConsentTokens.js'
 
 

@@ -1,6 +1,5 @@
 import { css, html, LitElement, nothing, unsafeCSS } from 'lit'
 import { createRef, ref } from 'lit/directives/ref.js'
-import { DEFAULT_PREFERENCES } from './constants.js'
 import styles from './bib-consent-dialog.scss?inline'
 
 /**

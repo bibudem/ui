@@ -4,13 +4,13 @@ import { ContextProvider, ContextConsumer } from '@lit/context'
 import '@auroratide/toggle-switch/lib/define.js'
 import { loggerFactory } from '@/utils/logger.js'
 import { addToGlobalBib } from '@/utils/bib.js'
+import { ConsentTokens } from './ConsentTokens.js'
+import createConsentClient from './consentClient.js'
+import { consentContext } from './consent-context.js'
 import '../bib-button/bib-button-close.js'
 import './bib-consent-consent-dialog.js'
 import './bib-consent-preferences-dialog.js'
-import createConsentClient from './consentClient.js'
-import { consentContext } from './consent-context.js'
 import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT, CONSENT_STATES } from './constants.js'
-import { ConsentTokens } from './ConsentTokens.js'
 
 const debug = loggerFactory('bib-consent', '#cd5300')
 
