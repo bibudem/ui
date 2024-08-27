@@ -10,7 +10,7 @@ import { consentContext } from './consent-context.js'
 import '../bib-button/bib-button-close.js'
 import './bib-consent-consent-dialog.js'
 import './bib-consent-preferences-dialog.js'
-import { EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT, CONSENT_STATES } from './constants.js'
+import { CONSENT_STATES, EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT, SERVER_DEFAULT_URL } from './constants.js'
 
 const debug = loggerFactory('bib-consent', '#cd5300')
 
@@ -142,7 +142,7 @@ export class BibConsent extends LitElement {
     super.connectedCallback()
 
     this.debug = this.debug || false
-    this.serverUrl = this.serverUrl || 'https://bib.umontreal.ca/consent/server'
+    this.serverUrl = this.serverUrl || SERVER_DEFAULT_URL
     this.serverRequestTimeout = this.serverRequestTimeout || SERVER_REQUEST_DEFAULT_TIMEOUT
     this._consentClient = await createConsentClient({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true })
 

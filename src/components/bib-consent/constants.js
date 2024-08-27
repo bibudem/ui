@@ -11,12 +11,16 @@ export const EVENT_NAMES = {
   READY: eventName('ready'),
   UPDATE: eventName('update'),
 }
+
 export const PREFIX = 'bib-consent'
+
+export const SERVER_DEFAULT_URL = 'https://bib.umontreal.ca/consent/server'
 
 export const SERVER_MODE = {
   LOCAL: 'local',
   REMOTE: 'remote'
 }
+
 export const SERVER_REQUEST_DEFAULT_TIMEOUT = 500
 
 /**
