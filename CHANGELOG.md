@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.0](https://github.com/bibudem/ui/compare/v0.18.1...v0.19.0) (2024-08-27)
+
+
+### Features
+
+* **bib-consent:** Les propriétés server-url et server-request-timeout ne répercutent plus les changements de leurs valeurs sur les attributs correspondants. ([3f297b3](https://github.com/bibudem/ui/commit/3f297b31a289654e1bf47ef64bbbd3d1bc90dd7b))
+
 ## [0.18.1](https://github.com/bibudem/ui/compare/v0.18.0...v0.18.1) (2024-08-21)
 
 
