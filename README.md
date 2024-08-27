@@ -18,6 +18,14 @@ puis, insérez le custom element:
 <bib-avis bouton-fermer></bib-avis>
 ```
 
+### Le composant `<bib-consent>`
+
+Il faut temporairement ajouter une configuration à l'élément afin d'allonger le temps d'attente à 5000 millisecondes pour une réponse de la part du composant serveur:
+
+`<bib-consent server-request-timeout="5000"></bib-consent>`
+
+Cette configuration sera enlevée lors de la publication de la version 1.0.0 de la librairie.
+
 ## Documentation
 
 La documentation des composants est gérée à l'aide de [Storybook](https://storybook.js.org/) et publiée sur GitHub Pages:
