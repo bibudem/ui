@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.18.1
+ * @version 0.19.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -18,7 +18,6 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
 var _a_instances, o_fn, e_fn;
 import { s as o, i as e, r, x as t, T as s } from "./lit-element-Dj1nHH6C.js";
 import { e as n, n as i } from "./ref-B-kqFHPy.js";
-import "./type-BPiIb9Kq.js";
 class a extends o {
   constructor() {
     super();

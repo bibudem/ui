@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.18.1
+ * @version 0.19.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { n as e } from "./package-BQN-QfHU.js";
+import { n as e } from "./package-aLA7rD-Y.js";
 import { t as n } from "./type-BPiIb9Kq.js";
 function t(e4, n2, t2) {
   return n2 in e4 ? Object.defineProperty(e4, n2, { value: t2, enumerable: true, configurable: true, writable: true }) : e4[n2] = t2, e4;
@@ -286,14 +286,14 @@ function S(e4, n2) {
   }(n2) ? s2.style.cssText = "width: 100%; height: 100%; border: 0;" : (s2.ariaHidden = true, s2.tabIndex = -1, s2.hidden = true, s2.style.setProperty("display", "none")), t2.appendChild(s2), s2.src = n2), { server: s2.contentWindow || s2.contentDocument.parentWindow, origin: r2, iframe: s2 };
 }
 async function q(e4) {
-  const n2 = e4.serverUrl, t2 = e4.serverRequestTimeout || U;
-  if (!n2) return N.LOCAL;
+  const n2 = e4.serverUrl, t2 = e4.serverRequestTimeout || F;
+  if (!n2) return U.LOCAL;
   const r2 = new AbortController();
   let o2, s2;
   try {
     if (s2 = setTimeout(() => {
       console.warn(`Request timed out after ${t2}ms. Aborting request...`), r2.abort();
-    }, t2), o2 = await fetch(n2, { signal: r2.signal }), o2.ok) return N.REMOTE;
+    }, t2), o2 = await fetch(n2, { signal: r2.signal }), o2.ok) return U.REMOTE;
   } catch (e5) {
     if (console.error(e5), r2.signal.aborted) throw new Error(`Unable to locate server page. The request timed out after ${t2}ms. url: ${n2.href}`);
     throw new Error(`Unable to locate server page : ${n2.href}.`, e5);
@@ -302,24 +302,25 @@ async function q(e4) {
   }
   throw new Error(`Unable to locate server page. The request failed with status code ${o2.status}. url: ${n2.href}`);
 }
-const L = D("consent"), $ = `${e}/consent`, A = 1, x = "consent", C = { READY: L("ready"), UPDATE: L("update") }, _ = "bib-consent", N = { LOCAL: "local", REMOTE: "remote" }, U = 500, F = { analytics_consent: null, functionality_consent: null, ad_consent: null }, K = { INDETERMINATE: "indeterminate", DETERMINATE: "determinate" };
+const L = D("consent"), $ = `${e}/consent`, A = 1, x = "consent", C = { READY: L("ready"), UPDATE: L("update") }, _ = "bib-consent", N = "https://bib.umontreal.ca/consent/server", U = { LOCAL: "local", REMOTE: "remote" }, F = 500, K = { analytics_consent: null, functionality_consent: null, ad_consent: null }, Y = { INDETERMINATE: "indeterminate", DETERMINATE: "determinate" };
 export {
-  K as C,
-  F as D,
+  Y as C,
+  K as D,
   C as E,
   _ as P,
-  N as S,
+  U as S,
   S as a,
-  U as b,
+  F as b,
   g as c,
   I as d,
   R as e,
-  $ as f,
+  N as f,
   q as g,
-  A as h,
-  x as i,
-  D as j,
+  $ as h,
+  A as i,
+  x as j,
+  D as k,
   T as p,
   M as s
 };
-//# sourceMappingURL=constants-B2WJQGFq.js.map
+//# sourceMappingURL=constants-D0hS4kJm.js.map
