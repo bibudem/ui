@@ -54,13 +54,11 @@ export class BibConsent extends LitElement {
   static properties = {
     serverUrl: {
       type: String,
-      attribute: 'server-url',
-      reflect: true
+      attribute: 'server-url'
     },
     serverRequestTimeout: {
       type: Number,
-      attribute: 'server-request-timeout',
-      reflect: true
+      attribute: 'server-request-timeout'
     },
     [SERVER_MODE.LOCAL]: {
       type: Boolean
