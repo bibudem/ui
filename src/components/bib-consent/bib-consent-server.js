@@ -141,7 +141,7 @@ export class BibConsentServer extends LitElement {
           break
 
         case 'ping':
-          responseData = "pong"
+          responseData = 'pong'
           break
 
         default:
