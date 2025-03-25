@@ -107,10 +107,14 @@ export async function getServerMode(client) {
     console.error(error)
 
     if (controller.signal.aborted) {
-      throw new Error(`Unable to locate server page. The request timed out after ${timeout}ms. url: ${serverUrl.href}`)
+      // throw new Error(`Unable to locate server page. The request timed out after ${timeout}ms. url: ${serverUrl.href}`)
+      console.error(`Unable to locate server page. The request timed out after ${timeout}ms. url: ${serverUrl.href}`)
+      return SERVER_MODE.LOCAL
     }
 
-    throw new Error(`Unable to locate server page : ${serverUrl.href}.`, error)
+    // throw new Error(`Unable to locate server page : ${serverUrl.href}.`, error)
+    console.error(`Unable to locate server page : ${serverUrl.href}.`, error)
+    return SERVER_MODE.LOCAL
   } finally {
     clearTimeout(timeoutHandle)
   }
