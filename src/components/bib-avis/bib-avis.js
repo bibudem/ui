@@ -78,6 +78,7 @@ export class BibAvis extends LitElement {
             },
             signal
           })
+            .catch(console.error)
 
           if (!response.ok) {
             return reject(new Error(response.status))
