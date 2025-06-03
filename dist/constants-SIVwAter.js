@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.19.0
+ * @version 0.20.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { n as e } from "./package-aLA7rD-Y.js";
+import { n as e } from "./package-CsfenMsK.js";
 import { t as n } from "./type-BPiIb9Kq.js";
 function t(e4, n2, t2) {
   return n2 in e4 ? Object.defineProperty(e4, n2, { value: t2, enumerable: true, configurable: true, writable: true }) : e4[n2] = t2, e4;
@@ -153,7 +153,7 @@ function y(e4, n2) {
   }
   return t2;
 }
-function w(e4) {
+function b(e4) {
   for (var n2 = 1; n2 < arguments.length; n2++) {
     var r2 = null != arguments[n2] ? arguments[n2] : {};
     n2 % 2 ? y(Object(r2), true).forEach(function(n3) {
@@ -164,7 +164,7 @@ function w(e4) {
   }
   return e4;
 }
-var b = "identity_key";
+var w = "identity_key";
 function I() {
   var e4 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {}, n2 = e4.eventFilter, r2 = void 0 === n2 ? function() {
     return true;
@@ -174,7 +174,7 @@ function I() {
       return new Promise(function(r3) {
         var o3 = "syn", s3 = Number(Math.random().toString().substr(3, 10)), i3 = -1, a3 = null, c3 = 5;
         window.addEventListener("message", function l2(u2) {
-          if (u2.data && "postmessage-promise_client" === u2.data[b] && u2.data.channelId && u2.data.method && "hand-shake" === u2.data.method && e6(u2)) {
+          if (u2.data && "postmessage-promise_client" === u2.data[w] && u2.data.channelId && u2.data.method && "hand-shake" === u2.data.method && e6(u2)) {
             var d2 = u2.data.payload || {}, f2 = d2.SYN, h2 = d2.ACK, v2 = d2.seqnumber, p2 = d2.acknumber;
             if (1 === f2 && 0 === h2) {
               if ("syn" !== o3) return;
@@ -182,7 +182,7 @@ function I() {
               var m2 = function() {
                 if (!u2.source || u2.source.closed) return console.info("client closed and reset to listening."), o3 = "syn", clearTimeout(a3), a3 = null, c3 = 5, s3 = Number(Math.random().toString().substr(3, 10)), i3 = -1, false;
                 try {
-                  u2.source.postMessage(t(t(t(t({}, b, "postmessage-promise_server"), "channelId", u2.data.channelId), "method", "hand-shake"), "payload", { serverInfo: n3, acknumber: v2 + 1, SYN: 1, ACK: 1, seqnumber: s3 }), u2.origin);
+                  u2.source.postMessage(t(t(t(t({}, w, "postmessage-promise_server"), "channelId", u2.data.channelId), "method", "hand-shake"), "payload", { serverInfo: n3, acknumber: v2 + 1, SYN: 1, ACK: 1, seqnumber: s3 }), u2.origin);
                 } catch (e7) {
                   return console.error(e7), true;
                 }
@@ -216,7 +216,7 @@ function I() {
             u2 && (e8 = u2).listenMessage.apply(e8, arguments);
           }, destroy: d2 });
         } };
-      })(w(w({}, n3), {}, { destroy: function() {
+      })(b(b({}, n3), {}, { destroy: function() {
         c2 && c2(n3.clientInfo, n3);
       } }), r2, s2).run(e5);
     });
@@ -265,27 +265,27 @@ function M(e4) {
     return false;
   }
 }
-function T(e4, n2) {
+function L(e4, n2) {
   const t2 = e4.replace(/[.]/g, "\\$&").replace(/-/g, "\\x2d").replace(/[*]/g, ".*");
   return new RegExp(`^${t2}$`, "u").test(n2);
 }
-function D(e4) {
+function T(e4) {
   return function(n2) {
     return `bib:${e4}:${n2}`;
   };
 }
-function R(e4) {
+function D(e4) {
   return `${_}-${e4}`;
 }
-function S(e4, n2) {
-  const t2 = void 0 !== e4 ? e4 : document.body, r2 = P.resolveOrigin(n2), o2 = R("iframe");
+function R(e4, n2) {
+  const t2 = void 0 !== e4 ? e4 : document.body, r2 = P.resolveOrigin(n2), o2 = D("iframe");
   let s2;
   return document.querySelector(`#${o2}`) ? s2 = document.querySelector(`#${o2}`) : (s2 = document.createElement("iframe"), s2.id = o2, function(e5, n3) {
     const t3 = (e5 = "string" == typeof e5 ? new URL(e5, location) : e5).searchParams.get("debug");
     return null !== t3 && ("" === t3 || k(t3));
   }(n2) ? s2.style.cssText = "width: 100%; height: 100%; border: 0;" : (s2.ariaHidden = true, s2.tabIndex = -1, s2.hidden = true, s2.style.setProperty("display", "none")), t2.appendChild(s2), s2.src = n2), { server: s2.contentWindow || s2.contentDocument.parentWindow, origin: r2, iframe: s2 };
 }
-async function q(e4) {
+async function S(e4) {
   const n2 = e4.serverUrl, t2 = e4.serverRequestTimeout || F;
   if (!n2) return U.LOCAL;
   const r2 = new AbortController();
@@ -295,32 +295,31 @@ async function q(e4) {
       console.warn(`Request timed out after ${t2}ms. Aborting request...`), r2.abort();
     }, t2), o2 = await fetch(n2, { signal: r2.signal }), o2.ok) return U.REMOTE;
   } catch (e5) {
-    if (console.error(e5), r2.signal.aborted) throw new Error(`Unable to locate server page. The request timed out after ${t2}ms. url: ${n2.href}`);
-    throw new Error(`Unable to locate server page : ${n2.href}.`, e5);
+    return console.error(e5), r2.signal.aborted ? (console.error(`Unable to locate server page. The request timed out after ${t2}ms. url: ${n2.href}`), U.LOCAL) : (console.error(`Unable to locate server page : ${n2.href}.`, e5), U.LOCAL);
   } finally {
     clearTimeout(s2);
   }
   throw new Error(`Unable to locate server page. The request failed with status code ${o2.status}. url: ${n2.href}`);
 }
-const L = D("consent"), $ = `${e}/consent`, A = 1, x = "consent", C = { READY: L("ready"), UPDATE: L("update") }, _ = "bib-consent", N = "https://bib.umontreal.ca/consent/server", U = { LOCAL: "local", REMOTE: "remote" }, F = 500, K = { analytics_consent: null, functionality_consent: null, ad_consent: null }, Y = { INDETERMINATE: "indeterminate", DETERMINATE: "determinate" };
+const q = T("consent"), A = `${e}/consent`, $ = 1, C = "consent", x = { READY: q("ready"), UPDATE: q("update") }, _ = "bib-consent", N = "https://bib.umontreal.ca/consent/server", U = { LOCAL: "local", REMOTE: "remote" }, F = 500, K = { analytics_consent: null, functionality_consent: null, ad_consent: null }, Y = { INDETERMINATE: "indeterminate", DETERMINATE: "determinate" };
 export {
   Y as C,
   K as D,
-  C as E,
+  x as E,
   _ as P,
   U as S,
-  S as a,
+  R as a,
   F as b,
   g as c,
   I as d,
-  R as e,
+  D as e,
   N as f,
-  q as g,
-  $ as h,
-  A as i,
-  x as j,
-  D as k,
-  T as p,
+  S as g,
+  A as h,
+  $ as i,
+  C as j,
+  T as k,
+  L as p,
   M as s
 };
-//# sourceMappingURL=constants-D0hS4kJm.js.map
+//# sourceMappingURL=constants-SIVwAter.js.map

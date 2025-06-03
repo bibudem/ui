@@ -1,13 +1,13 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.19.0
+ * @version 0.20.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import "./package-aLA7rD-Y.js";
-import { C, h, j, i, D, E, P, f, S, b } from "./constants-D0hS4kJm.js";
+import "./package-CsfenMsK.js";
+import { C, h, j, i, D, E, P, f, S, b } from "./constants-SIVwAter.js";
 export {
   C as CONSENT_STATES,
   h as DB_NAME,

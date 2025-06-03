@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.19.0
+ * @version 0.20.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -22,9 +22,9 @@ import { h as e } from "./task-BYUCPaT1.js";
 import { s as t, i as s, r as i, x as n } from "./lit-element-Dj1nHH6C.js";
 import { o } from "./unsafe-html-hzUS4Xy_.js";
 import { o as r } from "./index-CRxQMTzC.js";
-import { a } from "./bib-1rVnZJhT.js";
-import { DB_STORE_NAME as c, DB_VERSION as l, DB_NAME as d } from "./constants2.js";
-async function h(e2) {
+import { a } from "./bib-CuS-VlYr.js";
+import { DB_STORE_NAME as c, DB_VERSION as l, DB_NAME as h } from "./constants2.js";
+async function d(e2) {
   const t2 = new TextEncoder().encode(JSON.stringify(e2)), s2 = await crypto.subtle.digest("SHA-256", t2);
   return Array.from(new Uint8Array(s2)).map((e3) => e3.toString(16).padStart(2, "0")).join("");
 }
@@ -61,7 +61,7 @@ s_fn = function() {
   return new e(this, { task: async ([e2, t2, s2], { signal: i2 }) => {
     const n2 = new Promise(async (n3, o2) => {
       if ("" !== this.textContent.trim()) return n3({ isLocal: true, message: this.innerHTML.split(/<!--\?lit\$\d+\$-->/).join("") });
-      const r2 = new URL(`${t2}/${s2}`, e2), a2 = await fetch(r2, { headers: { Accept: "application/json" }, signal: i2 });
+      const r2 = new URL(`${t2}/${s2}`, e2), a2 = await fetch(r2, { headers: { Accept: "application/json" }, signal: i2 }).catch(console.error);
       if (!a2.ok) return o2(new Error(a2.status));
       const { message: c2 } = await a2.json();
       n3({ isLocal: false, message: c2 });
@@ -78,11 +78,11 @@ s_fn = function() {
 i_fn = async function(e2) {
   if (!e2.message) return void this.setMessage(null);
   if (!("indexedDB" in window)) return void this.setMessage(e2.message);
-  const t2 = __privateSet(this, _t, await r(d, l, { upgrade(e3) {
+  const t2 = __privateSet(this, _t, await r(h, l, { upgrade(e3) {
     e3.objectStoreNames.contains(c) || e3.createObjectStore(c);
   } }));
   try {
-    const s2 = await h(e2), i2 = await t2.get(c, s2);
+    const s2 = await d(e2), i2 = await t2.get(c, s2);
     i2 ? i2.hidden || (await t2.delete(c, s2), __privateMethod(this, _b_instances, n_fn).call(this, i2)) : __privateMethod(this, _b_instances, n_fn).call(this, e2);
   } catch (t3) {
     console.error("Something went wrong with indexedDB: %o", t3), this.setMessage(e2.message);
@@ -90,13 +90,13 @@ i_fn = async function(e2) {
 };
 n_fn = async function(e2) {
   if (this.dispatchEvent(new CustomEvent("bib:show", { bubbles: true, cancelable: true })) && (this.setMessage(e2), __privateGet(this, _t))) {
-    const t2 = await h(e2);
+    const t2 = await d(e2);
     await __privateGet(this, _t).put(c, { ...e2, hidden: false }, t2);
   }
 };
 o_fn = async function() {
   if (!this.dispatchEvent(new CustomEvent("bib:hide", { bubbles: true, cancelable: true }))) return;
-  const e2 = await h(__privateGet(this, _e));
+  const e2 = await d(__privateGet(this, _e));
   await __privateGet(this, _t).put(c, { ...__privateGet(this, _e), hidden: true }, e2), __privateSet(this, _e, null), this.requestUpdate();
 };
 r_fn = function() {
