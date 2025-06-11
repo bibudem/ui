@@ -143,9 +143,14 @@ export class BibAvis extends LitElement {
             return reject(new Error(response.status))
           }
 
-          const { message } = await response.json()
+          const { success, data } = await response.json()
 
-          resolve({ isLocal: false, message })
+          if (success) {
+            const { id, message } = data
+            return resolve({ isLocal: false, id, message })
+          }
+
+          reject(new Error('The service responded with a message with a prop succes at', success))
         })
 
         try {
@@ -165,18 +170,20 @@ export class BibAvis extends LitElement {
    * Traite les données d'avis récupérées et gère la persistance
    * @param {Object} avis - Données de l'avis à traiter
    * @param {string} avis.message - Contenu HTML du message
+   * @param {string} [avis.id] - Id unique du message
    * @param {boolean} [avis.isLocal] - Indique si l'avis provient du contenu local
    * @returns {Promise<void>}
    * @private
    */
   async #processAvis(avis) {
-    if (!avis.message) {
+    const { id, message } = avis
+    if (!message) {
       this.setMessage(null)
       return
     }
 
     if (!('indexedDB' in window)) {
-      this.setMessage(avis.message)
+      this.setMessage(message)
       return
     }
 
@@ -190,7 +197,6 @@ export class BibAvis extends LitElement {
     })
 
     try {
-      const id = await hash(avis)
       const storedAvis = await db.get(DB_STORE_NAME, id)
       if (storedAvis) {
         if (!storedAvis.hidden) {
@@ -213,7 +219,7 @@ export class BibAvis extends LitElement {
    * @returns {Promise<void>}
    * @private
    */
-  async #show(avis) {
+  async #show(message) {
 
     const canceled = !this.dispatchEvent(new CustomEvent('bib:show', { bubbles: true, cancelable: true }))
 
@@ -221,11 +227,10 @@ export class BibAvis extends LitElement {
       return
     }
 
-    this.setMessage(avis)
+    this.setMessage(message)
 
     if (this.#db) {
-      const id = await hash(avis)
-      await this.#db.put(DB_STORE_NAME, { ...avis, hidden: false }, id)
+      await this.#db.put(DB_STORE_NAME, { ...message, hidden: false }, message.id)
     }
   }
 
@@ -242,7 +247,7 @@ export class BibAvis extends LitElement {
       return
     }
 
-    const id = await hash(this.#avis)
+    const { id } = this.#avis
     await this.#db.put(DB_STORE_NAME, { ...this.#avis, hidden: true }, id)
     this.#avis = null
     this.requestUpdate()
@@ -273,28 +278,6 @@ export class BibAvis extends LitElement {
   _renderBoutonFermer() {
     return this.boutonFermer ? html`<button class="btn-close" aria-label="Fermer" @click="${this.#onBtnFermerClick}">${unsafeHTML(closeIcon)}</button>` : null
   }
-
-  /**
-   * Tâche alternative pour la récupération d'avis (non utilisée actuellement)
-   * @type {Task}
-   * @private
-   */
-  _avisTask = new Task(this, {
-    task: async ([service], { signal }) => {
-      const url = new URL(service)
-      const response = await fetch(url, {
-        headers: {
-          "Accept": "application/json",
-        },
-        signal
-      })
-      if (!response.ok) {
-        throw new Error(response.status)
-      }
-      return response.json()
-    },
-    args: () => [this.service]
-  })
 
   /**
    * Méthode de rendu du composant
