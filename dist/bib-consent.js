@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.21.0
+ * @version 0.22.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -20,15 +20,15 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
 var _e, _t, _s, _n, _o, _i, _E_instances, c_fn, r_fn, h_fn, a_fn, l_fn, u_fn;
 import { s as e, x as t } from "./lit-element-Dj1nHH6C.js";
 import { e as s, n } from "./ref-B-kqFHPy.js";
-import { s as o, a as i } from "./bib-consent-preferences-dialog-DizgF75h.js";
-import { l as r } from "./logger-DUD5CkCC.js";
-import { a as c } from "./bib-DQcZq7c_.js";
+import { s as o, a as i } from "./bib-consent-preferences-dialog-D7WmclpJ.js";
+import { l as r } from "./logger-DuAGR7EQ.js";
+import { a as c } from "./bib-BhAU8_Zb.js";
 import { ConsentTokens as a } from "./ConsentTokens.js";
 import h from "./consentClient.js";
 import { consentContext as l } from "./consent-context.js";
 import "./bib-button-close.js";
 import "./bib-consent-consent-dialog.js";
-import { S as u, C as d, f as p, b, E as v } from "./constants-BzVDdA62.js";
+import { S as u, C as d, f as p, b, E as v } from "./constants-CPZCUlKO.js";
 /**
  * @license
  * Copyright 2021 Google LLC

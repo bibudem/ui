@@ -6,13 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { s as e, x as r } from "./lit-element-Dj1nHH6C.js";
-class t extends e {
-  render() {
-    return r``;
-  }
-}
-export {
-  t as BibFooter
-};
-//# sourceMappingURL=bib-footer.js.map
+const o=require("./package-BiT3gx3h.cjs");exports.loggerFactory=function(e=o.name,n="green"){return Function.prototype.bind.call(console.log,console,`%c[${e}]`,`color: ${n}; font-weight: bold;`)};
+//# sourceMappingURL=logger-bWGlnhLt.cjs.map
