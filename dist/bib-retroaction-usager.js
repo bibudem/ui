@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.20.2
+ * @version 0.23.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -22,7 +22,7 @@ import { u as e, f as t, s as r, x as o, i as a, w as i, T as n, r as s } from "
 import { o as l } from "./unsafe-html-hzUS4Xy_.js";
 import { e as c, i as d, t as h } from "./directive-Ce1M5_Fy.js";
 import { VoteData as u } from "./VotePayload.js";
-import { a as p } from "./bib-vcTyZWHA.js";
+import { a as p } from "./bib-DW2nTpT-.js";
 function v(e2, t2, r2, o2) {
   var a2, i2 = arguments.length, n2 = i2 < 3 ? t2 : null === o2 ? o2 = Object.getOwnPropertyDescriptor(t2, r2) : o2;
   if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) n2 = Reflect.decorate(e2, t2, r2, o2);
