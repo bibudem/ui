@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.20.1](https://github.com/bibudem/ui/compare/v0.20.0...v0.20.1) (2025-06-11)
+
+
+### Bug Fixes
+
+* **bib-avis:** Correctifs afn d'adapter le traitement des données reçues du service REST en fonction de leur nouveau format ([99d4b23](https://github.com/bibudem/ui/commit/99d4b230dbe73d256a420c4f5924b3717d469818))
+* **bib-avis:** Correction de la largeur maximale du composant. ([e6fd35e](https://github.com/bibudem/ui/commit/e6fd35e91e11022219a675b27cbc38e021099b1a))
+* **bib-avis:** Correction du background-color du composant. ([ed8c371](https://github.com/bibudem/ui/commit/ed8c3716eea5bc85685d625e5eb7e61b7c5a72b0))
+
 ## [0.20.0](https://github.com/bibudem/ui/compare/v0.19.0...v0.20.0) (2025-06-11)
 
 
