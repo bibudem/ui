@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 0.20.0
+ * @version 0.21.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -18,8 +18,8 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _e, _t, _c_instances, s_fn;
-import { E as e, S as t, s, g as r, a as o, c as n, b as i } from "./constants-SIVwAter.js";
-import { l as a } from "./logger-DOB7lghp.js";
+import { E as e, S as t, s, g as r, a as o, c as n, b as i } from "./constants-BzVDdA62.js";
+import { l as a } from "./logger-DUD5CkCC.js";
 import h from "./ConsentStorage.js";
 import { ConsentTokens as d } from "./ConsentTokens.js";
 class c extends EventTarget {
