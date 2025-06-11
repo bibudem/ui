@@ -1,7 +1,9 @@
 @use '../../scss/states';
 
 :host,
-* {
+*,
+*::after,
+*::before {
   box-sizing: border-box;
 }
 
@@ -19,11 +21,12 @@
   display: flex;
   align-items: center;
   margin: 0 auto;
-  padding: 0.75rem 64px;
+  padding: 0.75rem;
   gap: 1em;
 
   :host(:not([fluide])) & {
     max-width: 1536px;
+    padding: 0.75rem 64px;
   }
 }
 
