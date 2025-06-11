@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.20.0](https://github.com/bibudem/ui/compare/v0.19.0...v0.20.0) (2025-06-11)
+
+
+### Features
+
+* **bib-avis:** Changement de l'URL du service afin de s'aligner avec la nouvelle version du service REST; Ajout de documentation jsdoc ([0f7b2de](https://github.com/bibudem/ui/commit/0f7b2de0c5ce97d68f6618e87cee659e7edeaf87))
+
+
+### Bug Fixes
+
+* **bib-avis:** Meilleure gestion des exceptions ([cec07af](https://github.com/bibudem/ui/commit/cec07afda09ea16ba5dc5a03bc07ae607c3f0b73))
+* **bib-consent:** La détection du mode de serveur (local ou distant) ne throw plus en cas d'échec. ([43b71b1](https://github.com/bibudem/ui/commit/43b71b1b48aaa2b61c1bb424bfbc37a501018de6))
+
 ## [0.19.0](https://github.com/bibudem/ui/compare/v0.18.1...v0.19.0) (2024-08-27)
 
 
