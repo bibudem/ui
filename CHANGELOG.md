@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.0](https://github.com/bibudem/ui/compare/v0.20.1...v0.21.0) (2025-06-11)
+
+
+### Features
+
+* **bib-avis:** Ajout d'une propriété css --bib-avis-spacing-inline ([64cadd7](https://github.com/bibudem/ui/commit/64cadd79d41c63625a4c917a2dcffded1e72a5e2))
+
 ## [0.20.1](https://github.com/bibudem/ui/compare/v0.20.0...v0.20.1) (2025-06-11)
 
 
