@@ -21,35 +21,7 @@ export default {
           summary: 'url'
         },
         defaultValue: {
-          summary: 'https://avis.bib.umontreal.ca'
-        }
-      }
-    },
-    niveau: {
-      description: 'Niveau d\importance de l\'avis: `informatif` ou `important`',
-      type: {
-        name: 'string',
-      },
-      control: { type: 'select' },
-      options: ['important', 'informatif'],
-      table: {
-        value: ['important', 'informatif'],
-        defaultValue: {
-          summary: 'important'
-        }
-      }
-    },
-    contexte: {
-      description: 'Contexte d\'affichage du service utilité: `site-web` ou `site-web-dev`',
-      type: {
-        name: 'string'
-      },
-      control: { type: 'select' },
-      options: ['site-web', 'site-web-dev'],
-      table: {
-        value: ['site-web', 'site-web-dev'],
-        defaultValue: {
-          summary: 'site-web'
+          summary: 'https://avis.bib.umontreal.ca/api/avis'
         }
       }
     },
@@ -97,8 +69,8 @@ export default {
  * Affiche un avis
  */
 export const Avis = {
-  render: function ({ contexte, niveau, service, fluide, ...props }) {
-    return html`<bib-avis contexte="${ifDefined(contexte)}" niveau="${ifDefined(niveau)}" service="${ifDefined(service)}" ?bouton-fermer=${props['bouton-fermer']} ?fluide=${fluide} />`
+  render: function ({ service, fluide, ...props }) {
+    return html`<bib-avis service="${ifDefined(service)}" ?bouton-fermer=${props['bouton-fermer']} ?fluide=${fluide} />`
   },
   args: {
     'bouton-fermer': true
