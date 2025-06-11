@@ -19,11 +19,11 @@
   display: flex;
   align-items: center;
   margin: 0 auto;
-  padding: 11px 19px;
+  padding: 0.75rem 64px;
   gap: 1em;
 
   :host(:not([fluide])) & {
-    max-width: 1220px;
+    max-width: 1536px;
   }
 }
 
