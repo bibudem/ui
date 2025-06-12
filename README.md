@@ -1,7 +1,5 @@
 # Librairie du system design des Bibliothèques de l'Université de Montréal
 
-**_Version préliminaire_**
-
 ## Utilisation
 
 Cette librairie n'exporte pas pour l'instant de module pour le _custom element_ `bib-avis`. La seule façon d'utiliser ce composant est d'importer le module à l'aide d'un élément `<script type="module"></script>`
@@ -46,4 +44,4 @@ Effectuer un commit des fichiers build, avec un message du genre:
 git add --all dist && git commit -m "Build pour v0.13.0" -m "Release-As: 0.13.0" && git push
 ```
 
-Puis naviguer sur les [pull requests du dépôt GitHub](https://github.com/bibudem/ui/pulls) et acceptez le pull request généré par *Release Please*.
+Puis naviguer sur les [pull requests du dépôt GitHub](https://github.com/bibudem/ui/pulls) et acceptez le pull request généré par _Release Please_.
