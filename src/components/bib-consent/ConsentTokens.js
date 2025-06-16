@@ -52,7 +52,7 @@ export class ConsentTokens {
   static from(tokens) {
     const consentTokens = new ConsentTokens()
 
-    if (tokens) {
+    if (typeof tokens !== 'undefined') {
       if (isObject(tokens)) {
         Object.keys(tokens).forEach(key => {
           consentTokens.#setToken(key, tokens[key], true)
