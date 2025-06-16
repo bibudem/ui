@@ -32,24 +32,6 @@ const debug = loggerFactory('bib-consent', '#cd5300')
  *
  * The component uses the `@lit/context` library to manage the consent preferences as a shared context, and the `createConsentClient` function to interact with the server.
  */
-/**
- * The `BibConsent` class is a custom web component that provides a user interface for managing consent preferences.
- *
- * It includes the following functionality:
- * - Fetching and displaying the user's consent preferences from a server
- * - Allowing the user to update their consent preferences
- * - Saving the updated consent preferences to the server
- * - Providing a consent dialog and a preferences dialog for the user to interact with
- *
- * The component can be configured with the following properties:
- * - `serverUrl`: the URL of the server where the consent preferences are stored
- * - `serverRequestTimeout`: the timeout for requests to the server
- * - `[SERVER_MODE.LOCAL]`: a boolean indicating whether the component is running in local mode
- * - `debug`: a boolean indicating whether debug logging should be enabled
- * - `open`: a boolean indicating whether the consent dialog or preferences dialog is currently open
- *
- * The component uses the `@lit/context` library to manage the consent preferences as a shared context, and the `createConsentClient` function to interact with the server.
- */
 export class BibConsent extends LitElement {
   static properties = {
     serverUrl: {
