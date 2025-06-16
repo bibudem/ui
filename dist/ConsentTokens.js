@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.0.0
+ * @version 1.0.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -14,7 +14,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _n, _h_instances, e_fn, t_fn;
-import { D as e, C as t } from "./constants-CQA7KXmT.js";
+import { D as e, C as t } from "./constants-7IpvaV6g.js";
 import { i as n, b as s, a as o } from "./isObject-Dipzh7kZ.js";
 var i = "[object Boolean]";
 function a(e2) {
@@ -41,7 +41,7 @@ const _h = class _h {
   static from(e2) {
     var _a;
     const t2 = new _h();
-    return e2 && (o(e2) ? Object.keys(e2).forEach((n2) => {
+    return void 0 !== e2 && (o(e2) ? Object.keys(e2).forEach((n2) => {
       var _a2;
       __privateMethod(_a2 = t2, _h_instances, e_fn).call(_a2, n2, e2[n2], true);
     }) : __privateMethod(_a = t2, _h_instances, t_fn).call(_a, e2, true)), t2;

@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.0.0
+ * @version 1.0.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { e as o } from "./constants-CQA7KXmT.js";
+import { e as o } from "./constants-7IpvaV6g.js";
 /**
  * @license
  * Copyright 2021 Google LLC
