@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/bibudem/ui/compare/1.0.0...v1.0.1) (2025-06-16)
+
+
+### Bug Fixes
+
+* **bib-consent:** Le bouton 'Tout refuser' ne fonctionnait pas. ([6ccc903](https://github.com/bibudem/ui/commit/6ccc903d12183ed7ecab1ad413bd82c75276ccc4))
+
 ## [0.21.0](https://github.com/bibudem/ui/compare/v0.20.1...v0.21.0) (2025-06-11)
 
 
