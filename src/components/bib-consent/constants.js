@@ -14,7 +14,7 @@ export const EVENT_NAMES = {
 
 export const PREFIX = 'bib-consent'
 
-export const SERVER_DEFAULT_URL = 'https://bib.umontreal.ca/consent/server'
+export const SERVER_DEFAULT_URL = 'https://bib.umontreal.ca/consent/server/'
 
 export const SERVER_MODE = {
   LOCAL: 'local',
