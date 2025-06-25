@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/bibudem/ui/compare/v1.0.1...v1.0.2) (2025-06-25)
+
+
+### Bug Fixes
+
+* **bib-consent:** Changement de l'URL du service par défaut ([3ecb548](https://github.com/bibudem/ui/commit/3ecb5482cb0c0fdc4d6944ff33cd26a256658ad9))
+
 ## [1.0.1](https://github.com/bibudem/ui/compare/1.0.0...v1.0.1) (2025-06-16)
 
 
