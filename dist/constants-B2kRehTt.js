@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.0.1
+ * @version 1.0.2
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { n as e } from "./package-CwKbjj-1.js";
+import { n as e } from "./package-DNZk2Zt4.js";
 import { t as n } from "./type-BPiIb9Kq.js";
 function t(e4, n2, t2) {
   return n2 in e4 ? Object.defineProperty(e4, n2, { value: t2, enumerable: true, configurable: true, writable: true }) : e4[n2] = t2, e4;
@@ -301,7 +301,7 @@ async function S(e4) {
   }
   throw new Error(`Unable to locate server page. The request failed with status code ${o2.status}. url: ${n2.href}`);
 }
-const q = T("consent"), A = `${e}/consent`, $ = 1, C = "consent", x = { READY: q("ready"), UPDATE: q("update") }, _ = "bib-consent", N = "https://bib.umontreal.ca/consent/server", U = { LOCAL: "local", REMOTE: "remote" }, F = 500, K = { analytics_consent: null, functionality_consent: null, ad_consent: null }, Y = { INDETERMINATE: "indeterminate", DETERMINATE: "determinate" };
+const q = T("consent"), A = `${e}/consent`, $ = 1, C = "consent", x = { READY: q("ready"), UPDATE: q("update") }, _ = "bib-consent", N = "https://bib.umontreal.ca/consent/server/", U = { LOCAL: "local", REMOTE: "remote" }, F = 500, K = { analytics_consent: null, functionality_consent: null, ad_consent: null }, Y = { INDETERMINATE: "indeterminate", DETERMINATE: "determinate" };
 export {
   Y as C,
   K as D,
@@ -322,4 +322,4 @@ export {
   L as p,
   M as s
 };
-//# sourceMappingURL=constants-7IpvaV6g.js.map
+//# sourceMappingURL=constants-B2kRehTt.js.map

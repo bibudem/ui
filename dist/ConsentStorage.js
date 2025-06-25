@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.0.1
+ * @version 1.0.2
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -14,7 +14,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _se_instances, e_fn;
 import { o as e } from "./index-CRxQMTzC.js";
-import { E as t, h as r, i as n, j as a } from "./constants-7IpvaV6g.js";
+import { E as t, h as r, i as n, j as a } from "./constants-B2kRehTt.js";
 import { ConsentTokens as o } from "./ConsentTokens.js";
 import { g as s, o as c, i, a as u, b as f, c as l, t as b, M as h, d as v, e as p, U as d, f as w, S as j, h as y } from "./_Uint8Array-Cf-PTZCw.js";
 import { r as g, b as m, S as _, i as k } from "./isObject-Dipzh7kZ.js";
