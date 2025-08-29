@@ -94,7 +94,9 @@ export class BibConsentConsentDialog extends LitElement {
             <button class="btn--filled" type="button" @click="${() => this.setConsentTokens(true)}">Tout accepter</button>
           </div>
           <p class="learn-more-container">
-            Voir notre <a href="https://vie-privee.umontreal.ca/confidentialite">politique de confidentialité</a> et nos <a href="https://vie-privee.umontreal.ca/conditions-dutilisation">conditions d’utilisation</a>.
+            Voir notre <a href="https://vie-privee.umontreal.ca/confidentialite" target="_blank" 
+         rel="noopener noreferrer">politique de confidentialité</a> et nos <a href="https://vie-privee.umontreal.ca/conditions-dutilisation" target="_blank" 
+         rel="noopener noreferrer">conditions d’utilisation</a>.
           </p>
       </bib-consent-dialog>
     `
