@@ -20,7 +20,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
 var _e, _t, _s, _n, _o, _i, _E_instances, c_fn, r_fn, h_fn, a_fn, l_fn, u_fn;
 import { s as e, x as t } from "./lit-element-Dj1nHH6C.js";
 import { e as s, n } from "./ref-B-kqFHPy.js";
-import { s as o, a as i } from "./bib-consent-preferences-dialog-DMhwk9OG.js";
+import { s as o, a as i } from "./bib-consent-preferences-dialog-DjOtQNfK.js";
 import { l as r } from "./logger-CUsY34xw.js";
 import { a as c } from "./bib-DBaUjAx4.js";
 import { ConsentTokens as a } from "./ConsentTokens.js";
