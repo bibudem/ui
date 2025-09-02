@@ -85,19 +85,22 @@ export class BibConsentConsentDialog extends LitElement {
 
   render() {
     return html`
-      <bib-consent-dialog class='consent-dialog' ${ref(this.dialogRef)}>
-          <div class="title" autofocus>L’UdeM reconnaît l’importance de respecter la vie privée</div>
-          <p>L’utilisation de témoins nous permet d’améliorer et de personnaliser votre expérience Web. Certains témoins sont obligatoires pour assurer le fonctionnement et la sécurité du site Web, alors que d’autres enregistrent vos préférences. En acceptant tout, vous consentez à notre utilisation de témoins pour mieux répondre à vos besoins.</p>
-          <div class="actions-container">
-            <button class="btn--outlined" type="button" @click="${() => this.showPreferences()}">Personnaliser les témoins <span>&gt;</span></button>
-            <button class="btn--filled" type="button" @click="${() => this.setConsentTokens(false)}">Tout refuser</button>
-            <button class="btn--filled" type="button" @click="${() => this.setConsentTokens(true)}">Tout accepter</button>
-          </div>
-          <p class="learn-more-container">
-            Voir notre <a href="https://vie-privee.umontreal.ca/confidentialite" target="_blank" 
-         rel="noopener noreferrer">politique de confidentialité</a> et nos <a href="https://vie-privee.umontreal.ca/conditions-dutilisation" target="_blank" 
-         rel="noopener noreferrer">conditions d’utilisation</a>.
-          </p>
+      <bib-consent-dialog class="consent-dialog" ${ref(this.dialogRef)}>
+        <div class="title" autofocus>
+          L’UdeM reconnaît l’importance de respecter la vie privée
+        </div>
+        <p>
+          Nous utilisons des témoins pour améliorer votre expérience. Certains sont essentiels, d’autres enregistrent vos préférences.<br>  
+          Voir notre 
+          <a href="https://vie-privee.umontreal.ca/confidentialite" target="_blank" rel="noopener noreferrer">politique de confidentialité</a> 
+          et nos 
+          <a href="https://vie-privee.umontreal.ca/conditions-dutilisation" target="_blank" rel="noopener noreferrer">conditions d’utilisation.</a>.
+        </p>
+        <div class="actions-container">
+          <a href="#" @click="${() => this.showPreferences()}" class="consent-link">Personnaliser les témoins</a>
+          <button class="btn--outlined" type="button" @click="${() => this.setConsentTokens(false)}">Tout refuser</button>
+          <button class="btn--filled" type="button" @click="${() => this.setConsentTokens(true)}">Tout accepter</button>
+        </div>
       </bib-consent-dialog>
     `
   }
