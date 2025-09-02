@@ -45,6 +45,12 @@
       margin: 0;
       gap: 0;
     }
+    .consent-link {
+      margin-top: 0.65rem;
+      margin-right: 0.25rem;
+      text-decoration: underline;
+      font-size: var(--_consent-text-size);
+  }
   }
 
   .confirm-selection {

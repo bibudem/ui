@@ -38,7 +38,7 @@
   }
 
   .dialog {
-    border-top: 10px solid #0b113a;
+    border-top: 5px solid #0b113a;
     top: auto;
     bottom: 0;
     color: #0b113a;
@@ -49,8 +49,7 @@
     overflow: hidden;
     position: fixed;
     width: 100%;
-    padding-top: 50px;
-    padding-bottom: 10px;
+    padding-top: 15px;
     z-index: 10000;
 
     @media screen and (min-width: 640px) {
