@@ -90,11 +90,10 @@ export class BibConsentConsentDialog extends LitElement {
           L’UdeM reconnaît l’importance de respecter la vie privée
         </div>
         <p>
-          Nous utilisons des témoins pour améliorer votre expérience. Certains sont essentiels, d’autres enregistrent vos préférences.<br>  
-          Voir notre 
+          Vos données personnelles sont utilisées pour enregistrer vos préférences, votre consentement et produire des statistiques anonymes.<br> Pour plus d'informations, veuillez consulter notre 
           <a href="https://vie-privee.umontreal.ca/confidentialite" target="_blank" rel="noopener noreferrer">politique de confidentialité</a> 
           et nos 
-          <a href="https://vie-privee.umontreal.ca/conditions-dutilisation" target="_blank" rel="noopener noreferrer">conditions d’utilisation.</a>.
+          <a href="https://vie-privee.umontreal.ca/conditions-dutilisation" target="_blank" rel="noopener noreferrer">conditions d’utilisation</a>.
         </p>
         <div class="actions-container">
           <a href="#" @click="${() => this.showPreferences()}" class="consent-link">Personnaliser les témoins</a>
