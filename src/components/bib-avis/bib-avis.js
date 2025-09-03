@@ -146,6 +146,9 @@ export class BibAvis extends LitElement {
           const { success, data } = await response.json()
 
           if (success) {
+            if (data === null) {
+            return resolve({ isLocal: false, message: null })
+          }
             const { id, message } = data
             return resolve({ isLocal: false, id, message })
           }
@@ -176,6 +179,11 @@ export class BibAvis extends LitElement {
    * @private
    */
   async #processAvis(avis) {
+    // Vérifier si avis est null ou n'a pas de message
+    if (!avis || !avis.message) {
+      this.setMessage(null)
+      return
+    }
     const { id, message } = avis
     if (!message) {
       this.setMessage(null)
@@ -197,20 +205,23 @@ export class BibAvis extends LitElement {
     })
 
     try {
-      const storedAvis = await db.get(DB_STORE_NAME, id)
-      if (storedAvis) {
-        if (!storedAvis.hidden) {
-          // Delete old entries
-          await db.delete(DB_STORE_NAME, id)
-          this.#show(storedAvis)
-        }
-      } else {
-        this.#show(avis)
+    // Vérifier que id existe avant de l'utiliser
+    const storageId = id || await hash(avis)
+    
+    const storedAvis = await db.get(DB_STORE_NAME, storageId)
+    if (storedAvis) {
+      if (!storedAvis.hidden) {
+        // Utiliser storageId au lieu de id
+        await db.delete(DB_STORE_NAME, storageId)
+        this.#show({...storedAvis, id: storageId})
       }
-    } catch (error) {
-      console.error('Something went wrong with indexedDB: %o', error)
-      this.setMessage(avis.message)
+    } else {
+      this.#show({...avis, id: storageId})
     }
+  } catch (error) {
+    console.error('Something went wrong with indexedDB: %o', error)
+    this.setMessage(message)
+  }
   }
 
   /**
@@ -220,19 +231,19 @@ export class BibAvis extends LitElement {
    * @private
    */
   async #show(message) {
+  const canceled = !this.dispatchEvent(new CustomEvent('bib:show', { bubbles: true, cancelable: true }))
 
-    const canceled = !this.dispatchEvent(new CustomEvent('bib:show', { bubbles: true, cancelable: true }))
-
-    if (canceled) {
-      return
-    }
-
-    this.setMessage(message)
-
-    if (this.#db) {
-      await this.#db.put(DB_STORE_NAME, { ...message, hidden: false }, message.id)
-    }
+  if (canceled) {
+    return
   }
+
+  this.setMessage(message)
+
+  // Vérifier que message.id existe avant de l'utiliser
+  if (this.#db && message.id) {
+    await this.#db.put(DB_STORE_NAME, { ...message, hidden: false }, message.id)
+  }
+}
 
   /**
    * Masque l'avis et met à jour son statut en base de données
