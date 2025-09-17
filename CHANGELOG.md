@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/bibudem/ui/compare/v1.0.4...v1.1.0) (2025-09-17)
+
+
+### Features
+
+* Mise à jour de l'action GitHub release-please ([1d81a80](https://github.com/bibudem/ui/commit/1d81a8077180f4277a5cf9b34a6a2d743a5a7d34))
+
+
+### Bug Fixes
+
+* **bib-consent:** Ajout d'une méthode toObject() pour permettre aux données de se propager via des événements. ([d4c7240](https://github.com/bibudem/ui/commit/d4c72407ea26d9e8fd69ad4e2a98eb67a9af6d1e))
+* **bib-consent:** Sur événement bib:update, les données de consentement n'étaient pas transmises avec l'object de l'événement. ([fe499c0](https://github.com/bibudem/ui/commit/fe499c0b1768592d0dd3579a15a7d1ecc9fb1e9a))
+
 ## [1.0.1](https://github.com/bibudem/ui/compare/1.0.0...v1.0.1) (2025-06-16)
 
 
