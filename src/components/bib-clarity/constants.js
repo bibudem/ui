@@ -1,0 +1,1 @@
+export const CLARITY_PROJECT_ID = 't10hsivmt0'

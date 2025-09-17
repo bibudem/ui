@@ -33,6 +33,7 @@
     "@auroratide/toggle-switch": "^0.2.3",
     "@lit/context": "^1.1.2",
     "@material/web": "^1.4.1",
+    "@microsoft/clarity": "^1.0.0",
     "@whitespace/storybook-addon-html": "^6.1.1",
     "boolify-string": "^2.0.2",
     "express": "^4.19.2",
