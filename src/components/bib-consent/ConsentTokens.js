@@ -137,7 +137,7 @@ export class ConsentTokens {
     return this.#tokens[key] === CONSENT_STATES.DENIED
   }
 
-  state() {
+  getState() {
     return Object.values(this.#tokens).every(value => value !== null) ? CONSENT_STATES.DETERMINATE : CONSENT_STATES.INDETERMINATE
   }
 
@@ -154,8 +154,12 @@ export class ConsentTokens {
     Object.keys(this.#tokens).forEach(key => this.#tokens[key] = null)
   }
 
+  toObject() {
+    return { ...this.#tokens }
+  }
+
   toGTM(wait_for_update = 500) {
-    if (this.state() === CONSENT_STATES.INDETERMINATE) {
+    if (this.getState() === CONSENT_STATES.INDETERMINATE) {
       const nullEntries = Object.entries(this.#tokens).filter(token => token[1] === null)
       throw new Error(`All tokens must have an explicit value. Undefined token${nullEntries.length > 1 ? 's' : ''}: ${nullEntries.map(token => token[0]).join(', ')}`)
     }
@@ -169,6 +173,5 @@ export class ConsentTokens {
       analytics_consent: analytics_consent,
       wait_for_update
     }
-
   }
 }

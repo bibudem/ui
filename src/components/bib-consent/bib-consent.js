@@ -133,7 +133,7 @@ export class BibConsent extends LitElement {
 
       this.#debug(EVENT_NAMES.READY, 'event: ', event)
 
-      if (detail.state() === CONSENT_STATES.DETERMINATE) {
+      if (detail.getState() === CONSENT_STATES.DETERMINATE) {
         this.#setValue(detail)
       } else {
         this.#show('consent')
@@ -143,7 +143,7 @@ export class BibConsent extends LitElement {
 
   #setValue(value) {
     this.#consentProvider.setValue(value)
-    this.#state = this.#consentProvider.value.state()
+    this.#state = this.#consentProvider.value.getState()
   }
 
   #debug() {

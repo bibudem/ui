@@ -54,7 +54,7 @@ export class BibConsentPreferencesDialog extends LitElement {
 
           const consentTokens = ConsentTokens.from(tokens)
 
-          if (consentTokens.state() === CONSENT_STATES.INDETERMINATE) {
+          if (consentTokens.getState() === CONSENT_STATES.INDETERMINATE) {
             this.#toggleChoices.setAll(false)
             return
           }
@@ -96,7 +96,7 @@ export class BibConsentPreferencesDialog extends LitElement {
    * @returns {void}
    */
   show() {
-    const tokens = this._consentConsumer.value?.state() === CONSENT_STATES.DETERMINATE ? this._consentConsumer.value : false
+    const tokens = this._consentConsumer.value?.getState() === CONSENT_STATES.DETERMINATE ? this._consentConsumer.value : false
 
     console.log('tokens', tokens)
 
