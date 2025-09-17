@@ -7,8 +7,8 @@
 .wrapper {
   width: 100%;
   height: 55px;
-  background-color: #282828;
-  border-bottom: #40474f solid 7px;
+  background-color: #37424D;
+  border-bottom: #37424D solid 7px;
   cursor: pointer;
   color: #fff;
   font-size: 13px;
@@ -22,7 +22,7 @@
 .container {
   width: 100%;
   height: 48px;
-  background-color: #b60000;
+  background-color: #b72600;
   position: relative;
   bottom: 0;
 
@@ -53,8 +53,7 @@
 }
 
 .title {
-  margin: 0;
-  margin-left: 132px;
+  margin-left: 10rem!important;
   line-height: 22px;
   padding: 0 12px;
   font-size: 17px;
@@ -74,7 +73,7 @@
 
 .datetime {
   height: 48px;
-  background-color: #40474f;
+  background-color: #37424D;
   position: absolute;
   top: 0;
   min-width: 107px;
