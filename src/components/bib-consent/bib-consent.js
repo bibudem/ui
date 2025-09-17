@@ -15,6 +15,10 @@ import { CONSENT_STATES, EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOU
 const debug = loggerFactory('bib-consent', '#cd5300')
 
 /**
+ * @typedef {'indeterminate' | 'determinate'} ConsentState
+ */
+
+/**
  * The `BibConsent` class is a custom web component that provides a user interface for managing consent preferences.
  *
  * It includes the following functionality:
@@ -31,6 +35,29 @@ const debug = loggerFactory('bib-consent', '#cd5300')
  * - `open`: a boolean indicating whether the consent dialog or preferences dialog is currently open
  *
  * The component uses the `@lit/context` library to manage the consent preferences as a shared context, and the `createConsentClient` function to interact with the server.
+ * 
+ * @class BibConsent
+ * @extends LitElement
+ * @property {string} serverUrl - The URL of the server where the consent preferences are stored.
+ * @property {number} serverRequestTimeout - The timeout for requests to the server.
+ * @property {boolean} [SERVER_MODE.LOCAL] - A boolean indicating whether the component is running in local mode.
+ * @property {boolean} debug - A boolean indicating whether debug logging should be enabled.
+ * @property {boolean} open - A boolean indicating whether the consent dialog or preferences dialog is currently open.
+ * @property {ConsentState} state - The current state of the BibConsent component, which can be one of the following values:
+ *   - `indeterminate`: The user has not yet indicated their consent preferences.
+ *   - `determinate`: The user has made their consent preferences.
+ * @property {import('./ConsentTokens.js').ConsentTokens} consentTokens - The user's consent tokens.
+ * @emits {CustomEvent} EVENT_NAMES.READY - Emitted when the consent client is ready.
+ * @emits {CustomEvent} EVENT_NAMES.UPDATE - Emitted when the consent preferences are updated.
+ * @emits {CustomEvent} context-request - Emitted when the context is requested.
+ * @method connectedCallback - Initializes the component and sets up the necessary state and references.
+ * @method close - Closes the current dialog and sets the `open` property to `false`.
+ * @method show - Shows the consent dialog.
+ * @method showPreferences - Shows the preferences dialog.
+ * @method getTokens - Gets the user's consent tokens.
+ * @method saveTokens - Saves the user's consent tokens to the server.
+ * @method resetTokens - Resets the user's consent tokens to their default values.
+ * @method render - Renders the component.
  */
 export class BibConsent extends LitElement {
   static properties = {

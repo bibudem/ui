@@ -3,17 +3,6 @@ import { hasBooleanParam } from '@/utils/url.js'
 import { PREFIX, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT } from './constants.js'
 
 /**
- * Creates a prefixed event name for the BIB consent module.
- * @param {string} prefix - The prefix to use for the event name.
- * @returns {function(string): string} - A function that takes an event name and returns the prefixed event name.
- */
-export function createPrefixedEventName(prefix) {
-  return function (eventName) {
-    return `bib:${prefix}:${eventName}`
-  }
-}
-
-/**
  * Creates a prefixed key name for the BIB consent module.
  * @param {string} key - The key to be prefixed.
  * @returns {string} - The prefixed key name.
