@@ -273,7 +273,7 @@ export class BibConsent extends LitElement {
       // TODO: show error message
       return
     }
-    this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: this.consentTokens }))
+    this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: this.#consentTokens }))
     this.#close()
   }
 
