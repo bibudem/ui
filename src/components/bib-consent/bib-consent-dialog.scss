@@ -26,7 +26,7 @@
 
   :host(.preferences-dialog) {
     --_consent-dialog-height: 80%;
-    --_consent-dialog-height-sm: 450px;
+    --_consent-dialog-height-sm: 375px;
     --_consent-content-height: auto;
   }
 
@@ -49,8 +49,7 @@
     overflow: hidden;
     position: fixed;
     width: 100%;
-    padding-top: 50px;
-    padding-bottom: 10px;
+    padding-top: 1.75rem;
     z-index: 10000;
 
     @media screen and (min-width: 640px) {

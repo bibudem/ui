@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.0.2
+ * @version 1.1.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -46,7 +46,7 @@ i_fn = function(e2) {
   (" " === e2.key || "Enter" === e2.key || "click" === e2.type) && window.open(this.href, "_blank");
 };
 __publicField(o, "properties", { service: { type: String }, big: { type: Boolean }, href: { type: String, attribute: false } });
-__publicField(o, "styles", [i`${n(".wrapper{width:100%;height:55px;background-color:#282828;border-bottom:#40474f solid 7px;cursor:pointer;color:#fff;font-size:13px;box-sizing:border-box}.wrapper.big{height:168px}.container{width:100%;height:48px;background-color:#b60000;position:relative;bottom:0}.big .container{height:161px}.content{margin-left:auto;margin-right:auto;display:flex;align-items:center;height:48px;width:auto}.big .content{height:113px}@media (min-width: 768px){.content{width:768px}}@media (min-width: 1200px){.content{width:1220px}}.title{margin:0 0 0 132px;line-height:22px;padding:0 12px;font-size:17px;max-height:48px;overflow:hidden;color:#fff;text-decoration:none}.big .title{margin-left:0;position:static;max-height:101px;font-size:18px;line-height:unset}.datetime{height:48px;background-color:#40474f;position:absolute;top:0;min-width:107px;padding:7px 12px 0;font-size:15px;line-height:17px;text-align:center;margin:0;text-transform:uppercase}.big .datetime{top:113px;line-height:36px}.datetime span{position:relative;bottom:0}")}`]);
+__publicField(o, "styles", [i`${n(".wrapper{width:100%;height:55px;background-color:#37424d;border-bottom:#37424D solid 7px;cursor:pointer;color:#fff;font-size:13px;box-sizing:border-box}.wrapper.big{height:168px}.container{width:100%;height:48px;background-color:#b72600;position:relative;bottom:0}.big .container{height:161px}.content{margin-left:auto;margin-right:auto;display:flex;align-items:center;height:48px;width:auto}.big .content{height:113px}@media (min-width: 768px){.content{width:768px}}@media (min-width: 1200px){.content{width:1220px}}.title{margin-left:10rem!important;line-height:22px;padding:0 12px;font-size:17px;max-height:48px;overflow:hidden;color:#fff;text-decoration:none}.big .title{margin-left:0;position:static;max-height:101px;font-size:18px;line-height:unset}.datetime{height:48px;background-color:#37424d;position:absolute;top:0;min-width:107px;padding:7px 12px 0;font-size:15px;line-height:17px;text-align:center;margin:0;text-transform:uppercase}.big .datetime{top:113px;line-height:36px}.datetime span{position:relative;bottom:0}")}`]);
 window.customElements.get("udem-urgence") || window.customElements.define("udem-urgence", o);
 export {
   o as UdeMUrgence
