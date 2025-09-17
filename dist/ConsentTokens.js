@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.1.0
+ * @version 1.1.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -14,19 +14,19 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _n, _h_instances, e_fn, t_fn;
-import { D as e, C as t } from "./constants-BnLEHB4z.js";
+import { DEFAULT_PREFERENCES as e, CONSENT_STATES as t } from "./constants2.js";
 import { i as n, b as s, a as o } from "./isObject-Dipzh7kZ.js";
 var i = "[object Boolean]";
-function a(e2) {
+function r(e2) {
   return true === e2 || false === e2 || n(e2) && s(e2) == i;
 }
-const r = Object.keys(e);
+const a = Object.keys(e);
 function c(e2, { key: t2, acceptNull: n2 = false } = {}) {
-  if (!a(e2) && !["granted", "denied"].includes(e2) && !n2 && null === e2) throw new TypeError(`Invalid value${t2 ? ` for field \`${t2}\`` : ""}: ${e2}. Must be either boolean or one of 'granted' or 'denied'.`);
+  if (!r(e2) && !["granted", "denied"].includes(e2) && !n2 && null === e2) throw new TypeError(`Invalid value${t2 ? ` for field \`${t2}\`` : ""}: ${e2}. Must be either boolean or one of 'granted' or 'denied'.`);
 }
 function l(e2) {
-  if (!r.includes(e2)) {
-    const t2 = `Invalid key: ${e2}. Must be one of ${r.reduce((e3, t3, n2) => n2 === r.length ? `${e3} or ${t3}` : `${e3}, ${t3}`)}.`;
+  if (!a.includes(e2)) {
+    const t2 = `Invalid key: ${e2}. Must be one of ${a.reduce((e3, t3, n2) => n2 === a.length ? `${e3} or ${t3}` : `${e3}, ${t3}`)}.`;
     throw new TypeError(t2);
   }
 }
@@ -52,7 +52,7 @@ const _h = class _h {
   isDenied(e2) {
     return l(e2), __privateGet(this, _n)[e2] === t.DENIED;
   }
-  state() {
+  getState() {
     return Object.values(__privateGet(this, _n)).every((e2) => null !== e2) ? t.DETERMINATE : t.INDETERMINATE;
   }
   setAll(e2) {
@@ -61,8 +61,11 @@ const _h = class _h {
   resetConsent() {
     Object.keys(__privateGet(this, _n)).forEach((e2) => __privateGet(this, _n)[e2] = null);
   }
+  toObject() {
+    return { ...__privateGet(this, _n) };
+  }
   toGTM(e2 = 500) {
-    if (this.state() === t.INDETERMINATE) {
+    if (this.getState() === t.INDETERMINATE) {
       const e3 = Object.entries(__privateGet(this, _n)).filter((e4) => null === e4[1]);
       throw new Error(`All tokens must have an explicit value. Undefined token${e3.length > 1 ? "s" : ""}: ${e3.map((e4) => e4[0]).join(", ")}`);
     }
@@ -73,7 +76,7 @@ const _h = class _h {
 _n = new WeakMap();
 _h_instances = new WeakSet();
 e_fn = function(e2, t2, n2 = false) {
-  l(e2), c(t2, { key: e2, acceptNull: n2 }), __privateGet(this, _n)[e2] = a(t2) ? t2 ? "granted" : "denied" : t2;
+  l(e2), c(t2, { key: e2, acceptNull: n2 }), __privateGet(this, _n)[e2] = r(t2) ? t2 ? "granted" : "denied" : t2;
 };
 t_fn = function(e2, t2 = false) {
   c(e2, { acceptNull: t2 }), "string" != typeof e2 && (e2 = e2 ? "granted" : "denied"), Object.keys(__privateGet(this, _n)).forEach((t3) => __privateGet(this, _n)[t3] = e2);

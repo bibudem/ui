@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.1.0
+ * @version 1.1.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -22,7 +22,7 @@ import { s as e, i as t, r as i, x as s } from "./lit-element-Dj1nHH6C.js";
 import { e as o, n } from "./ref-B-kqFHPy.js";
 import { consentContext as a } from "./consent-context.js";
 import { ConsentTokens as r } from "./ConsentTokens.js";
-import { C as c } from "./constants-BnLEHB4z.js";
+import { CONSENT_STATES as c } from "./constants2.js";
 /**
  * @license
  * Copyright 2021 Google LLC
@@ -127,7 +127,7 @@ class m extends e {
     this.open = false, this._dialogRef = o(), __privateSet(this, _s, new r(false)), this._consentConsumer = new d(this, { context: a, subscribe: true, callback: (e2) => {
       try {
         const t2 = r.from(e2);
-        if (t2.state() === c.INDETERMINATE) return void __privateGet(this, _s).setAll(false);
+        if (t2.getState() === c.INDETERMINATE) return void __privateGet(this, _s).setAll(false);
         __privateGet(this, _s).setAll(t2);
       } catch (e3) {
         throw console.error("[BibConsentPreferencesDialog] error: ", e3), e3;
@@ -142,7 +142,7 @@ class m extends e {
     }
   }
   show() {
-    const e2 = this._consentConsumer.value?.state() === c.DETERMINATE && this._consentConsumer.value;
+    const e2 = this._consentConsumer.value?.getState() === c.DETERMINATE && this._consentConsumer.value;
     console.log("tokens", e2), __privateGet(this, _s).setAll(e2), this._dialogRef.value?.showModal();
   }
   close(e2 = true) {
@@ -169,4 +169,4 @@ export {
   d as a,
   l as s
 };
-//# sourceMappingURL=bib-consent-preferences-dialog-PffJdSZo.js.map
+//# sourceMappingURL=bib-consent-preferences-dialog-DHQswKCk.js.map

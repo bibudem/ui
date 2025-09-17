@@ -1,23 +1,16 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.1.0
+ * @version 1.1.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import "./package-CNeP-lpQ.js";
-import { C, h, j, i, D, E, P, f, S, b } from "./constants-BnLEHB4z.js";
+import { n as a } from "./package-URoTI9j0.js";
+const s = `${a}/avis`, o = 1, i = "avis";
 export {
-  C as CONSENT_STATES,
-  h as DB_NAME,
-  j as DB_STORE_NAME,
-  i as DB_VERSION,
-  D as DEFAULT_PREFERENCES,
-  E as EVENT_NAMES,
-  P as PREFIX,
-  f as SERVER_DEFAULT_URL,
-  S as SERVER_MODE,
-  b as SERVER_REQUEST_DEFAULT_TIMEOUT
+  s as DB_NAME,
+  i as DB_STORE_NAME,
+  o as DB_VERSION
 };
 //# sourceMappingURL=constants3.js.map

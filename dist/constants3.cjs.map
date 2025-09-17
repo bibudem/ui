@@ -1,1 +1,1 @@
-{"version":3,"file":"constants3.cjs","sources":[],"sourcesContent":[],"names":[],"mappings":""}
+{"version":3,"file":"constants3.cjs","sources":["../src/components/bib-avis/constants.js"],"sourcesContent":["import { name as PKG_NAME } from '../../../package.json'\n\nexport const DB_NAME = `${PKG_NAME}/avis`\nexport const DB_VERSION = 1\nexport const DB_STORE_NAME = 'avis'"],"names":["DB_NAME","name"],"mappings":"yEAEaA,EAAU,qCAAWC,oDAEL,0BADH"}
