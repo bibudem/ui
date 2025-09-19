@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/bibudem/ui/compare/v1.1.0...v1.1.1) (2025-09-19)
+
+
+### Bug Fixes
+
+* **bib-consent:** Améliorations stylistiques pour l'accessibilité. ([dd79e78](https://github.com/bibudem/ui/commit/dd79e780461982fd8400af3550a9f81f673b539d))
+
 ## [1.1.0](https://github.com/bibudem/ui/compare/v1.0.4...v1.1.0) (2025-09-17)
 
 
