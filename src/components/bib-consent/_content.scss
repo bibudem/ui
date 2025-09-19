@@ -25,34 +25,33 @@
   p {
     font-size: var(--_consent-text-size);
     line-height: var(--_consent-text-line-height);
-    padding-bottom: 20px;
 
     @media screen and (min-width: 640px) {
-      padding-bottom: 5px;
+      padding-bottom: 0.5rem;
     }
   }
 
   .actions-container {
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-    flex-direction: column;
-    gap: 0.5rem;
-
     //sm
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0 0;
+    flex-direction: column;
+    gap: 1.35rem;
+
+    // >= sm
     @media screen and (min-width: 640px) {
+      margin-top: 1rem;
       flex-direction: row;
       justify-content: normal;
-      margin: 0;
-      gap: 0;
-    } 
+      gap: 0.75rem;
+    }
   }
   .consent-link {
-    margin-top: 0.65rem;
-    margin-right: 0.25rem;
     text-decoration: underline;
     font-size: var(--_consent-text-size);
-    display: inline-block; 
+    display: inline-block;
   }
 
   /* Supprimer les effets de clic */
@@ -61,17 +60,16 @@
   .consent-link:visited {
     text-decoration: none;
     color: inherit;
-}
-
-/* Centrage uniquement sur mobile */
-@media (max-width: 768px) {
-  .consent-link {
-    display: block;
-    margin: 0.65rem auto 0; /* centre horizontalement */
-    text-align: center;
   }
-}
 
+  /* Centrage uniquement sur mobile */
+  @media (max-width: 768px) {
+    .consent-link {
+      display: block;
+      margin: 0.65rem auto 0; /* centre horizontalement */
+      text-align: center;
+    }
+  }
 
   .confirm-selection {
     @media screen and (min-width: 640px) {
