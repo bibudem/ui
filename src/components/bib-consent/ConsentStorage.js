@@ -28,7 +28,7 @@ class ConsentStorage extends EventTarget {
    * @return void
    */
   listen(listener) {
-    super.addEventListener(EVENT_NAMES.UPDATE, listener)
+    super.addEventListener(EVENT_NAMES.CHANGE, listener)
   }
 
   /*
@@ -38,7 +38,7 @@ class ConsentStorage extends EventTarget {
   dispatchEvent({ detail }) {
     super.dispatchEvent(
       new CustomEvent(
-        EVENT_NAMES.UPDATE,
+        EVENT_NAMES.CHANGE,
         { detail }
       )
     )

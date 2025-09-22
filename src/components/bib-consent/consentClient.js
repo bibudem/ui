@@ -86,7 +86,7 @@ class ConsentClient extends EventTarget {
    * @returns {Promise<void>} - A promise that resolves when initialization is complete.
    *
    * @event EVENT_NAMES.READY - Dispatched when the initial preferences data is available. The event detail contains the preferences object.
-   * @event EVENT_NAMES.UPDATE - Dispatched when the preferences are updated. The event detail contains the updated preferences object.
+   * @event EVENT_NAMES.CHANGE - Dispatched when the preferences are updated. The event detail contains the updated preferences object.
    */
 
   async init({ host, serverMode, serverUrl, serverRequestTimeout = SERVER_REQUEST_DEFAULT_TIMEOUT, reflectEvents = true }) {
@@ -138,7 +138,7 @@ class ConsentClient extends EventTarget {
         this._server.listenMessage((method, data) => {
           this.debug('[remote] server.listenMessage method: ', method, 'data: ', data)
           const consentTokens = ConsentTokens.from(data)
-          const event = new CustomEvent(EVENT_NAMES.UPDATE, { detail: consentTokens })
+          const event = new CustomEvent(EVENT_NAMES.CHANGE, { detail: consentTokens })
           this.dispatchEvent(event)
         })
       } catch (error) {
@@ -205,7 +205,7 @@ class ConsentClient extends EventTarget {
       }
 
       if (response) {
-        this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: response }))
+        this.dispatchEvent(new CustomEvent(EVENT_NAMES.CHANGE, { detail: response }))
         return response
       }
     } catch (error) {

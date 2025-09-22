@@ -23,8 +23,8 @@ const debug = loggerFactory('bib-consent', '#cd5300')
  *
  * It includes the following functionality:
  * - Fetching and displaying the user's consent preferences from a server
- * - Allowing the user to update their consent preferences
- * - Saving the updated consent preferences to the server
+ * - Allowing the user to change their consent preferences
+ * - Saving the changed consent preferences to the server
  * - Providing a consent dialog and a preferences dialog for the user to interact with
  *
  * The component can be configured with the following properties:
@@ -48,7 +48,7 @@ const debug = loggerFactory('bib-consent', '#cd5300')
  *   - `determinate`: The user has made their consent preferences.
  * @property {import('./ConsentTokens.js').ConsentTokens} consentTokens - The user's consent tokens.
  * @emits {CustomEvent} EVENT_NAMES.READY - Emitted when the consent client is ready.
- * @emits {CustomEvent} EVENT_NAMES.UPDATE - Emitted when the consent preferences are updated.
+ * @emits {CustomEvent} EVENT_NAMES.CHANGE - Emitted when the consent preferences are changed.
  * @emits {CustomEvent} context-request - Emitted when the context is requested.
  * @method connectedCallback - Initializes the component and sets up the necessary state and references.
  * @method close - Closes the current dialog and sets the `open` property to `false`.
@@ -144,7 +144,7 @@ export class BibConsent extends LitElement {
    * - Sets the `serverUrl` property to `'https://bib.umontreal.ca/consent/server'` if it is not already defined
    * - Sets the `serverRequestTimeout` property to `SERVER_REQUEST_DEFAULT_TIMEOUT` if it is not already defined
    * - Creates a `ConsentClient` instance and assigns it to the `_consentClient` property
-   * - Adds event listeners for the `EVENT_NAMES.READY` and `EVENT_NAMES.UPDATE` events on the `_consentClient` instance
+   * - Adds event listeners for the `EVENT_NAMES.READY` and `EVENT_NAMES.CHANGE` events on the `_consentClient` instance
    * - Adds an event listener for the `context-request` event on the component's shadow root, which responds with the current tokens
    */
   async connectedCallback() {
@@ -265,15 +265,15 @@ export class BibConsent extends LitElement {
     return this.#consentTokens
   }
 
-  async #handleUpdateEvent(event) {
-    this.#debug('[#handleUpdateEvent]', event)
+  async #handleChangeEvent(event) {
+    this.#debug('[#handleChangeEvent]', event)
     const success = await this.saveTokens(event.detail)
-    this.#debug('[#handleUpdateEvent] success: ', success)
+    this.#debug('[#handleChangeEvent] success: ', success)
     if (!success) {
       // TODO: show error message
       return
     }
-    this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: this.#consentTokens }))
+    this.dispatchEvent(new CustomEvent(EVENT_NAMES.CHANGE, { detail: this.#consentTokens }))
     this.#close()
   }
 
@@ -284,8 +284,8 @@ export class BibConsent extends LitElement {
 
   render() {
     return html`
-        <bib-consent-consent-dialog @update="${this.#handleUpdateEvent}" @show-preferences="${() => this.#show('preferences')}" ${ref(this.#consentDialogRef)} @close="${this.#handleCloseEvent}"></bib-consent-consent-dialog>
-        <bib-consent-preferences-dialog @update="${this.#handleUpdateEvent}" ${ref(this.#preferencesDialogRef)} @close="${this.#handleCloseEvent}"></bib-consent-preferences-dialog>
+        <bib-consent-consent-dialog @change="${this.#handleChangeEvent}" @show-preferences="${() => this.#show('preferences')}" ${ref(this.#consentDialogRef)} @close="${this.#handleCloseEvent}"></bib-consent-consent-dialog>
+        <bib-consent-preferences-dialog @change="${this.#handleChangeEvent}" ${ref(this.#preferencesDialogRef)} @close="${this.#handleCloseEvent}"></bib-consent-preferences-dialog>
     `
   }
 }

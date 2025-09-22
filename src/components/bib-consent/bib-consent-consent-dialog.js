@@ -19,7 +19,7 @@ function all(value) {
  *
  * The component provides the following functionality:
  * - Displays a consent dialog with options to customize preferences, accept all, or reject all.
- * - Allows setting preferences by dispatching a `update` event with the new preferences.
+ * - Allows setting preferences by dispatching a `change` event with the new preferences.
  * - Provides methods to show, close, and display the preferences dialog.
  *
  * The component uses the `bib-consent-dialog` component to render the actual dialog.
