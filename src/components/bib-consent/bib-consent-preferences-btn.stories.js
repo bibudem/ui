@@ -18,7 +18,7 @@ export const ConsentementTemoinsBtn = {
   render: function () {
 
     return html`
-      <bib-consent-preferences-btn></bib-consent-preferences-btn>
+      <bib-consent-preferences-btn style="background-color: #0b113abe; color: #fff; padding: .5em; border-radius: .5em;"></bib-consent-preferences-btn>
       <bib-consent server-url="/consent-server"></bib-consent>
     `
   }
