@@ -4,19 +4,20 @@ import { createRef, ref } from 'lit/directives/ref.js'
 import '@auroratide/toggle-switch/lib/define.js'
 import { consentContext } from './consent-context.js'
 import { ConsentTokens } from './ConsentTokens.js'
-import { DEFAULT_PREFERENCES, CONSENT_STATES } from './constants.js'
+import { CONSENT_STATES } from './constants.js'
 import styles from './bib-consent-preferences-dialog.scss?inline'
 
 /**
- * Generates an object with the default consent preferences, where each key is set to the provided boolean value.
+ * The `BibConsentPreferencesDialog` component displays a dialog for managing user preferences related to cookies and other tracking technologies.
  *
- * @param {boolean} value - The boolean value to set for each consent preference.
- * @returns {Object} An object with the default consent preferences, where each key is set to the provided value.
+ * The component provides the following functionality:
+ * - Displays a dialog with options to customize preferences, accept all, or reject all.
+ * - Allows setting preferences by dispatching a `change` event with the new preferences.
+ * - Provides methods to show, close, and display the preferences dialog.
+ *
+ * @element bib-consent-preferences-dialog
+ * @emits {CustomEvent} @intern:change - An event that is dispatched when the user changes their preferences.
  */
-function getConsentValues(value) {
-  return Object.keys(DEFAULT_PREFERENCES).reduce((obj, key) => ({ ...obj, [key]: value }), {})
-}
-
 export class BibConsentPreferencesDialog extends LitElement {
   static properties = {
     debug: {
@@ -71,17 +72,24 @@ export class BibConsentPreferencesDialog extends LitElement {
   /**
    * Saves the user's consent preferences.
    *
-   * @param {boolean|Object} preference - The consent preferences to save. If a boolean is provided, it will be used to generate a full set of consent values. If an object is provided, it will be used directly as the consent preferences.
+   * This method takes either a boolean or an object as a parameter. If a boolean is provided, it will be used to generate a full set of consent values. If an object is provided, it will be used directly as the consent preferences.
+   *
+   * @param {boolean|Object} preference - The consent preferences to save.
    * @returns {void}
    * @throws {Error} If there is an error saving the preferences.
    */
   async savePreferences(preference) {
+    /**
+     * If the preference is a boolean, use it to generate a full set of consent values.
+     * If the preference is an object, use it directly as the consent preferences.
+     */
     try {
       if (typeof preference !== 'undefined') {
         this.#toggleChoices.setAll(preference)
       }
 
-      this.dispatchEvent(new CustomEvent('update', { detail: this.#toggleChoices }))
+      // Dispatch the public bib:change event with the updated preferences
+      this.dispatchEvent(new CustomEvent('intern:change', { detail: this.#toggleChoices }))
     } catch (error) {
       console.error('[savePreferences] error: ', error)
       throw error
@@ -98,8 +106,6 @@ export class BibConsentPreferencesDialog extends LitElement {
   show() {
     const tokens = this._consentConsumer.value?.getState() === CONSENT_STATES.DETERMINATE ? this._consentConsumer.value : false
 
-    console.log('tokens', tokens)
-
     this.#toggleChoices.setAll(tokens)
 
     this._dialogRef.value?.showModal()
@@ -112,7 +118,10 @@ export class BibConsentPreferencesDialog extends LitElement {
    * @returns {void}
    */
   close(emit = true) {
-    this._dialogRef.value?.close(emit)
+    this._dialogRef.value?.close()
+    if (emit) {
+      this.dispatchEvent(new CustomEvent('intern:close'))
+    }
   }
 
   #onDetailsClick(event) {
