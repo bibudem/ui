@@ -39,6 +39,7 @@ export const DB_STORE_NAME = 'consent'
 export const EVENT_NAMES = {
   READY: 'bib:ready',
   CHANGE: 'bib:change',
+  CLOSE: 'bib:close',
 }
 
 export const PREFIX = 'bib-consent'
