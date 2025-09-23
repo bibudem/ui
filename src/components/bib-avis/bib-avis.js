@@ -32,8 +32,8 @@ async function hash(obj) {
  * 
  * @element bib-avis
  * 
- * @fires bib:show - Émis avant l'affichage d'un avis. Peut être annulé.
- * @fires bib:hide - Émis avant le masquage d'un avis. Peut être annulé.
+ * @emits bib:show - Émis avant l'affichage d'un avis. Peut être annulé.
+ * @emits bib:hide - Émis avant le masquage d'un avis. Peut être annulé.
  * 
  * @slot - Contenu HTML local à afficher comme avis (optionnel)
  * 
@@ -147,8 +147,8 @@ export class BibAvis extends LitElement {
 
           if (success) {
             if (data === null) {
-            return resolve({ isLocal: false, message: null })
-          }
+              return resolve({ isLocal: false, message: null })
+            }
             const { id, message } = data
             return resolve({ isLocal: false, id, message })
           }
@@ -205,23 +205,23 @@ export class BibAvis extends LitElement {
     })
 
     try {
-    // Vérifier que id existe avant de l'utiliser
-    const storageId = id || await hash(avis)
-    
-    const storedAvis = await db.get(DB_STORE_NAME, storageId)
-    if (storedAvis) {
-      if (!storedAvis.hidden) {
-        // Utiliser storageId au lieu de id
-        await db.delete(DB_STORE_NAME, storageId)
-        this.#show({...storedAvis, id: storageId})
+      // Vérifier que id existe avant de l'utiliser
+      const storageId = id || await hash(avis)
+
+      const storedAvis = await db.get(DB_STORE_NAME, storageId)
+      if (storedAvis) {
+        if (!storedAvis.hidden) {
+          // Utiliser storageId au lieu de id
+          await db.delete(DB_STORE_NAME, storageId)
+          this.#show({ ...storedAvis, id: storageId })
+        }
+      } else {
+        this.#show({ ...avis, id: storageId })
       }
-    } else {
-      this.#show({...avis, id: storageId})
+    } catch (error) {
+      console.error('Something went wrong with indexedDB: %o', error)
+      this.setMessage(message)
     }
-  } catch (error) {
-    console.error('Something went wrong with indexedDB: %o', error)
-    this.setMessage(message)
-  }
   }
 
   /**
@@ -231,19 +231,19 @@ export class BibAvis extends LitElement {
    * @private
    */
   async #show(message) {
-  const canceled = !this.dispatchEvent(new CustomEvent('bib:show', { bubbles: true, cancelable: true }))
+    const canceled = !this.dispatchEvent(new CustomEvent('bib:show', { bubbles: true, cancelable: true }))
 
-  if (canceled) {
-    return
+    if (canceled) {
+      return
+    }
+
+    this.setMessage(message)
+
+    // Vérifier que message.id existe avant de l'utiliser
+    if (this.#db && message.id) {
+      await this.#db.put(DB_STORE_NAME, { ...message, hidden: false }, message.id)
+    }
   }
-
-  this.setMessage(message)
-
-  // Vérifier que message.id existe avant de l'utiliser
-  if (this.#db && message.id) {
-    await this.#db.put(DB_STORE_NAME, { ...message, hidden: false }, message.id)
-  }
-}
 
   /**
    * Masque l'avis et met à jour son statut en base de données
