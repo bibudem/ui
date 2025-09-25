@@ -27,13 +27,13 @@ export default {
 }
 
 /**
- * Affiche un message d'urgence
+ * 
  */
-export const GTM = {
+export const Clarity = {
+  name: 'bib-clarity',
   render: function ({ env, containerId }) {
     return html`
-      <bib-consent server-url="/consent-server"></bib-consent>
-      <bib-clarity project-id="${ifDefined(containerId)}" />
+      <bib-clarity project-id="${ifDefined(containerId)}"></bib-clarity>
     `
   },
   args: {

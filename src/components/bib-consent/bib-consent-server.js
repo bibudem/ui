@@ -12,6 +12,19 @@ import styles from './bib-consent-server.scss?inline'
  * @description A custom element that manages consent preferences for the BIB application.
  * It handles storage of preferences, listens for postMessage events, and provides methods
  * for setting, getting, and resetting user consent preferences.
+ *
+ * It includes the following functionality:
+ * - Stores consent preferences using the `getConsentStorage` function
+ * - Listens for storage updates and logs them
+ * - Listens for postMessage events from allowed origins
+ * - Provides methods for setting, getting, and resetting user consent preferences
+ *
+ * @class BibConsentServer
+ * @extends LitElement
+ * @property {Boolean} connected - Indicates whether the component is connected to the DOM. Default: `false`.
+ * @property {Boolean} debug - Indicates whether debug mode is enabled. Default: `false`.
+ * @property {String} allowedOrigins - The allowed origins for postMessage events.
+ * @property {String} allowed-origins - The allowed origins for postMessage events (attribute).
  */
 export class BibConsentServer extends LitElement {
   #storage
@@ -62,7 +75,6 @@ export class BibConsentServer extends LitElement {
   async init() {
     this.log('Initializing BibConsentServer...')
     this.#storage = await getConsentStorage()
-    this.log('Connected to storage.')
 
     this.#storage.listen(event => {
       this.log('Storage updated with data', event.detail)

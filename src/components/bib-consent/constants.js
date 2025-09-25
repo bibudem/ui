@@ -20,7 +20,7 @@ export const DB_NAME = `${PKG_NAME}/consent`
  * @type {number}
  * @constant
  */
-export const DB_VERSION = 1
+export const DB_VERSION = 2
 
 /**
  * The name of the database store.
@@ -38,6 +38,7 @@ export const DB_STORE_NAME = 'consent'
  */
 export const EVENT_NAMES = {
   READY: 'bib:ready',
+  STATE: 'bib:state',
   CHANGE: 'bib:change',
   CLOSE: 'bib:close',
 }

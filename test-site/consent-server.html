@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Server</title>
+  <script type="module" src="/dist/bib-consent-server.js"></script>
+  <style>
+    html,
+    body,
+    bib-consent-server {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    .debug-server {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <bib-consent-server allowed-origins="http://localhost:9994" class="debug-server"></bib-consent-server>
+</body>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bib-consent</title>
+  <script type="module" src="../dist/bib-consent.js"></script>
+</head>
+
+<body>
+  <h1>bib-consent</h1>
+  <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 1em;">
+    <button id='btn-open' @click="${() => consentElement.show()}">Open</button>
+    <button id='btn-open-preferences' @click="${() => consentElement.showPreferences()}">Open preferences</button>
+    <span style="width: 1px; height: 1em; margin-inline: 2px; background: hsla(203, 50%, 30%, 0.25);"></span>
+    <button id='btn-get-tokens' @click="${() => consentElement.getTokens()}">Get tokens</button>
+    <button id='btn-save-tokens'
+      @click="${() => consentElement.saveTokens({ analytics_consent: true, functionality_consent: false, ad_consent: false })}">Save
+      tokens</button>
+    <button id='btn-reset-tokens' @click="${() => consentElement.resetTokens()}">Reset tokens</button>
+    <div>
+      State:
+      <span id="consent-state">indeterminate</span>
+    </div>
+  </div>
+  <bib-consent server-url="/consent-server" debug></bib-consent>
+
+  <script type="module">
+    import { EVENT_NAMES } from '../dist/constants2.js'
+    const consentElement = document.querySelector('bib-consent')
+
+    consentElement.addEventListener(EVENT_NAMES.STATE_CHANGE, (event) => {
+      document.querySelector('#consent-state').textContent = event.detail.state
+    })
+
+    Object.values(EVENT_NAMES).forEach((eventName) => {
+      consentElement.addEventListener(eventName, (event) => {
+        console.log('[%s] Event fired:', eventName, event.detail)
+      })
+    })
+
+    consentElement.addEventListener('error', (event) => {
+      event.preventDefault()
+      console.error('Error:', event.detail)
+    })
+
+    //
+
+    document.querySelector('#btn-open').addEventListener('click', (event) => {
+      event.preventDefault()
+      consentElement.show()
+    })
+
+    document.querySelector('#btn-open-preferences').addEventListener('click', (event) => {
+      event.preventDefault()
+      consentElement.showPreferences()
+    })
+
+    document.querySelector('#btn-get-tokens').addEventListener('click', (event) => {
+      event.preventDefault()
+      consentElement.getTokens().then((tokens) => {
+        console.log('Tokens:', tokens)
+      })
+    })
+
+    document.querySelector('#btn-save-tokens').addEventListener('click', (event) => {
+      event.preventDefault()
+      consentElement.saveTokens({ analytics_consent: true, functionality_consent: false, ad_consent: false })
+    })
+
+    document.querySelector('#btn-reset-tokens').addEventListener('click', (event) => {
+      event.preventDefault()
+      consentElement.resetTokens()
+    })
+
+    consentElement.addEventListener(EVENT_NAMES.READY, (event) => {
+      console.log('Consent element is ready with state:', event.detail.getState())
+      setTimeout(() => {
+        consentElement.getTokens().then((tokens) => {
+          console.log('Initial tokens:', tokens)
+        })
+      })
+    })
+
+  </script>
+</body>

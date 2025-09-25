@@ -136,7 +136,6 @@ class ConsentClient extends EventTarget {
         this._server = await callServer(serverObject)
 
         this._server.listenMessage((method, data) => {
-          this.debug('[remote] server.listenMessage method: ', method, 'data: ', data)
           const consentTokens = ConsentTokens.from(data)
           const event = new CustomEvent(EVENT_NAMES.CHANGE, { detail: consentTokens })
           this.dispatchEvent(event)
@@ -163,7 +162,6 @@ class ConsentClient extends EventTarget {
       // Dispatch initial data with the ready state.
       this.readyState = 'ready'
 
-      this.debug('dispatchEvent', EVENT_NAMES.READY, consentTokens)
       this.dispatchEvent(new CustomEvent(EVENT_NAMES.READY, { detail: consentTokens }))
     }
   }

@@ -131,14 +131,14 @@ export class BibConsent extends LitElement {
     return this.#state
   }
 
-  /**
-   * Gets the user's consent tokens.
-   * @readonly
-   * @returns {import('./ConsentTokens.js').ConsentTokens} The user's consent tokens.
-   */
-  get consentTokens() {
-    return this.#consentConsumer.value
-  }
+  // /**
+  //  * Gets the user's consent tokens.
+  //  * @readonly
+  //  * @returns {import('./ConsentTokens.js').ConsentTokens} The user's consent tokens.
+  //  */
+  // get consentTokens() {
+  //   return this.#consentConsumer.value
+  // }
 
   /**
    * Initializes the `BibConsent` component, sets up the necessary state and references, and handles events related to the consent client.
@@ -154,16 +154,14 @@ export class BibConsent extends LitElement {
    */
   async connectedCallback() {
     super.connectedCallback()
-
     this.debug = this.debug || false
     this.serverUrl = this.serverUrl || SERVER_DEFAULT_URL
     this.serverRequestTimeout = this.serverRequestTimeout || SERVER_REQUEST_DEFAULT_TIMEOUT
+
     this._consentClient = await createConsentClient({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true })
 
     this._consentClient.addEventListener(EVENT_NAMES.READY, event => {
       const { detail } = event
-
-      this.#debug(EVENT_NAMES.READY, 'event: ', event)
 
       if (detail.getState() === CONSENT_STATES.DETERMINATE) {
         this.#setValue(detail)
@@ -243,7 +241,7 @@ export class BibConsent extends LitElement {
    */
   async getTokens() {
     this.#consentTokens = await this._consentClient.getConsentTokens()
-    return this.#consentTokens
+    return this.#consentTokens.toObject()
   }
 
   /**

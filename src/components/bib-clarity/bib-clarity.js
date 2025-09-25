@@ -1,25 +1,19 @@
 import { css, LitElement, unsafeCSS } from 'lit'
 import Clarity from '@microsoft/clarity'
 import { addToGlobalBib } from '@/utils/bib.js'
-import { ConsentTokens } from '../bib-consent/ConsentTokens.js'
+import { dispatchPublicEvent } from '@/utils/events.js'
 import styles from './bib-clarity.scss?inline'
 import { CLARITY_PROJECT_ID } from './constants.js'
+import { EVENT_NAMES } from '../bib-consent/constants.js'
 
-function loadClarity(projectId) {
-  const gtmScriptId = 'bib-clarity-script'
-  if (document.querySelector(`script#${gtmScriptId}`)) {
-    return
-  }
 
-  var gtmScript = document.createElement('script')
-  gtmScript.id = gtmScriptId
-  gtmScript.async = true
-  gtmScript.src = `https://www.googletagmanager.com/gtm.js?id=${projectId}`
 
-  var firstScript = document.getElementsByTagName('script')[0]
-  firstScript.parentNode.insertBefore(gtmScript, firstScript)
-}
-
+/**
+ * Custom element that manages the loading and updating of Microsoft Clarity tracking code on a web page.
+ *
+ * @class BibClarity
+ * @extends LitElement
+ */
 export class BibClarity extends LitElement {
 
   static properties = {
@@ -40,60 +34,68 @@ export class BibClarity extends LitElement {
     super()
 
     this.hidden = true
-    this.projectId = CLARITY_PROJECT_ID
+    this.projectId = this.projectId || CLARITY_PROJECT_ID
+    this.clarity = Clarity
     this.#init()
   }
 
-  #init() {
+  async #init() {
+    const self = this
     const projectId = this.projectId
 
+    function consentListener(event) {
+      console.log(`[bib-clarity] événement de bib-consent ${event.type}`, event.detail)
+
+      const consentData = event.detail
+
+      if (consentData === null) {
+        self.consent(false)
+        return
+      }
+      // console.log('[bib-consent] tokens:', Object.entries(consentData).map(entry => entry.join(': ')).join(', '))
+
+      const { analytics_consent } = consentData
+
+      self.consent(analytics_consent === 'granted')
+    }
+
+    this.clarity.init(projectId)
+
+    // Push the rest to the next tick
+    // Clarity should have been initialized by then
     setTimeout(() => {
       const consentElem = document.querySelector('bib-consent')
 
-      if (consentElem) {
-        // console.warn('bib-consent element found')
+      if (consentElem === null) {
+        // Aborting
+        console.info('No <bib-consent /> element found. Turning off Clarity tracking.')
 
-        function consentListener(event) {
-          // console.log(`[bib-consent] événement ${event.type}`, event.detail)
+        this.#dispatchPublicEvent(EVENT_NAMES.READY, { detail: this.clarity })
 
-          const consentData = event.detail
+        // Turn off Clarity in case it was initially on
+        self.consent(false)
 
-          if (consentData !== null) {
-            // console.log('[bib-consent] tokens:', Object.entries(consentData).map(entry => entry.join(': ')).join(', '))
-
-            loadClarity(projectId)
-
-            const { analytics_consent, ad_consent } = consentData
-
-            const gtmConsentData = {
-              ad_user_data: ad_consent,
-              ad_personalization: ad_consent,
-              ad_storage: ad_consent,
-              analytics_storage: analytics_consent
-            }
-
-            // console.log('Updating GTM consent with', gtmConsentData)
-
-            gtag('consent', 'update', gtmConsentData)
-          }
-        }
-
-        const dataLayer = globalThis.dataLayer = globalThis.dataLayer || []
-        const gtag = globalThis.gtag = globalThis.gtag || function gtag() { dataLayer.push(arguments) }
-
-        const defaultConsent = new ConsentTokens(false)
-        // console.log('defaultConsent: ', defaultConsent)
-
-        gtag('consent', 'default', defaultConsent.toGTM())
-        dataLayer.push({ 'gtm.start': new Date().getTime(), 'event': 'gtm.js' })
-
-        consentElem.addEventListener('bib:consent:ready', consentListener)
-        consentElem.addEventListener('bib:consent:update', consentListener)
       } else {
-        console.warn('No bib-consent element found')
+
+        consentElem.addEventListener(EVENT_NAMES.READY, consentListener)
+        consentElem.addEventListener(EVENT_NAMES.CHANGE, consentListener)
       }
 
+      this.#dispatchPublicEvent(EVENT_NAMES.READY, { detail: this.clarity })
+
     })
+  }
+
+  #dispatchPublicEvent(name, detail = null) {
+    dispatchPublicEvent(this, name, { detail })
+  }
+
+  consent(granted) {
+    if (typeof granted !== 'boolean') {
+      throw new TypeError('The "granted" parameter must be a boolean')
+    }
+
+    this.clarity.consent(granted)
   }
 }
 
