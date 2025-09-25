@@ -6,7 +6,13 @@ import styles from './bib-clarity.scss?inline'
 import { CLARITY_PROJECT_ID } from './constants.js'
 import { EVENT_NAMES } from '../bib-consent/constants.js'
 
+function toClarityConsent(granted) {
+  if (granted === null) {
+    return null
+  }
 
+  return granted === 'granted'
+}
 
 /**
  * Custom element that manages the loading and updating of Microsoft Clarity tracking code on a web page.
@@ -15,6 +21,7 @@ import { EVENT_NAMES } from '../bib-consent/constants.js'
  * @extends LitElement
  */
 export class BibClarity extends LitElement {
+  #consent = null
 
   static properties = {
     projectId: {
@@ -43,8 +50,8 @@ export class BibClarity extends LitElement {
     const self = this
     const projectId = this.projectId
 
-    function consentListener(event) {
-      console.log(`[bib-clarity] événement de bib-consent ${event.type}`, event.detail)
+    async function consentListener(event) {
+      console.log(`<bib-clarity> recieved an event from <bib-consent>: ${event.type}`, event.detail)
 
       const consentData = event.detail
 
@@ -52,36 +59,33 @@ export class BibClarity extends LitElement {
         self.consent(false)
         return
       }
-      // console.log('[bib-consent] tokens:', Object.entries(consentData).map(entry => entry.join(': ')).join(', '))
 
       const { analytics_consent } = consentData
 
-      self.consent(analytics_consent === 'granted')
+      self.setConsent(analytics_consent === 'granted')
     }
 
     this.clarity.init(projectId)
 
     // Push the rest to the next tick
     // Clarity should have been initialized by then
-    setTimeout(() => {
-      const consentElem = document.querySelector('bib-consent')
+    setTimeout(async () => {
+      const bibConsentElem = document.querySelector('bib-consent')
 
-      if (consentElem === null) {
+      if (bibConsentElem === null) {
         // Aborting
         console.info('No <bib-consent /> element found. Turning off Clarity tracking.')
 
-        this.#dispatchPublicEvent(EVENT_NAMES.READY, { detail: this.clarity })
-
         // Turn off Clarity in case it was initially on
-        self.consent(false)
+        self.setConsent(false)
 
       } else {
 
-        consentElem.addEventListener(EVENT_NAMES.READY, consentListener)
-        consentElem.addEventListener(EVENT_NAMES.CHANGE, consentListener)
+        bibConsentElem.addEventListener(EVENT_NAMES.READY, consentListener)
+        bibConsentElem.addEventListener(EVENT_NAMES.CHANGE, consentListener)
       }
 
-      this.#dispatchPublicEvent(EVENT_NAMES.READY, { detail: this.clarity })
+      this.#dispatchPublicEvent(EVENT_NAMES.READY)
 
     })
   }
@@ -90,12 +94,14 @@ export class BibClarity extends LitElement {
     dispatchPublicEvent(this, name, { detail })
   }
 
-  consent(granted) {
+  setConsent(granted) {
     if (typeof granted !== 'boolean') {
       throw new TypeError('The "granted" parameter must be a boolean')
     }
 
+    this.#consent = granted
     this.clarity.consent(granted)
+    this.#dispatchPublicEvent(EVENT_NAMES.CHANGE, { detail: granted })
   }
 }
 

@@ -43,7 +43,7 @@ class ConsentClient extends EventTarget {
 
   dispatchEvent(event) {
     super.dispatchEvent(event)
-    this.hosts.forEach(({ host, reflectEvents }) => reflectEvents && host.dispatchEvent?.(event))
+    // this.hosts.forEach(({ host, reflectEvents }) => reflectEvents && host.dispatchEvent?.(event))
   }
 
   /**
@@ -222,7 +222,6 @@ class ConsentClient extends EventTarget {
       if (this.serverMode === SERVER_MODE.LOCAL) {
         return await this._storage.resetTokens()
       } else {
-        console.log('YESSS')
         await this._server.postMessage('resetTokens')
       }
     } catch (error) {
