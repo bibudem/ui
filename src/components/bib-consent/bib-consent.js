@@ -12,6 +12,7 @@ import '../bib-button/bib-button-close.js'
 import './bib-consent-consent-dialog.js'
 import './bib-consent-preferences-dialog.js'
 import { CONSENT_STATES, EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT, SERVER_DEFAULT_URL } from './constants.js'
+import { c } from '../../../dist/_Uint8Array-Cf-PTZCw.js'
 
 const debug = loggerFactory('bib-consent', '#cd5300')
 
@@ -161,13 +162,16 @@ export class BibConsent extends LitElement {
     this._consentClient = await createConsentClient({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true })
 
     this._consentClient.addEventListener(EVENT_NAMES.READY, event => {
-      const { detail } = event
 
-      if (detail.getState() === CONSENT_STATES.DETERMINATE) {
-        this.#setValue(detail)
+      const { detail: consentData } = event
+
+      if (consentData.getState() === CONSENT_STATES.DETERMINATE) {
+        this.#setValue(consentData)
       } else {
         this.#show('consent')
       }
+
+      this.#dispatchPublicEvent(EVENT_NAMES.READY, consentData.toObject())
     })
   }
 
@@ -270,9 +274,11 @@ export class BibConsent extends LitElement {
    * @returns {Promise<Object>} - A promise that resolves to the user's reset consent preferences.
    */
   async resetTokens() {
-    this.#consentTokens = await this._consentClient.resetTokens()
-    this.#dispatchPublicEvent(EVENT_NAMES.CHANGE, this.#consentTokens.toObject())
-    return this.#consentTokens
+    await this._consentClient.resetTokens()
+    const tokens = await this._consentClient.getConsentTokens()
+    this.#consentTokens = tokens
+    this.#dispatchPublicEvent(EVENT_NAMES.CHANGE, tokens.toObject())
+    return tokens
   }
 
   async #handleChangeEvent(event) {
@@ -285,7 +291,8 @@ export class BibConsent extends LitElement {
       return
     }
 
-    this.#dispatchPublicEvent(EVENT_NAMES.CHANGE, this.#consentTokens.toObject())
+    const tokens = await this.getTokens()
+    this.#dispatchPublicEvent(EVENT_NAMES.CHANGE, tokens)
     this.#close()
   }
 
