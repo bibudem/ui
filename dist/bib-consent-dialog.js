@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.1.1
+ * @version 1.2.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -33,8 +33,8 @@ class a extends o {
   showModal() {
     __privateMethod(this, _a_instances, e_fn).call(this, "modal");
   }
-  close(o2 = true) {
-    this.open = false, this._dialogRef.value && this._dialogRef.value.open && this._dialogRef.value?.close(), o2 && this.dispatchEvent(new CustomEvent("close", { bubbles: true, composed: true }));
+  close() {
+    this.open = false, this._dialogRef.value && this._dialogRef.value.open && this._dialogRef.value?.close();
   }
   render() {
     return t`<dialog class="dialog" ${i(this._dialogRef)}>${__privateMethod(this, _a_instances, o_fn).call(this)}<div class="dialog-container"><div class="content-container"><slot></slot></div></div></dialog>`;
