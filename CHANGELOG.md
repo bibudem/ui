@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.1](https://github.com/bibudem/ui/compare/v1.1.0...v1.1.1) (2025-09-26)
+
+
+### Bug Fixes
+
+* **bib-consent:** Améliorations stylistiques pour l'accessibilité. ([dd79e78](https://github.com/bibudem/ui/commit/dd79e780461982fd8400af3550a9f81f673b539d))
+* **bib-consent:** Changement de l'URL du composant serveur: https://bib.umontreal.ca/consent/server/ ([a2b8b55](https://github.com/bibudem/ui/commit/a2b8b55142370703e7e06f609864ec2911342b3d))
+* **bib-consent:** Correction de l'événement 'bib:change' qui n'incluait pas les données de consentement. ([e795a19](https://github.com/bibudem/ui/commit/e795a19657b4d7b01c5524977808a934a556c2e7))
+* **bib-consent:** Renommage de l'événement 'update' par 'change'. ([6473e50](https://github.com/bibudem/ui/commit/6473e50cb7795bb485c3f013e1d5fa707ebf7abb))
+
 ## [1.1.0](https://github.com/bibudem/ui/compare/v1.0.4...v1.1.0) (2025-09-17)
 
 
