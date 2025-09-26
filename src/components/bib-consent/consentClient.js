@@ -43,7 +43,7 @@ class ConsentClient extends EventTarget {
 
   dispatchEvent(event) {
     super.dispatchEvent(event)
-    this.hosts.forEach(({ host, reflectEvents }) => reflectEvents && host.dispatchEvent?.(event))
+    // this.hosts.forEach(({ host, reflectEvents }) => reflectEvents && host.dispatchEvent?.(event))
   }
 
   /**
@@ -69,7 +69,7 @@ class ConsentClient extends EventTarget {
 
   async #fireReadyListener(listener) {
     const consentTokens = await this.getConsentTokens()
-    const readyEvent = new CustomEvent(EVENT_NAMES.READY, { detail: consentTokens })
+    const readyEvent = new CustomEvent(EVENT_NAMES.READY, { detail: consentTokens, bubbles: true, composed: true })
     this.debug('Firing ready event with preferences: ', consentTokens)
     listener(readyEvent)
   }
@@ -136,9 +136,8 @@ class ConsentClient extends EventTarget {
         this._server = await callServer(serverObject)
 
         this._server.listenMessage((method, data) => {
-          this.debug('[remote] server.listenMessage method: ', method, 'data: ', data)
           const consentTokens = ConsentTokens.from(data)
-          const event = new CustomEvent(EVENT_NAMES.CHANGE, { detail: consentTokens })
+          const event = new CustomEvent(EVENT_NAMES.CHANGE, { detail: consentTokens, bubbles: true, composed: true })
           this.dispatchEvent(event)
         })
       } catch (error) {
@@ -163,8 +162,7 @@ class ConsentClient extends EventTarget {
       // Dispatch initial data with the ready state.
       this.readyState = 'ready'
 
-      this.debug('dispatchEvent', EVENT_NAMES.READY, consentTokens)
-      this.dispatchEvent(new CustomEvent(EVENT_NAMES.READY, { detail: consentTokens }))
+      this.dispatchEvent(new CustomEvent(EVENT_NAMES.READY, { detail: consentTokens, bubbles: true, composed: true }))
     }
   }
 
@@ -205,7 +203,7 @@ class ConsentClient extends EventTarget {
       }
 
       if (response) {
-        this.dispatchEvent(new CustomEvent(EVENT_NAMES.CHANGE, { detail: response }))
+        this.dispatchEvent(new CustomEvent(EVENT_NAMES.CHANGE, { detail: response, bubbles: true, composed: true }))
         return response
       }
     } catch (error) {

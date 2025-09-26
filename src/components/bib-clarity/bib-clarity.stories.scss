@@ -1,0 +1,19 @@
+@use '@/scss/utils/layers';
+
+@include layers.component {
+  :host(hidden) {
+    display: none;
+  }
+
+  button,
+  input[type='checkbox'],
+  label {
+    cursor: pointer;
+    font-size: smaller;
+  }
+
+  label {
+    display: inline-flex;
+    align-items: center;
+  }
+}

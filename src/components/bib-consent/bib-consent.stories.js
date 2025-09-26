@@ -14,8 +14,10 @@ export default {
 const consentElement = document.createElement('bib-consent')
 consentElement.setAttribute('debug', '')
 consentElement.setAttribute('server-url', '/consent-server')
-consentElement.addEventListener(EVENT_NAMES.CHANGE, (event) => {
-  console.log(`This element just got an ${EVENT_NAMES.CHANGE} event:`, event)
+Object.values(EVENT_NAMES).forEach(eventName => {
+  consentElement.addEventListener(eventName, (event) => {
+    console.log(`[bib-consent] Event ${eventName} dispatched:`, event)
+  })
 })
 
 /**
