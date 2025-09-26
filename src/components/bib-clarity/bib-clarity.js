@@ -99,6 +99,13 @@ export class BibClarity extends LitElement {
       throw new TypeError('The "granted" parameter must be a boolean')
     }
 
+    if (this.#consent === granted) {
+      // No change, so no need to do anything or dispatch an event
+      return
+    }
+
+    console.log(`[bib-clarity] Setting consent to ${granted} (was: ${this.#consent})`)
+
     this.#consent = granted
     this.clarity.consent(granted)
     this.#dispatchPublicEvent(EVENT_NAMES.CHANGE, { detail: granted })

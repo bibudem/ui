@@ -3,6 +3,7 @@ import { EVENT_NAMES as BIB_CONSENT_EVENT_NAMES } from '../bib-consent/constants
 import { CLARITY_PROJECT_ID, EVENT_NAMES as BIB_CLARITY_EVENT_NAMES } from './constants.js'
 import './bib-clarity.js'
 import '../bib-consent/bib-consent.js'
+import './bib-clarity.stories.scss'
 
 export default {
   title: 'Composants/Microsoft Clarity',
@@ -92,6 +93,12 @@ export const Clarity = {
       updateDiv(tokens)
     }
 
+    function onToggleClarityConsent(event) {
+      const checked = event.target.checked
+      console.log('Setting clarity consent to', checked)
+      clarityElement.setConsent(checked)
+    }
+
     return html`
       ${consentElement}
       ${clarityElement}
@@ -101,7 +108,7 @@ export const Clarity = {
         <span style="width: 1px; height: 1em; margin-inline: 2px; background: hsla(203, 50%, 30%, 0.25);"></span>
         <button @click="${getTokens}">Get tokens</button>
         <button @click="${() => consentElement.saveTokens({ analytics_consent: true, functionality_consent: false, ad_consent: false })}">Save tokens</button>
-        <button @click="${() => consentElement.resetTokens()}">Reset tokens</button>
+        <button @click="${() => consentElement.resetTokens()}">Reset tokens</button>        
       </div>
       <div id="tokens" style="margin-top: 1rem; padding: 1rem; border: 1px solid hsla(203, 50%, 30%, 0.25); font-size: .8em; background: hsla(203, 50%, 30%, 0.05);"></div>
       <p><b>Événements</b></p>
