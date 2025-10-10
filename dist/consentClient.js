@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.2.0
+ * @version 1.2.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -19,7 +19,7 @@ var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _e, _s, _c_instances, t_fn;
 import { s as e, c as s } from "./url-B0JPXU6k.js";
-import { l as t } from "./logger-BMZPTtxW.js";
+import { l as t } from "./logger-34NuDmbq.js";
 import r from "./ConsentStorage.js";
 import { ConsentTokens as o } from "./ConsentTokens.js";
 import { getServerMode as n, getIframeServer as i } from "./utils.js";
