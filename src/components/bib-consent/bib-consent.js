@@ -171,7 +171,7 @@ export class BibConsent extends LitElement {
         this.#show('consent')
       }
 
-      this.#dispatchPublicEvent(EVENT_NAMES.READY, { ...consentData.toObject(), a: 'allo' })
+      this.#dispatchPublicEvent(EVENT_NAMES.READY, consentData.toObject())
     })
   }
 
