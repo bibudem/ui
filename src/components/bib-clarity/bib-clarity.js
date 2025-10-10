@@ -1,6 +1,5 @@
 import { css, LitElement, unsafeCSS } from 'lit'
 import Clarity from '@microsoft/clarity'
-import Cookies from 'js-cookie'
 import { addToGlobalBib } from '@/utils/bib.js'
 import { dispatchPublicEvent } from '@/utils/events.js'
 import styles from './bib-clarity.scss?inline'
