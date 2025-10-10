@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.2.0
+ * @version 1.2.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -19,7 +19,7 @@ var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _t, _a_instances, e_fn, n_fn;
 import { s as t, i as e, r as n } from "./lit-element-Dj1nHH6C.js";
-import { a as i } from "./bib-RFFKFfZN.js";
+import { a as i } from "./bib-CAfTDCvd.js";
 import { d as s } from "./events-BtF7lCmA.js";
 import { CLARITY_PROJECT_ID as o } from "./constants3.js";
 import { EVENT_NAMES as c } from "./constants2.js";
@@ -54,24 +54,24 @@ class a extends t {
     this.hidden = true, this.projectId = this.projectId || o, this.clarity = r, __privateMethod(this, _a_instances, e_fn).call(this);
   }
   setConsent(t2) {
-    if ("boolean" != typeof t2) throw new TypeError('The "granted" parameter must be a boolean');
-    __privateGet(this, _t) !== t2 && (console.log(`[bib-clarity] Setting consent to ${t2} (was: ${__privateGet(this, _t)})`), __privateSet(this, _t, t2), this.clarity.consent(t2), __privateMethod(this, _a_instances, n_fn).call(this, c.CHANGE, { detail: t2 }));
+    if ("boolean" != typeof t2) throw new TypeError('The "granted" parameter must be a boolean. Got', typeof t2);
+    __privateGet(this, _t) !== t2 && (console.log(`[bib-clarity] Setting consent to ${t2} (was ${null === __privateGet(this, _t) ? "not set" : __privateGet(this, _t)}).`), __privateSet(this, _t, t2), this.clarity.consent("consent", t2), __privateMethod(this, _a_instances, n_fn).call(this, c.CHANGE, { detail: t2 }));
   }
 }
 _t = new WeakMap();
 _a_instances = new WeakSet();
 e_fn = async function() {
-  const t2 = this, e2 = this.projectId;
-  async function n2(e3) {
+  const t2 = this;
+  async function e2(e3) {
     console.log(`<bib-clarity> recieved an event from <bib-consent>: ${e3.type}`, e3.detail);
-    const n3 = e3.detail;
-    if (null === n3) return void t2.consent(false);
-    const { analytics_consent: i2 } = n3;
+    const n2 = e3.detail;
+    if (null === n2) return void t2.setConsent(false);
+    const { analytics_consent: i2 } = n2;
     t2.setConsent("granted" === i2);
   }
-  this.clarity.init(e2), setTimeout(async () => {
-    const e3 = document.querySelector("bib-consent");
-    null === e3 ? (console.info("No <bib-consent /> element found. Turning off Clarity tracking."), t2.setConsent(false)) : (e3.addEventListener(c.READY, n2), e3.addEventListener(c.CHANGE, n2)), __privateMethod(this, _a_instances, n_fn).call(this, c.READY);
+  this.clarity.init(this.projectId), setTimeout(async () => {
+    const n2 = document.querySelector("bib-consent");
+    null === n2 ? (console.info("No <bib-consent /> element found. Turning off Clarity tracking."), t2.setConsent(false)) : (n2.addEventListener(c.READY, e2), n2.addEventListener(c.CHANGE, e2)), __privateMethod(this, _a_instances, n_fn).call(this, c.READY);
   });
 };
 n_fn = function(t2, e2 = null) {

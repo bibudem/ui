@@ -6,11 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { n as a } from "./package-CT3bvKPr.js";
-const s = `${a}/avis`, o = 1, i = "avis";
-export {
-  s as DB_NAME,
-  i as DB_STORE_NAME,
-  o as DB_VERSION
-};
-//# sourceMappingURL=constants4.js.map
+const o=require("./package-BFBr-yFd.cjs");exports.loggerFactory=function(e=o.name,n="green"){return Function.prototype.bind.call(console.log,console,`%c[${e}]`,`color: ${n}; font-weight: bold;`)};
+//# sourceMappingURL=logger-5acNnVJl.cjs.map
