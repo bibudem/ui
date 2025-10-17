@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/bibudem/ui/compare/v1.2.1...v1.2.2) (2025-10-17)
+
+
+### Bug Fixes
+
+* **bib-avis:** Correction pour les cas où il n'y a pas de réponse http (ex: quand le certificat de sécurité est expiré) ([cef30d7](https://github.com/bibudem/ui/commit/cef30d7e799c5d449a5f1411cfdf278ca5efe83f))
+
 ## [1.1.0](https://github.com/bibudem/ui/compare/v1.0.4...v1.1.0) (2025-09-17)
 
 
