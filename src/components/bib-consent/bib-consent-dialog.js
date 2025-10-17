@@ -1,6 +1,7 @@
 import { css, html, LitElement, nothing, unsafeCSS } from 'lit'
 import { createRef, ref } from 'lit/directives/ref.js'
 import styles from './bib-consent-dialog.scss?inline'
+import { EVENT_NAMES } from './constants.js'
 
 /**
  * A custom dialog element that can be shown or hidden, with an optional close button.
@@ -94,13 +95,13 @@ export class BibConsentDialog extends LitElement {
    * This method sets the `open` property to `false` and calls the `close()` method on the dialog element to hide it. If the `emit` parameter is `true`, it also dispatches a 'close' event that bubbles up and is composed.
    * 
    * @param {boolean} [emit=true] - Whether to dispatch a 'close' event.
+   * @emits bib:close - Emits a 'bib:close' event.
    */
-  close(emit = true) {
+  close() {
     this.open = false
     if (this._dialogRef.value && this._dialogRef.value.open) {
       this._dialogRef.value?.close()
     }
-    emit && this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }))
   }
 
   render() {

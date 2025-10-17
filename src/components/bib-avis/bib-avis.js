@@ -32,8 +32,8 @@ async function hash(obj) {
  * 
  * @element bib-avis
  * 
- * @fires bib:show - Émis avant l'affichage d'un avis. Peut être annulé.
- * @fires bib:hide - Émis avant le masquage d'un avis. Peut être annulé.
+ * @emits bib:show - Émis avant l'affichage d'un avis. Peut être annulé.
+ * @emits bib:hide - Émis avant le masquage d'un avis. Peut être annulé.
  * 
  * @slot - Contenu HTML local à afficher comme avis (optionnel)
  * 

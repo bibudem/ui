@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.1.1
+ * @version 1.2.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -20,7 +20,7 @@ var _e, _o;
 import { s as e, i as o, r as t, x as s } from "./lit-element-Dj1nHH6C.js";
 import { a as n, p as i } from "./url-B0JPXU6k.js";
 import { e as r, n as a } from "./ref-B-kqFHPy.js";
-import { l } from "./logger-CqwzzWaI.js";
+import { l } from "./logger-34NuDmbq.js";
 import g from "./ConsentStorage.js";
 class c extends e {
   constructor() {
@@ -30,7 +30,7 @@ class c extends e {
     this.connected = false, this.debug = this.debug || false, this.loggerRef = r(), this.allowedOrigins = this.allowedOrigins || [], this.init();
   }
   async init() {
-    this.log("Initializing BibConsentServer..."), __privateSet(this, _e, await g()), this.log("Connected to storage."), __privateGet(this, _e).listen((e2) => {
+    this.log("Initializing BibConsentServer..."), __privateSet(this, _e, await g()), __privateGet(this, _e).listen((e2) => {
       this.log("Storage updated with data", e2.detail);
     }), this.log("Start listening for storage updates..."), this.startListening();
   }

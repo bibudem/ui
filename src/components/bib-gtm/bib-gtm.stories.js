@@ -29,10 +29,11 @@ export default {
  * Affiche un message d'urgence
  */
 export const GTM = {
+  name: 'bib-gtm',
   render: function ({ env, containerId }) {
     return html`
       <bib-consent server-url="/consent-server"></bib-consent>
-      <bib-gtm container-id="${ifDefined(containerId)}" />
+      <bib-gtm container-id="${ifDefined(containerId)}"></bib-gtm>
     `
   },
   args: {

@@ -87,13 +87,13 @@ export async function getServerMode(client) {
       console.warn(`Request timed out after ${timeout}ms. Aborting request...`)
       controller.abort()
     }, timeout)
+
     response = await fetch(serverUrl, { signal: controller.signal })
 
     if (response.ok) {
       return SERVER_MODE.REMOTE
     }
   } catch (error) {
-    console.error(error)
 
     if (controller.signal.aborted) {
       // throw new Error(`Unable to locate server page. The request timed out after ${timeout}ms. url: ${serverUrl.href}`)
@@ -108,5 +108,5 @@ export async function getServerMode(client) {
     clearTimeout(timeoutHandle)
   }
 
-  throw new Error(`Unable to locate server page. The request failed with status code ${response.status}. url: ${serverUrl.href}`)
+  // throw new Error(`Unable to locate server page. The request failed with status code ${response.status}. url: ${serverUrl.href}`)
 }

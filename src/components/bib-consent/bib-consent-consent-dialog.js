@@ -19,7 +19,7 @@ function all(value) {
  *
  * The component provides the following functionality:
  * - Displays a consent dialog with options to customize preferences, accept all, or reject all.
- * - Allows setting preferences by dispatching a `update` event with the new preferences.
+ * - Allows setting preferences by dispatching a `change` event with the new preferences.
  * - Provides methods to show, close, and display the preferences dialog.
  *
  * The component uses the `bib-consent-dialog` component to render the actual dialog.
@@ -50,10 +50,10 @@ export class BibConsentConsentDialog extends LitElement {
    * Sets the preferences for the consent dialog.
    *
    * @param {Object} preferences - An object containing the preferences to set.
-   * @emits update - Dispatches a custom event with the updated preferences.
+   * @emits change - Dispatches a custom event with the updated preferences.
    */
   setConsentTokens(preferences) {
-    this.dispatchEvent(new CustomEvent('update', { detail: preferences }))
+    this.dispatchEvent(new CustomEvent('intern:change', { detail: preferences }))
   }
 
   /**
@@ -80,7 +80,7 @@ export class BibConsentConsentDialog extends LitElement {
    * This method dispatches a custom 'show-preferences' event to notify other components that the preferences dialog should be shown.
    */
   showPreferences() {
-    this.dispatchEvent(new CustomEvent('show-preferences'))
+    this.dispatchEvent(new CustomEvent('intern:show-preferences'))
   }
 
   render() {

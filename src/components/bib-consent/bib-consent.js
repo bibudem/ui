@@ -4,6 +4,7 @@ import { ContextProvider, ContextConsumer } from '@lit/context'
 import '@auroratide/toggle-switch/lib/define.js'
 import { loggerFactory } from '@/utils/logger.js'
 import { addToGlobalBib } from '@/utils/bib.js'
+import { dispatchPublicEvent } from '@/utils/events.js'
 import { ConsentTokens } from './ConsentTokens.js'
 import createConsentClient from './consentClient.js'
 import { consentContext } from './consent-context.js'
@@ -11,6 +12,7 @@ import '../bib-button/bib-button-close.js'
 import './bib-consent-consent-dialog.js'
 import './bib-consent-preferences-dialog.js'
 import { CONSENT_STATES, EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT, SERVER_DEFAULT_URL } from './constants.js'
+import { c } from '../../../dist/_Uint8Array-Cf-PTZCw.js'
 
 const debug = loggerFactory('bib-consent', '#cd5300')
 
@@ -23,8 +25,8 @@ const debug = loggerFactory('bib-consent', '#cd5300')
  *
  * It includes the following functionality:
  * - Fetching and displaying the user's consent preferences from a server
- * - Allowing the user to update their consent preferences
- * - Saving the updated consent preferences to the server
+ * - Allowing the user to change their consent preferences
+ * - Saving the changed consent preferences to the server
  * - Providing a consent dialog and a preferences dialog for the user to interact with
  *
  * The component can be configured with the following properties:
@@ -48,7 +50,7 @@ const debug = loggerFactory('bib-consent', '#cd5300')
  *   - `determinate`: The user has made their consent preferences.
  * @property {import('./ConsentTokens.js').ConsentTokens} consentTokens - The user's consent tokens.
  * @emits {CustomEvent} EVENT_NAMES.READY - Emitted when the consent client is ready.
- * @emits {CustomEvent} EVENT_NAMES.UPDATE - Emitted when the consent preferences are updated.
+ * @emits {CustomEvent} EVENT_NAMES.CHANGE - Emitted when the consent preferences are changed.
  * @emits {CustomEvent} context-request - Emitted when the context is requested.
  * @method connectedCallback - Initializes the component and sets up the necessary state and references.
  * @method close - Closes the current dialog and sets the `open` property to `false`.
@@ -114,6 +116,10 @@ export class BibConsent extends LitElement {
     this.#consentConsumer = new ContextConsumer(this, { context: consentContext, callback: this.savePreferences })
   }
 
+  #dispatchPublicEvent(name, detail = null) {
+    dispatchPublicEvent(this, name, { detail })
+  }
+
   /**
    * Gets the current state of the BibConsent component.
    * The state is determined by the user's input. Initially `indeterminate`, it turns `determinate` when the user has indicated their consent preferences.
@@ -126,14 +132,14 @@ export class BibConsent extends LitElement {
     return this.#state
   }
 
-  /**
-   * Gets the user's consent tokens.
-   * @readonly
-   * @returns {import('./ConsentTokens.js').ConsentTokens} The user's consent tokens.
-   */
-  get consentTokens() {
-    return this.#consentConsumer.value
-  }
+  // /**
+  //  * Gets the user's consent tokens.
+  //  * @readonly
+  //  * @returns {import('./ConsentTokens.js').ConsentTokens} The user's consent tokens.
+  //  */
+  // get consentTokens() {
+  //   return this.#consentConsumer.value
+  // }
 
   /**
    * Initializes the `BibConsent` component, sets up the necessary state and references, and handles events related to the consent client.
@@ -141,30 +147,31 @@ export class BibConsent extends LitElement {
    * The `connectedCallback` method performs the following tasks:
    * - Calls the parent class's `connectedCallback` method
    * - Sets the `debug` property to `false` if it is not already defined
-   * - Sets the `serverUrl` property to `'https://bib.umontreal.ca/consent/server'` if it is not already defined
+   * - Sets the `serverUrl` property to `'https://bib.umontreal.ca/consent/server/'` if it is not already defined
    * - Sets the `serverRequestTimeout` property to `SERVER_REQUEST_DEFAULT_TIMEOUT` if it is not already defined
    * - Creates a `ConsentClient` instance and assigns it to the `_consentClient` property
-   * - Adds event listeners for the `EVENT_NAMES.READY` and `EVENT_NAMES.UPDATE` events on the `_consentClient` instance
+   * - Adds event listeners for the `EVENT_NAMES.READY` and `EVENT_NAMES.CHANGE` events on the `_consentClient` instance
    * - Adds an event listener for the `context-request` event on the component's shadow root, which responds with the current tokens
    */
   async connectedCallback() {
     super.connectedCallback()
-
     this.debug = this.debug || false
     this.serverUrl = this.serverUrl || SERVER_DEFAULT_URL
     this.serverRequestTimeout = this.serverRequestTimeout || SERVER_REQUEST_DEFAULT_TIMEOUT
+
     this._consentClient = await createConsentClient({ host: this, serverUrl: this.serverUrl, serverRequestTimeout: this.serverRequestTimeout, reflectEvents: true })
 
     this._consentClient.addEventListener(EVENT_NAMES.READY, event => {
-      const { detail } = event
 
-      this.#debug(EVENT_NAMES.READY, 'event: ', event)
+      const { detail: consentData } = event
 
-      if (detail.getState() === CONSENT_STATES.DETERMINATE) {
-        this.#setValue(detail)
+      if (consentData.getState() === CONSENT_STATES.DETERMINATE) {
+        this.#setValue(consentData)
       } else {
         this.#show('consent')
       }
+
+      this.#dispatchPublicEvent(EVENT_NAMES.READY, consentData.toObject())
     })
   }
 
@@ -183,6 +190,10 @@ export class BibConsent extends LitElement {
     this.open = false
     this.currentDialog?.close(emit)
     this.currentDialog = null
+
+    if (emit) {
+      this.#dispatchPublicEvent(EVENT_NAMES.CLOSE)
+    }
   }
 
   /**
@@ -194,8 +205,10 @@ export class BibConsent extends LitElement {
 
   #show(panel = 'consent') {
 
-    if (typeof panel !== 'string' && !['consent', 'preferences'].includes(panel)) {
-      throw new TypeError(`The panel argument must be a string of either values 'consent' or 'preferences'. `, panel)
+    const validPanels = ['consent', 'preferences']
+
+    if (typeof panel !== 'string' && !validPanels.includes(panel)) {
+      throw new TypeError(`The panel argument must be a string of either values \`${validPanels.join(` or `)}\`. You provided \`${panel}\``, panel)
     }
 
     this.open = true
@@ -232,7 +245,7 @@ export class BibConsent extends LitElement {
    */
   async getTokens() {
     this.#consentTokens = await this._consentClient.getConsentTokens()
-    return this.#consentTokens
+    return this.#consentTokens.toObject()
   }
 
   /**
@@ -261,31 +274,36 @@ export class BibConsent extends LitElement {
    * @returns {Promise<Object>} - A promise that resolves to the user's reset consent preferences.
    */
   async resetTokens() {
-    this.#consentTokens = await this._consentClient.resetTokens()
-    return this.#consentTokens
+    await this._consentClient.resetTokens()
+    const tokens = await this._consentClient.getConsentTokens()
+    this.#consentTokens = tokens
+    this.#dispatchPublicEvent(EVENT_NAMES.CHANGE, tokens.toObject())
+    return tokens
   }
 
-  async #handleUpdateEvent(event) {
-    this.#debug('[#handleUpdateEvent]', event)
+  async #handleChangeEvent(event) {
+    // this.#debug('[#handleChangeEvent]', event)
     const success = await this.saveTokens(event.detail)
-    this.#debug('[#handleUpdateEvent] success: ', success)
+    // this.#debug('[#handleChangeEvent] success: ', success)
+
     if (!success) {
       // TODO: show error message
       return
     }
-    this.dispatchEvent(new CustomEvent(EVENT_NAMES.UPDATE, { detail: this.#consentTokens }))
+
+    const tokens = await this.getTokens()
+    this.#dispatchPublicEvent(EVENT_NAMES.CHANGE, tokens)
     this.#close()
   }
 
   #handleCloseEvent(event) {
-    event.stopPropagation()
     this.#close(false)
   }
 
   render() {
     return html`
-        <bib-consent-consent-dialog @update="${this.#handleUpdateEvent}" @show-preferences="${() => this.#show('preferences')}" ${ref(this.#consentDialogRef)} @close="${this.#handleCloseEvent}"></bib-consent-consent-dialog>
-        <bib-consent-preferences-dialog @update="${this.#handleUpdateEvent}" ${ref(this.#preferencesDialogRef)} @close="${this.#handleCloseEvent}"></bib-consent-preferences-dialog>
+        <bib-consent-consent-dialog @intern:change="${this.#handleChangeEvent}" @intern:show-preferences="${() => this.#show('preferences')}" ${ref(this.#consentDialogRef)} @intern:close="${this.#handleCloseEvent}"></bib-consent-consent-dialog>
+        <bib-consent-preferences-dialog @intern:change="${this.#handleChangeEvent}" ${ref(this.#preferencesDialogRef)} @intern:close="${this.#handleCloseEvent}"></bib-consent-preferences-dialog>
     `
   }
 }

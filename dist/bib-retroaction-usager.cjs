@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.1.1
+ * @version 1.2.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-var e,t,r,o,a,i,n,s=Object.defineProperty,l=e=>{throw TypeError(e)},c=(e,t,r)=>((e,t,r)=>t in e?s(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r)(e,"symbol"!=typeof t?t+"":t,r),d=(e,t,r)=>t.has(e)||l("Cannot "+r),h=(e,t,r)=>(d(e,t,"read from private field"),r?r.call(e):t.get(e)),u=(e,t,r)=>t.has(e)?l("Cannot add the same private member more than once"):t instanceof WeakSet?t.add(e):t.set(e,r),p=(e,t,r)=>(d(e,t,"access private method"),r);Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const v=require("./lit-element-BHNMc-Kg.cjs"),m=require("./unsafe-html-Dku8oD0s.cjs"),b=require("./directive-DpiRyOsV.cjs"),f=require("./VotePayload.cjs"),g=require("./bib-CeS4PEX-.cjs");function y(e,t,r,o){var a,i=arguments.length,n=i<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,r):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,r,o);else for(var s=e.length-1;s>=0;s--)(a=e[s])&&(n=(i<3?a(n):i>3?a(t,r,n):a(t,r))||n);return i>3&&n&&Object.defineProperty(t,r,n),n}"function"==typeof SuppressedError&&SuppressedError;
+var e,t,r,o,a,i,n,s=Object.defineProperty,l=e=>{throw TypeError(e)},c=(e,t,r)=>((e,t,r)=>t in e?s(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r)(e,"symbol"!=typeof t?t+"":t,r),d=(e,t,r)=>t.has(e)||l("Cannot "+r),h=(e,t,r)=>(d(e,t,"read from private field"),r?r.call(e):t.get(e)),u=(e,t,r)=>t.has(e)?l("Cannot add the same private member more than once"):t instanceof WeakSet?t.add(e):t.set(e,r),p=(e,t,r)=>(d(e,t,"access private method"),r);Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const v=require("./lit-element-BHNMc-Kg.cjs"),m=require("./unsafe-html-Dku8oD0s.cjs"),b=require("./directive-DpiRyOsV.cjs"),f=require("./VotePayload.cjs"),g=require("./bib-CxkFjFJ8.cjs");function y(e,t,r,o){var a,i=arguments.length,n=i<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,r):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,r,o);else for(var s=e.length-1;s>=0;s--)(a=e[s])&&(n=(i<3?a(n):i>3?a(t,r,n):a(t,r))||n);return i>3&&n&&Object.defineProperty(t,r,n),n}"function"==typeof SuppressedError&&SuppressedError;
 /**
  * @license
  * Copyright 2017 Google LLC
