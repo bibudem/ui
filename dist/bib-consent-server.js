@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.2.1
+ * @version 1.3.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -18,9 +18,9 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var _e, _o;
 import { s as e, i as o, r as t, x as s } from "./lit-element-Dj1nHH6C.js";
-import { a as n, p as i } from "./url-B0JPXU6k.js";
+import { a as i, p as n } from "./url-B0JPXU6k.js";
 import { e as r, n as a } from "./ref-B-kqFHPy.js";
-import { l } from "./logger-34NuDmbq.js";
+import { l } from "./logger-CfH5-372.js";
 import g from "./ConsentStorage.js";
 class c extends e {
   constructor() {
@@ -32,7 +32,7 @@ class c extends e {
   async init() {
     this.log("Initializing BibConsentServer..."), __privateSet(this, _e, await g()), __privateGet(this, _e).listen((e2) => {
       this.log("Storage updated with data", e2.detail);
-    }), this.log("Start listening for storage updates..."), this.startListening();
+    }), this.log("Start listening for storage updates..."), await this.startListening(), this.log("Initialization complete.");
   }
   log(...e2) {
     if (this.hasAttribute("debug")) {
@@ -46,9 +46,9 @@ class c extends e {
     }
   }
   async startListening() {
-    const { listenMessage: e2 } = await n({ eventFilter: (e3) => {
+    const { listenMessage: e2 } = await i({ eventFilter: (e3) => {
       const { origin: o2 } = e3;
-      return this.allowedOrigins.length > 0 && this.allowedOrigins.some((e4) => i(e4, o2));
+      return this.allowedOrigins.length > 0 && this.allowedOrigins.some((e4) => n(e4, o2));
     } });
     this.connected = true, this.log("Connected:", `<code class="value">${this.connected}</code>`), this.log("Listening for postMessage events..."), e2(async (e3, o2, t2) => {
       let s2;

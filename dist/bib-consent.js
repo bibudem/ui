@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.2.1
+ * @version 1.3.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -21,8 +21,8 @@ var _e, _t, _s, _o, _n, _r, _Z_instances, i_fn, c_fn, l_fn, h_fn, a_fn, u_fn, p_
 import { s as e, x as t } from "./lit-element-Dj1nHH6C.js";
 import { e as s, n as o } from "./ref-B-kqFHPy.js";
 import { s as n, a as r } from "./bib-consent-preferences-dialog-DVwg6XoV.js";
-import { l as i } from "./logger-34NuDmbq.js";
-import { a as c } from "./bib-CAfTDCvd.js";
+import { l as i } from "./logger-CfH5-372.js";
+import { a as c } from "./bib-D0cwtjek.js";
 import { d as a } from "./events-BtF7lCmA.js";
 import { ConsentTokens as l } from "./ConsentTokens.js";
 import h from "./consentClient.js";
@@ -94,7 +94,7 @@ let g = class {
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.2.0
+ * @version 1.3.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -120,7 +120,7 @@ function $(e2) {
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.2.0
+ * @version 1.3.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui

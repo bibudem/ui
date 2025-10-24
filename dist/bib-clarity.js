@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.2.1
+ * @version 1.3.0
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -17,70 +17,49 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _t, _a_instances, e_fn, n_fn;
-import { s as t, i as e, r as n } from "./lit-element-Dj1nHH6C.js";
-import { a as i } from "./bib-CAfTDCvd.js";
-import { d as s } from "./events-BtF7lCmA.js";
-import { CLARITY_PROJECT_ID as o } from "./constants3.js";
-import { EVENT_NAMES as c } from "./constants2.js";
-const r = { init(t2) {
-  !function(t3) {
-    try {
-      return void function(t4, e2, n2, i2, s2, o2, c2) {
-        e2.getElementById("clarity-script") || (t4[n2] = t4[n2] || function() {
-          (t4[n2].q = t4[n2].q || []).push(arguments);
-        }, (o2 = e2.createElement(i2)).async = 1, o2.src = "https://www.clarity.ms/tag/" + s2 + "?ref=npm", o2.id = "clarity-script", (c2 = e2.getElementsByTagName(i2)[0]).parentNode.insertBefore(o2, c2));
-      }(window, document, "clarity", "script", t3);
-    } catch (t4) {
-      return;
-    }
-  }(t2);
-}, setTag(t2, e2) {
-  window.clarity("set", t2, e2);
-}, identify(t2, e2, n2, i2) {
-  window.clarity("identify", t2, e2, n2, i2);
-}, consent(t2 = true) {
-  window.clarity("consent", t2);
-}, upgrade(t2) {
-  window.clarity("upgrade", t2);
-}, event(t2) {
-  window.clarity("event", t2);
-} };
-class a extends t {
+var _t, _y_instances, n_fn, e_fn;
+import { s as t, i as n, r as e } from "./lit-element-Dj1nHH6C.js";
+import { C as s, s as i } from "./bib-clarity-D4L6fT33.js";
+import { a as o } from "./bib-D0cwtjek.js";
+import { d as c } from "./events-BtF7lCmA.js";
+import r from "./ConsentTokenV2.js";
+import { CLARITY_PROJECT_ID as a, READY_STATES as l } from "./constants3.js";
+import { EVENT_NAMES as d } from "./constants2.js";
+class y extends t {
   constructor() {
     super();
-    __privateAdd(this, _a_instances);
+    __privateAdd(this, _y_instances);
     __privateAdd(this, _t, null);
-    this.hidden = true, this.projectId = this.projectId || o, this.clarity = r, __privateMethod(this, _a_instances, e_fn).call(this);
+    this.hidden = true, this.projectId = this.projectId || a, this.clarity = s, __privateMethod(this, _y_instances, n_fn).call(this);
   }
   setConsent(t2) {
-    if ("boolean" != typeof t2) throw new TypeError('The "granted" parameter must be a boolean. Got', typeof t2);
-    __privateGet(this, _t) !== t2 && (console.log(`[bib-clarity] Setting consent to ${t2} (was ${null === __privateGet(this, _t) ? "not set" : __privateGet(this, _t)}).`), __privateSet(this, _t, t2), this.clarity.consent("consent", t2), __privateMethod(this, _a_instances, n_fn).call(this, c.CHANGE, { detail: t2 }));
+    const n2 = new r(t2);
+    JSON.stringify(__privateGet(this, _t)) !== JSON.stringify(n2) && (console.log(`[bib-clarity] Setting consent to %o (was ${null === __privateGet(this, _t) ? "not set" : __privateGet(this, _t)}).`, n2), __privateSet(this, _t, n2), this.clarity.consent("consentv2", n2), __privateMethod(this, _y_instances, e_fn).call(this, d.CHANGE, { detail: n2 }));
   }
 }
 _t = new WeakMap();
-_a_instances = new WeakSet();
-e_fn = async function() {
+_y_instances = new WeakSet();
+n_fn = async function() {
   const t2 = this;
-  async function e2(e3) {
-    console.log(`<bib-clarity> recieved an event from <bib-consent>: ${e3.type}`, e3.detail);
-    const n2 = e3.detail;
-    if (null === n2) return void t2.setConsent(false);
-    const { analytics_consent: i2 } = n2;
-    t2.setConsent("granted" === i2);
+  async function n2(n3) {
+    console.log(`<bib-clarity> recieved an event from <bib-consent>: ${n3.type}`, n3.detail);
+    const e2 = n3.detail;
+    if (null === e2) return void t2.setConsent(false);
+    const { analytics_consent: s2, ad_consent: i2 } = e2;
+    t2.readyState === l.INDETERMINATE && (t2.readyState = l.CONNECTED), t2.setConsent({ analytics_consent: s2, ad_consent: i2 });
   }
   this.clarity.init(this.projectId), setTimeout(async () => {
-    const n2 = document.querySelector("bib-consent");
-    null === n2 ? (console.info("No <bib-consent /> element found. Turning off Clarity tracking."), t2.setConsent(false)) : (n2.addEventListener(c.READY, e2), n2.addEventListener(c.CHANGE, e2)), __privateMethod(this, _a_instances, n_fn).call(this, c.READY);
+    const e2 = document.querySelector("bib-consent");
+    null === e2 ? (console.info("No <bib-consent /> element found. Turning off Clarity tracking."), t2.setConsent(false)) : (e2.addEventListener(d.READY, n2), e2.addEventListener(d.CHANGE, n2));
   });
 };
-n_fn = function(t2, e2 = null) {
-  s(this, t2, { detail: e2 });
+e_fn = function(t2, n2 = null) {
+  c(this, t2, { detail: n2 });
 };
-__publicField(a, "properties", { projectId: { type: String, attribute: "project-id" }, hidden: { type: Boolean } });
-__publicField(a, "styles", [e`${n("@layer component{:host(hidden){display:none}}")}`]);
-window.customElements.get("bib-clarity") || window.customElements.define("bib-clarity", a), i("clarity", {});
+__publicField(y, "properties", { projectId: { type: String, attribute: "project-id" }, hidden: { type: Boolean } });
+__publicField(y, "styles", [n`${e(i)}`]);
+window.customElements.get("bib-clarity") || window.customElements.define("bib-clarity", y), o("clarity", {});
 export {
-  a as BibClarity
+  y as BibClarity
 };
 //# sourceMappingURL=bib-clarity.js.map
