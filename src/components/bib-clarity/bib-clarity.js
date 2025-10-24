@@ -2,9 +2,10 @@ import { css, LitElement, unsafeCSS } from 'lit'
 import Clarity from '@microsoft/clarity'
 import { addToGlobalBib } from '@/utils/bib.js'
 import { dispatchPublicEvent } from '@/utils/events.js'
-import styles from './bib-clarity.scss?inline'
-import { CLARITY_PROJECT_ID } from './constants.js'
+import ConsentTokenV2 from './ConsentTokenV2.js'
+import { CLARITY_PROJECT_ID, READY_STATES } from './constants.js'
 import { EVENT_NAMES } from '../bib-consent/constants.js'
+import styles from './bib-clarity.scss?inline'
 
 function toClarityConsent(granted) {
   if (granted === null) {
@@ -19,6 +20,15 @@ function toClarityConsent(granted) {
  *
  * @class BibClarity
  * @extends LitElement
+ * @property {String} projectId - The ID of the Microsoft Clarity project.
+ * @property {Boolean} hidden - Indicates whether the component is hidden.
+ * @property {Boolean} #consent - Indicates whether Microsoft Clarity tracking is enabled.
+ * @property {String} readyState - The current state of the BibClarity component, which can be one of the following values:
+ *   - `indeterminate`: The user has not yet indicated their consent preferences.
+ *   - `determinate`: The user has made their consent preferences.
+ *   - `connected`: The user has granted consent and the component is connected.
+ *   - `disconnected`: The user has not granted consent and the component is disconnected.
+ * @property {Clarity} clarity - The Microsoft Clarity instance.
  */
 export class BibClarity extends LitElement {
   #consent = null
@@ -46,6 +56,11 @@ export class BibClarity extends LitElement {
     this.#init()
   }
 
+  /**
+   * Initializes the component.
+   *
+   * @private
+   */
   async #init() {
     const self = this
 
@@ -59,9 +74,13 @@ export class BibClarity extends LitElement {
         return
       }
 
-      const { analytics_consent } = consentData
+      const { analytics_consent, ad_consent } = consentData
 
-      self.setConsent(analytics_consent === 'granted')
+      if (self.readyState === READY_STATES.INDETERMINATE) {
+        self.readyState = READY_STATES.CONNECTED
+      }
+
+      self.setConsent({ analytics_consent, ad_consent })
     }
 
     this.clarity.init(this.projectId)
@@ -84,8 +103,6 @@ export class BibClarity extends LitElement {
         bibConsentElem.addEventListener(EVENT_NAMES.CHANGE, consentListener)
       }
 
-      this.#dispatchPublicEvent(EVENT_NAMES.READY)
-
     })
   }
 
@@ -93,23 +110,22 @@ export class BibClarity extends LitElement {
     dispatchPublicEvent(this, name, { detail })
   }
 
-  setConsent(granted) {
-    if (typeof granted !== 'boolean') {
-      throw new TypeError('The "granted" parameter must be a boolean. Got', typeof granted)
-    }
+  setConsent(consent) {
+    const consentToken = new ConsentTokenV2(consent)
 
-    if (this.#consent === granted) {
+    if (JSON.stringify(this.#consent) === JSON.stringify(consentToken)) {
       // No change, so no need to do anything or dispatch an event
       return
     }
 
-    console.log(`[bib-clarity] Setting consent to ${granted} (was ${this.#consent === null ? 'not set' : this.#consent}).`)
+    console.log(`[bib-clarity] Setting consent to %o (was ${this.#consent === null ? 'not set' : this.#consent}).`, consentToken)
 
-    this.#consent = granted
-    // Using v1 API for now.
-    //See: https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-consent-api-v1
-    this.clarity.consent('consent', granted)
-    this.#dispatchPublicEvent(EVENT_NAMES.CHANGE, { detail: granted })
+    this.#consent = consentToken
+    // Using v2 API for now.
+    //See: https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-consent-api-v2
+    // this.clarity.consent('consent', granted)
+    this.clarity.consent('consentv2', consentToken)
+    this.#dispatchPublicEvent(EVENT_NAMES.CHANGE, { detail: consentToken })
   }
 }
 

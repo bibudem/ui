@@ -12,7 +12,7 @@ export default {
 }
 
 const consentElement = document.createElement('bib-consent')
-consentElement.setAttribute('debug', '')
+// consentElement.setAttribute('debug', '')
 consentElement.setAttribute('server-url', '/consent-server')
 Object.values(EVENT_NAMES).forEach(eventName => {
   consentElement.addEventListener(eventName, (event) => {

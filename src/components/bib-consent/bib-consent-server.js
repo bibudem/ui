@@ -81,7 +81,8 @@ export class BibConsentServer extends LitElement {
     })
 
     this.log('Start listening for storage updates...')
-    this.startListening()
+    await this.startListening()
+    this.log('Initialization complete.')
   }
 
   /**

@@ -10,3 +10,16 @@ export const EVENT_NAMES = {
   READY: 'bib:ready',
   CHANGE: 'bib:change',
 }
+
+/**
+ * The possible bib-clarity states.
+ *
+ * @type {Object.<BibClarityStateTypes,string>}
+ * @constant
+ */
+export const READY_STATES = {
+  INDETERMINATE: 'indeterminate',
+  INITIALIZING: 'initializing',
+  CONNECTED: 'connected',
+  DISCONNECTED: 'disconnected',
+}
