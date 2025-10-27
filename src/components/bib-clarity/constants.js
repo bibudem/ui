@@ -1,4 +1,4 @@
-export const CLARITY_PROJECT_ID = 't10hsivmt0'
+export const CLARITY_PROJECT_ID = 'tfds44a7xa'
 
 /**
  * The names of events that can be dispatched by the BibClarity component.
