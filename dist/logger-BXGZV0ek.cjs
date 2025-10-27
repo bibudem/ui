@@ -6,5 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"}),exports.GTM_CONTAINER_ID="GTM-K8BQPC";
-//# sourceMappingURL=constants.cjs.map
+const o=require("./package-Cy3pq9jh.cjs");exports.loggerFactory=function(e=o.name,n="green"){return Function.prototype.bind.call(console.log,console,`%c[${e}]`,`color: ${n}; font-weight: bold;`)};
+//# sourceMappingURL=logger-BXGZV0ek.cjs.map

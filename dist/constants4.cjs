@@ -1,10 +1,10 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.0
+ * @version 1.3.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=`${require("./package-D4MJHANM.cjs").name}/avis`;exports.DB_NAME=e,exports.DB_STORE_NAME="avis",exports.DB_VERSION=1;
+Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=`${require("./package-Cy3pq9jh.cjs").name}/avis`;exports.DB_NAME=e,exports.DB_STORE_NAME="avis",exports.DB_VERSION=1;
 //# sourceMappingURL=constants4.cjs.map

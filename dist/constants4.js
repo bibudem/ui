@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.0
+ * @version 1.3.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { n as a } from "./package-DK4LE5MH.js";
+import { n as a } from "./package-UBiwJD4l.js";
 const s = `${a}/avis`, o = 1, i = "avis";
 export {
   s as DB_NAME,

@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.0
+ * @version 1.3.1
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-var t,e,s,n,o,i,r,c,a,l,h,u,p,b,d=Object.defineProperty,v=t=>{throw TypeError(t)},f=(t,e,s)=>((t,e,s)=>e in t?d(t,e,{enumerable:!0,configurable:!0,writable:!0,value:s}):t[e]=s)(t,"symbol"!=typeof e?e+"":e,s),g=(t,e,s)=>e.has(t)||v("Cannot "+s),y=(t,e,s)=>(g(t,e,"read from private field"),s?s.call(t):e.get(t)),E=(t,e,s)=>e.has(t)?v("Cannot add the same private member more than once"):e instanceof WeakSet?e.add(t):e.set(t,s),T=(t,e,s,n)=>(g(t,e,"write to private field"),n?n.call(t,s):e.set(t,s),s),j=(t,e,s)=>(g(t,e,"access private method"),s);Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const w=require("./lit-element-BHNMc-Kg.cjs"),x=require("./ref-mxufyLY8.cjs"),m=require("./bib-consent-preferences-dialog-BqYn5DOh.cjs"),C=require("./logger-BX-1QvXr.cjs"),S=require("./bib-DL4f4STe.cjs"),k=require("./events-DuQfPugX.cjs"),O=require("./ConsentTokens.cjs"),_=require("./consentClient.cjs"),q=require("./consent-context.cjs");require("./bib-button-close.cjs"),require("./bib-consent-consent-dialog.cjs");const R=require("./constants2.cjs");
+var t,e,s,n,o,i,r,c,a,l,h,u,p,b,d=Object.defineProperty,v=t=>{throw TypeError(t)},f=(t,e,s)=>((t,e,s)=>e in t?d(t,e,{enumerable:!0,configurable:!0,writable:!0,value:s}):t[e]=s)(t,"symbol"!=typeof e?e+"":e,s),g=(t,e,s)=>e.has(t)||v("Cannot "+s),y=(t,e,s)=>(g(t,e,"read from private field"),s?s.call(t):e.get(t)),E=(t,e,s)=>e.has(t)?v("Cannot add the same private member more than once"):e instanceof WeakSet?e.add(t):e.set(t,s),T=(t,e,s,n)=>(g(t,e,"write to private field"),n?n.call(t,s):e.set(t,s),s),j=(t,e,s)=>(g(t,e,"access private method"),s);Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const w=require("./lit-element-BHNMc-Kg.cjs"),x=require("./ref-mxufyLY8.cjs"),m=require("./bib-consent-preferences-dialog-BqYn5DOh.cjs"),C=require("./logger-BXGZV0ek.cjs"),S=require("./bib-mdcNW8yu.cjs"),k=require("./events-DuQfPugX.cjs"),O=require("./ConsentTokens.cjs"),_=require("./consentClient.cjs"),q=require("./consent-context.cjs");require("./bib-button-close.cjs"),require("./bib-consent-consent-dialog.cjs");const R=require("./constants2.cjs");
 /**
  * @license
  * Copyright 2021 Google LLC
