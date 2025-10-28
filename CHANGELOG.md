@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/bibudem/ui/compare/1.3.1...v1.3.1) (2025-10-28)
+
+
+### Miscellaneous Chores
+
+* release 1.3.1 ([8483a23](https://github.com/bibudem/ui/commit/8483a23c589ba76882157960badfc28b264d1c30))
+
 ## [1.1.0](https://github.com/bibudem/ui/compare/v1.0.4...v1.1.0) (2025-09-17)
 
 
