@@ -28,7 +28,7 @@ import styles from './bib-consent-server.scss?inline'
  */
 export class BibConsentServer extends LitElement {
   #storage
-  #logger = loggerFactory('consent-server')
+  #logger = loggerFactory('bib-consent-server')
 
   static properties = {
     connected: {
@@ -73,16 +73,16 @@ export class BibConsentServer extends LitElement {
    * and begins listening for postMessage events from allowed origins.
    */
   async init() {
-    this.log('Initializing BibConsentServer...')
+    this.#debug('Initializing BibConsentServer...')
     this.#storage = await getConsentStorage()
 
     this.#storage.listen(event => {
-      this.log('Storage updated with data', event.detail)
+      this.#debug('Storage updated with data', event.detail)
     })
 
-    this.log('Start listening for storage updates...')
+    this.#debug('Start listening for storage updates...')
     await this.startListening()
-    this.log('Initialization complete.')
+    this.#debug('Initialization complete.')
   }
 
   /**
@@ -90,7 +90,7 @@ export class BibConsentServer extends LitElement {
    * @description If debug attribute is set, logs messages to the console and updates the UI logger.
    * @param {...any} args - The messages or data to log.
    */
-  log(...args) {
+  #debug(...args) {
     if (this.hasAttribute('debug')) {
       const strippedMsg = args.map(part => {
         if (typeof part === 'string') {
@@ -133,9 +133,9 @@ export class BibConsentServer extends LitElement {
     })
 
     this.connected = true
-    this.log('Connected:', `<code class="value">${this.connected}</code>`)
+    this.#debug('Connected:', `<code class="value">${this.connected}</code>`)
 
-    this.log('Listening for postMessage events...')
+    this.#debug('Listening for postMessage events...')
 
     listenMessage(async (method, payload, response) => {
       let responseData
@@ -158,14 +158,14 @@ export class BibConsentServer extends LitElement {
           break
 
         default:
-          this.log(`Unknown method: <code class="method">${method}</code>. Payload:`, payload)
+          this.#debug(`Unknown method: <code class="method">${method}</code>. Payload:`, payload)
           throw new Error(`Unknown method: ${method}`)
       }
 
       if (payload) {
-        this.log(`Method <code class="method">${method}</code> called with payload:`, payload, 'response:', responseData)
+        this.#debug(`Method <code class="method">${method}</code> called with payload:`, payload, 'response:', responseData)
       } else {
-        this.log(`Method <code class="method">${method}</code> called.`, 'response:', responseData)
+        this.#debug(`Method <code class="method">${method}</code> called.`, 'response:', responseData)
       }
 
       response(responseData)

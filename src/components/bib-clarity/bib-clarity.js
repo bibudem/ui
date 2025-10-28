@@ -2,6 +2,7 @@ import { css, LitElement, unsafeCSS } from 'lit'
 import Clarity from '@microsoft/clarity'
 import { addToGlobalBib } from '@/utils/bib.js'
 import { dispatchPublicEvent } from '@/utils/events.js'
+import { loggerFactory } from '@/utils/logger.js'
 import ConsentTokenV2 from './ConsentTokenV2.js'
 import { CLARITY_PROJECT_ID, READY_STATES } from './constants.js'
 import { EVENT_NAMES } from '../bib-consent/constants.js'
@@ -32,6 +33,7 @@ function toClarityConsent(granted) {
  */
 export class BibClarity extends LitElement {
   #consent = null
+  #logger = loggerFactory('bib-clarity')
 
   static properties = {
     projectId: {
@@ -40,7 +42,11 @@ export class BibClarity extends LitElement {
     },
     hidden: {
       type: Boolean
-    }
+    },
+    debug: {
+      type: Boolean,
+      reflect: true
+    },
   }
 
   static styles = [
@@ -65,7 +71,7 @@ export class BibClarity extends LitElement {
     const self = this
 
     async function consentListener(event) {
-      console.log(`<bib-clarity> recieved an event from <bib-consent>: ${event.type}`, event.detail)
+      self.#debug(`Recieved a \`%s\` event from <bib-consent>:`, event.type, event.detail)
 
       const consentData = event.detail
 
@@ -92,13 +98,12 @@ export class BibClarity extends LitElement {
 
       if (bibConsentElem === null) {
         // Aborting
-        console.info('No <bib-consent /> element found. Turning off Clarity tracking.')
+        self.#debug('No <bib-consent /> element found. Turning off Clarity tracking.')
 
         // Turn off Clarity in case it was initially on
         self.setConsent(false)
 
       } else {
-
         bibConsentElem.addEventListener(EVENT_NAMES.READY, consentListener)
         bibConsentElem.addEventListener(EVENT_NAMES.CHANGE, consentListener)
       }
@@ -110,6 +115,24 @@ export class BibClarity extends LitElement {
     dispatchPublicEvent(this, name, { detail })
   }
 
+  /**
+   * Logs messages when in debug mode.
+   * @description If debug attribute is set, logs messages to the console and updates the UI logger.
+   * @param {...any} args - The messages or data to log.
+   */
+  #debug(...args) {
+    if (this.hasAttribute('debug')) {
+      const strippedMsg = args.map(part => {
+        if (typeof part === 'string') {
+          return part.replace(/<\/?[^>]+(>|$)/g, "")
+        }
+
+        return part
+      })
+      this.#logger(...args)
+    }
+  }
+
   setConsent(consent) {
     const consentToken = new ConsentTokenV2(consent)
 
@@ -118,7 +141,7 @@ export class BibClarity extends LitElement {
       return
     }
 
-    console.log(`[bib-clarity] Setting consent to %o (was ${this.#consent === null ? 'not set' : this.#consent}).`, consentToken)
+    this.#debug(`[setConsent] Setting consent to %o (was ${this.#consent === null ? 'not set' : this.#consent}).`, consentToken)
 
     this.#consent = consentToken
     // Using v2 API for now.

@@ -12,9 +12,6 @@ import '../bib-button/bib-button-close.js'
 import './bib-consent-consent-dialog.js'
 import './bib-consent-preferences-dialog.js'
 import { CONSENT_STATES, EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOUT, SERVER_DEFAULT_URL } from './constants.js'
-import { c } from '../../../dist/_Uint8Array-Cf-PTZCw.js'
-
-const debug = loggerFactory('bib-consent', '#cd5300')
 
 /**
  * @typedef {'indeterminate' | 'determinate'} ConsentState
@@ -62,6 +59,8 @@ const debug = loggerFactory('bib-consent', '#cd5300')
  * @method render - Renders the component.
  */
 export class BibConsent extends LitElement {
+  #logger = loggerFactory('bib-consent', '#cd5300')
+
   static properties = {
     serverUrl: {
       type: String,
@@ -182,7 +181,7 @@ export class BibConsent extends LitElement {
 
   #debug() {
     if (this.debug) {
-      debug(...arguments)
+      this.#logger(...arguments)
     }
   }
 
@@ -282,9 +281,7 @@ export class BibConsent extends LitElement {
   }
 
   async #handleChangeEvent(event) {
-    // this.#debug('[#handleChangeEvent]', event)
     const success = await this.saveTokens(event.detail)
-    // this.#debug('[#handleChangeEvent] success: ', success)
 
     if (!success) {
       // TODO: show error message
