@@ -19,6 +19,7 @@ const config = {
   docs: {},
   core: {
     disableWhatsNewNotifications: true
-  }
+  },
+  staticDirs: ['../public']
 }
 export default config

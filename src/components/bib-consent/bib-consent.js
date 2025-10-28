@@ -131,15 +131,6 @@ export class BibConsent extends LitElement {
     return this.#state
   }
 
-  // /**
-  //  * Gets the user's consent tokens.
-  //  * @readonly
-  //  * @returns {import('./ConsentTokens.js').ConsentTokens} The user's consent tokens.
-  //  */
-  // get consentTokens() {
-  //   return this.#consentConsumer.value
-  // }
-
   /**
    * Initializes the `BibConsent` component, sets up the necessary state and references, and handles events related to the consent client.
    * 
