@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.1](https://github.com/bibudem/ui/compare/1.3.1...v1.3.1) (2025-12-08)
+
+
+### Bug Fixes
+
+* Harmonisation de la façon d'employer l'utilitaire #debug dans les composants. ([54718d8](https://github.com/bibudem/ui/commit/54718d8dec42163cfea5e2a0766064af8210162c))
+* Retrait de message dans la console ([a297cd9](https://github.com/bibudem/ui/commit/a297cd9d278a3471e3cd7dcca1e0960efb6094b8))
+
+
+### Miscellaneous Chores
+
+* release 1.3.1 ([8483a23](https://github.com/bibudem/ui/commit/8483a23c589ba76882157960badfc28b264d1c30))
+
 ## [1.1.0](https://github.com/bibudem/ui/compare/v1.0.4...v1.1.0) (2025-09-17)
 
 
