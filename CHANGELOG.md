@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/bibudem/ui/compare/v1.3.1...v1.3.2) (2025-12-08)
+
+
+### Miscellaneous Chores
+
+* Build pour v1.3.2 ([311c39c](https://github.com/bibudem/ui/commit/311c39c5ec36c9c535aab9fbde3eea8dd2b51a73))
+
 ## [1.3.1](https://github.com/bibudem/ui/compare/1.3.1...v1.3.1) (2025-12-08)
 
 
