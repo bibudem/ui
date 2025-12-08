@@ -163,9 +163,9 @@ export class BibConsentServer extends LitElement {
       }
 
       if (payload) {
-        this.#debug(`Method <code class="method">${method}</code> called with payload:`, payload, 'response:', responseData)
+        // this.#debug(`Method <code class="method">${method}</code> called with payload:`, payload, 'response:', responseData)
       } else {
-        this.#debug(`Method <code class="method">${method}</code> called.`, 'response:', responseData)
+        // this.#debug(`Method <code class="method">${method}</code> called.`, 'response:', responseData)
       }
 
       response(responseData)

@@ -71,7 +71,7 @@ export class BibClarity extends LitElement {
     const self = this
 
     async function consentListener(event) {
-      self.#debug(`Recieved a \`%s\` event from <bib-consent>:`, event.type, event.detail)
+      // self.#debug(`Recieved a \`%s\` event from <bib-consent>:`, event.type, event.detail)
 
       const consentData = event.detail
 
@@ -122,13 +122,6 @@ export class BibClarity extends LitElement {
    */
   #debug(...args) {
     if (this.hasAttribute('debug')) {
-      const strippedMsg = args.map(part => {
-        if (typeof part === 'string') {
-          return part.replace(/<\/?[^>]+(>|$)/g, "")
-        }
-
-        return part
-      })
       this.#logger(...args)
     }
   }
@@ -141,7 +134,7 @@ export class BibClarity extends LitElement {
       return
     }
 
-    this.#debug(`[setConsent] Setting consent to %o (was ${this.#consent === null ? 'not set' : this.#consent}).`, consentToken)
+    // this.#debug(`[setConsent] Setting consent to %o (was ${this.#consent === null ? 'not set' : this.#consent}).`, consentToken)
 
     this.#consent = consentToken
     // Using v2 API for now.

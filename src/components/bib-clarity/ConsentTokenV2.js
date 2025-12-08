@@ -10,6 +10,7 @@ export default class ConsentTokenV2 {
         ad_Storage: consent ? 'granted' : 'denied'
       }
     }
+
     const { analytics_Storage = 'denied', ad_consent = 'denied' } = consent
 
     this.analytics_Storage = analytics_Storage
