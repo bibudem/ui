@@ -55,7 +55,6 @@ export class UdeMUrgence extends LitElement {
 
   #onTitleClick(event) {
     event.preventDefault()
-    event.stopPropagation()
   }
 
   #onActivate(event) {
