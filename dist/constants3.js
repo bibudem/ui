@@ -1,15 +1,23 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.2
+ * @version 1.3.3
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-const e = "tfds44a7xa", i = { READY: "bib:ready", CHANGE: "bib:change" }, n = { INDETERMINATE: "indeterminate", INITIALIZING: "initializing", CONNECTED: "connected", DISCONNECTED: "disconnected" };
+import { n } from "./package-CO9yQKod.js";
+const e = `${n}/consent`, t = 2, o = "consent", a = { READY: "bib:ready", STATE: "bib:state", CHANGE: "bib:change", CLOSE: "bib:close" }, c = "bib-consent", s = "https://bib.umontreal.ca/consent/server/", i = { LOCAL: "local", REMOTE: "remote" }, b = 500, l = { analytics_consent: null, functionality_consent: null, ad_consent: null }, E = { INDETERMINATE: "indeterminate", DETERMINATE: "determinate" };
 export {
-  e as CLARITY_PROJECT_ID,
-  i as EVENT_NAMES,
-  n as READY_STATES
+  E as CONSENT_STATES,
+  e as DB_NAME,
+  o as DB_STORE_NAME,
+  t as DB_VERSION,
+  l as DEFAULT_PREFERENCES,
+  a as EVENT_NAMES,
+  c as PREFIX,
+  s as SERVER_DEFAULT_URL,
+  i as SERVER_MODE,
+  b as SERVER_REQUEST_DEFAULT_TIMEOUT
 };
 //# sourceMappingURL=constants3.js.map

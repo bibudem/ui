@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.2
+ * @version 1.3.3
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -19,11 +19,11 @@ var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _e, _s, _c_instances, t_fn;
 import { s as e, c as s } from "./url-B0JPXU6k.js";
-import { l as t } from "./logger-wA2DXZcK.js";
+import { l as t } from "./logger-DlvF4Usk.js";
 import r from "./ConsentStorage.js";
 import { ConsentTokens as o } from "./ConsentTokens.js";
 import { getServerMode as n, getIframeServer as i } from "./utils.js";
-import { EVENT_NAMES as a, SERVER_MODE as h, SERVER_REQUEST_DEFAULT_TIMEOUT as d } from "./constants2.js";
+import { EVENT_NAMES as a, SERVER_MODE as h, SERVER_REQUEST_DEFAULT_TIMEOUT as d } from "./constants3.js";
 class c extends EventTarget {
   constructor() {
     super();

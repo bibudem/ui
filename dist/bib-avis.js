@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.2
+ * @version 1.3.3
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -22,7 +22,7 @@ import { h as e } from "./task-BYUCPaT1.js";
 import { s as t, i as s, r as i, x as n } from "./lit-element-Dj1nHH6C.js";
 import { o as r } from "./unsafe-html-hzUS4Xy_.js";
 import { o } from "./index-CRxQMTzC.js";
-import { a } from "./bib-D3IzddRS.js";
+import { a } from "./bib-BUvYmga4.js";
 import { DB_STORE_NAME as c, DB_VERSION as l, DB_NAME as d } from "./constants4.js";
 class b extends t {
   constructor() {

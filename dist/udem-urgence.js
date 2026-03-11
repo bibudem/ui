@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.2
+ * @version 1.3.3
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -40,7 +40,7 @@ class o extends t {
 _e = new WeakMap();
 _o_instances = new WeakSet();
 t_fn = function(e2) {
-  e2.preventDefault(), e2.stopPropagation();
+  e2.preventDefault();
 };
 i_fn = function(e2) {
   (" " === e2.key || "Enter" === e2.key || "click" === e2.type) && window.open(this.href, "_blank");
