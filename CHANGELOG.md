@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.3](https://github.com/bibudem/ui/compare/v1.3.2...v1.3.3) (2026-03-11)
+
+
+### Bug Fixes
+
+* typo ([a9d48b5](https://github.com/bibudem/ui/commit/a9d48b5c891ea289bb047cbbd9ef6898897daa81))
+* **udem-urgence:** Le clic sur le lien du message ne faisait rien ([8492c66](https://github.com/bibudem/ui/commit/8492c6694fc09851c2759a10a4c14a601fd30cde))
+
+
+### Miscellaneous Chores
+
+* Build pour v1.3.3 ([87df2f9](https://github.com/bibudem/ui/commit/87df2f902826cddd77ba16bc0d48f52c61b75f11))
+
 ## [1.3.2](https://github.com/bibudem/ui/compare/v1.3.1...v1.3.2) (2025-12-08)
 
 
