@@ -79,13 +79,13 @@ export class UdeMUrgence extends LitElement {
           <aside class="wrapper${this.big ? ' big' : ''}" tabindex="0" @click="${this.#onActivate}" @keyup="${this.#onActivate}">
             <div class="container">
               <div class="content">
-                <a class="title" href="${this.href}" @click="${this.#onTitleClick}" tabindex="-1">
+                <a class="title" href="${this.href}" @click="${this.#onTitleClick}" @keydown="${this.#onActivate}">
                   <div>${title}</div>
                 </a>
                 <time datetime="${date}" class="datetime">
                   <span class="hour">${hour}</span>
-                  <span> | </span>
-                  <span classid="date">${fullDay}</span>
+                  <span><br /></span>
+                  <span class="date">${fullDay}</span>
                 </time>
               </div>
             </div>

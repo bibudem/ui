@@ -1,18 +1,20 @@
-// #udem-urgence-bcrp:empty {
-//   height: 0;
-//   min-height: 0;
-//   border-bottom: 0 none;
-// }
+@use '../../scss/reset';
+
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
 
 .wrapper {
   width: 100%;
   height: 55px;
-  background-color: #37424D;
-  border-bottom: #37424D solid 7px;
-  cursor: pointer;
+  background-color: #282828;
+  border-bottom: #40474f solid 7px;
   color: #fff;
   font-size: 13px;
-  box-sizing: border-box;
 
   &.big {
     height: 168px;
@@ -22,9 +24,9 @@
 .container {
   width: 100%;
   height: 48px;
-  background-color: #b72600;
   position: relative;
   bottom: 0;
+  background: #b60000;
 
   .big & {
     height: 161px;
@@ -34,10 +36,23 @@
 .content {
   margin-left: auto;
   margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
   display: flex;
   align-items: center;
   height: 48px;
-  width: auto;
+
+  @media (min-width: 768px) {
+    width: 750px;
+  }
+
+  @media (min-width: 992px) {
+    width: 970px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 1170px;
+  }
 
   .big & {
     height: 113px;
@@ -53,7 +68,8 @@
 }
 
 .title {
-  margin-left: 10rem!important;
+  margin: 0;
+  margin-left: 128px;
   line-height: 22px;
   padding: 0 12px;
   font-size: 17px;
@@ -73,11 +89,11 @@
 
 .datetime {
   height: 48px;
-  background-color: #37424D;
+  background: #40474f;
   position: absolute;
   top: 0;
-  min-width: 107px;
-  padding: 7px 12px 0;
+  min-width: 127px;
+  padding: 7px 12px 4px;
   font-size: 15px;
   line-height: 17px;
   text-align: center;
