@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.7](https://github.com/bibudem/ui/compare/v1.3.6...v1.3.7) (2026-03-25)
+
+
+### Miscellaneous Chores
+
+* Build pour v1.3.7 ([a7aaf3a](https://github.com/bibudem/ui/commit/a7aaf3aeb133368c0813a1f45fcd5ca6b811f29e))
+
 ## [1.3.6](https://github.com/bibudem/ui/compare/v1.3.5...v1.3.6) (2026-03-25)
 
 
