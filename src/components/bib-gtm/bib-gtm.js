@@ -86,8 +86,8 @@ export class BibGtm extends LitElement {
         gtag('consent', 'default', defaultConsent.toGTM())
         dataLayer.push({ 'gtm.start': new Date().getTime(), 'event': 'gtm.js' })
 
-        consentElem.addEventListener('bib:consent:ready', consentListener)
-        consentElem.addEventListener('bib:consent:update', consentListener)
+        consentElem.addEventListener('bib:ready', consentListener)
+        consentElem.addEventListener('bib:change', consentListener)
       } else {
         console.warn('No bib-consent element found')
       }
