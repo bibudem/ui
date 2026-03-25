@@ -6,5 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-const t={bubbles:!0,composed:!0};exports.dispatchPublicEvent=function(e,n,s={}){return s={...t,...s},e.dispatchEvent(new CustomEvent(n,s))};
-//# sourceMappingURL=events-DuQfPugX.cjs.map
+const o=require("./package-gTKI7dow.cjs");exports.loggerFactory=function(e=o.name,n="green"){return Function.prototype.bind.call(console.log,console,`%c[${e}]`,`color: ${n}; font-weight: bold;`)};
+//# sourceMappingURL=logger-DrhJM-27.cjs.map
