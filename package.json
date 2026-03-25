@@ -23,7 +23,7 @@
     "build-storybook": "storybook build --output-dir build-storybook",
     "chromatic": "npx chromatic",
     "dev": "storybook dev -p 6006 --no-open",
-    "version": "npm run build",
+
     "preview": "npm-run-all set-env:production --parallel preview:*",
     "preview:build": "vite build --watch",
     "preview:serve": "vite preview --no-open",
