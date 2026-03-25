@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.5
+ * @version 1.3.6
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -19,9 +19,9 @@ var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _t, _e, _y_instances, n_fn, s_fn, i_fn;
 import { s as t, i as e, r as n } from "./lit-element-Dj1nHH6C.js";
-import { a as i } from "./bib-A8QOvgPI.js";
+import { a as i } from "./bib-D-evzUC9.js";
 import { d as s } from "./events-BtF7lCmA.js";
-import { l as o } from "./logger-DecZDeRX.js";
+import { l as o } from "./logger-WoB4TZCW.js";
 import r from "./ConsentTokenV2.js";
 import { CLARITY_PROJECT_ID as c, READY_STATES as a } from "./constants3.js";
 import { EVENT_NAMES as d } from "./constants2.js";

@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.5
+ * @version 1.3.6
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -17,7 +17,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _a_instances, t_fn;
 import { s as t, i as e, r as n } from "./lit-element-Dj1nHH6C.js";
-import { a as s } from "./bib-A8QOvgPI.js";
+import { a as s } from "./bib-D-evzUC9.js";
 import { ConsentTokens as o } from "./ConsentTokens.js";
 import { GTM_CONTAINER_ID as i } from "./constants.js";
 class a extends t {
@@ -52,7 +52,7 @@ t_fn = function() {
       const s2 = globalThis.dataLayer = globalThis.dataLayer || [], i2 = globalThis.gtag = globalThis.gtag || function() {
         s2.push(arguments);
       }, a2 = new o(false);
-      i2("consent", "default", a2.toGTM()), s2.push({ "gtm.start": (/* @__PURE__ */ new Date()).getTime(), event: "gtm.js" }), e2.addEventListener("bib:consent:ready", n2), e2.addEventListener("bib:consent:update", n2);
+      i2("consent", "default", a2.toGTM()), s2.push({ "gtm.start": (/* @__PURE__ */ new Date()).getTime(), event: "gtm.js" }), e2.addEventListener("bib:ready", n2), e2.addEventListener("bib:change", n2);
     } else console.warn("No bib-consent element found");
   });
 };
