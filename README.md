@@ -35,7 +35,13 @@ La documentation des composants est gérée à l'aide de [Storybook](https://sto
 Exécuter la commande suivante, en adaptant le niveau de version en fonction des commits faits depuis le dernier `release`:
 
 ```
-npm version minor -m "Bump v%s"
+npm version major|minor|patch -m "Bump v%s"
+```
+
+Exécuter un build:
+
+```
+npm run build
 ```
 
 Effectuer un commit des fichiers build, avec un message du genre:
@@ -45,3 +51,5 @@ git add --all dist && git commit -m "chore:Build pour v0.13.0" -m "Release-As: 0
 ```
 
 Puis naviguer sur les [pull requests du dépôt GitHub](https://github.com/bibudem/ui/pulls) et acceptez le pull request généré par _Release Please_.
+
+Le changement auprès du serveur `jsdelivr` prendra effet le lendemain. On peut accélérer l'adoption du nouveau code en se dirigeant sur la page [Purge jsDelivr CDN cache](https://www.jsdelivr.com/tools/purge 'https://www.jsdelivr.com/tools/purge').
