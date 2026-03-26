@@ -147,7 +147,6 @@ class ConsentClient extends EventTarget {
 
       console.log('[consentClient] Server mode: %s', this.serverMode)
       console.log('[consentClient] Remote consent server URL: %s', this.serverUrl.href)
-      console.log('[consentClient] this._server:', this._server)
 
       consentTokens = ConsentTokens.from(await this._server.postMessage('getConsentTokens'))
       this.debug('[remote] Got response from server: ', consentTokens)
