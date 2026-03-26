@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.8](https://github.com/bibudem/ui/compare/v1.3.7...v1.3.8) (2026-03-26)
+
+
+### Bug Fixes
+
+* Added logging for exchanges between &lt;bib-gtm&gt; and &lt;bob-consent&gt; ([718e8b8](https://github.com/bibudem/ui/commit/718e8b8e7996e81d81ac9a09598bf71981cf5543))
+
+
+### Miscellaneous Chores
+
+* Build pour v1.3.8 ([6f081c6](https://github.com/bibudem/ui/commit/6f081c6fd110ee2dd62605c29cfda47ef5d2d24e))
+
 ## [1.3.7](https://github.com/bibudem/ui/compare/v1.3.6...v1.3.7) (2026-03-25)
 
 
