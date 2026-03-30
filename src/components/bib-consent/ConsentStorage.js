@@ -97,7 +97,7 @@ class ConsentStorage extends EventTarget {
         await this.db.put(DB_STORE_NAME, newConsentTokens, 'tokens')
         return newConsentTokens
       } else {
-        console.log('[setConsentTokens] No change in tokens. oldConsentTokens: ', oldConsentTokens, 'newConsentTokens: ', newConsentTokens)
+        console.log('[ConsentStorage] #setConsentTokens: No change in tokens. oldConsentTokens: ', oldConsentTokens, 'newConsentTokens: ', newConsentTokens)
       }
 
       // No change in tokens, return false

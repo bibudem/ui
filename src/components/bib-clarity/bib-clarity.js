@@ -33,7 +33,7 @@ function toClarityConsent(granted) {
  */
 export class BibClarity extends LitElement {
   #consent = null
-  #logger = loggerFactory('bib-clarity')
+  #logger = loggerFactory('bib-clarity', '#a31515')
 
   static properties = {
     projectId: {
@@ -98,12 +98,13 @@ export class BibClarity extends LitElement {
 
       if (bibConsentElem === null) {
         // Aborting
-        self.#debug('No <bib-consent /> element found. Turning off Clarity tracking.')
+        self.#logger.log('No <bib-consent /> element found. Turning off Clarity tracking.')
 
         // Turn off Clarity in case it was initially on
         self.setConsent(false)
 
       } else {
+        self.#logger.log('Found <bib-consent /> element. Turning on Clarity tracking.')
         bibConsentElem.addEventListener(EVENT_NAMES.READY, consentListener)
         bibConsentElem.addEventListener(EVENT_NAMES.CHANGE, consentListener)
       }
@@ -127,14 +128,17 @@ export class BibClarity extends LitElement {
   }
 
   setConsent(consent) {
+    this.#logger.log('#setConsent called with data ', consent)
+
     const consentToken = new ConsentTokenV2(consent)
 
     if (JSON.stringify(this.#consent) === JSON.stringify(consentToken)) {
       // No change, so no need to do anything or dispatch an event
+      this.#logger.log('#setConsent: No change in consent. oldConsent: ', this.#consent, 'newConsent: ', consent)
       return
     }
 
-    // this.#debug(`[setConsent] Setting consent to %o (was ${this.#consent === null ? 'not set' : this.#consent}).`, consentToken)
+    this.#logger.log(`#setConsent: Setting consent to %o (was ${this.#consent === null ? 'not set' : this.#consent}).`, consentToken)
 
     this.#consent = consentToken
     // Using v2 API for now.
