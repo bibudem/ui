@@ -25,6 +25,7 @@ function loadGtm(containerId) {
 }
 
 export class BibGtm extends LitElement {
+  #logger = loggerFactory('bib-gtm', '#0a00ff')
 
   static properties = {
     containerId: {
@@ -49,7 +50,8 @@ export class BibGtm extends LitElement {
   }
 
   #init() {
-    logger.log('Initializing...')
+    const self = this
+    this.#logger.log('Initializing...')
 
     const containerId = this.containerId
 
@@ -57,17 +59,17 @@ export class BibGtm extends LitElement {
       const consentElem = document.querySelector('bib-consent')
 
       if (consentElem) {
-        logger.log('bib-consent element found.')
+        self.#logger.log('bib-consent element found.')
 
         function consentListener(event) {
-          logger.log(`<bib-consent> triggered event type ${event.type} with data:`, event.detail)
+          self.#logger.log(`<bib-consent> triggered event type ${event.type} with data:`, event.detail)
 
           const consentData = event.detail
 
           if (consentData !== null) {
             // console.log('[bib-consent] tokens:', Object.entries(consentData).map(entry => entry.join(': ')).join(', '))
 
-            logger.log(`Loading GTM script.`)
+            self.#logger.log(`Loading GTM script.`)
             loadGtm(containerId)
 
             const { analytics_consent, ad_consent } = consentData
@@ -79,7 +81,7 @@ export class BibGtm extends LitElement {
               analytics_storage: analytics_consent
             }
 
-            logger.log('Updating GTM with consent data:', gtmConsentData)
+            self.#logger.log('Updating GTM with consent data:', gtmConsentData)
 
             gtag('consent', 'update', gtmConsentData)
           }
@@ -90,19 +92,19 @@ export class BibGtm extends LitElement {
 
         const defaultConsent = new ConsentTokens(false)
 
-        logger.log('Pushing default consent to GTM with `defaultConsent`: ', defaultConsent)
+        self.#logger.log('Pushing default consent to GTM with `defaultConsent`: ', defaultConsent)
 
         gtag('consent', 'default', defaultConsent.toGTM())
         dataLayer.push({ 'gtm.start': new Date().getTime(), 'event': 'gtm.js' })
 
-        logger.log('Registering event listeners on <bib-consent> element.')
+        self.#logger.log('Registering event listeners on <bib-consent> element.')
         consentElem.addEventListener(EVENT_NAMES.READY, consentListener)
         consentElem.addEventListener(EVENT_NAMES.CHANGE, consentListener)
       } else {
-        logger.warn('No bib-consent element found')
+        self.#logger.warn('No bib-consent element found')
       }
 
-      logger.log('Initialization complete.')
+      self.#logger.log('Initialization complete.')
 
     })
   }
