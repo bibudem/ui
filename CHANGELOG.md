@@ -13,6 +13,26 @@
 
 ### Miscellaneous Chores
 
+* Build pour v1.3.8 ([b9082e7](https://github.com/bibudem/ui/commit/b9082e721fbbf6b9dc07992d0af10a7e4ead645f))
+* Build pour v1.3.8 ([3d51702](https://github.com/bibudem/ui/commit/3d5170234f90d7cba6e4201090588299bc0d9127))
+* Build pour v1.3.8 ([b514279](https://github.com/bibudem/ui/commit/b5142791a5414fb2f75e59c09ed69896f8508964))
+* Build pour v1.3.8 ([513a023](https://github.com/bibudem/ui/commit/513a023fb7f65b376748e949c621b88e0817e371))
+* Build pour v1.3.8 ([eb1e865](https://github.com/bibudem/ui/commit/eb1e86510cd1dd05585fea22bb3510975a2d8e43))
+* Build pour v1.3.8 ([eeec351](https://github.com/bibudem/ui/commit/eeec351a9e64821cd3aab07cf55f9f416b29a397))
+
+## [1.3.8](https://github.com/bibudem/ui/compare/v1.3.8...v1.3.8) (2026-03-30)
+
+
+### Bug Fixes
+
+* **bib-gtm:** ajout d'un page_view manuel après consentement pour utiliser l'URL réelle au lieu de consent/server ([ce47c31](https://github.com/bibudem/ui/commit/ce47c3124e654b7890d37070493007f420bb35ae))
+* **bib-gtm:** Correction des appels du logger ([d792c71](https://github.com/bibudem/ui/commit/d792c71f59df5695fc9a2b894b5a9bc076baa4e8))
+* **bib-gtm:** Remplacement du logger interne par console.log() ([e6d5802](https://github.com/bibudem/ui/commit/e6d58024698c250e97331dab0fe0e626f5af594c))
+* wip ([07ef62b](https://github.com/bibudem/ui/commit/07ef62b825c00ee07fd08062fe3ad72c4a190811))
+
+
+### Miscellaneous Chores
+
 * Build pour v1.3.8 ([3d51702](https://github.com/bibudem/ui/commit/3d5170234f90d7cba6e4201090588299bc0d9127))
 * Build pour v1.3.8 ([b514279](https://github.com/bibudem/ui/commit/b5142791a5414fb2f75e59c09ed69896f8508964))
 * Build pour v1.3.8 ([513a023](https://github.com/bibudem/ui/commit/513a023fb7f65b376748e949c621b88e0817e371))
