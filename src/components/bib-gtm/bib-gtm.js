@@ -1,6 +1,6 @@
 import { css, LitElement, unsafeCSS } from 'lit'
 import { addToGlobalBib } from '@/utils/bib.js'
-import { loggerFactory } from '@/utils/logger.js'
+// import { loggerFactory } from '@/utils/logger.js'
 import { ConsentTokens } from '../bib-consent/ConsentTokens.js'
 import styles from './bib-gtm.scss?inline'
 import { GTM_CONTAINER_ID } from './constants.js'
@@ -28,7 +28,7 @@ function loadGtm(containerId) {
 }
 
 export class BibGtm extends LitElement {
-  #logger = loggerFactory('bib-gtm', '#0a00ff')
+  // #logger = loggerFactory('bib-gtm', '#0a00ff')
 
   static properties = {
     containerId: {
@@ -50,6 +50,8 @@ export class BibGtm extends LitElement {
     this.hidden = true
     this.containerId = GTM_CONTAINER_ID
     this.#init()
+
+    console.log('[bib-gtm] Component class initialized.')
   }
 
   #init() {
