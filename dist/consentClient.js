@@ -23,7 +23,7 @@ import { l as t } from "./logger-DcXTZUsI.js";
 import r from "./ConsentStorage.js";
 import { ConsentTokens as o } from "./ConsentTokens.js";
 import { getServerMode as n, getIframeServer as i } from "./utils.js";
-import { EVENT_NAMES as a, SERVER_MODE as d, SERVER_REQUEST_DEFAULT_TIMEOUT as h } from "./constants2.js";
+import { EVENT_NAMES as a, SERVER_MODE as d, SERVER_REQUEST_DEFAULT_TIMEOUT as h } from "./constants3.js";
 class c extends EventTarget {
   constructor() {
     super();

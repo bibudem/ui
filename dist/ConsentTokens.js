@@ -14,7 +14,7 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _n, _h_instances, e_fn, t_fn;
-import { DEFAULT_PREFERENCES as e, CONSENT_STATES as t } from "./constants2.js";
+import { DEFAULT_PREFERENCES as e, CONSENT_STATES as t } from "./constants3.js";
 import { i as n, b as s, a as o } from "./isObject-Dipzh7kZ.js";
 var i = "[object Boolean]";
 function r(e2) {

@@ -14,16 +14,16 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _se_instances, e_fn;
 import { o as e } from "./index-CRxQMTzC.js";
-import { EVENT_NAMES as t, DB_NAME as r, DB_VERSION as n, DB_STORE_NAME as o } from "./constants2.js";
+import { EVENT_NAMES as t, DB_NAME as r, DB_VERSION as n, DB_STORE_NAME as o } from "./constants3.js";
 import { ConsentTokens as a } from "./ConsentTokens.js";
 import { g as s, o as c, i, a as u, b as f, c as l, t as b, M as v, d as h, e as p, U as d, f as w, S as j, h as y } from "./_Uint8Array-Cf-PTZCw.js";
 import { r as g, b as m, S as _, i as k } from "./isObject-Dipzh7kZ.js";
-var O = s(g, "WeakMap"), S = c(Object.keys, Object), E = Object.prototype.hasOwnProperty;
-var C = Object.prototype.propertyIsEnumerable, T = Object.getOwnPropertySymbols, A = T ? function(e2) {
+var O = s(g, "WeakMap"), S = c(Object.keys, Object), C = Object.prototype.hasOwnProperty;
+var E = Object.prototype.propertyIsEnumerable, T = Object.getOwnPropertySymbols, A = T ? function(e2) {
   return null == e2 ? [] : (e2 = Object(e2), function(t2, r2) {
     for (var n2 = -1, o2 = null == t2 ? 0 : t2.length, a2 = 0, s2 = []; ++n2 < o2; ) {
       var c2 = t2[n2];
-      i2 = c2, C.call(e2, i2) && (s2[a2++] = c2);
+      i2 = c2, E.call(e2, i2) && (s2[a2++] = c2);
     }
     var i2;
     return s2;
@@ -37,7 +37,7 @@ function x(e2) {
       return u(e4) ? f(e4) : function(e5) {
         if (!i(e5)) return S(e5);
         var t3 = [];
-        for (var r3 in Object(e5)) E.call(e5, r3) && "constructor" != r3 && t3.push(r3);
+        for (var r3 in Object(e5)) C.call(e5, r3) && "constructor" != r3 && t3.push(r3);
         return t3;
       }(e4);
     }(e3);
@@ -229,7 +229,7 @@ _se_instances = new WeakSet();
 e_fn = async function(e2) {
   try {
     const t2 = await this.getConsentTokens(), r2 = new a(e2);
-    return ae(t2, r2) ? (console.log("[setConsentTokens] No change in tokens. oldConsentTokens: ", t2, "newConsentTokens: ", r2), false) : (await this.db.put(o, r2, "tokens"), r2);
+    return ae(t2, r2) ? (console.log("[ConsentStorage] #setConsentTokens: No change in tokens. oldConsentTokens: ", t2, "newConsentTokens: ", r2), false) : (await this.db.put(o, r2, "tokens"), r2);
   } catch (e3) {
     throw new Error("Something went wrong with indexedDB:", e3);
   }

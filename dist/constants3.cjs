@@ -6,5 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"}),exports.CLARITY_PROJECT_ID="tfds44a7xa",exports.EVENT_NAMES={READY:"bib:ready",CHANGE:"bib:change"},exports.READY_STATES={INDETERMINATE:"indeterminate",INITIALIZING:"initializing",CONNECTED:"connected",DISCONNECTED:"disconnected"};
+Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=`${require("./package-s6GjWkLb.cjs").name}/consent`;exports.CONSENT_STATES={INDETERMINATE:"indeterminate",DETERMINATE:"determinate"},exports.DB_NAME=e,exports.DB_STORE_NAME="consent",exports.DB_VERSION=2,exports.DEFAULT_PREFERENCES={analytics_consent:null,functionality_consent:null,ad_consent:null},exports.EVENT_NAMES={READY:"bib:ready",STATE:"bib:state",CHANGE:"bib:change",CLOSE:"bib:close"},exports.PREFIX="bib-consent",exports.SERVER_DEFAULT_URL="https://bib.umontreal.ca/consent/server/",exports.SERVER_MODE={LOCAL:"local",REMOTE:"remote"},exports.SERVER_REQUEST_DEFAULT_TIMEOUT=500;
 //# sourceMappingURL=constants3.cjs.map

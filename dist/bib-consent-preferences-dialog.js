@@ -7,11 +7,11 @@
  * @see https://github.com/bibudem/ui
  */
 import "./lit-element-Dj1nHH6C.js";
-import { B } from "./bib-consent-preferences-dialog-DVwg6XoV.js";
+import { B } from "./bib-consent-preferences-dialog-5Q9pP-jX.js";
 import "./ref-B-kqFHPy.js";
 import "./consent-context.js";
 import "./ConsentTokens.js";
-import "./constants2.js";
+import "./constants3.js";
 export {
   B as BibConsentPreferencesDialog
 };

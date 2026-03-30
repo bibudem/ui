@@ -22,7 +22,7 @@ import { a as o } from "./bib-C3HY5EBh.js";
 import { l as i } from "./logger-DcXTZUsI.js";
 import { ConsentTokens as s } from "./ConsentTokens.js";
 import { GTM_CONTAINER_ID as a } from "./constants.js";
-import { EVENT_NAMES as g } from "./constants2.js";
+import { EVENT_NAMES as g } from "./constants3.js";
 i("bib-gtm", "green");
 let r = null;
 class l extends t {
