@@ -22,9 +22,8 @@ import { a as o } from "./bib-C3HY5EBh.js";
 import { l as i } from "./logger-DcXTZUsI.js";
 import { ConsentTokens as s } from "./ConsentTokens.js";
 import { GTM_CONTAINER_ID as a } from "./constants.js";
-import { EVENT_NAMES as g } from "./constants3.js";
-i("bib-gtm", "green");
-let r = null;
+import { EVENT_NAMES as r } from "./constants3.js";
+let g = null;
 class l extends t {
   constructor() {
     super();
@@ -37,33 +36,35 @@ _t = new WeakMap();
 _l_instances = new WeakSet();
 e_fn = function() {
   const t2 = this;
-  __privateGet(this, _t).log("Initializing...");
+  __privateGet(this, _t).call(this, "Initializing...");
   const e2 = this.containerId;
   setTimeout(() => {
+    var _a, _b, _c, _d;
     const n2 = document.querySelector("bib-consent");
     if (n2) {
       let o2 = function(n3) {
-        __privateGet(t2, _t).log(`<bib-consent> triggered event type ${n3.type} with data:`, n3.detail);
+        var _a2, _b2, _c2;
+        __privateGet(_a2 = t2, _t).call(_a2, `<bib-consent> triggered event type ${n3.type} with data:`, n3.detail);
         const o3 = n3.detail;
         if (null !== o3) {
-          __privateGet(t2, _t).log("Loading GTM script."), function(t3) {
-            if (!r) {
-              r = document.createElement("script"), r.async = true, r.src = `https://www.googletagmanager.com/gtm.js?id=${t3}`;
+          __privateGet(_b2 = t2, _t).call(_b2, "Loading GTM script."), function(t3) {
+            if (!g) {
+              g = document.createElement("script"), g.async = true, g.src = `https://www.googletagmanager.com/gtm.js?id=${t3}`;
               var e3 = document.getElementsByTagName("script")[0];
-              e3.parentNode.insertBefore(r, e3);
+              e3.parentNode.insertBefore(g, e3);
             }
           }(e2);
           const { analytics_consent: n4, ad_consent: i3 } = o3, s2 = { ad_user_data: i3, ad_personalization: i3, ad_storage: i3, analytics_storage: n4 };
-          __privateGet(t2, _t).log("Updating GTM with consent data:", s2), a2("consent", "update", s2);
+          __privateGet(_c2 = t2, _t).call(_c2, "Updating GTM with consent data:", s2), a2("consent", "update", s2);
         }
       };
-      __privateGet(t2, _t).log("bib-consent element found.");
+      __privateGet(_a = t2, _t).call(_a, "bib-consent element found.");
       const i2 = globalThis.dataLayer = globalThis.dataLayer || [], a2 = globalThis.gtag = globalThis.gtag || function() {
         i2.push(arguments);
       }, l2 = new s(false);
-      __privateGet(t2, _t).log("Pushing default consent to GTM with `defaultConsent`: ", l2), a2("consent", "default", l2.toGTM()), i2.push({ "gtm.start": (/* @__PURE__ */ new Date()).getTime(), event: "gtm.js" }), __privateGet(t2, _t).log("Registering event listeners on <bib-consent> element."), n2.addEventListener(g.READY, o2), n2.addEventListener(g.CHANGE, o2);
+      __privateGet(_b = t2, _t).call(_b, "Pushing default consent to GTM with `defaultConsent`: ", l2), a2("consent", "default", l2.toGTM()), i2.push({ "gtm.start": (/* @__PURE__ */ new Date()).getTime(), event: "gtm.js" }), __privateGet(_c = t2, _t).call(_c, "Registering event listeners on <bib-consent> element."), n2.addEventListener(r.READY, o2), n2.addEventListener(r.CHANGE, o2);
     } else __privateGet(t2, _t).warn("No bib-consent element found");
-    __privateGet(t2, _t).log("Initialization complete.");
+    __privateGet(_d = t2, _t).call(_d, "Initialization complete.");
   });
 };
 __publicField(l, "properties", { containerId: { type: String, attribute: "container-id" }, hidden: { type: Boolean } });
