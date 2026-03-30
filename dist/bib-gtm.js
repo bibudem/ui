@@ -15,25 +15,22 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
 var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _t, _g_instances, e_fn;
+var _c_instances, t_fn;
 import { s as t, i as e, r as n } from "./lit-element-Dj1nHH6C.js";
 import { a as o } from "./bib-C3HY5EBh.js";
-import { l as i } from "./logger-DcXTZUsI.js";
-import { ConsentTokens as s } from "./ConsentTokens.js";
-import { GTM_CONTAINER_ID as a } from "./constants.js";
-import { EVENT_NAMES as l } from "./constants2.js";
-let c = null;
-class g extends t {
+import { ConsentTokens as i } from "./ConsentTokens.js";
+import { GTM_CONTAINER_ID as s } from "./constants.js";
+import { EVENT_NAMES as a } from "./constants2.js";
+let l = null;
+class c extends t {
   constructor() {
     super();
-    __privateAdd(this, _g_instances);
-    __privateAdd(this, _t, i("bib-gtm", "#0a00ff"));
-    this.hidden = true, this.containerId = a, __privateMethod(this, _g_instances, e_fn).call(this);
+    __privateAdd(this, _c_instances);
+    this.hidden = true, this.containerId = s, __privateMethod(this, _c_instances, t_fn).call(this), console.log("[bib-gtm] Component class initialized.");
   }
 }
-_t = new WeakMap();
-_g_instances = new WeakSet();
-e_fn = function() {
+_c_instances = new WeakSet();
+t_fn = function() {
   console.log("[bib-gtm] Initializing...");
   const t2 = this.containerId;
   setTimeout(() => {
@@ -44,36 +41,36 @@ e_fn = function() {
         const n3 = e3.detail;
         if (null !== n3) {
           console.log("[bib-gtm] Loading GTM script."), function(t3) {
-            if (!c) {
-              c = document.createElement("script"), c.async = true, c.src = `https://www.googletagmanager.com/gtm.js?id=${t3}`;
+            if (!l) {
+              l = document.createElement("script"), l.async = true, l.src = `https://www.googletagmanager.com/gtm.js?id=${t3}`;
               var e5 = document.getElementsByTagName("script")[0];
-              e5.parentNode.insertBefore(c, e5);
+              e5.parentNode.insertBefore(l, e5);
             }
           }(t2);
-          const { analytics_consent: e4, ad_consent: o3 } = n3, s2 = { ad_user_data: o3, ad_personalization: o3, ad_storage: o3, analytics_storage: e4 };
-          let a3, l2;
-          console.log("[bib-gtm] Updating GTM with consent data:", s2), i2("consent", "update", s2);
+          const { analytics_consent: e4, ad_consent: o3 } = n3, i2 = { ad_user_data: o3, ad_personalization: o3, ad_storage: o3, analytics_storage: e4 };
+          let a2, c3;
+          console.log("[bib-gtm] Updating GTM with consent data:", i2), s2("consent", "update", i2);
           try {
-            a3 = window.top.location.href, l2 = window.top.location.pathname;
+            a2 = window.top.location.href, c3 = window.top.location.pathname;
           } catch (t3) {
-            a3 = window.location.href, l2 = window.location.pathname;
+            a2 = window.location.href, c3 = window.location.pathname;
           }
-          console.log("[bib-gtm] Sending page_view with location:", a3, "path:", l2, "title:", document.title), i2("event", "page_view", { page_path: l2, page_location: a3, page_title: document.title });
+          console.log("[bib-gtm] Sending page_view with location:", a2, "path:", c3, "title:", document.title), s2("event", "page_view", { page_path: c3, page_location: a2, page_title: document.title });
         }
       };
       console.log("[bib-gtm] bib-consent element found.");
-      const o2 = globalThis.dataLayer = globalThis.dataLayer || [], i2 = globalThis.gtag = globalThis.gtag || function() {
+      const o2 = globalThis.dataLayer = globalThis.dataLayer || [], s2 = globalThis.gtag = globalThis.gtag || function() {
         o2.push(arguments);
-      }, a2 = new s(false);
-      console.log("[bib-gtm] Pushing default consent to GTM with `defaultConsent`: ", a2), i2("consent", "default", a2.toGTM()), o2.push({ "gtm.start": (/* @__PURE__ */ new Date()).getTime(), event: "gtm.js" }), console.log("[bib-gtm] Registering event listeners on <bib-consent> element."), e2.addEventListener(l.READY, n2), e2.addEventListener(l.CHANGE, n2);
+      }, c2 = new i(false);
+      console.log("[bib-gtm] Pushing default consent to GTM with `defaultConsent`: ", c2), s2("consent", "default", c2.toGTM()), o2.push({ "gtm.start": (/* @__PURE__ */ new Date()).getTime(), event: "gtm.js" }), console.log("[bib-gtm] Registering event listeners on <bib-consent> element."), e2.addEventListener(a.READY, n2), e2.addEventListener(a.CHANGE, n2);
     } else console.log("[bib-gtm] No bib-consent element found");
     console.log("[bib-gtm] Initialization complete.");
   });
 };
-__publicField(g, "properties", { containerId: { type: String, attribute: "container-id" }, hidden: { type: Boolean } });
-__publicField(g, "styles", [e`${n("@layer component{:host(hidden){display:none}}")}`]);
-window.customElements.get("bib-gtm") || window.customElements.define("bib-gtm", g), o("gtm", {});
+__publicField(c, "properties", { containerId: { type: String, attribute: "container-id" }, hidden: { type: Boolean } });
+__publicField(c, "styles", [e`${n("@layer component{:host(hidden){display:none}}")}`]);
+window.customElements.get("bib-gtm") || window.customElements.define("bib-gtm", c), o("gtm", {});
 export {
-  g as BibGtm
+  c as BibGtm
 };
 //# sourceMappingURL=bib-gtm.js.map
