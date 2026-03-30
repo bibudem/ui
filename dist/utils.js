@@ -7,7 +7,7 @@
  * @see https://github.com/bibudem/ui
  */
 import { u as e, h as r } from "./url-B0JPXU6k.js";
-import { PREFIX as t, SERVER_REQUEST_DEFAULT_TIMEOUT as o, SERVER_MODE as n } from "./constants3.js";
+import { PREFIX as t, SERVER_REQUEST_DEFAULT_TIMEOUT as o, SERVER_MODE as n } from "./constants2.js";
 function i(e2) {
   return `${t}-${e2}`;
 }

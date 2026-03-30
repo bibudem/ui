@@ -23,8 +23,8 @@ import { a as i } from "./bib-C3HY5EBh.js";
 import { d as s } from "./events-BtF7lCmA.js";
 import { l as o } from "./logger-DcXTZUsI.js";
 import r from "./ConsentTokenV2.js";
-import { CLARITY_PROJECT_ID as c, READY_STATES as a } from "./constants2.js";
-import { EVENT_NAMES as l } from "./constants3.js";
+import { CLARITY_PROJECT_ID as c, READY_STATES as a } from "./constants3.js";
+import { EVENT_NAMES as l } from "./constants2.js";
 const d = { init(t2) {
   !function(t3) {
     try {
