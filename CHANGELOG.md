@@ -11,6 +11,21 @@
 
 ### Miscellaneous Chores
 
+* Build pour v1.3.8 ([513a023](https://github.com/bibudem/ui/commit/513a023fb7f65b376748e949c621b88e0817e371))
+* Build pour v1.3.8 ([eb1e865](https://github.com/bibudem/ui/commit/eb1e86510cd1dd05585fea22bb3510975a2d8e43))
+* Build pour v1.3.8 ([eeec351](https://github.com/bibudem/ui/commit/eeec351a9e64821cd3aab07cf55f9f416b29a397))
+
+## [1.3.8](https://github.com/bibudem/ui/compare/v1.3.8...v1.3.8) (2026-03-30)
+
+
+### Bug Fixes
+
+* **bib-gtm:** Correction des appels du logger ([d792c71](https://github.com/bibudem/ui/commit/d792c71f59df5695fc9a2b894b5a9bc076baa4e8))
+* wip ([07ef62b](https://github.com/bibudem/ui/commit/07ef62b825c00ee07fd08062fe3ad72c4a190811))
+
+
+### Miscellaneous Chores
+
 * Build pour v1.3.8 ([eb1e865](https://github.com/bibudem/ui/commit/eb1e86510cd1dd05585fea22bb3510975a2d8e43))
 * Build pour v1.3.8 ([eeec351](https://github.com/bibudem/ui/commit/eeec351a9e64821cd3aab07cf55f9f416b29a397))
 
