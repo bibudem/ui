@@ -87,6 +87,25 @@ export class BibGtm extends LitElement {
             self.#logger('Updating GTM with consent data:', gtmConsentData)
 
             gtag('consent', 'update', gtmConsentData)
+
+            // Get the correct page location (parent page if in iframe)
+            let pageLocation, pagePath;
+            try {
+              pageLocation = window.top.location.href;
+              pagePath = window.top.location.pathname;
+            } catch (e) {
+              // Fallback if cross-origin
+              pageLocation = window.location.href;
+              pagePath = window.location.pathname;
+            }
+
+            self.#logger('Sending page_view with location:', pageLocation, 'path:', pagePath, 'title:', document.title)
+
+            gtag('event', 'page_view', {
+              page_path: pagePath,
+              page_location: pageLocation,
+              page_title: document.title
+            })
           }
         }
 
