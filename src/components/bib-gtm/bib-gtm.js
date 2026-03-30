@@ -123,7 +123,7 @@ export class BibGtm extends LitElement {
         consentElem.addEventListener(EVENT_NAMES.READY, consentListener)
         consentElem.addEventListener(EVENT_NAMES.CHANGE, consentListener)
       } else {
-        self.#logger.warn('No bib-consent element found')
+        console.log('[bib-gtm] No bib-consent element found')
       }
 
       console.log('[bib-gtm] Initialization complete.')
