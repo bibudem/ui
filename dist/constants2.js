@@ -1,12 +1,12 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.9
+ * @version 1.3.10
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-import { n } from "./package-C1Jr7hfT.js";
+import { n } from "./package-Dtcfk5vm.js";
 const e = `${n}/consent`, t = 2, o = "consent", a = { READY: "bib:ready", STATE: "bib:state", CHANGE: "bib:change", CLOSE: "bib:close" }, c = "bib-consent", s = "https://bib.umontreal.ca/consent/server/", i = { LOCAL: "local", REMOTE: "remote" }, b = 500, l = { analytics_consent: null, functionality_consent: null, ad_consent: null }, E = { INDETERMINATE: "indeterminate", DETERMINATE: "determinate" };
 export {
   E as CONSENT_STATES,

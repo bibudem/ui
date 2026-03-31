@@ -6,11 +6,5 @@
  * @license ISC
  * @see https://github.com/bibudem/ui
  */
-const t = { bubbles: true, composed: true };
-function e(e2, n, o = {}) {
-  return o = { ...t, ...o }, e2.dispatchEvent(new CustomEvent(n, o));
-}
-export {
-  e as d
-};
-//# sourceMappingURL=events-BtF7lCmA.js.map
+const o=require("./package-Azluo6fN.cjs");exports.loggerFactory=function(e=o.name,n="green"){return Function.prototype.bind.call(console.log,console,`%c[${e}]`,`color: ${n}; font-weight: bold;`)};
+//# sourceMappingURL=logger-CTJaGWA6.cjs.map

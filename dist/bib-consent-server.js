@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.9
+ * @version 1.3.10
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -21,7 +21,7 @@ var _e, _t, _d_instances, o_fn;
 import { s as e, i as t, r as o, x as s } from "./lit-element-Dj1nHH6C.js";
 import { a as i, p as n } from "./url-B0JPXU6k.js";
 import { e as r, n as a } from "./ref-B-kqFHPy.js";
-import { l } from "./logger-ZaieeW-F.js";
+import { l } from "./logger-DHPaUuvL.js";
 import g from "./ConsentStorage.js";
 class d extends e {
   constructor() {
