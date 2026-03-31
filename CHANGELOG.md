@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.10](https://github.com/bibudem/ui/compare/v1.3.9...v1.3.10) (2026-03-31)
+
+
+### Bug Fixes
+
+* **bib-clarity:** Corectif sur le logger ([4dd0467](https://github.com/bibudem/ui/commit/4dd0467affab9f92ea51f6ac88162254f2c949c4))
+* **bib-gtm:** Changement de console.log() par self.#logger() ([6c64fe2](https://github.com/bibudem/ui/commit/6c64fe28098011307c34074209458a53e0c4053e))
+
+
+### Miscellaneous Chores
+
+* Build pour v1.3.10 ([263b4ac](https://github.com/bibudem/ui/commit/263b4ac69893b1f6b0dc03aa647bf881d571559b))
+
 ## [1.3.9](https://github.com/bibudem/ui/compare/v1.3.8...v1.3.9) (2026-03-30)
 
 
