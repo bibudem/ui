@@ -1,7 +1,7 @@
 /**
  * Librairie du system desing des Bibliothèques de l'Université de Montréal
  * @module @bibudem/ui
- * @version 1.3.10
+ * @version 1.3.11
  * @author Christian Rémillard <christian.remillard@umontreal.ca>
  * @license ISC
  * @see https://github.com/bibudem/ui
@@ -17,17 +17,16 @@ var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read fr
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
-var _e, _s, _c_instances, t_fn;
+var _e, _s, _h_instances, t_fn;
 import { s as e, c as s } from "./url-B0JPXU6k.js";
-import { l as t } from "./logger-DHPaUuvL.js";
-import r from "./ConsentStorage.js";
-import { ConsentTokens as o } from "./ConsentTokens.js";
-import { getServerMode as n, getIframeServer as i } from "./utils.js";
-import { EVENT_NAMES as a, SERVER_MODE as d, SERVER_REQUEST_DEFAULT_TIMEOUT as h } from "./constants2.js";
-class c extends EventTarget {
+import t from "./ConsentStorage.js";
+import { ConsentTokens as r } from "./ConsentTokens.js";
+import { getServerMode as o, getIframeServer as n } from "./utils.js";
+import { EVENT_NAMES as i, SERVER_MODE as a, SERVER_REQUEST_DEFAULT_TIMEOUT as d } from "./constants2.js";
+class h extends EventTarget {
   constructor() {
     super();
-    __privateAdd(this, _c_instances);
+    __privateAdd(this, _h_instances);
     __publicField(this, "_server");
     __publicField(this, "_storage");
     __privateAdd(this, _e, false);
@@ -44,28 +43,29 @@ class c extends EventTarget {
     super.dispatchEvent(e2);
   }
   addEventListener(e2, s2, t2) {
-    if (e2 === a.READY && "ready" === this.readyState) return this.debug("Firing ready event immediately since readyState is already ready"), void __privateMethod(this, _c_instances, t_fn).call(this, s2);
+    if (e2 === i.READY && "ready" === this.readyState) return this.debug("Firing ready event immediately since readyState is already ready"), void __privateMethod(this, _h_instances, t_fn).call(this, s2);
     super.addEventListener(e2, s2, t2);
   }
-  async init({ host: c2, serverMode: l2, serverUrl: v2, serverRequestTimeout: g = h, reflectEvents: u = true }) {
-    let m;
-    if (this.serverRequestTimeout = g, c2 && this.addHost({ host: c2, reflectEvents: u }), this.readyState = "connecting", l2 && l2 === d.LOCAL || void 0 === v2 || !e(v2) ? this.serverMode = d.LOCAL : (this.serverUrl = new URL(v2, location), c2.debug && this.serverUrl.searchParams.set("debug", ""), this.serverMode = await n(this)), __privateSet(this, _e, !!c2.debug), __privateGet(this, _e) && __privateSet(this, _s, t("consentClient", "purple")), this.debug("init", `server mode: ${this.serverMode}`), this.serverMode === d.REMOTE) {
-      const e2 = i(document.body, this.serverUrl.href);
+  async init({ host: h2, serverMode: c2, serverUrl: v2, serverRequestTimeout: l = d, reflectEvents: u = true }) {
+    let g;
+    if (this.serverRequestTimeout = l, h2 && this.addHost({ host: h2, reflectEvents: u }), this.readyState = "connecting", c2 && c2 === a.LOCAL || void 0 === v2 || !e(v2) ? this.serverMode = a.LOCAL : (this.serverUrl = new URL(v2, location), h2.debug && this.serverUrl.searchParams.set("debug", ""), this.serverMode = await o(this)), __privateSet(this, _e, !!h2.debug), __privateGet(this, _e) && __privateSet(this, _s, function() {
+    }), this.debug("init", `server mode: ${this.serverMode}`), this.serverMode === a.REMOTE) {
+      const e2 = n(document.body, this.serverUrl.href);
       try {
         this._server = await s(e2), this._server.listenMessage((e3, s2) => {
-          const t2 = o.from(s2), r2 = new CustomEvent(a.CHANGE, { detail: t2, bubbles: true, composed: true });
-          this.dispatchEvent(r2);
+          const t2 = r.from(s2), o2 = new CustomEvent(i.CHANGE, { detail: t2, bubbles: true, composed: true });
+          this.dispatchEvent(o2);
         });
       } catch (e3) {
         throw console.error("[callServer] error: ", e3), e3;
       }
-      console.log("[consentClient] Server mode: %s", this.serverMode), console.log("[consentClient] Remote consent server URL: %s", this.serverUrl.href), m = o.from(await this._server.postMessage("getConsentTokens")), this.debug("[remote] Got response from server: ", m);
-    } else this._storage = await r(), m = await this._storage.getConsentTokens(), this.debug("[local] Got response from storage: ", m);
-    this.debug("[local] consentTokens: ", m), void 0 !== m && (this.readyState = "ready", this.dispatchEvent(new CustomEvent(a.READY, { detail: m, bubbles: true, composed: true })));
+      console.log("[consentClient] Server mode: %s", this.serverMode), console.log("[consentClient] Remote consent server URL: %s", this.serverUrl.href), g = r.from(await this._server.postMessage("getConsentTokens")), this.debug("[remote] Got response from server: ", g);
+    } else this._storage = await t(), g = await this._storage.getConsentTokens(), this.debug("[local] Got response from storage: ", g);
+    this.debug("[local] consentTokens: ", g), void 0 !== g && (this.readyState = "ready", this.dispatchEvent(new CustomEvent(i.READY, { detail: g, bubbles: true, composed: true })));
   }
   async getConsentTokens() {
     try {
-      return this.serverMode === d.LOCAL ? await this._storage.getConsentTokens() : o.from(await this._server.postMessage("getConsentTokens"));
+      return this.serverMode === a.LOCAL ? await this._storage.getConsentTokens() : r.from(await this._server.postMessage("getConsentTokens"));
     } catch (e2) {
       throw console.error("[#getConsentTokens]", e2), e2;
     }
@@ -73,15 +73,15 @@ class c extends EventTarget {
   async setConsentTokens(e2) {
     try {
       let s2;
-      const t2 = o.from(e2);
-      if (s2 = this.serverMode === d.LOCAL ? await this._storage.setConsentTokens(t2) : await this._server.postMessage("setConsentTokens", t2), s2) return this.dispatchEvent(new CustomEvent(a.CHANGE, { detail: s2, bubbles: true, composed: true })), s2;
+      const t2 = r.from(e2);
+      if (s2 = this.serverMode === a.LOCAL ? await this._storage.setConsentTokens(t2) : await this._server.postMessage("setConsentTokens", t2), s2) return this.dispatchEvent(new CustomEvent(i.CHANGE, { detail: s2, bubbles: true, composed: true })), s2;
     } catch (e3) {
       throw console.error("[#setConsentTokens]", e3), e3;
     }
   }
   async resetTokens() {
     try {
-      if (this.serverMode === d.LOCAL) return await this._storage.resetTokens();
+      if (this.serverMode === a.LOCAL) return await this._storage.resetTokens();
       await this._server.postMessage("resetTokens");
     } catch (e2) {
       throw console.error("[#resetTokens]", e2), e2;
@@ -90,14 +90,14 @@ class c extends EventTarget {
 }
 _e = new WeakMap();
 _s = new WeakMap();
-_c_instances = new WeakSet();
+_h_instances = new WeakSet();
 t_fn = async function(e2) {
-  const s2 = await this.getConsentTokens(), t2 = new CustomEvent(a.READY, { detail: s2, bubbles: true, composed: true });
+  const s2 = await this.getConsentTokens(), t2 = new CustomEvent(i.READY, { detail: s2, bubbles: true, composed: true });
   this.debug("Firing ready event with preferences: ", s2), e2(t2);
 };
-let l;
+let c;
 async function v(e2) {
-  return l ? (l.addHost(e2), l) : (l = new c(), await l.init(e2), l);
+  return c ? (c.addHost(e2), c) : (c = new h(), await c.init(e2), c);
 }
 export {
   v as default
