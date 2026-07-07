@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.11](https://github.com/bibudem/ui/compare/v1.3.10...v1.3.11) (2026-07-07)
+
+
+### Features
+
+* Retrait des logs dans la console ([da5d9f2](https://github.com/bibudem/ui/commit/da5d9f25b84c5592f5055c99d02956f477689b03))
+
+
+### Miscellaneous Chores
+
+* Build pour v1.3.11 ([5bcca5d](https://github.com/bibudem/ui/commit/5bcca5d3567c7f145abae5c47d97f49ba8cecb21))
+
 ## [1.3.10](https://github.com/bibudem/ui/compare/v1.3.9...v1.3.10) (2026-03-31)
 
 
