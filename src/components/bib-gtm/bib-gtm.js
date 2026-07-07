@@ -28,7 +28,8 @@ function loadGtm(containerId) {
 }
 
 export class BibGtm extends LitElement {
-  #logger = loggerFactory('bib-gtm', '#0a00ff')
+  // #logger = loggerFactory('bib-gtm', '#0a00ff')
+  #logger = function () { }
 
   static properties = {
     containerId: {

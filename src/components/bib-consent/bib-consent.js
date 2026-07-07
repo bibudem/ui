@@ -59,7 +59,8 @@ import { CONSENT_STATES, EVENT_NAMES, SERVER_MODE, SERVER_REQUEST_DEFAULT_TIMEOU
  * @method render - Renders the component.
  */
 export class BibConsent extends LitElement {
-  #logger = loggerFactory('bib-consent', '#cd5300')
+  // #logger = loggerFactory('bib-consent', '#cd5300')
+  #logger = function () { }
 
   static properties = {
     serverUrl: {

@@ -122,7 +122,8 @@ class ConsentClient extends EventTarget {
     this.#debugIsOn = !!host.debug
 
     if (this.#debugIsOn) {
-      this.#debug = loggerFactory('consentClient', 'purple')
+      // this.#debug = loggerFactory('consentClient', 'purple')
+      this.#debug = function () { }
     }
 
     this.debug('init', `server mode: ${this.serverMode}`)

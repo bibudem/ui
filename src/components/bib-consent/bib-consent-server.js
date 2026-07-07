@@ -28,7 +28,8 @@ import styles from './bib-consent-server.scss?inline'
  */
 export class BibConsentServer extends LitElement {
   #storage
-  #logger = loggerFactory('bib-consent-server')
+  // #logger = loggerFactory('bib-consent-server')
+  #logger = function () { }
 
   static properties = {
     connected: {

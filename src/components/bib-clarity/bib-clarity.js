@@ -33,7 +33,8 @@ function toClarityConsent(granted) {
  */
 export class BibClarity extends LitElement {
   #consent = null
-  #logger = loggerFactory('bib-clarity', '#a31515')
+  // #logger = loggerFactory('bib-clarity', '#a31515')
+  #logger = function () { }
 
   static properties = {
     projectId: {
